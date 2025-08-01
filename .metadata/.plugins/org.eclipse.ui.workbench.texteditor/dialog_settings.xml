@@ -8,6 +8,7 @@
 		<item key="isRegEx" value="false"/>
 		<item key="selection" value="vo"/>
 		<list key="findhistory">
+			<item value="&lt;c:forEach items=&quot;${list}&quot; var=&quot;board&quot;&gt;"/>
 			<item value="vo"/>
 			<item value="/Users/EGOVEDU/eGovFrame-3.10.0/"/>
 		</list>

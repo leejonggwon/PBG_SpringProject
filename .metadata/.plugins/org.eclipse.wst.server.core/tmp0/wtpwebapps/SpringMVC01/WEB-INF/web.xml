@@ -15,12 +15,14 @@
 	</listener>
 
 	<!-- Processes application requests -->
+	<!-- **DispatcherServlet: 사용자의 요청을 먼저 받음 → 처리할 컨트롤러, 뷰, 모델 등을 결정 → 최종 응답을 반환한다 -->
+	<!-- DispatcherServlet 이 생성이 될 떄 servlet-context.xml를 참조한다 -->
 	<servlet>
 		<servlet-name>appServlet</servlet-name>
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
 		<init-param>
 			<param-name>contextConfigLocation</param-name>
-			<param-value>/WEB-INF/spring/appServlet/servlet-context.xml</param-value>
+			<param-value>/WEB-INF/spring/appServlet/servlet-context.xml</param-value> 
 		</init-param>
 		<load-on-startup>1</load-on-startup>
 	</servlet>

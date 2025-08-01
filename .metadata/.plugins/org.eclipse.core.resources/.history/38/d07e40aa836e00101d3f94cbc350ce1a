@@ -1,0 +1,5 @@
+package kr.sping.entity;
+
+public class Board {
+
+}

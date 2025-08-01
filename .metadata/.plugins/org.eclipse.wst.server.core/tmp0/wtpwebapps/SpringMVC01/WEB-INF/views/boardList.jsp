@@ -1,14 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>   
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </head>
 <body>
 	<div class="container">
@@ -16,50 +19,27 @@
 		<div class="panel panel-default">
 			<div class="panel-heading">Board</div>
 			<div class="panel-body">
-				<table class= "table">
-					<tr>
+				<table class="table table-bordered table-hover">
+					<tr class="danger">
 						<td>번호</td>
 						<td>제목</td>
 						<td>작성자</td>
 						<td>작성일</td>
 						<td>조회수</td>
 					</tr>
-
-					<tr>
-						<td>1</td>
-						<td>공지사항: 여름방학 일정</td>
-						<td>관리자</td>
-						<td>2025.07.25</td>
-						<td>12</td>
-					</tr>
-					<tr>
-						<td>2</td>
-						<td>자유게시판 이용 안내</td>
-						<td>운영자</td>
-						<td>2025.07.26</td>
-						<td>34</td>
-					</tr>
-					<tr>
-						<td>3</td>
-						<td>질문 있습니다!</td>
-						<td>홍길동</td>
-						<td>2025.07.27</td>
-						<td>8</td>
-					</tr>
-					<tr>
-						<td>4</td>
-						<td>자바 공부 꿀팁 공유</td>
-						<td>김자바</td>
-						<td>2025.07.28</td>
-						<td>23</td>
-					</tr>
-					<tr>
-						<td>5</td>
-						<td>오늘 날씨 좋네요</td>
-						<td>이하늘</td>
-						<td>2025.07.29</td>
-						<td>5</td>
-					</tr>
+					
+					<!-- **model은 request영역에 들어있다 
+					       그러므로 model.addAttribute("list", list)는 내부적으로 request.setAttribute("list", list)처럼 처리된다 -->
+					<c:forEach items="${list}" var="vo" varStatus = "i">
+						<tr>
+							<td>${i.count}</td> <!-- idx는 고유 식별 번호로 사용된다 -->
+							<td>${vo.title}</td>
+							<td>${vo.writer}</td>
+							<td>${vo.indate}</td>
+							<td>${vo.count}</td>		
+						</tr>
+					</c:forEach>
+					
 				</table>
 			</div>
 			<div class="panel-footer">스프링게시판 - 이종권</div>

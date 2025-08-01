@@ -115,7 +115,16 @@
 			<artifactId>junit</artifactId>
 			<version>4.7</version>
 			<scope>test</scope>
-		</dependency>        
+		</dependency>    
+		 
+		<!-- lombok API 추가, lombok:자바 코드에서 반복적으로 쓰는 코드를 자동으로 줄여주는 라이브러리 -->
+		<!-- getter, setter, toString(), equals(), hashCode(), 생성자 등 어노테이션(@Data)으로 자동생성이 된다 -->
+		<dependency>
+		    <groupId>org.projectlombok</groupId>
+		    <artifactId>lombok</artifactId>
+		    <version>1.18.24</version>
+		</dependency> 
+		
 	</dependencies>
     <build>
         <plugins>
