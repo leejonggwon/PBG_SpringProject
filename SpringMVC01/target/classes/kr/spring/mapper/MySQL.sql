@@ -5,17 +5,45 @@
 --실행: 드래그 → Alt + X → Execute Selected Text
 
 CREATE TABLE BOARD(
-	IDX INT NOT NULL AUTO_INCREMENT, 
+	IDX INT NOT NULL AUTO_INCREMENT, -- 기본키, 자동 증가되는 유일한 번호--
 	TITLE VARCHAR(100) NOT NULL,
 	CONTENT VARCHAR(2000) NOT NULL,
 	WRITER VARCHAR(30) NOT NULL,
-	INDATE DATETIME DEFAULT NOW(), 
+	INDATE DATETIME DEFAULT NOW(), -- 기본값으로 현재 날짜와 시간 저장--
 	COUNT INT DEFAULT 0,
 	PRIMARY KEY(IDX)
 )
 
+--조회
 SELECT * FROM BOARD;
 
+--테이블 식제
 DROP TABLE BOARD;
+
+
+--입력
+INSERT INTO BOARD(TITLE, CONTENT, WRITER)
+VALUES
+('공지사항', '8월 서버 점검이 예정되어 있습니다.', '관리자'),
+('자유게시판 오픈!', '이제 자유롭게 글을 남겨보세요.', '운영팀'),
+('스프링 질문 있어요', 'Controller와 Service 차이점이 궁금합니다.', '초보개발자'),
+('스터디 모집', '백엔드 스터디 함께하실 분 구합니다!', '개발자A'),
+('오류 해결법 공유', 'MySQL 연결 오류 해결법 정리해봤어요.', '지식나눔이');
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 

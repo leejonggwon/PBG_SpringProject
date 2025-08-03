@@ -1,0 +1,16 @@
+package kr.spring.mapper;
+
+import java.util.List;
+
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Select;
+
+import kr.sping.entity.Board;
+
+@Mapper //MyBatis가 interFace를 찾기위해 달아주는 부분
+public interface BoardMapper {
+
+	@Select("SELECT * FROM BOARD")
+	public List<Board> getList(); //SQL문을 전달하면, MyBatis가 알아서 기능을 구현한다
+	
+}

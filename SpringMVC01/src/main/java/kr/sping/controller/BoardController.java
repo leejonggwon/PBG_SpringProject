@@ -1,7 +1,9 @@
 package kr.sping.controller;
 
 import java.util.ArrayList;
+import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -9,9 +11,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import kr.sping.entity.Board;
             //**Controller 클래스들은 프로젝트 생성 시 설정한 kr.spring.controller 패키지 내에 위치해야 하며, 
             //그래야 HandlerMapping이 이를 올바르게 찾아서 정상적으로 작동할 수 있습니다.
+import kr.spring.mapper.BoardMapper;
 
 @Controller //**핸들러맵핑이 현재클래스를 찾기위해 컨트롤러로 등록하는 부분           
 public class BoardController { //**BoardController를 Controller이고 POJO 라고 한다 
+	
+	@Autowired //스프링에 BoardMapper 객체가 생성된걸 가져다 쓰는것을 의미, @Autowired를 통해서 SqlSessionFactoryBean를 사용한다
+	private BoardMapper mapper;// MyBatis한테 JDBC를 실행하게 요청하는 객체
+							   // BoardMapper는 MyBatis의 매퍼 인터페이스 SQL 실행을 담당하는 객체
+							   // 컨트롤러가 DB 작업을 하려고 할 때, mapper를 통해 MyBatis에게 요청하는 방식
 	
 //	@RequestMapping("/") //요청 url로 들어왔을때 아래 기능을 수행하겠다
 //	public String home() {
@@ -25,24 +33,16 @@ public class BoardController { //**BoardController를 Controller이고 POJO 라�
 	public String boardList(Model model) { //**매게변수에 model을 적으면 메서드가 실행되면서 model을 가져온다
 		System.out.println("게시판목록보기 기능수행");
 		
-		//boardList로 이동을 할떄,
-		//게시글 정보를 가져와야한다
+		//boardList로 이동을 할떄, 게시글 정보를 가져와야한다
 		//한개의 게시글의 정보는 - 번호, 제목, 내용, 작성자, 작성일, 조회수 등 6개의 데이터를 가지고 있다 
 		//(DTO: 사용자 정의에서 만든 클래스), 회원정보를 하나로 묶기위해 DTO를 만든다, 데이터를 넘기기위해서 DTO 형태로 넘겨야한다
 		
-		Board b1 = new Board(1, "공지사항: 여름방학 일정", "여름방학은 8월 1일부터입니다.", "관리자", "2025.07.25", 12);
-		Board b2 = new Board(2, "자유게시판 이용 안내", "욕설, 광고글은 금지입니다.", "운영자", "2025.07.26", 34);
-		Board b3 = new Board(3, "질문 있습니다!", "자바에서 배열과 리스트 차이가 뭔가요?", "홍길동", "2025.07.27", 8);
-		Board b4 = new Board(4, "자바 공부 꿀팁 공유", "열심히 복습하고 직접 코드 작성하는 게 최고!", "김자바", "2025.07.28", 23);
-		Board b5 = new Board(5, "오늘 날씨 좋네요", "하늘이 맑고 기분이 좋네요 😊", "이하늘", "2025.07.29", 5);
-
-		//하나로 묶어서 담고, 가변인 ArrayList에 담아준다 
-		ArrayList<Board> list = new ArrayList<>();
-		list.add(b1);
-		list.add(b2);
-		list.add(b3);
-		list.add(b4);
-		list.add(b5);
+		
+		//MyBatis: SQL 문장만 작성하면, 그에 맞게 데이터를 자동으로 매핑해서 데이터베이스에 삽입하거나 조회하는 작업을 쉽게 도와주는 프레임워크이다
+		
+		//전체 게시글 조회 기능
+		List<Board> list = mapper.getList(); //BoardMapper 인터페이스에서 SQL문을 작성한다
+		
 		
 		// list를 boardList로 전달해야 한다.
 		// boardList.jsp 한 페이지에서만 게시글을 출력하므로, session(브라우저 전반에서 유지되는 저장소)을 사용하는 것은 서버 리소스를 낭비하게 된다.

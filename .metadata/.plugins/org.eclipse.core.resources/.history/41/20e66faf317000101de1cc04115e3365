@@ -1,0 +1,58 @@
+package kr.sping.controller;
+
+import java.util.ArrayList;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import kr.sping.entity.Board;
+            //**Controller 클래스들은 프로젝트 생성 시 설정한 kr.spring.controller 패키지 내에 위치해야 하며, 
+            //그래야 HandlerMapping이 이를 올바르게 찾아서 정상적으로 작동할 수 있습니다.
+import kr.spring.mapper.BoardMapper;
+
+@Controller //**핸들러맵핑이 현재클래스를 찾기위해 컨트롤러로 등록하는 부분           
+public class BoardController { //**BoardController를 Controller이고 POJO 라고 한다 
+	
+	@Autowired //스프링에 BoardMapper 객체가 생성된걸 가져다 쓰는것을 의미, BoardMapper 객체 가지고 있으면 여기 자동으로 넣어주라는 의미,
+	private BoardMapper mapper;// MyBatis한테 JDBC를 실행하게 요청하는 객체
+							   // BoardMapper는 MyBati하고 Controller 사이에 연결해주는 매개체 역할을 한다
+	
+//	@RequestMapping("/") //요청 url로 들어왔을때 아래 기능을 수행하겠다
+//	public String home() {
+//		System.out.println("홈 기능 수행");
+//		return "boardList"; //view name을 돌려준다 
+//		                    //views안에 boardList.jsp 화면으로 이동한다
+//		                    //Controller가 boardList를 리턴했을떄 boardList.jsp를 찾아간다
+//	}
+	
+	@RequestMapping("/boardList.do") //요청 url로 들어왔을때 아래 기능을 수행하겠다
+	public String boardList(Model model) { //**매게변수에 model을 적으면 메서드가 실행되면서 model을 가져온다
+		System.out.println("게시판목록보기 기능수행");
+		
+		//boardList로 이동을 할떄, 게시글 정보를 가져와야한다
+		//한개의 게시글의 정보는 - 번호, 제목, 내용, 작성자, 작성일, 조회수 등 6개의 데이터를 가지고 있다 
+		//(DTO: 사용자 정의에서 만든 클래스), 회원정보를 하나로 묶기위해 DTO를 만든다, 데이터를 넘기기위해서 DTO 형태로 넘겨야한다
+		
+		
+		//MyBatis: SQL 문장만 작성하면, 그에 맞게 데이터를 자동으로 매핑해서 데이터베이스에 삽입하거나 조회하는 작업을 쉽게 도와주는 프레임워크이다
+		
+		
+		
+		// list를 boardList로 전달해야 한다.
+		// boardList.jsp 한 페이지에서만 게시글을 출력하므로, session(브라우저 전반에서 유지되는 저장소)을 사용하는 것은 서버 리소스를 낭비하게 된다.
+		//  따라서 Spring에서는 session이 필요하지 않을 경우, Model을 사용한다.
+		// **Model은 요청(Request) 범위에서만 데이터를 전달하는 객체로, 한 번의 요청 내에서만 데이터를 사용할 때 적합하다.
+		// 객체바이딩 - 동적바인딩: 요청에 따라 특정 영역에 데이터를 담고, 이를 이용해 다른 페이지로 이동하는 방식
+		model.addAttribute("list", list); //데이터를 model에 저장한다, list 라는 이름으로 list를 담아준다
+										  //Spring MVC Controller 안에서만 사용한다	                                
+										  //addAttribute(): 뷰로 데이터를 전달할때 사용, request.setAttribute("list", list)처럼 처리된다
+		
+		return "boardList"; //view name을 돌려준다
+		                    //boardList.do로 요청을 했을떄 → boardList로 이동한다, 
+		                    //최종 이동경로: WEB-INF/views/boardList.jsp
+							//스프링 MVC에서는 기본적으로 페이지 이동 방식이 "포워드(forward)" 방식이다 
+	}
+}
+

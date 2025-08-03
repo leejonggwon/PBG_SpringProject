@@ -1,0 +1,8 @@
+package kr.spring.mapper;
+
+import org.apache.ibatis.annotations.Mapper;
+
+@Mapper //MyBatis가 interFace를 찾기위해 달아주는 부분
+public interface BoardMapper {
+	
+}

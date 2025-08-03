@@ -1,0 +1,14 @@
+package kr.spring.mapper;
+
+import java.util.List;
+
+import org.apache.ibatis.annotations.Mapper;
+
+import kr.sping.entity.Board;
+
+@Mapper //MyBatis가 interFace를 찾기위해 달아주는 부분
+public interface BoardMapper {
+
+	public List<Board> getList();
+	
+}

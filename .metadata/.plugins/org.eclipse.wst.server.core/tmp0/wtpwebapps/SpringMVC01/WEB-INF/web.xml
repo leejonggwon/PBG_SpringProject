@@ -8,9 +8,12 @@
 	<!-- The definition of the Root Spring Container shared by all Servlets and Filters -->
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
-		<param-value>/WEB-INF/spring/root-context.xml</param-value>
+		<param-value>/WEB-INF/spring/root-context.xml</param-value> <!--*ContextLoaderListener 설정을 여기에 한다 -->
 	</context-param>
 	
+	<!-- **서버는 맨처음 web.xml 파일을 읽는데, DispatcherServlet 하기전에 ContextLoaderListener를 맨처음 만나게 된다  
+	     ContextLoaderListener가 DB를 연결하는 설정파일을 가지고 있다,
+	     ContextLoaderListener가 MyBatic를 통해서 JDBC를 돌리게 한다 -->
 	<!-- Creates the Spring Container shared by all Servlets and Filters -->
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
@@ -23,7 +26,7 @@
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
 		<init-param>
 			<param-name>contextConfigLocation</param-name>
-			<param-value>/WEB-INF/spring/appServlet/servlet-context.xml</param-value> <!--DispatcherServlet이 생성이 될 떄 servlet-context.xml를 참조한다 -->
+			<param-value>/WEB-INF/spring/appServlet/servlet-context.xml</param-value> <!--**DispatcherServlet이 생성이 될 떄 servlet-context.xml를 참조한다 -->
 		</init-param>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
