@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-
+//데이터 객체
 //DTO를 하나의 객체라고 해서 영어로 entity라고 한다 
 //entity 패키지를 따로 만든다, entity에 Board DTO를 넣는다, 실제에서는 Board라고 쓴다 
 

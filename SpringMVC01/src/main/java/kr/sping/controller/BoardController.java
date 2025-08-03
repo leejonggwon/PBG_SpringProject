@@ -48,16 +48,15 @@ public class BoardController { //**BoardController를 Controller이고 POJO 라�
 		// boardList.jsp 한 페이지에서만 게시글을 출력하므로, session(브라우저 전반에서 유지되는 저장소)을 사용하는 것은 서버 리소스를 낭비하게 된다.
 		//  따라서 Spring에서는 session이 필요하지 않을 경우, Model을 사용한다.
 		// **Model은 요청(Request) 범위에서만 데이터를 전달하는 객체로, 한 번의 요청 내에서만 데이터를 사용할 때 적합하다.
-		
-		//객체바이딩 - 동적바인딩: 요청에 따라 특정 영역에 데이터를 담고, 이를 이용해 다른 페이지로 이동하는 방식
+		// 객체바이딩 - 동적바인딩: 요청에 따라 특정 영역에 데이터를 담고, 이를 이용해 다른 페이지로 이동하는 방식
 		model.addAttribute("list", list); //데이터를 model에 저장한다, list 라는 이름으로 list를 담아준다
 										  //Spring MVC Controller 안에서만 사용한다	                                
 										  //addAttribute(): 뷰로 데이터를 전달할때 사용, request.setAttribute("list", list)처럼 처리된다
+		
 		return "boardList"; //view name을 돌려준다
 		                    //boardList.do로 요청을 했을떄 → boardList로 이동한다, 
 		                    //최종 이동경로: WEB-INF/views/boardList.jsp
 							//스프링 MVC에서는 기본적으로 페이지 이동 방식이 "포워드(forward)" 방식이다 
 	}
-
 }
 
