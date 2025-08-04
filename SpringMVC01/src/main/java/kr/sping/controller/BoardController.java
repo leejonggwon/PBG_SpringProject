@@ -21,13 +21,12 @@ public class BoardController { //**BoardController를 Controller이고 POJO 라�
 							   // BoardMapper는 MyBatis의 매퍼 인터페이스 SQL 실행을 담당하는 객체
 							   // 컨트롤러가 DB 작업을 하려고 할 때, mapper를 통해 MyBatis에게 요청하는 방식
 	
-//	@RequestMapping("/") //요청 url로 들어왔을때 아래 기능을 수행하겠다
-//	public String home() {
-//		System.out.println("홈 기능 수행");
-//		return "boardList"; //view name을 돌려준다 
-//		                    //views안에 boardList.jsp 화면으로 이동한다
-//		                    //Controller가 boardList를 리턴했을떄 boardList.jsp를 찾아간다
-//	}
+	@RequestMapping("/") //요청 url로 들어왔을때 아래 기능을 수행하겠다
+	public String home() {
+		System.out.println("홈 기능 수행");
+		return "redirect:/boardList.do"; //redirect 방식으로 페이지 이동한다 //다시 접속할 URL을 돌려준다           	                 		
+	}
+	
 	
 	@RequestMapping("/boardList.do") //요청 url로 들어왔을때 아래 기능을 수행하겠다
 	public String boardList(Model model) { //**매게변수에 model을 적으면 메서드가 실행되면서 model을 가져온다
@@ -58,5 +57,14 @@ public class BoardController { //**BoardController를 Controller이고 POJO 라�
 		                    //최종 이동경로: WEB-INF/views/boardList.jsp
 							//스프링 MVC에서는 기본적으로 페이지 이동 방식이 "포워드(forward)" 방식이다 
 	}
+	
+	@RequestMapping("/boardForm.do")
+	public String boardForm(){
+		System.out.println("글쓰기 페이지 이동");
+		return "boardForm";
+	}
+	
+	
+	
 }
 

@@ -11,3 +11,7 @@
 0:0:0:0:0:0:0:1 - - [03/Aug/2025:15:24:22 +0900] "GET /controller/boardList.do HTTP/1.1" 500 10191
 0:0:0:0:0:0:0:1 - - [03/Aug/2025:15:24:25 +0900] "GET /controller/boardList.do HTTP/1.1" 500 10191
 0:0:0:0:0:0:0:1 - - [03/Aug/2025:15:24:28 +0900] "GET /controller/boardList.do HTTP/1.1" 500 10191
+127.0.0.1 - - [03/Aug/2025:15:24:56 +0900] "GET / HTTP/1.1" 404 750
+0:0:0:0:0:0:0:1 - - [03/Aug/2025:15:25:06 +0900] "GET /controller/boardList.do HTTP/1.1" 200 2286
+0:0:0:0:0:0:0:1 - - [03/Aug/2025:15:54:52 +0900] "GET /controller/boardList.do HTTP/1.1" 200 2286
+0:0:0:0:0:0:0:1 - - [03/Aug/2025:18:18:10 +0900] "GET /controller/boardList.do HTTP/1.1" 200 2286

@@ -20,7 +20,7 @@
 			<div class="panel-heading">Board</div>
 			<div class="panel-body">
 				<table class="table table-bordered table-hover">
-					<tr class="danger">
+					<tr class="active">
 						<td>번호</td>
 						<td>제목</td>
 						<td>작성자</td>
@@ -39,8 +39,12 @@
 							<td>${vo.count}</td>		
 						</tr>
 					</c:forEach>
-					
+				
 				</table>
+				<!-- Controller → jsp로 이동한다 -->
+				<a href="boardForm.do" class="btn btn-primary btn-sm" type ="button">글쓰기</a>
+				
+				
 			</div>
 			<div class="panel-footer">스프링게시판 - 이종권</div>
 		</div>
