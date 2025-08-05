@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- MyBatis는 매퍼 XML 파일에 SQL문을 작성하고, 자바의 인터페이스와 매핑해서 SQL을 실행하는 방식 -->
+
+<!--*BoardMapper.xml는 인터페이스와 이름을 똑같이 맞춰준다 -->
+
+<mapper namespace="kr.spring.mapper.BoardMapper">  <!-- 이 이 XML은 BoardMapper 인터페이스와 연결되어 있다는 표시 -->
+
+<!-- id: 호출할 메서드 이름과 동일하게 설정, 
+     resultType: SQL 실행 결과의 반환 타입을 지정  
+                 여기서는 Board 객체로 매핑되므로 → kr.spring.entity.Board-->
+<select id="getLists" resultType="kr.spring.entity.Board"> 
+	SELECT * FROM BOARD ORDER BY INDATE DESC
+</select>	
+
+
+<!-- parameterType: 전달받는 매개변수의 타입 (여기서는 Board 객체)-->
+<insert id="boardInsert" parameterType="kr.spring.entity.Board"> 
+	INSERT INTO BOARD(TITLE, CONTENT, WRITER) 
+	VALUES (#{title}, #{content}, #{writer})
+</insert>
+<!-- #{필드명} → MyBatis 전용 바인딩 문법-->
+
+</mapper>
+
+
+
+

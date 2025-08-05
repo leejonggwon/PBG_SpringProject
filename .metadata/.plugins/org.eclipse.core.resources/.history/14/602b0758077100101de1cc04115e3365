@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- *보통 인터페이스와 이름을 똑같이 맞춰준다 -->
+<mapper namespace="kr.spring.mapper.BoardMapper">  <!-- 이 이 XML은 BoardMapper 인터페이스와 연결되어 있다는 표시 -->
+
+	<!-- XML에 SQL문을 작성하는 방식 -->
+	
+<select id="getList" parameterType="kr.spring.mapper.BoardMapper">
+	SELECT * FROM BOARD ORDER BY INDATE DESC
+</select>	
+
+
+
+</mapper>
+
+
+
+

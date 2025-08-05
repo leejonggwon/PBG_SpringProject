@@ -25,6 +25,6 @@
 	</beans:bean>
 	
 	<!--**핸들러매핑이 Controller를 찾을떄 "kr.sping.controller"에서 찾는다고 명시했다 -->
-	<context:component-scan base-package="kr.sping.controller" /> 
+	<context:component-scan base-package="kr.spring.controller" /> 
 	
 </beans:beans>

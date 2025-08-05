@@ -1,0 +1,35 @@
+package kr.spring.mapper;
+
+import java.util.List;
+
+import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Select;
+
+import kr.sping.entity.Board;
+
+@Mapper //MyBatis가 InterFace를 찾기위해 달아주는 부분
+public interface BoardMapper {
+
+	
+	public List<Board> getList(); //SQL문을 전달하면, MyBatis가 알아서 기능을 구현한다, 게시글 전체보기 기능
+
+	@Insert("INSERT INTO BOARD(TITLE, CONTENT, WRITER) VALUES (#{title}, #{content}, #{writer})") //#{필드명} → MyBatis 전용 바인딩 문법
+	public void boardInsert(Board board);
+                            
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

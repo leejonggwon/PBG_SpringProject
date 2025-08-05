@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- XML에 SQL문을 작성하는 방식 -->
+
+<!-- *보통 인터페이스와 이름을 똑같이 맞춰준다 -->
+<mapper namespace="kr.spring.mapper.BoardMapper">  <!-- 이 이 XML은 BoardMapper 인터페이스와 연결되어 있다는 표시 -->
+
+
+<select id="getLists" resultType="kr.spring.entity.Board"> <!-- return 타입이 존재하면 → resultType, Board 타입이므로 → kr.spring.entity.Board -->
+	SELECT * FROM BOARD ORDER BY INDATE DESC
+</select>	
+
+
+<insert id="boardInsert" parameterType="kr.spring.entity.Board"> <!-- 매개변수: parameterType -->
+	INSERT INTO BOARD(TITLE, CONTENT, WRITER) 
+	VALUES (#{title}, #{content}, #{writer})
+</insert>
+
+
+
+</mapper>
+
+
+
+
