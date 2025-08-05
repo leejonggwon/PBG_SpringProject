@@ -1,0 +1,65 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %><!-- 문자열 자르기, 줄바꿈 처리, 문자열 검색 등의 기능 제공 -->   
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+	<% pageContext.setAttribute("newLineChar", "\n"); %> <!-- 페이지 영역에 줄바꿈 문자를 newLineChar라는 이름으로 등록-->
+	<div class="container">
+		<h2>Spring MVC01</h2>
+		<div class="panel panel-default">
+			<div class="panel-heading">Board</div>
+			<div class="panel-body">
+				<table class="table">
+				<c:set var="num" value = "vo" scope="session"/>
+					<tr>
+						<td>제목</td>
+						<td>
+							${vo.title} 
+						</td> 
+					</tr>
+					<tr>
+						<td>내용</td>
+						<td>
+							${fn:replace(vo.content, newLineChar, "<br/>")} 
+							<!-- vo.content 안에서 newLineChar와 일치하는 줄바꿈 문자("\n")를 <br/> 태그로 치환하여 줄바꿈을 웹에 표시한다 -->
+						</td>
+					</tr>
+					<tr>
+						<td>작성자</td>
+						<td>${vo.writer}</td>
+					</tr>
+					<tr>
+						<td>작성일</td>
+						<td>
+						${fn:split(vo.indate, ".")[0]} <!-- vo.indate를 "." 기준으로 나누고, 그 중 첫 번째 부분(인덱스 0)을 사용 -->
+						</td>
+					</tr>
+					<tr>
+					<td colspan="2" align="center"> 
+						<button class="btn btn-warning btn-sm" type="submit">수정화면</button>
+						<a href="boardDelete.do?idx=${vo.idx}" class="btn btn-danger btn-sm">삭제</a>
+						<a href="boardList.do" class="btn btn-info btn-sm">목록</a>
+					</td>
+				</tr>
+				</table>
+					
+			</div>
+			<div class="panel-footer">스프링게시판 - 이종권</div>
+		</div>
+	</div>
+</body>
+</html>
+
+
+
+
+

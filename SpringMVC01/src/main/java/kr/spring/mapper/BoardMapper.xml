@@ -38,6 +38,13 @@
 	DELETE FROM BOARD WHERE IDX = #{idx}
 </delete>
 
+
+
+<update id="boardUpdate" parameterType="kr.spring.entity.Board">
+	UPDATE BOARD SET TITLE = #{title}, CONTENT = #{content}, WRITER = #{writer} WHERE IDX = #{idx}
+</update>
+
+
 </mapper>
 
 

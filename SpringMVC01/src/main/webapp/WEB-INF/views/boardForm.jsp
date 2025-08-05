@@ -33,7 +33,7 @@
 						<tr>
 						<td colspan="2" align="center"> 
 							<button class="btn btn-success btn-sm" type="submit">등록</button>
-							<button class="btn btn-warning btn-sm" type="reset">취소</button>
+							<button class="btn btn-default btn-sm" type="reset">취소</button>
 							<a href="boardList.do" class="btn btn-info btn-sm">목록</a>
 						</td>
 					</tr>

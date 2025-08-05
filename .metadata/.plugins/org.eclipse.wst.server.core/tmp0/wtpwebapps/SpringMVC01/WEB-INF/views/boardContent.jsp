@@ -19,7 +19,6 @@
 			<div class="panel-heading">Board</div>
 			<div class="panel-body">
 				<table class="table">
-				<c:set var="num" value = "vo" scope="session"/>
 					<tr>
 						<td>제목</td>
 						<td>
@@ -45,7 +44,7 @@
 					</tr>
 					<tr>
 					<td colspan="2" align="center"> 
-						<button class="btn btn-success btn-sm" type="submit">등록</button>
+						<a href="boardUpdateForm.do?idx=${vo.idx}" class="btn btn-warning btn-sm">수정화면</a> <!-- 수정화면 페이지로 이동하게 한다 -->
 						<a href="boardDelete.do?idx=${vo.idx}" class="btn btn-danger btn-sm">삭제</a>
 						<a href="boardList.do" class="btn btn-info btn-sm">목록</a>
 					</td>

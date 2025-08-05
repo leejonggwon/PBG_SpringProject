@@ -36,7 +36,7 @@
 							<td>${i.count}</td> <!-- idx는 고유 식별 번호로 사용된다 -->
 							<td><a href="boardContent.do?idx=${vo.idx}">${vo.title}</a></td> <!-- 게시글 제목을 클릭하면 상세 페이지(boardContent.do)로 이동하도록 링크를 설정 -->
 							<td>${vo.writer}</td>
-							<td>${fn:split(vo.indate, ".")[0]}</td>
+							<td>${fn:split(vo.indate, " ")[0]}</td>
 							<td>${vo.count}</td>		
 						</tr>
 					</c:forEach>
@@ -45,7 +45,7 @@
 				<!-- Controller → jsp로 이동한다 -->
 				<a href="boardForm.do" class="btn btn-primary btn-sm" type ="button">글쓰기</a>
 				
-				
+			
 			</div>
 			<div class="panel-footer">스프링게시판 - 이종권</div>
 		</div>
