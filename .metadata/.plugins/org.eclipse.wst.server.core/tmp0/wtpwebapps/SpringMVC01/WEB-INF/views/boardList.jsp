@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -33,9 +34,9 @@
 					<c:forEach items="${list}" var="vo" varStatus = "i">
 						<tr>
 							<td>${i.count}</td> <!-- idx는 고유 식별 번호로 사용된다 -->
-							<td>${vo.title}</td>
+							<td><a href="boardContent.do?idx=${vo.idx}">${vo.title}</a></td> <!-- 게시글 제목을 클릭하면 상세 페이지(boardContent.do)로 이동하도록 링크를 설정 -->
 							<td>${vo.writer}</td>
-							<td>${vo.indate}</td>
+							<td>${fn:split(vo.indate, ".")[0]}</td>
 							<td>${vo.count}</td>		
 						</tr>
 					</c:forEach>

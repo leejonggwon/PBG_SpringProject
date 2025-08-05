@@ -243,3 +243,8 @@
 0:0:0:0:0:0:0:1 - - [04/Aug/2025:17:12:27 +0900] "GET /controller/boardList.do HTTP/1.1" 404 777
 0:0:0:0:0:0:0:1 - - [04/Aug/2025:17:14:10 +0900] "GET /controller/boardList.do HTTP/1.1" 404 777
 0:0:0:0:0:0:0:1 - - [04/Aug/2025:17:14:13 +0900] "GET /controller/boardList.do HTTP/1.1" 404 777
+127.0.0.1 - - [04/Aug/2025:17:14:34 +0900] "GET / HTTP/1.1" 404 750
+0:0:0:0:0:0:0:1 - - [04/Aug/2025:17:14:39 +0900] "GET /controller/boardList.do HTTP/1.1" 200 2913
+0:0:0:0:0:0:0:1 - - [04/Aug/2025:17:49:12 +0900] "GET /controller/boardList.do HTTP/1.1" 200 2913
+0:0:0:0:0:0:0:1 - - [04/Aug/2025:17:49:19 +0900] "GET /controller/boardForm.do HTTP/1.1" 200 1608
+0:0:0:0:0:0:0:1 - - [04/Aug/2025:17:49:27 +0900] "GET /controller/boardList.do HTTP/1.1" 200 2913

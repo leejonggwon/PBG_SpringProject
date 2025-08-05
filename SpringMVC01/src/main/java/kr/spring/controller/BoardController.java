@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import kr.spring.entity.Board;
 //**Controller 클래스들은 프로젝트 생성 시 설정한 kr.spring.controller 패키지 내에 위치해야 하며, 
@@ -67,12 +68,29 @@ public class BoardController { //**BoardController를 Controller이고 POJO 라�
 	@RequestMapping("/boardInsert.do")
 	public String boardInsert(Board board) { //board안에 title, content, writer값이 들어가 있다 
 		System.out.println("게시글 등록 기능수행");
-		
 		mapper.boardInsert(board);
 		
 		return "redirect:/boardList.do"; //boardList.do에 들려서 게시글 담아서 boardList.jsp로 이동한다
 	}
 	
 	
+	@RequestMapping("/boardContent.do")
+	public String boardContent(@RequestParam("idx") int idx, Model model) { //Board 객체 대신 단일값을 받아 처리하는 경우, 
+		                                                                    //요청 파라미터 "idx"값을 찾아서 int 타입 변수 idx에 담는다
+		System.out.println("게시글 상세보기 기능수행");
+		Board vo = mapper.boardContent(idx); // idx에 해당하는 게시글은 하나뿐이므로, 단일 Board 객체로 받아온다 
+		model.addAttribute("vo", vo);
+		
+		return "boardContent";
+	}
+	
+	
+	@RequestMapping("/boardDelete.do")
+	public String boardDelete(@RequestParam("idx") int idx) {
+		System.out.println("게시글 삭제 기능수행");
+		mapper.boardDelete(idx);
+		
+		return "redirect:/boardList.do"; //redirect 방식으로 boardList.do를 다시 요청한다 
+	}
 }
 
