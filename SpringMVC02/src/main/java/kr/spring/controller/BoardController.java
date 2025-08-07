@@ -26,92 +26,10 @@ public class BoardController { //**BoardController를 Controller이고 POJO 라�
 	@RequestMapping("/") //요청 url로 들어왔을때 아래 기능을 수행하겠다
 	public String home() {
 		System.out.println("홈 기능 수행");
-		return "redirect:/boardList.do"; //redirect 방식으로 페이지 이동한다 //다시 접속할 URL을 돌려준다           	                 		
+		return "main";         	                 		
 	}
 	
 	
-	@RequestMapping("/boardList.do") //요청 url로 들어왔을때 아래 기능을 수행하겠다
-	public String boardList(Model model) { //**매게변수에 model을 적으면 메서드가 실행되면서 model을 가져온다
-		System.out.println("게시판목록보기 기능수행");
-		
-		//boardList로 이동을 할떄, 게시글 정보를 가져와야한다
-		//한개의 게시글의 정보는 - 번호, 제목, 내용, 작성자, 작성일, 조회수 등 6개의 데이터를 가지고 있다 
-		//(DTO: 사용자 정의에서 만든 클래스), 회원정보를 하나로 묶기위해 DTO를 만든다, 데이터를 넘기기위해서 DTO 형태로 넘겨야한다
-		
-		
-		//MyBatis: SQL 문장만 작성하면, 그에 맞게 데이터를 자동으로 매핑해서 데이터베이스에 삽입하거나 조회하는 작업을 쉽게 도와주는 프레임워크이다
-		
-		//전체 게시글 조회 기능
-		List<Board> list = mapper.getLists(); //BoardMapper 인터페이스에서 SQL문을 작성한다
-		
-		
-		// list를 boardList로 전달해야 한다.
-		// boardList.jsp 한 페이지에서만 게시글을 출력하므로, session(브라우저 전반에서 유지되는 저장소)을 사용하는 것은 서버 리소스를 낭비하게 된다.
-		//  따라서 Spring에서는 session이 필요하지 않을 경우, Model을 사용한다.
-		// **Model은 요청(Request) 범위에서만 데이터를 전달하는 객체로, 한 번의 요청 내에서만 데이터를 사용할 때 적합하다.
-		// 객체바이딩 - 동적바인딩: 요청에 따라 특정 영역에 데이터를 담고, 이를 이용해 다른 페이지로 이동하는 방식
-		model.addAttribute("list", list); //데이터를 model에 저장한다, list 라는 이름으로 list를 담아준다
-										  //Spring MVC Controller 안에서만 사용한다	                                
-										  //addAttribute(): 뷰로 데이터를 전달할때 사용, request.setAttribute("list", list)처럼 처리된다
-		
-		return "boardList"; //view name을 돌려준다
-		                    //boardList.do로 요청을 했을떄 → boardList로 이동한다, 
-		                    //최종 이동경로: WEB-INF/views/boardList.jsp
-							//스프링 MVC에서는 기본적으로 페이지 이동 방식이 "포워드(forward)" 방식이다 
-	}
-	
-	@RequestMapping("/boardForm.do")
-	public String boardForm(){
-		System.out.println("글쓰기 페이지 이동");
-		return "boardForm";
-	}
-	
-	@RequestMapping("/boardInsert.do")
-	public String boardInsert(Board board) { //board안에 title, content, writer값이 들어가 있다 
-		System.out.println("게시글 등록 기능수행");
-		mapper.boardInsert(board);
-		return "redirect:/boardList.do"; //boardList.do에 들려서 게시글 담아서 boardList.jsp로 이동한다
-	}
-	
-	
-	@RequestMapping("/boardContent.do/{idx}") //*PathVariable 방식: URL 노출적어 보안에 강력, URL 간결
-	public String boardContent(@PathVariable("idx") int idx, Model model) { //Board 객체 대신 단일값을 받아 처리하는 경우, 
-		                                                                    //요청 파라미터 "idx"값을 찾아서 int 타입 변수 idx에 담는다
-		System.out.println("게시글 상세보기 기능수행");
-		mapper.boardCount(idx); //게시글 조회수 증가 기능 
-		Board vo = mapper.boardContent(idx); // idx에 해당하는 게시글은 하나뿐이므로, 단일 Board 객체로 받아온다 
-		model.addAttribute("vo", vo);
-		return "boardContent";
-	}
-	
-	
-	@RequestMapping("/boardDelete.do/{idx}")
-	public String boardDelete(@PathVariable("idx") int idx) {
-		System.out.println("게시글 삭제 기능수행");
-		mapper.boardDelete(idx);
-		return "redirect:/boardList.do"; //redirect 방식으로 boardList.do를 다시 요청한다 
-	}
-	
-	
-	@RequestMapping("/boardUpdateForm.do/{idx}")
-	public String boardUpdateForm(@PathVariable("idx") int idx, Model model) { //*@RequestParam("idx") 안쓰려면, 요청 파라미터의 이름("idx")과 변수명(idx)이 같아야 자동으로 매핑된다다 
-		System.out.println("게시글 수정 화면이동");
-		Board vo = mapper.boardContent(idx); //상세보기 기능을 사용한다
-		model.addAttribute("vo", vo);
-		return "boardUpdateForm";
-	}
-	
-	
-	@RequestMapping("/boardUpdate.do") 
-	public String boardUpdate(Board vo) { //form에서 전달한 name 값(idx, title, content, writer)이
-		                                  // Board 클래스의 필드명과 동일하므로, 객체(Board)로 한 번에 받을 수 있다
-		System.out.println("게시글 수정 기능수행");
-		mapper.boardUpdate(vo); //상세보기 기능을 사용한다
-		return "redirect:/boardList.do";
-	}
-	
-	
-
 	
 }
 
