@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.spring.entity.Board;
 //**Controller 클래스들은 프로젝트 생성 시 설정한 kr.spring.controller 패키지 내에 위치해야 하며, 
@@ -28,6 +29,25 @@ public class BoardController { //**BoardController를 Controller이고 POJO 라�
 		System.out.println("홈 기능 수행");
 		return "main";         	                 		
 	}
+	
+	
+	@RequestMapping("/boardList.do")
+	public @ResponseBody List<Board> boardList() { //비동기 요청에 JSON 형태로 응답하기 위해 List<Board>를 반환한다
+		                                           //@ResponseBody로 명시 해야 비동기방식 메서드가 된다  
+		List<Board> list = mapper.getLists();
+		return list; //뷰네임(boardList.jsp)이 아닌 데이터자체를 돌려준다
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	
