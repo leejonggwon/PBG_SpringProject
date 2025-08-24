@@ -6,8 +6,10 @@
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
-		<item key="selection" value="vo"/>
+		<item key="selection" value="hidden"/>
 		<list key="findhistory">
+			<item value="hidden"/>
+			<item value="&#x09;&lt;filter&gt; "/>
 			<item value="&lt;c:forEach items=&quot;${list}&quot; var=&quot;board&quot;&gt;"/>
 			<item value="vo"/>
 			<item value="/Users/EGOVEDU/eGovFrame-3.10.0/"/>

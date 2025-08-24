@@ -19,13 +19,12 @@ import kr.spring.mapper.BoardMapper;
 public class BoardController { //**BoardController를 Controller이고 POJO 라고 한다 
 	
 	@Autowired //스프링에 BoardMapper 객체가 생성된걸 가져다 쓰는것을 의미, @Autowired를 통해서 SqlSessionFactoryBean를 사용한다
-	private BoardMapper mapper;// MyBatis한테 JDBC를 실행하게 요청하는 객체
-							   // BoardMapper는 MyBatis의 매퍼 인터페이스 SQL 실행을 담당하는 객체
+	private BoardMapper mapper;// MyBatis한테 JDBC를 실행하게 요청하는 객체 는 객체
 							   // 컨트롤러가 DB 작업을 하려고 할 때, mapper를 통해 MyBatis에게 요청하는 방식
 	
 	@RequestMapping("/") //요청 url로 들어왔을때 아래 기능을 수행하겠다
 	public String home() {
-		System.out.println("홈 기능 수행");
+		System.out.println("홈 기능 수행"); 
 		return "redirect:/boardList.do"; //redirect 방식으로 페이지 이동한다 //다시 접속할 URL을 돌려준다           	                 		
 	}
 	

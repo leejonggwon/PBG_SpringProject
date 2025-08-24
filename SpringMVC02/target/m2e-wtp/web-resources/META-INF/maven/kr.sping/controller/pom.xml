@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>kr.sping</groupId>
 	<artifactId>controller</artifactId>
-	<name>SpringMVC01</name>
+	<name>SpringMVC02</name>
 	<packaging>war</packaging>
 	<version>1.0.0-BUILD-SNAPSHOT</version>
 	<properties>
@@ -172,7 +172,7 @@
 		</dependency>
 		
 		<!-- JSON방식으로 응답하기 위한 API -->
-		<!-- Java 객체 ↔ JSON 데이터 간의 변환(직렬화/역직렬화)을 자동으로 해주는 라이브러리 -->
+		<!-- Spring에서 응답할 때 JSON 방식으로 응답할 것임 -->
 		<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind -->
 		<dependency>
 		    <groupId>com.fasterxml.jackson.core</groupId>

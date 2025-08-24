@@ -1,5 +1,0 @@
-package kr.sping.controller;
-
-public interface BoardMapper {
-
-}

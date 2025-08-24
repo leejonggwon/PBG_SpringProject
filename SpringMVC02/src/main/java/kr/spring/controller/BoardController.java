@@ -21,8 +21,8 @@ public class BoardController { //**BoardController를 Controller이고 POJO 라�
 	
 	@Autowired //스프링에 BoardMapper 객체가 생성된걸 가져다 쓰는것을 의미, @Autowired를 통해서 SqlSessionFactoryBean를 사용한다
 	private BoardMapper mapper;// MyBatis한테 JDBC를 실행하게 요청하는 객체
-							   // BoardMapper는 MyBatis의 매퍼 인터페이스 SQL 실행을 담당하는 객체
-							   // 컨트롤러가 DB 작업을 하려고 할 때, mapper를 통해 MyBatis에게 요청하는 방식
+							   // MyBatis에게 "이 메서드 = 이 SQL 실행" 이라고 요청하는 역할
+							   // 개발자 ↔ BoardMapper ↔ MyBatis ↔ JDBC ↔ DB 이런 구조
 	
 	@RequestMapping("/") //요청 url로 들어왔을때 아래 기능을 수행하겠다
 	public String home() {
@@ -32,10 +32,17 @@ public class BoardController { //**BoardController를 Controller이고 POJO 라�
 	
 	
 	@RequestMapping("/boardList.do")
-	public @ResponseBody List<Board> boardList() { //비동기 요청에 JSON 형태로 응답하기 위해 List<Board>를 반환한다
+	public @ResponseBody List<Board> boardList() { //비동기 요청에 JSON 형태로 응답하기 위해 List<Board>를 반환해야한다
 		                                           //@ResponseBody로 명시 해야 비동기방식 메서드가 된다  
-		List<Board> list = mapper.getLists();
-		return list; //뷰네임(boardList.jsp)이 아닌 데이터자체를 돌려준다
+		System.out.println("게시글 전체보기 기능수행");
+		List<Board> list = mapper.getLists();//게시글 목록 전체보는 기능
+		return list; //비동기 방식의 서버는 JSON데이터를 반환한다 
+	}
+	
+	@RequestMapping("/boardInsert.do")
+	public @ResponseBody void boardInsert(Board board) { //writer, title, content 3개 데이터를 묶는 타입 Board
+		System.out.println("게시글 작성 기능수행");
+		mapper.boardInsert(board);
 	}
 	
 	
