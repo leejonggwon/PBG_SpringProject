@@ -31,32 +31,6 @@ public class BoardController { //**BoardController를 Controller이고 POJO 라�
 	}
 	
 	
-	@RequestMapping("/boardList.do")
-	public @ResponseBody List<Board> boardList() { //비동기 요청에 JSON 형태로 응답하기 위해 List<Board>를 반환해야한다
-		                                           //@ResponseBody로 명시 해야 비동기방식 메서드가 된다  
-		System.out.println("게시글 전체보기 기능수행");
-		List<Board> list = mapper.getLists();//게시글 목록 전체보는 기능
-		return list; //비동기 방식의 서버는 JSON데이터를 반환한다 
-	}
-	
-	@RequestMapping("/boardInsert.do")
-	public @ResponseBody void boardInsert(Board board) { //writer, title, content 3개 데이터를 묶는 타입 Board
-		System.out.println("게시글 작성 기능수행");
-		mapper.boardInsert(board);
-	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 }
 
