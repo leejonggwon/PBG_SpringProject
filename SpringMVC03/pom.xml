@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>kr.sping</groupId>
 	<artifactId>controller</artifactId>
-	<name>SpringMVC02</name>
+	<name>SpringMVC03</name>
 	<packaging>war</packaging>
 	<version>1.0.0-BUILD-SNAPSHOT</version>
 	<properties>

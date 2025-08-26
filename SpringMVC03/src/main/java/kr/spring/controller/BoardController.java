@@ -31,6 +31,5 @@ public class BoardController { //**BoardController를 Controller이고 POJO 라�
 	}
 	
 	
-	
 }
 

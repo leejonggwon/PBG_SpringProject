@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Spring MVC02</title>
+<title>Spring MVC03</title>
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 <script
@@ -14,9 +14,10 @@
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </head>
-<body>
+<body> 
 	<div class="container">
-		<h2>Spring MVC02 비동기방식</h2>
+	<jsp:include page="../common/header.jsp"></jsp:include> <!--context path는 views 아래와 같으므로 .. → /controller를 입력한다-->
+		<h2>Spring MVC03</h2>
 		<div class="panel panel-default">
 			<div class="panel-heading">Board</div>
 			<div class="panel-body">
