@@ -16,7 +16,7 @@
 </head>
 <body> 
 	<div class="container">
-	<jsp:include page="../common/header.jsp"></jsp:include> <!--context path는 views 아래와 같으므로 .. → /controller를 입력한다-->
+	<jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include> <!--context path는 views 아래와 같으므로 .. → /controller를 입력한다-->
 		<h2>Spring MVC03</h2>
 		<div class="panel panel-default">
 			<div class="panel-heading">Board</div>
@@ -206,7 +206,7 @@
 		function goUpdateForm(idx){
 			//내용 수정화면 
 			 //textarea는 불러올때부터 수정된 데이터 idx가 있다 
-			$("#ta" + idx).attr("readonly", false); //attr은 attribute 의미: HTML 요소의 속성을 읽거나 변경할 때 사용, readonly는 true/false로 제어
+			$("#ta" + idx).attr("readonly", false); //attr은 attribute 의미: HTML 요소의 속성을 읽거나 변경할 때 사용,readonly를 false로 변경하였음
 			
 			//제목 수정화면
 			var title = $("#t"+ idx).text();//html하면 기존의 제목값이 사라지므로 기존의 제목 값을 가져올것이다

@@ -29,15 +29,33 @@
 					<li><a href="boardMain.do">게시판</a></li>
 				</ul>	
 					 
+				<!-- 세션이 비어있어 로그인하지 않은 상태일 때 보여줄 영역  --> 
+				<c:if test="${empty mvo}">
 				<ul class="nav navbar-nav navbar-right">
 					<li class="dropdown">
 						<a class="dropdown-toggle" data-toggle="dropdown" href="#">접속하기<span class="caret"></span></a>
 						<ul class="dropdown-menu">
-							<li><a href="#">로그인</a></li>
+							<li><a href="${contextPath}/loginForm.do">로그인</a></li>
 							<li><a href="${contextPath}/joinForm.do">회원가입</a></li> <!-- contextPath를 붙여서 배포 환경이 바뀌어도 항상 올바른 경로로 이동하도록 함 -->			
 						</ul>
 					</li>
 				</ul>
+				</c:if>
+				
+				<!-- 로그인된 사용자(세션이 유효한 경우)에게 보여주는 영역  --> 
+				<c:if test="${not empty mvo}"> <!-- mvo로 session을 꺼내기로 했다 -->
+				<ul class="nav navbar-nav navbar-right">
+					<li class="dropdown">
+						<a class="dropdown-toggle" data-toggle="dropdown" href="#">접속하기<span class="caret"></span></a>
+						<ul class="dropdown-menu">
+							<li><a href="#">회원정보수정</a></li>
+							<li><a href="#">프로필사진등록</a></li>
+							<li><a href="${contextPath}/logout.do">로그아웃</a></li>
+						</ul>
+					</li>
+				</ul>
+				</c:if>
+				
 			</div>
 		</div>
 	</nav>
