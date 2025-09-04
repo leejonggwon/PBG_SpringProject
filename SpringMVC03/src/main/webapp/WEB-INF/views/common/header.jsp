@@ -13,7 +13,7 @@
 </head>
 <body>
 	<!-- 메뉴바 -->
-	<nav class="navbar navbar-inverse">
+	<nav class="navbar navbar-default">
 		<div class="container-fluid">
 			<div class="navbar-header">
 				<button type="button" class="navbar-toggle" data-toggle="collapse"
@@ -21,7 +21,7 @@
 					<span class="icon-bar"></span> <span class="icon-bar"></span> <span
 						class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="${contextPath}/">Spring Company</a>
+				<a class="navbar-brand" href="#">스프링주식회사</a>
 			</div>
 			<div class="collapse navbar-collapse" id="myNavbar">
 				<ul class="nav navbar-nav">
@@ -31,28 +31,35 @@
 					 
 				<!-- 세션이 비어있어 로그인하지 않은 상태일 때 보여줄 영역  --> 
 				<c:if test="${empty mvo}">
-				<ul class="nav navbar-nav navbar-right">
-					<li class="dropdown">
-						<a class="dropdown-toggle" data-toggle="dropdown" href="#">접속하기<span class="caret"></span></a>
-						<ul class="dropdown-menu">
-							<li><a href="${contextPath}/loginForm.do">로그인</a></li>
-							<li><a href="${contextPath}/joinForm.do">회원가입</a></li> <!-- contextPath를 붙여서 배포 환경이 바뀌어도 항상 올바른 경로로 이동하도록 함 -->			
-						</ul>
-					</li>
+				<ul class="nav navbar-nav navbar-right">		
+					<li><a href="${contextPath}/loginForm.do"><span class="glyphicon glyphicon-log-in"></span>&nbsp;로그인</a></li>
+					<li><a href="${contextPath}/joinForm.do"><span class="glyphicon glyphicon-list-alt"></span>&nbsp;회원가입</a></li> <!-- contextPath를 붙여서 배포 환경이 바뀌어도 항상 올바른 경로로 이동하도록 함 -->			
 				</ul>
 				</c:if>
 				
 				<!-- 로그인된 사용자(세션이 유효한 경우)에게 보여주는 영역  --> 
 				<c:if test="${not empty mvo}"> <!-- mvo로 session을 꺼내기로 했다 -->
 				<ul class="nav navbar-nav navbar-right">
-					<li class="dropdown">
-						<a class="dropdown-toggle" data-toggle="dropdown" href="#">접속하기<span class="caret"></span></a>
-						<ul class="dropdown-menu">
-							<li><a href="#">회원정보수정</a></li>
-							<li><a href="#">프로필사진등록</a></li>
-							<li><a href="${contextPath}/logout.do">로그아웃</a></li>
-						</ul>
-					</li>
+									
+					<c:if test="${mvo.memProfile ne ''}">
+						<li>
+							<img style="width:50px; height:50px;" class="img-circle" alt="" src= "${contextPath}/resources/upload/${mvo.memProfile}"
+						<li>
+					</c:if>
+					
+					<c:if test="${mvo.memProfile eq ''}">
+						<li>
+							<img style="width:50px; height:50px;" class="img-circle" alt="" src= "${contextPath}/resources/upload/default.png"
+						<li>
+					</c:if>
+					
+					${mvo.memName}님 환영합니다
+					
+					<li><a href="${contextPath}/updateForm.do"><span class="glyphicon glyphicon-pencil"></span>&nbsp;회원정보수정</a></li>
+					<li><a href="${contextPath}/imageForm.do"><span class="glyphicon glyphicon-picture"></span>&nbsp;프로필사진등록</a></li>
+					<li><a href="${contextPath}/logout.do"><span class="glyphicon glyphicon-log-out"></span>&nbsp;로그아웃</a></li>	
+					
+				
 				</ul>
 				</c:if>
 				

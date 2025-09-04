@@ -32,17 +32,23 @@
 					<tbody id="view">
 					<!-- 비동기 방식으로 가져온 게시글 나오게할 부분-->			
 					</tbody>
-					<tr>
-						<td colspan="5"> <!-- colspan="5": 5개의 열을 합쳐서 한 줄에 걸쳐 표시 -->
-							<button onclick="goForm()" class="btn btn-primary btn-sm">글쓰기</button>
-						</td>
-					</tr>
+					
+					<!-- 로그인 했을때만 글쓰기 버튼이 보이게 한다(session에 mvo가 있으면 로그인한 상태) -->
+					<c:if test="${not empty mvo}"> 
+						<tr>
+							<td colspan="5"> <!-- colspan="5": 5개의 열을 합쳐서 한 줄에 걸쳐 표시 -->
+								<button onclick="goForm()" class="btn btn-primary btn-sm">글쓰기</button>
+							</td>
+						</tr>		
+					</c:if>
 				</table>		
 			</div>
 			
 			<!-- 글쓰기 폼 -->
 			<div class="panel-body" id="wform" style="display: none"> <!-- style="display: none":안보이게 한다 -->
 				<form id="frm"> <!-- form 태그에 id를 지정하면, 내부 input 태그들의 값을 한 번에 가져올 수 있음 -->
+				<input type="hidden" name="memID" value="${mvo.memID}"> <!-- 로그인한 사용자의 ID를 가져온다 -->
+				
 				<table class="table">
 					<tr>
 						<td>제목</td>
@@ -54,7 +60,7 @@
 					</tr>
 					<tr>
 						<td>작성자</td>
-						<td><input type="text" name="writer" class="form-control"></td>
+						<td><input readonly="readonly" type="text" value="${mvo.memName}" name="writer" class="form-control"></td>
 					</tr>
 					<tr>
 					<td colspan="2" align="center"> 
@@ -118,12 +124,23 @@
 				listHtml += obj.content;
 				listHtml += "</textarea>";
 				
-				//수정 삭제 화면 
-				listHtml += "<br>";
-				listHtml += "<span id='ub" + obj.idx + "'>";
-				listHtml += "<button onclick='goUpdateForm(" + obj.idx + ")' class='btn btn-sm btn-success'>수정화면</button></span> &nbsp;"; //&nbsp; 줄바꿈없이 띄어쓰기
-				//'수정화면'을 누르면 해당위치의 제목, 작성자, 내용이 input 태그로 바뀐다
-				listHtml += "<button onclick='goDelete(" + obj.idx + ")' class='btn btn-sm btn-warning'>삭제</button> &nbsp;"; 
+				//수정 삭제 화면 (내가 쓴글일때 보여준다)
+				//문법: 조건문안에 EL식을 쓰고 싶다면 문자열로 감싸야한다
+				if("${mvo.memID}" == obj.memID){
+					listHtml += "<br>";
+					listHtml += "<span id='ub" + obj.idx + "'>";
+					listHtml += "<button onclick='goUpdateForm(" + obj.idx + ")' class='btn btn-sm btn-success'>수정화면</button></span> &nbsp;"; //&nbsp; 줄바꿈없이 띄어쓰기
+					//'수정화면'을 누르면 해당위치의 제목, 작성자, 내용이 input 태그로 바뀐다
+					listHtml += "<button onclick='goDelete(" + obj.idx + ")' class='btn btn-sm btn-warning'>삭제</button> &nbsp;"; 
+				}else{
+					listHtml += "<br>";
+					listHtml += "<span id='ub" + obj.idx + "'>";
+					listHtml += "<button disabled onclick='goUpdateForm(" + obj.idx + ")' class='btn btn-sm btn-success'>수정화면</button></span> &nbsp;"; //&nbsp; 줄바꿈없이 띄어쓰기
+					//'수정화면'을 누르면 해당위치의 제목, 작성자, 내용이 input 태그로 바뀐다
+					//disabled: 버튼이 동작을 못하게 하는 속성
+					listHtml += "<button disabled onclick='goDelete(" + obj.idx + ")' class='btn btn-sm btn-warning'>삭제</button> &nbsp;"; 
+				}
+				
 				listHtml += "</td>"; //상세보기와 같은 칸 사용
 				listHtml += "</tr>";
 			});

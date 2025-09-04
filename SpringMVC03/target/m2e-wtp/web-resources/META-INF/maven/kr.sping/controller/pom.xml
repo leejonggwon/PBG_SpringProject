@@ -180,6 +180,13 @@
 		    <version>2.9.8</version>
 		</dependency>
 		
+		<!-- 파일업로드를 하기위한 API -->
+		<dependency>
+			<groupId>com.servlets</groupId>
+			<artifactId>cos</artifactId>
+			<version>09May2002</version>
+		</dependency>
+		
 		
 	</dependencies>
     <build>

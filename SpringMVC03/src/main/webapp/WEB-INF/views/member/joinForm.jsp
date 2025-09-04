@@ -42,7 +42,7 @@
 					</tr>
 					<tr>
 						<td style="width: 110px; vertical-align: middle;">사용자이름</td>
-						<td colspan ="2"><input type="text" name="memName" id="memName" class="form-control" maxlength="20" placeholder="이름을 입력하세요"></td>				
+						<td colspan ="2"><input required="required" type="text" name="memName" id="memName" class="form-control" maxlength="20" placeholder="이름을 입력하세요"></td>				
 					</tr>
 					<tr>
 						<td style="width: 110px; vertical-align: middle;">나이</td>
@@ -58,7 +58,7 @@
 										<input type="radio" id="memGender" name="memGender" autocomplete="off" value="남자" checked="checked"> 남자
 									</label>
 									<label class="btn btn-primary">
-										<input type="radio" id="memGender" name="memGender" autocomplete="off" value="여지"> 여자
+										<input type="radio" id="memGender" name="memGender" autocomplete="off" value="여자"> 여자
 									</label>
 								</div>
 							</div>
