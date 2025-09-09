@@ -19,7 +19,7 @@
 	<jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include> <!--context path는 views 아래와 같으므로 .. → /controller를 입력한다-->
 		<h2>2025 SEOUL MARATHON</h2>
 		<div class="panel panel-default">
-			<div class="panel-heading">Board</div>
+			<div class="panel-heading">Community</div>
 			<div class="panel-body">
 				<table id="boardList" class="table table-bordered table-hover"> 
 					<tr class="active">

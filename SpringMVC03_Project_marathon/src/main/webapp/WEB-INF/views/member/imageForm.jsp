@@ -19,7 +19,7 @@
 	<jsp:include page="../common/header.jsp"></jsp:include>
 		<h2>2025 SEOUL MARATHON</h2>
 		<div class="panel panel-default">
-			<div class="panel-heading">Login</div>
+			<div class="panel-heading">Upload Profile Picture</div>
 			<div class="panel-body">
 			
 			<form action="${contextPath}/imageUpdate.do" method="post" enctype="multipart/form-data"> <!-- 이미지나 영상 이런걸로 보낼때는 인코딩방식을 바꿔줘야한다 

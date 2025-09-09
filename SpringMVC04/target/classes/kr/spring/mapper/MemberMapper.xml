@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--*MyBatis는 매퍼 XML 파일에 SQL문을 작성하고, 자바의 인터페이스와 매핑해서 SQL을 실행하는 방식 -->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.spring.mapper.MemberMapper">  
+
+	<select id="registerCheck" parameterType="String" resultType="kr.spring.entity.Member"> 
+		SELECT * FROM MEMBER WHERE MEMID = #{memID}
+	</select>	
+	
+	<!-- insert는 resultType을 못쓰지만, 
+	mapper 인터페이스에서 리턴 타입을 int로 주면 MyBatis가 자동으로 성공한 행 수를 돌려준다 -->
+	<insert id="join" parameterType="kr.spring.entity.Member"> 
+		INSERT INTO MEMBER(MEMID, MEMPASSWORD, MEMNAME, MEMAGE, MEMGENDER, MEMEMAIL, MEMPROFILE) 
+		VALUES (#{memID}, #{memPassword}, #{memName}, #{memAge}, #{memGender}, #{memEmail}, #{memProfile})
+	</insert>
+	
+	<!-- 로그인 -->
+	<select id="login" parameterType="kr.spring.entity.Member" resultType="kr.spring.entity.Member"> 
+		SELECT * FROM MEMBER WHERE MEMID = #{memID} AND MEMPASSWORD = #{memPassword}
+	</select>
+	
+	<!-- 업데이트: resultType 없지만 성공하면 1 실패하면 0을 반환한다 -->
+	<update id="update" parameterType="kr.spring.entity.Member">
+    	UPDATE MEMBER
+   		SET MEMPASSWORD = #{memPassword}, MEMNAME = #{memName}, MEMAGE = #{memAge}, MEMGENDER = #{memGender}, MEMEMAIL = #{memEmail}, MEMPROFILE = #{memProfile}
+   		WHERE MEMID = #{memID}
+	</update>
+	
+	<update id="profileUpdate" parameterType="kr.spring.entity.Member">
+		UPDATE MEMBER 
+		SET MEMPROFILE = #{memProfile}
+		WHERE MEMID = #{memID}
+	</update>
+	
+</mapper>
+
+
+
+

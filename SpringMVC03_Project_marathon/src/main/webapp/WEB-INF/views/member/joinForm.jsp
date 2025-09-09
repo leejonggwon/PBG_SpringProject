@@ -19,7 +19,7 @@
 	<jsp:include page="../common/header.jsp"></jsp:include>
 		<h2>2025 SEOUL MARATHON</h2>
 		<div class="panel panel-default">
-			<div class="panel-heading">Board</div>
+			<div class="panel-heading">Sign up</div>
 			<div class="panel-body">
 			
 			<form action="${contextPath}/join.do" method="post"> <!-- controller위치는 views 바로 아래에 있다 -->
