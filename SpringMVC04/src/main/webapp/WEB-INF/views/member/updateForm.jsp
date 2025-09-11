@@ -23,6 +23,7 @@
 			<div class="panel-body">
 			
 			<form action="${contextPath}/update.do" method="post"> <!-- controller위치는 views 바로 아래에 있다 -->
+				<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"> <!-- Spring Security CSRF 토큰발행 -->
 				<input type="hidden" name="memPassword" id="memPassword" value="" > 
 				<input type="hidden" name="memID" id="memID" value="${mvo.memID}" > 
 				<%-- 회원정보 수정할때 이미지가 날아가는것 방지하는 두번째 방법 --%>
@@ -139,13 +140,9 @@
      </div>
    </div>
    
-   
-   
-   
 	
 	<script type="text/javascript">
 	
-		
 		//비밀번호체크
 		function passwordCheck() {
 			var memPassword1 = $("#memPassword1").val();

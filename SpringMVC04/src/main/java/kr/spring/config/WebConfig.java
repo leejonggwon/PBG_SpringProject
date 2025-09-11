@@ -23,8 +23,9 @@ public class WebConfig extends AbstractAnnotationConfigDispatcherServletInitiali
 	@Override
 	protected Class<?>[] getRootConfigClasses() { 
 		// DB 설정관련 RootConfig.java 파일을 가져온다
-		// 리턴타입은 Class의 배열 형태이다 → 왜냐하면 나중에 설정파일이 여러개로 돌려줄 수 있기 떄문에 
-		return new Class[] {RootConfig.class}; //RootConfig를 참조한다 root-context 자바파일을 만들어서 여기에 읽겠다는 의미
+		// 리턴타입은 Class의 배열 형태이다 → 왜냐하면 나중에 설정파일이 여러개로 돌려줄 수 있기 떄문이다
+		return new Class[] {RootConfig.class, SecurityConfig.class }; //RootConfig를 참조한다 root-context 자바파일을 만들어서 여기에 읽겠다는 의미
+											  //SecurityConfig.class 추가한다 필요한 환경설정을 추가한다 		
 	}
 
 

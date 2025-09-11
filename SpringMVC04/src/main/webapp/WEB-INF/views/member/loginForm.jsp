@@ -23,6 +23,7 @@
 			<div class="panel-body">
 			
 			<form action="${contextPath}/login.do" method="post"> <!-- controller위치는 views 바로 아래에 있다 -->
+				<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"> <!-- Spring Security CSRF -->
 				<table style="text-align: center; border: 1px solid #dddddd" class ="table table-borderd">
 					<tr>
 						<td style="width: 110px; vertical-align: middle;">아이디</td>

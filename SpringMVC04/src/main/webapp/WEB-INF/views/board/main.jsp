@@ -79,6 +79,15 @@
 	</div>
 	
 	<script type="text/javascript">
+		
+		//ajax에서도 post방식으로 데이터를 보내기 위해서는 crsf token값을 전달해야한다 
+		
+		// 1.token의 이름과 값을 가져오기 
+		//   ajax에서 crsf의 이름을 사용할때는 parameterName이 아니라 headerName을 사용한다 
+		var csrfHeaderName = "${_csrf.headerName}";
+		var csrfTokenValue = "${_csrf.token}";
+		
+		
 	
 		$(document).ready(function(){ 
 			//HTML 요소들이 다 로딩되고나서 아래 loadList() 실행하겠다는 의미
@@ -171,6 +180,10 @@
 				url : "board/new",
 				type : "post",
 				data : fData, 
+				beforeSend : function (xhr) { // beforeSend: 실제 요청이 서버로 보내지기 직전에 실행되는 함수
+					                          // XMLHttpRequest 객체
+					xhr.setRequestHeader(csrfHeaderName, csrfTokenValue); //요청 헤더에 CSRF 토큰을 담아 보냄,Ajax 요청에서도 CSRF 검증이 통과되도록 보안 토큰을 붙여주는 것
+				},
 				success : function(){ 
 					loadList(); 
 					goList();
@@ -201,8 +214,11 @@
 				$.ajax({
 					url:"board/count/" + idx, //PathVariable방식: 경로 뒤에 붙여서 값 전달방식으로 보냈으므로 data는 필요없음
 					type: "put",
+					beforeSend : function (xhr) { 
+						xhr.setRequestHeader(csrfHeaderName, csrfTokenValue); 
+					},
 					success : loadList,
-					error: function() { alert("error"); }
+					error: function() { alert("count error"); }
 				});
 			}
 		}
@@ -212,10 +228,13 @@
 			//비동기방식 - 게시글 등록기능 	
 			$.ajax({
 				url : "board/" + idx, // @DeleteMapping("/{idx}")
-				type : "delete",      //delete방식으로 요청해야지 삭제된다(외부에서 삭제 불가능하다)
+				type : "delete",      //delete방식으로 요청해야지 삭제된다(외부에서 삭제 불가능하다), delete방식은 post방식의 하위다
+				beforeSend : function (xhr) { 				               
+					xhr.setRequestHeader(csrfHeaderName, csrfTokenValue); 
+				},
 				data : { "idx" : idx },  //보낼 데이터는 JSON 형태로 보낸다
 				success : loadList,      //게시글정보 불러오기
-				error : function(){ alert("error")}
+				error : function(){ alert("delete error")}
 			});
 		}
 		
@@ -250,6 +269,9 @@
 			$.ajax({
 				url : "board/update",
 				type : "put", //post안에 put이라는 방식(다른요청방식로 하나의 url로 2개의 기능을 처리한다)
+				beforeSend : function (xhr) { 				               
+					xhr.setRequestHeader(csrfHeaderName, csrfTokenValue); 
+				},
 				contentType :"application/json; charset=utf-8", //비동기방식 + put방식 + 여러개 개체를 보낼때 사용한다
 				data : JSON.stringify({"idx" : idx , "title" : title, "content" : content, "writer" : writer}), 
 				//객체형태로 데이터를 보낸다 
