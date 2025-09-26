@@ -16,13 +16,15 @@
 	</insert>
 	<!-- 
 	SELECT IFNULL(MAX(MEMIDX + 1), 1 FROM MEMBER MEM)
+	: 삼항연산자와 비슷하다
 	: 테이블에 있는 MEMIDX 값 중 가장 큰 값에 1을 더한 것을 구한다
 	: 만약 MEMBER 테이블이 비어 있어서 MAX 결과가 NULL이면 → 기본값으로 1로 한다
 	 -->
 	
 	<!-- 로그인 -->
-	<select id="login" parameterType="kr.spring.entity.Member" resultType="kr.spring.entity.Member"> 
-		SELECT * FROM MEMBER WHERE MEMID = #{memID} AND MEMPASSWORD = #{memPassword}
+	<select id="login" parameterType="kr.spring.entity.Member" resultMap="memberMap"> 
+		SELECT * FROM MEMBER mem LEFT OUTER JOIN Auth auth ON
+		mem.MEMID = auth.MEMID WHERE mem.MEMID = #{memID}
 	</select>
 	
 	<!-- 업데이트: resultType 없지만 성공하면 1 실패하면 0을 반환한다 -->
@@ -37,6 +39,43 @@
 		SET MEMPROFILE = #{memProfile}
 		WHERE MEMID = #{memID}
 	</update>
+	
+	
+	
+	
+	<select id="getMember" parameterType="String" resultMap="memberMap"> 
+		SELECT * FROM MEMBER mem LEFT OUTER JOIN Auth auth ON
+		mem.MEMID = auth.MEMID WHERE mem.MEMID = #{memID}
+	</select>
+	
+	<!-- 권한정보도 SELECT 할것이다 -->
+	<resultMap type="kr.spring.entity.Auth" id="authMap">
+		<id property="no" column="no" /> <!-- id: 주인공 키(PK, 기본키) -->
+		<result property="memID" column="memID" />
+		<result property="auth" column="auth" />
+	</resultMap>
+	
+	<resultMap type="kr.spring.entity.Member" id="memberMap">
+		<id property="memIdx" column="memIdx" />
+		<result property="memID" column="memID" />
+		<result property="memPassword" column="memPassword" />
+		<result property="memName" column="memName" />
+		<result property="memAge" column="memAge" />
+		<result property="memGender" column="memGender" />
+		<result property="memEmail" column="memEmail" />
+		<result property="memProfile" column="memProfile" />
+		<collection property="authList" resultMap="authMap"/> <!-- 배열을 collection이라 한다, resultMap의 authMap연결-->
+	</resultMap>
+	
+	<!-- 권한입력 -->
+	<insert id="authInsert" parameterType="kr.spring.entity.Auth">
+		INSERT INTO AUTH(MEMID, AUTH) VALUES(#{memID}, #{auth})
+	</insert>
+	
+	<!-- 권한삭제 -->
+	<delete id="authDelete" parameterType="String">
+		DELETE FROM AUTH WHERE MEMID = #{memID}
+	</delete>
 	
 </mapper>
 

@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
+import kr.spring.entity.Auth;
 import kr.spring.entity.Board;
 import kr.spring.entity.Member;
 
@@ -27,6 +28,17 @@ public interface MemberMapper {
 
 	//회원 이미지 등록기능 
 	public void profileUpdate(Member mvo);
+	
+	public Member getMember(String memID); //아이디와 일치한 회원의 정보
+
+	//권한입력
+	public void authInsert(Auth saveVO);
+
+	//권한삭제
+	public void authDelete(String memID);
+	
+	
+
 
 	
         

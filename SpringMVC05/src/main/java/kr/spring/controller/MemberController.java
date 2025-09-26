@@ -20,6 +20,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
+import kr.spring.entity.Auth;
 import kr.spring.entity.Member;
 import kr.spring.mapper.BoardMapper;
 import kr.spring.mapper.MemberMapper;
@@ -88,19 +89,38 @@ public class MemberController {
 		}else {
 			//누락된것이 없으므로 회원가입을 시도할 수 있는 부분	
 			m.setMemProfile(""); //null을 넣고 싶지 않을 때 빈 문자열로 초기화
+			
 			//**추가 비밀번호 암호화하기 
-			String encyPw = pwEncoder.encode(m.getMemPassword()); //getMemPassword()를 암호화 설정
+			String encyPw = pwEncoder.encode(m.getMemPassword()); //.encode를 사용하면 스프링시큐리티 내 암호화프로그램으로 암호화 시키니다, getMemPassword()를 암호화 설정
 			m.setMemPassword(encyPw); //암호화 적용
 			
 			int cnt = mapper.join(m); //cnt가 1이면 회원가입성공, 0이면 실패  
+			
+			//추가: 권한테이블에 회원의 권한을 저장하기 
+			List<Auth> list = m.getAuthList(); //m.getAuthList()에 들어있는 체크한 권한을 list 변수에 담는다
+			
+			//가지고 있는 list 갯수 만큼 반복문을 돌면서 권한 테이블에 권한을 넣어준다 
+			for(Auth auth : list) {
+				if(auth.getAuth() != null) { //받아온 auth에 권한정보가 있는지 없는지 확인한다
+					// 권한 값이 있을때만 권한테이블에 값 넣기 
+					Auth saveVO = new Auth();//새로운 객체생성
+					saveVO.setMemID(m.getMemID());  //회원아이디 넣기(NO는 자동생성한다)
+					saveVO.setAuth(auth.getAuth()); //권한정보 넣기
+					//권한 저장
+					mapper.authInsert(saveVO);
+				}
+			}
 			
 			if(cnt == 1) {
 				System.out.println("회원가입 성공");
 				rttr.addFlashAttribute("msgType", "성공메세지"); 
 				rttr.addFlashAttribute("msg", "회원가입에 성공했습니다");
 				//회원가입 성공 시 로그인 처리까지 시키기
-				//로그인 정보 저장 (m에 Member 정보가 저장되어 있다)
-				session.setAttribute("mvo", m); 
+				
+				//m에는 authList의 no, memId부분과 memIdx값이 비워져 있다   
+				//회원가입 했을떄 회원정보(권한정보까지) 다시 가져와서 채워서 넣겠다
+				Member mvo = mapper.getMember(m.getMemID()); //아이디와 일치하는 회원정보 가져온다
+				session.setAttribute("mvo", mvo); 
 				//세션 유지 → session.setMaxInactiveInterval(60*60); // 1시간(초 단위)
 				//로그아웃 처리 → session.invalidate(); 
 				return "redirect:/";
@@ -130,13 +150,14 @@ public class MemberController {
 	//로그인
 	@RequestMapping("/login.do")
 	public String login(Member m, RedirectAttributes rttr, HttpSession session) { 
-		 Member userInfo = mapper.login(m); //로그인을 하고 회원정보를 돌려받아야한다
-		 
-		 if(userInfo != null) {
+		 Member mvo = mapper.login(m); //로그인을 하고 회원정보를 돌려받아야한다
+		 //추가 비밀번호 일치여부 체크
+		 if(mvo != null && pwEncoder.matches(m.getMemPassword(), mvo.getMemPassword())) { //m.getMemPassword()를 암호화해서 mvo.getMemPassword 같이 암호화된 비밀번호와 일치하는지 확인 true/false
+			   
 			 System.out.println("로그인 성공");
-			 	session.setAttribute("mvo", userInfo); //header.jsp에서 "mvo"로 판단하므로 "mvo"로 이름을 준다
-				rttr.addFlashAttribute("msgType", "성공메세지"); 
-				rttr.addFlashAttribute("msg", "로그인에 성공했습니다");
+			 session.setAttribute("mvo", mvo); //header.jsp에서 "mvo"로 판단하므로 "mvo"로 이름을 준다
+			 rttr.addFlashAttribute("msgType", "성공메세지"); 
+			 rttr.addFlashAttribute("msg", "로그인에 성공했습니다");
 				return "redirect:/";
 		 }else{
 			 System.out.println("로그인 실패");
@@ -160,7 +181,8 @@ public class MemberController {
 		if(m.getMemPassword() == null || m.getMemPassword().equals("") ||
 		   m.getMemName() == null || m.getMemName().equals("") ||
 		   m.getMemAge() == 0 ||
-		   m.getMemEmail() == null || m.getMemEmail().equals("") 
+		   m.getMemEmail() == null || m.getMemEmail().equals("") ||
+		   m.getAuthList().size() == 0 
 		  ) {
 			rttr.addFlashAttribute("msgType", "실패메세지"); 
 			rttr.addFlashAttribute("msg", "모든 내용을 입력하세요");
@@ -171,6 +193,25 @@ public class MemberController {
 			//회원정보 수정할때 이미지가 날아가는것 방지하는 첫번째 방법
 			Member mvo = (Member)session.getAttribute("mvo"); 
 			m.setMemProfile(mvo.getMemProfile()); //로그인한 Member의 MemProfile 값울 담는다
+			
+			// 비밀번호 암호화
+			String encyPw = pwEncoder.encode(m.getMemPassword());
+			m.setMemPassword(encyPw); //인코딩한 비밀번호를 넣어준다 
+			
+			// 권한 수정(권한삭제하고 새롭게 넣는다)
+			// 권한 삭제하기
+			mapper.authDelete(m.getMemID());
+			// 새롭게 권한 입력하기
+			List<Auth> list = m.getAuthList(); //권한테이블에 회원의 권한을 저장하기
+				
+			for(Auth auth : list) {
+				if(auth.getAuth() != null) { //권한 값이 있을떄만 권한테이블에 값 넣기
+					Auth saveVO = new Auth();
+					saveVO.setMemID(m.getMemID());  //회원아이디 넣기
+					saveVO.setAuth(auth.getAuth()); //권한 넣기 	
+					mapper.authInsert(saveVO);      //권한 지정
+				}
+			}
 			
 			int cnt = mapper.update(m); 
 			

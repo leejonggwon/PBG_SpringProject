@@ -1,5 +1,6 @@
 package kr.spring.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -34,11 +35,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	}
 	
 	//**비밀번호 암호화 환경설정
-	@Bean //객체로 등록할때 사용한다, 패스워드 인코딩 기능을 메모리에 올리는 작업 
-	public PasswordEncoder passwordEncoder() {
+	@Bean //@Bean: 패스워드 인코딩 기능을 객체형태로 만들어서 메모리에 올리는 작업 
+	public PasswordEncoder passwordEncoder() { //passwordEncoder()는 MemberController에서 @Autowired로 주입받아 사용된다
 		//비밀번호 암호화 메소드(비밀번호를 특정소수로 곱한다음 64bit로 인코딩 시킨다)
 		return new BCryptPasswordEncoder(); //비밀번호 암호화(해시) 클래스
-	}
+	}//→ 이렇게 하면 필요할때 마다 @Autowired로 PasswordEncoder인 비밀번호 암호화해주는 객체를 주입받아서 쓸 수 있다 
 	
 	
 	

@@ -55,6 +55,24 @@
 					
 					${mvo.memName}님 환영합니다
 					
+					[
+						<!-- 권한 정보 띄우기 -->
+						<!-- 회원이 가진 권한의 리스트만큼 반복돌면서 꺼내기 -->
+						<c:forEach items="${mvo.authList}" var="auth">
+							<c:choose>
+								<c:when test="${auth.auth eq 'ROLE_USER'}">
+									U
+								</c:when>
+								<c:when test="${auth.auth eq 'ROLE_MANAGER'}">
+									M
+								</c:when>
+								<c:when test="${auth.auth eq 'ROLE_ADMIN'}">
+									A
+								</c:when>
+							</c:choose>
+						</c:forEach>
+					]
+					
 					<li><a href="${contextPath}/updateForm.do"><span class="glyphicon glyphicon-pencil"></span>&nbsp;회원정보수정</a></li>
 					<li><a href="${contextPath}/imageForm.do"><span class="glyphicon glyphicon-picture"></span>&nbsp;프로필사진등록</a></li>
 					<li><a href="${contextPath}/logout.do"><span class="glyphicon glyphicon-log-out"></span>&nbsp;로그아웃</a></li>	
