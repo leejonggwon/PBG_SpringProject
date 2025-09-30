@@ -6,8 +6,13 @@
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
-		<item key="selection" value="checkType"/>
+		<item key="selection" value="join."/>
 		<list key="findhistory">
+			<item value="join."/>
+			<item value="join"/>
+			<item value="update"/>
+			<item value="upfate"/>
+			<item value="updae"/>
 			<item value="checkType"/>
 			<item value="ta"/>
 			<item value="#frm"/>

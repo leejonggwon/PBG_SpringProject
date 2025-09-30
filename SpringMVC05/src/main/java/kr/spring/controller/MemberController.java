@@ -219,7 +219,9 @@ public class MemberController {
 				System.out.println("회원정보수정 성공");
 				rttr.addFlashAttribute("msgType", "성공메세지"); 
 				rttr.addFlashAttribute("msg", "회원정보수정에 성공했습니다");
-				session.setAttribute("mvo", m); //회원정보 session도 업데이트해야한다
+				Member info = mapper.getMember(m.getMemID());
+				
+				session.setAttribute("mvo", info); //회원정보 session도 업데이트해야한다
 				return "redirect:/";		
 			}else {
 				System.out.println("회원정보수정 실패");
