@@ -12,7 +12,7 @@ import lombok.Data;
 //직접만든 클래스 객체는 내부보안 규정상 바로 담을 수 없음 → *내가 원하는 VO를 담을 수 있게 변환해주는 User Class가 필요
 //MemberUser: mvo를 담을수 있게 변환해주는 클래스
 @Data //로그인성공하면 member가져가 써야하므로 getter/setter 메소드가 있어야한다
-public class MemberUser extends User{
+public class MemberUser extends User{ //User 라는 클래스는 UserDetails를 상속받는다  
 	// MemberUser는 Spring Security에 Member객체를 담을 수 있게 해주는 클래스
 	
 	private Member member;
@@ -46,8 +46,10 @@ public class MemberUser extends User{
 				/* 스트림 처리가 끝나면 다시 리스트(List)로 모으는 작업
 				 * 최종 컬렉션 리스트로 변경*/
 				);
-		this.member = member;
+		this.member = mvo;
 	}
-	
-	
 }
+
+
+
+

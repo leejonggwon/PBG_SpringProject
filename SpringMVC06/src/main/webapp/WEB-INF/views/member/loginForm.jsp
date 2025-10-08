@@ -75,6 +75,16 @@
 		//회원가입 실패시 띄워줄 모달창 실행
 		//HTML 문서가 모두 로딩될 때까지 기다렸다가 그 안의 기능을 실행하겠다는 의미 
 		$(document).ready(function(){
+			//url뒤에 ?error확인한다
+			if(${param.error != null}){
+				$("#messageType").attr("class", "modal-content panel-warning");
+				$(".modal-body").text("아이디와 비밀번호를 확인해주세요");
+				$(".modal-title").text("실패메세지");
+				$("#myMessage").modal("show");
+			}	
+				
+				
+			
 			if(${not empty msgType}){ //EL식
 				if(${msgType eq "실패메세지"}){ //EL식
 					$("#messageType").attr("class", "modal-content panel-warning");
