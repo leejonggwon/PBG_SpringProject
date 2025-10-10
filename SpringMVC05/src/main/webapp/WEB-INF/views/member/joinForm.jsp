@@ -73,7 +73,7 @@
 						<td colspan ="2"><input type="email" name="memEmail" id="memEmail" class="form-control" maxlength="50" placeholder="이메일을 입력하세요"></td>				
 					</tr>
 					
-					<!-- 권한 체크박스 -->
+					<!-- 권한을 체크할수 있는 체크박스 -->
 					<tr>
 						<td style="width: 110px; vertical-align: middle;">권한</td>
 						<td colspan="2">
@@ -82,6 +82,7 @@
 							<input type="checkbox" name="authList[2].auth" value="ROLE_ADMIN"> ROLE_ADMIN
 						</td>
 					</tr>
+					<!-- Member VO의 authList로 → Auth VO의 auth에 권한을 넣는다-->
 					
 					<tr>
 						<td colspan ="3">

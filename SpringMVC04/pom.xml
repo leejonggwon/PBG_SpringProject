@@ -12,6 +12,7 @@
 		<org.springframework-version>5.0.2.RELEASE</org.springframework-version>
 		<!-- SpringSecurity를 하기 위한 버전 추가 -->
 		<org.springsecurity-version>5.0.2.RELEASE</org.springsecurity-version>
+		
 		<org.aspectj-version>1.6.10</org.aspectj-version>
 		<org.slf4j-version>1.6.6</org.slf4j-version>
 	</properties>
@@ -197,14 +198,15 @@
 	         <version>${org.springsecurity-version}</version>
         </dependency>
         
-        <!-- Spring Security를 사용하기 위한 설정 API(설정파일들이 있음) -->
+        <!-- Spring Security를 사용하기 위한 설정관련기능 API(설정파일들이 있음) -->
         <dependency>
 	         <groupId>org.springframework.security</groupId>
 	         <artifactId>spring-security-config</artifactId>
 	         <version>${org.springsecurity-version}</version>
 	    </dependency>
 	    
-	    <!-- Spring Security를 편리하게 사용하기위한 태그라이브러리 형태로 사용하는 API -->
+	    <!-- Spring Security를 편리하게 사용하기위한 태그라이브러리 형태로 사용하는 API로 
+	         <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %> 이런거 쓴다-->
 	    <dependency>
 	         <groupId>org.springframework.security</groupId>
 	         <artifactId>spring-security-taglibs</artifactId>

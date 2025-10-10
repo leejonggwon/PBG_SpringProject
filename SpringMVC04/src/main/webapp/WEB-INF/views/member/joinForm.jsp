@@ -23,7 +23,8 @@
 			<div class="panel-body">
 			
 			<form action="${contextPath}/join.do" method="post"> <!-- controller위치는 views 바로 아래에 있다 -->
-			<!-- 이제는 서버로 단순히 회원가입 정보만 전달하는 것이 아니라 서버에서 발행한 토큰도 전달해야 회원가입이 가능하다 -->
+			<!-- 문제점: 내 정식서버로 와서 회원가입해야 하는데 다른곳에서 서버주소(contextPath)를 접근해서 회원가입 할 수 있다 
+			     CSRF: 이제는 서버로 단순히 회원가입 정보만 전달하는 것이 아니라, 서버에서 발행한 토큰도 전달해야 회원가입이 가능하다 -->
 				<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
 				<!-- name="${_csrf.parameterName}": 내부적으로 존재하는 토큰, value="${_csrf.token}": 토큰값  -->
 				
@@ -143,7 +144,7 @@
 			$.ajax({
 				url:"${contextPath}/registerCheck.do",  // controller의 실행위치는 views바로 아래이므로 → ../registerCheck.do 으로 작성하면 불편하다 
 														// JS에 EL, JSTL을 쓸 수 있다 
-				type:"get", //get방식은 DB안에 있는값을 Select 할 때 사용한다
+				type:"get", //get방식은 DB안에 있는값을 Select 할 때 주로 사용한다(중복확인, 게시글 전체보기 등)
 				data:{"memID" : memID},
 				success:function(data){ //data결과값 받아온다
 					//중복유무확인 → (data=1 사용가능, data=0 사용불가능)

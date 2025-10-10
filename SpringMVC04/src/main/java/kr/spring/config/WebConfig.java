@@ -5,6 +5,7 @@ import javax.servlet.Filter;
 import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
+//*WebConfig 환경설정하는 클래스
 //**web.xml을 대체할 클래스
 //web.xml의 기능을 담고 있는 클래스를 상속받는다 
 public class WebConfig extends AbstractAnnotationConfigDispatcherServletInitializer { //상속받으니 빨간줄뜨면 - 추상크래스임(추상메서드가 있다는의미)
@@ -20,14 +21,14 @@ public class WebConfig extends AbstractAnnotationConfigDispatcherServletInitiali
 	}
 
 	//RootConfig(root-context.xml) 읽어오는 부분과 같다
+	//getRootConfigClasses()는 전체 애플리케이션에 걸쳐 공유해야 할 설정을 넣는 자리이다
 	@Override
 	protected Class<?>[] getRootConfigClasses() { 
 		// DB 설정관련 RootConfig.java 파일을 가져온다
-		// 리턴타입은 Class의 배열 형태이다 → 왜냐하면 나중에 설정파일이 여러개로 돌려줄 수 있기 떄문이다
+		// 리턴타입은 Class의 배열 형태인 이유 → 나중에 설정파일이 여러개로 돌려줄 수 있기 떄문이다
 		return new Class[] {RootConfig.class, SecurityConfig.class }; //RootConfig를 참조한다 root-context 자바파일을 만들어서 여기에 읽겠다는 의미
-											  //SecurityConfig.class 추가한다 필요한 환경설정을 추가한다 		
+											                          //SecurityConfig를 등록한다		
 	}
-
 
 	//DispatcherServlet을 설정하고 
 	// ServletConfig(servlet-context.xml) 읽어오는 부분과 같다

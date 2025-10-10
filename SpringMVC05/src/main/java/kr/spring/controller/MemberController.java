@@ -90,7 +90,7 @@ public class MemberController {
 			//누락된것이 없으므로 회원가입을 시도할 수 있는 부분	
 			m.setMemProfile(""); //null을 넣고 싶지 않을 때 빈 문자열로 초기화
 			
-			//**추가 비밀번호 암호화하기 
+			//**추가: 비밀번호 암호화하기 
 			String encyPw = pwEncoder.encode(m.getMemPassword()); //.encode를 사용하면 스프링시큐리티 내 암호화프로그램으로 암호화 시키니다, getMemPassword()를 암호화 설정
 			m.setMemPassword(encyPw); //암호화 적용
 			

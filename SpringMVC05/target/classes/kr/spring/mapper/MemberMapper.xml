@@ -15,10 +15,11 @@
 		#{memID}, #{memPassword}, #{memName}, #{memAge}, #{memGender}, #{memEmail}, #{memProfile})
 	</insert>
 	<!-- 
+	SELECT MAX(MEMIDX + 1 FROM MEMBER MEM
 	SELECT IFNULL(MAX(MEMIDX + 1), 1 FROM MEMBER MEM)
 	: 삼항연산자와 비슷하다
-	: 테이블에 있는 MEMIDX 값 중 가장 큰 값에 1을 더한 것을 구한다
-	: 만약 MEMBER 테이블이 비어 있어서 MAX 결과가 NULL이면 → 기본값으로 1로 한다
+	: 테이블에 있는 MEMIDX 값 중 가장 큰 값인 MAX(MEMIDX)에 1을 더한 것을 구한다
+	: 만약 MEMBER 테이블이 비어 있어서 MAX(MEMIDX) 결과가 NULL이면 → 기본값으로 1로 한다
 	 -->
 	
 	<!-- 로그인 -->

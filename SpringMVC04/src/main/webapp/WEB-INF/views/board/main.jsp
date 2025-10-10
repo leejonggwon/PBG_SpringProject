@@ -260,7 +260,7 @@
 			$("#ub" + idx).html(newBtn);
 		}
 		
-		
+		//수정하기
 		function goUpdate(idx) { 
 			var title = $("#nt" + idx).val(); //.val(): <input>이나 <textarea> 등의 값(value)을 가져오거나 설정할 때 사용
 			var content = $("#ta" + idx).val();

@@ -21,7 +21,7 @@
 		<div class="panel panel-default">
 			<div class="panel-heading">Login</div>
 			<div class="panel-body">
-			<!-- 파일 업로드 요청에서도 CSRF 토큰이 제대로 전달되도록 하기 위해 action URL 뒤에 붙여준다 -->
+			<!-- 파일 업로드할때는 input의 hidden으로 하지 않고 get방식으로 넘겨도 post방식으로 넘어간다 -->
 			<form action="${contextPath}/imageUpdate.do?${_csrf.parameterName}=${_csrf.token}" method="post" enctype="multipart/form-data"> <!-- 이미지나 영상 이런걸로 보낼때는 인코딩방식을 바꿔줘야한다 
 			                                                                                                                                     기본적으로 text보내는 형식에서 → multipart/form-data 형식으로 바꿔줘야한다 -->
 				
