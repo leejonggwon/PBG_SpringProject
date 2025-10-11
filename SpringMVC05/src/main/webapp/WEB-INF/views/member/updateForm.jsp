@@ -89,8 +89,8 @@
 						<td style="width: 110px; vertical-align: middle;">사용자권한</td>
 						<td colspan ="2">
 							<input value="ROLE_USER" name="authList[0].auth" type="checkbox"
-								<c:forEach items="${mvo.authList}" var="auth">
-									<c:if test="${auth.auth eq 'ROLE_USER'}">
+								<c:forEach items="${mvo.authList}" var="auth"> <!-- 반복문 -->
+									<c:if test="${auth.auth eq 'ROLE_USER'}">  <!-- 단독if -->
 										checked="checked"
 									</c:if>
 								</c:forEach>
@@ -111,6 +111,7 @@
 							 /> ROLE_ADMIN
 						</td>	
 					</tr>
+					
 					
 					<tr>
 						<td colspan ="3">

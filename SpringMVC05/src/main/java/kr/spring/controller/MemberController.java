@@ -91,19 +91,25 @@ public class MemberController {
 			m.setMemProfile(""); //null을 넣고 싶지 않을 때 빈 문자열로 초기화
 			
 			//**추가: 비밀번호 암호화하기 
-			String encyPw = pwEncoder.encode(m.getMemPassword()); //.encode를 사용하면 스프링시큐리티 내 암호화프로그램으로 암호화 시키니다, getMemPassword()를 암호화 설정
+			String encyPw = pwEncoder.encode(m.getMemPassword()); //.encode를 사용하면 스프링시큐리티 내 암호화프로그램으로 암호화 시킨다, getMemPassword()를 암호화 설정
 			m.setMemPassword(encyPw); //암호화 적용
 			
 			int cnt = mapper.join(m); //cnt가 1이면 회원가입성공, 0이면 실패  
 			
 			//추가: 권한테이블에 회원의 권한을 저장하기 
-			List<Auth> list = m.getAuthList(); //m.getAuthList()에 들어있는 체크한 권한을 list 변수에 담는다
+
+			List<Auth> list = m.getAuthList(); //체크한 권한들을 list 변수에 담는다
+			// list에는 이렇게 있다 [0] → Auth(no=1, memID="user01", auth="ROLE_USER")
+			//                   [1] → Auth(no=2, memID="user01", auth="ROLE_ADMIN")
+			// list.get(0).getAuth() 하면 "ROLE_USER"가 출력
+			
 			
 			//가지고 있는 list 갯수 만큼 반복문을 돌면서 권한 테이블에 권한을 넣어준다 
-			for(Auth auth : list) {
-				if(auth.getAuth() != null) { //받아온 auth에 권한정보가 있는지 없는지 확인한다
+			for(Auth auth : list) {          // 형태 [0] → Auth(no=1, memID="user01", auth="ROLE_USER")
+				if(auth.getAuth() != null) { // 받아온 auth에 권한정보가 있는지 없는지 확인한다(예를 들어 2번 배열의 admin에만 값이 있는경우 값을 넣지 않는다)
 					// 권한 값이 있을때만 권한테이블에 값 넣기 
-					Auth saveVO = new Auth();//새로운 객체생성
+					Auth saveVO = new Auth();//ID, 권한값을 가진 새로운 객체생성하기(NO는 자동생성)
+					
 					saveVO.setMemID(m.getMemID());  //회원아이디 넣기(NO는 자동생성한다)
 					saveVO.setAuth(auth.getAuth()); //권한정보 넣기
 					//권한 저장
@@ -117,9 +123,9 @@ public class MemberController {
 				rttr.addFlashAttribute("msg", "회원가입에 성공했습니다");
 				//회원가입 성공 시 로그인 처리까지 시키기
 				
-				//m에는 authList의 no, memId부분과 memIdx값이 비워져 있다   
-				//회원가입 했을떄 회원정보(권한정보까지) 다시 가져와서 채워서 넣겠다
-				Member mvo = mapper.getMember(m.getMemID()); //아이디와 일치하는 회원정보 가져온다
+				//기존 m에는 authList의 no, memId부분과 memIdx값이 비워져 있다   
+				//회원가입 성공 시 회원정보 + 권한정보까지 가져오기 
+				Member mvo = mapper.getMember(m.getMemID()); //MemID와 일치하는 회원정보 + 권한정보를 모두 가져온다
 				session.setAttribute("mvo", mvo); 
 				//세션 유지 → session.setMaxInactiveInterval(60*60); // 1시간(초 단위)
 				//로그아웃 처리 → session.invalidate(); 
@@ -150,10 +156,13 @@ public class MemberController {
 	//로그인
 	@RequestMapping("/login.do")
 	public String login(Member m, RedirectAttributes rttr, HttpSession session) { 
+		
 		 Member mvo = mapper.login(m); //로그인을 하고 회원정보를 돌려받아야한다
-		 //추가 비밀번호 일치여부 체크
-		 if(mvo != null && pwEncoder.matches(m.getMemPassword(), mvo.getMemPassword())) { //m.getMemPassword()를 암호화해서 mvo.getMemPassword 같이 암호화된 비밀번호와 일치하는지 확인 true/false
-			   
+		 
+		 //추가 비밀번호 일치여부 체크(암호화 되어 있으므로 쿼리문으로는 불가능하다)
+		 if(mvo != null && pwEncoder.matches(m.getMemPassword(), mvo.getMemPassword())) { 
+			 //m.getMemPassword()를 암호화해서 mvo.getMemPassword 같이 암호화된 비밀번호와 일치하는지 확인 true(일치)/false
+			 // pwEncoder.matches(평문비밀번호, 암호문비밀번호): 로그인 시 matches()로 “입력한 비밀번호가 DB 암호문과 일치하는지” 확인하는 역할
 			 System.out.println("로그인 성공");
 			 session.setAttribute("mvo", mvo); //header.jsp에서 "mvo"로 판단하므로 "mvo"로 이름을 준다
 			 rttr.addFlashAttribute("msgType", "성공메세지"); 
@@ -186,7 +195,7 @@ public class MemberController {
 		  ) {
 			rttr.addFlashAttribute("msgType", "실패메세지"); 
 			rttr.addFlashAttribute("msg", "모든 내용을 입력하세요");
-			
+			   
 			return "redirect:/updateForm.do"; //다시 회원가입 입력하는 폼으로 다시 요청하도록 시킨다
 			
 		}else{
@@ -194,7 +203,7 @@ public class MemberController {
 			Member mvo = (Member)session.getAttribute("mvo"); 
 			m.setMemProfile(mvo.getMemProfile()); //로그인한 Member의 MemProfile 값울 담는다
 			
-			// 비밀번호 암호화
+			// 업데이트 직전에 비밀번호 암호화를 해야한다
 			String encyPw = pwEncoder.encode(m.getMemPassword());
 			m.setMemPassword(encyPw); //인코딩한 비밀번호를 넣어준다 
 			

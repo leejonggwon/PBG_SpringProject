@@ -28,6 +28,12 @@ public class Member {
 	//여러 권한을 여러개 담을 수 있도록 List 형태로 만든다.(ArrayList 써도 되지만 확장성을 위해 List를 사용한다) 
 	//ROLE_MANAGER경우 회원권한(관리자, 매니저, 유저)이다 
 	private List<Auth> authList;
-	
-	
 }
+
+
+
+
+
+
+
+

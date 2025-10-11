@@ -42,16 +42,22 @@
 	</update>
 	
 	
-	
-	
 	<select id="getMember" parameterType="String" resultMap="memberMap"> 
-		SELECT * FROM MEMBER mem LEFT OUTER JOIN Auth auth ON
-		mem.MEMID = auth.MEMID WHERE mem.MEMID = #{memID}
+		SELECT * 
+		FROM MEMBER mem 
+		LEFT OUTER JOIN Auth auth 
+			ON mem.MEMID = auth.MEMID 
+		WHERE mem.MEMID = #{memID}
 	</select>
 	
-	<!-- 권한정보도 SELECT 할것이다 -->
+	<!-- resultMap은 SQL 결과를 자바 객체에 어떻게 담을지 알려주는 설명서(지도) -->
+	<!-- SQL에서 쓸수 있는 새로운 VO타입을 만든다 
+	     property는 자바 객체(VO)의 변수 이름, 
+	     column은 DB 컬럼 이름 -->
+	<!-- DB 컬럼명과 VO의 변수명이 완전히 같으면 <resultMap>은 굳이 필요 없다
+	     하지만 private List<Auth> authList; 때문에 <resultMap>이 필요하다  -->     
 	<resultMap type="kr.spring.entity.Auth" id="authMap">
-		<id property="no" column="no" /> <!-- id: 주인공 키(PK, 기본키) -->
+		<id property="no" column="no" /> <!-- id는 식별자(Primary Key) -->
 		<result property="memID" column="memID" />
 		<result property="auth" column="auth" />
 	</resultMap>

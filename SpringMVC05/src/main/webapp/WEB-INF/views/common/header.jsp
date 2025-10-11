@@ -44,13 +44,13 @@
 					<c:if test="${mvo.memProfile ne ''}">
 						<li>
 							<img style="width:50px; height:50px;" class="img-circle" alt="" src= "${contextPath}/resources/upload/${mvo.memProfile}"
-						<li>
+						</li>
 					</c:if>
 					
 					<c:if test="${mvo.memProfile eq ''}">
 						<li>
 							<img style="width:50px; height:50px;" class="img-circle" alt="" src= "${contextPath}/resources/upload/default.png"
-						<li>
+						</li>
 					</c:if>
 					
 					${mvo.memName}님 환영합니다
@@ -58,8 +58,8 @@
 					[
 						<!-- 권한 정보 띄우기 -->
 						<!-- 회원이 가진 권한의 리스트만큼 반복돌면서 꺼내기 -->
-						<c:forEach items="${mvo.authList}" var="auth">
-							<c:choose>
+						<c:forEach items="${mvo.authList}" var="auth"> <!-- items:반복할대상 var:변수 -->
+							<c:choose>                                 <!-- 조건문 -->
 								<c:when test="${auth.auth eq 'ROLE_USER'}">
 									U
 								</c:when>
