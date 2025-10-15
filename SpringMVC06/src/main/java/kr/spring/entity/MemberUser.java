@@ -13,11 +13,11 @@ import lombok.Data;
 //MemberUser: mvo를 담을수 있게 변환해주는 클래스
 @Data //로그인성공하면 member가져가 써야하므로 getter/setter 메소드가 있어야한다
 public class MemberUser extends User{ //User 라는 클래스는 UserDetails를 상속받는다  
-	// MemberUser는 Spring Security에 Member객체를 담을 수 있게 해주는 클래스
+	//Spring Security에 Member객체를 담을 수 있게 해주는 변환 클래스
 	
-	private Member member;
+	private Member member; //MemberUser안에 Member가 있다 
 	
-	//생성자
+	//생성자, 스프링시큐리티에서 기본으로 제공하는 MemberUser의 id, password, 권한 3개만 쓰는 회원정보 
 	public MemberUser(String username, String password, Collection<? extends GrantedAuthority> authorities) {
 		//Collection → 여러 개를 담을 수 있는 리스트나 세트, 배열형태의 권한
 		//? extends GrantedAuthority → GrantedAuthority를 구현한 모든 객체 가능
@@ -30,23 +30,20 @@ public class MemberUser extends User{ //User 라는 클래스는 UserDetails를 
 		super(username, password, authorities);
 	}
 	
-	//실제로 우리가 사용할 생성자 
+	//**실제로 우리가 사용할 생성자 
 	public MemberUser(Member mvo) {
 		//User 클래스의 생성자를 사용해서 구현한다
 		//생성자(아이디, 비밀번호, 권한을 넣어준다)
-		super(mvo.getMemID(), mvo.getMemPassword(), 
-				/*User클래스의 생성자의 사용하는 권한정보는 Collection<SimpleGrantedAuthrity>형태로 변경해서 넣어야함
-				 * 정리: 회원이 가진 권한 목록(List<Auth>)을 Spring Security가 사용하는 권한 객체(Collection<GrantedAuthority>)로 변환하는 과정”*/
-				mvo.getAuthList().stream() /*스트림(Stream)으로 변환 - 데이터를 하나씩 처리할 수 있는 도구*/
-				.map(auth -> new SimpleGrantedAuthority(auth.getAuth()))
-				/*  map은 각 요소를 변환(transform)하는 작업
-				 *  Auth 객체 → SimpleGrantedAuthority 객체로 변환
-				 *  List<Auth> -> Collection 안에 들어갈 수 있게 변경 */
-				.collect(Collectors.toList())
-				/* 스트림 처리가 끝나면 다시 리스트(List)로 모으는 작업
-				 * 최종 컬렉션 리스트로 변경*/
-				);
-		this.member = mvo;
+		super(mvo.getMemID(), 
+			  mvo.getMemPassword(), 
+			  /*User클래스의 생성자의 사용하는 권한정보는 Collection<SimpleGrantedAuthrity>형태로 변경해서 넣어야한다 */
+			  mvo.getAuthList().stream() /*스트림으로 변경 */
+				 .map(auth -> new SimpleGrantedAuthority(auth.getAuth()))
+				 /* List<Auth> → Collection 안에 들어갈 수 있게 변경 */
+			  	 .collect(Collectors.toList())
+			  	 /* 최종 컬렉션 리스트로 변경 */
+			  );
+		this.member = mvo; //아이디, 비밀번호, 권한를 포함한 나머지 정보들은 member에 담아준다
 	}
 }
 

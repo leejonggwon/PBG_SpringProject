@@ -39,7 +39,7 @@ public class MemberController {
 	private PasswordEncoder pwEncoder;
 	
 	
-	//보안3단계 로그인 안한상태에 특정페이지 접근
+	//보안3단계 로그인 안한상태에서 특정페이지 접근
 	@GetMapping("/access-denied") //로그인을 안하고 특정페이즈를 요청했을때 요청되는 url
 	public String showAccessDenied(){
 		return "access-denied";
