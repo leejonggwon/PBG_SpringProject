@@ -4,6 +4,16 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %><!-- 줄바꿈, 날짜일정문자 잘라내는 기능들이 있다 -->
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 
+<!-- Spring Security에서 제공하는 태그라이브러리(보안관련된 태그라이브러리) -->
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
+
+<!-- Spring Security에서 제공하는 계정정보 (SecurityContext 안에 계정정보 가져오기) -->
+<!-- 로그인한 계정정보 
+     MemberUserDetailsService에 있는 계정정보를 mvo를 받아온것이다-->   
+<c:set var="mvo" value="${SPRING_SECURITY_CONTEXT.authentication.principal}" />
+<!-- 권한정보 -->
+<c:set var="auth" value="${SPRING_SECURITY_CONTEXT.authentication.authorities}" />
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -27,7 +37,7 @@
 				<table style="text-align: center; border: 1px solid #dddddd" class ="table table-borderd">
 					<tr>
 						<td style="width: 110px; vertical-align: middle;">아이디</td>
-						<td>${mvo.memID}</td>						
+						<td>${mvo.member.memID}</td>						
 					</tr>
 					<tr><!-- 사진업로드 -->
 						<td style="width: 110px; vertical-align: middle;">사진업로드</td>

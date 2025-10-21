@@ -2,6 +2,17 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+
+<!-- Spring Security에서 제공하는 태그라이브러리(보안관련된 태그라이브러리) -->
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
+
+<!-- Spring Security에서 제공하는 계정정보 (SecurityContext 안에 계정정보 가져오기) -->
+<!-- 로그인한 계정정보 
+     MemberUserDetailsService에 있는 계정정보를 mvo를 받아온것이다-->   
+<c:set var="mvo" value="${SPRING_SECURITY_CONTEXT.authentication.principal}" />
+<!-- 권한정보 -->
+<c:set var="auth" value="${SPRING_SECURITY_CONTEXT.authentication.authorities}" />
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -34,7 +45,7 @@
 					</tbody>
 					
 					<!-- 로그인 했을때만 글쓰기 버튼이 보이게 한다(session에 mvo가 있으면 로그인한 상태) -->
-					<c:if test="${not empty mvo}"> 
+					<c:if test="${not empty mvo.member}"> 
 						<tr>
 							<td colspan="5"> <!-- colspan="5": 5개의 열을 합쳐서 한 줄에 걸쳐 표시 -->
 								<button onclick="goForm()" class="btn btn-primary btn-sm">글쓰기</button>
@@ -47,7 +58,7 @@
 			<!-- 글쓰기 폼 -->
 			<div class="panel-body" id="wform" style="display: none"> <!-- style="display: none":안보이게 한다 -->
 				<form id="frm"> <!-- form 태그에 id를 지정하면, 내부 input 태그들의 값을 한 번에 가져올 수 있음 -->
-				<input type="hidden" name="memID" value="${mvo.memID}"> <!-- 로그인한 사용자의 ID를 가져온다 -->
+				<input type="hidden" name="memID" value="${mvo.member.memID}"> <!-- 로그인한 사용자의 ID를 가져온다 -->
 				
 				<table class="table">
 					<tr>
@@ -60,7 +71,7 @@
 					</tr>
 					<tr>
 						<td>작성자</td>
-						<td><input readonly="readonly" type="text" value="${mvo.memName}" name="writer" class="form-control"></td>
+						<td><input readonly="readonly" type="text" value="${mvo.member.memName}" name="writer" class="form-control"></td>
 					</tr>
 					<tr>
 					<td colspan="2" align="center"> 
@@ -135,7 +146,7 @@
 				
 				//수정 삭제 화면 (내가 쓴글일때 보여준다)
 				//문법: 조건문안에 EL식을 쓰고 싶다면 문자열로 감싸야한다
-				if("${mvo.memID}" == obj.memID){
+				if("${mvo.member.memID}" == obj.memID){
 					listHtml += "<br>";
 					listHtml += "<span id='ub" + obj.idx + "'>";
 					listHtml += "<button onclick='goUpdateForm(" + obj.idx + ")' class='btn btn-sm btn-success'>수정화면</button></span> &nbsp;"; //&nbsp; 줄바꿈없이 띄어쓰기

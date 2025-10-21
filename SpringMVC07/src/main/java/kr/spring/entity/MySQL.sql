@@ -1,0 +1,83 @@
+-- 회원제 게시판 --
+CREATE TABLE TBLBOARD(
+   IDX INT NOT NULL,
+   MEMID VARCHAR(20) NOT NULL,
+   TITLE VARCHAR(100) NOT NULL,
+   CONTENT VARCHAR(2000) NOT NULL,
+   WRITER VARCHAR(30) NOT NULL,
+   INDATE DATETIME DEFAULT NOW(),
+   COUNT INT DEFAULT 0,
+   -- 댓글기능 추가 --
+   BOARDGROUP INT,     -- 어떤 그룹에 댓글을 달았는지 알수있는 --
+   BOARDSEQUENCE INT,  -- 같은 그룹안에서 댓글의 순서를 저장하는 변수 --
+   BOARDLEVEL INT,     -- 1단계(원본글댓글) 2단계(댓글에댓글) 인지에 대한 정보 --   
+   BOARDAVAILABLE INT, -- 삭제된 글인지 여부 판별한다 --
+   PRIMARY KEY(IDX)
+);
+
+SELECT * FROM TBLBOARD;
+
+INSERT INTO TBLBOARD
+SELECT IFNULL(MAX(IDX) + 1, 1),
+'user01', '공지사항입니다', '다음주 월요일 정상 등원하겠습니다', '교육운영부',
+NOW(), 0, IFNULL(MAX(BOARDGROUP) + 1, 1), 0 , 0, 1
+FROM TBLBOARD;
+--MAX(IDX) 와 MAX(BOARDGROUP) 모두 같은 FROM TBLBOARD에서 계산되기 때문에 SELECT는 한 번만 필요하다--
+
+
+INSERT INTO TBLBOARD
+SELECT IFNULL(MAX(IDX) + 1, 1),
+'user01', '가을 운동회 안내', '10월 25일(금) 전교생 운동회가 열립니다. 편한 복장으로 참여해주세요!', '교육운영부',
+NOW(), 0, IFNULL(MAX(BOARDGROUP) + 1, 1), 0, 0, 1
+FROM TBLBOARD;
+
+
+INSERT INTO TBLBOARD
+SELECT IFNULL(MAX(IDX) + 1, 1),
+'user02', '10월 급식 일정 안내', '10월 급식표를 홈페이지 자료실에 업로드했습니다. 참고 부탁드립니다.', '행정부',
+NOW(), 0, IFNULL(MAX(BOARDGROUP) + 1, 1), 0, 0, 1
+FROM TBLBOARD;
+
+
+INSERT INTO TBLBOARD
+SELECT IFNULL(MAX(IDX) + 1, 1),
+'user02', '학부모 상담 주간 안내', '다음 주 월요일부터 금요일까지 학부모 상담 주간이 진행됩니다.', '행정부',
+NOW(), 0, IFNULL(MAX(BOARDGROUP) + 1, 1), 0, 0, 1
+FROM TBLBOARD;
+
+
+SELECT * FROM TBLBOARD;
+
+DELETE FROM TBLBOARD;
+
+
+CREATE TABLE TBLMEMBER(
+   MEMID VARCHAR(50) NOT NULL,
+   MEMPWD VARCHAR(50) NOT NULL,
+   MEMNAME VARCHAR(50) NOT NULL,
+   MEMPHONE VARCHAR(50) NOT NULL,
+   MEMADDR VARCHAR(100),
+   LATITUDE DECIMAL(13, 10),  -- 현재위치위도, 카카오지도에 내위치 기록 37.5665350000
+   LONGITUDE DECIMAL(13, 10), -- 현재위치경도 --
+   PRIMARY KEY(MEMID)
+);
+
+SELECT * FROM TBLMEMBER;
+
+DELETE FROM TBLMEMBER;
+
+INSERT INTO TBLMEMBER(MEMID, MEMPWD, MEMNAME, MEMPHONE)
+VALUES('user01', '1234', '손흥민', '010-1234-1234');
+
+INSERT INTO TBLMEMBER(MEMID, MEMPWD, MEMNAME, MEMPHONE)
+VALUES('user02', '1234', '김연아', '010-1234-1234');
+
+
+
+
+
+
+
+
+
+

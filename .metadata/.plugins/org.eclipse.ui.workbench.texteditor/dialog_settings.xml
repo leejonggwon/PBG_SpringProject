@@ -6,8 +6,9 @@
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
-		<item key="selection" value="join."/>
+		<item key="selection" value="savePath"/>
 		<list key="findhistory">
+			<item value="savePath"/>
 			<item value="join."/>
 			<item value="join"/>
 			<item value="update"/>

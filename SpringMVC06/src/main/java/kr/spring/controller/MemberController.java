@@ -9,6 +9,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.MultiValueMap;
@@ -23,8 +27,10 @@ import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
 import kr.spring.entity.Auth;
 import kr.spring.entity.Member;
+import kr.spring.entity.MemberUser;
 import kr.spring.mapper.BoardMapper;
 import kr.spring.mapper.MemberMapper;
+import kr.spring.security.MemberUserDetailsService;
 
 @Controller
 public class MemberController {
@@ -33,10 +39,14 @@ public class MemberController {
 	@Autowired
 	private MemberMapper mapper; //SqlSessionFactoryBean → DB와 MyBatis 환경을 연결하는 설정 담당
 	
-
 	//**SecurityConfig에서 Bean으로 등록 시켰음
 	@Autowired //내가 만들어 놓은 비밀번호 암호화 객체를 주입받아 사용하겠다 
 	private PasswordEncoder pwEncoder;
+	
+	//Spring Security 내부에서 로그인을 mapper연결해주는 클래스
+	@Autowired
+	private MemberUserDetailsService memberUserDetailsService;
+	//회원수정이 끝나면 수정된 데이터를 내부저장소에 return 해준다 
 	
 	
 	//보안3단계 로그인 안한상태에서 특정페이지 접근
@@ -142,12 +152,12 @@ public class MemberController {
 		}
 	}
 	
-	//로그아웃
-	@RequestMapping("/logout.do")
-	public String logout(HttpSession session) { //매개변수에 HttpSession 쓰면 쓸수 있다
-		session.invalidate();
-		return "redirect:/";
-	}
+//	//로그아웃
+//	@RequestMapping("/logout.do")
+//	public String logout(HttpSession session) { //매개변수에 HttpSession 쓰면 쓸수 있다
+//		session.invalidate();
+//		return "redirect:/";
+//	}
 	
 	//로그인폼이동
 	@RequestMapping("/loginForm.do")
@@ -201,8 +211,8 @@ public class MemberController {
 			
 		}else{
 			//회원정보 수정할때 이미지가 날아가는것 방지하는 첫번째 방법
-			Member mvo = (Member)session.getAttribute("mvo"); 
-			m.setMemProfile(mvo.getMemProfile()); //로그인한 Member의 MemProfile 값울 담는다
+			//Member mvo = (Member)session.getAttribute("mvo"); 
+			//m.setMemProfile(mvo.getMemProfile()); //로그인한 Member의 MemProfile 값울 담는다
 			
 			// 비밀번호 암호화
 			String encyPw = pwEncoder.encode(m.getMemPassword());
@@ -231,8 +241,30 @@ public class MemberController {
 				rttr.addFlashAttribute("msg", "회원정보수정에 성공했습니다");
 				Member info = mapper.getMember(m.getMemID());
 				
-				session.setAttribute("mvo", info); //회원정보 session도 업데이트해야한다
-				return "redirect:/";		
+				//session.setAttribute("mvo", info); //회원정보 session도 업데이트해야한다
+				
+				//**현재 로그인한 사람의 인증 정보를 꺼내서 → DB에서 최신 정보로 다시 불러오고 → 다시 세션에 넣는 과정
+				//1.현재 로그인한 사용자 정보(인증 정보)를 가져와서 담는다
+				//Authentication: Spring Security에서 로그인한 사람 정보랑 인증 상태를 담는 객체
+				//SecurityContextHolder = 박스(보안 저장소)를 관리하는 관리자
+				//getContext() = 실제 저장된 SecurityContext(보안 저장소) 반환
+				//getAuthentication() = 박스 안에서 로그인한 사용자 정보 꺼내기
+				 Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+				 //그래서 authentication에는 로그인한 정보가 담겨있다
+				 
+				 //2.현재 로그인한 사용자의 정보(Principal)를 꺼내서 MemberUser 타입으로 변환
+				 //getPrincipal(): “누가 로그인했는지”를 가져오는 메서드 → 로그인 했으면 UserDetails를 반환한다
+				 // 리턴 타입이 Object 이므로 MemberUser 타입으로 형변환 해야 실제 메서드나 필드에 접근할 수 있다
+		         MemberUser userAccount = (MemberUser)authentication.getPrincipal();
+		         
+		         //3.현재 로그인 세션의 인증 정보를, 새로운 사용자 정보(memID)를 반영한 새로운 Authentication 객체로 교체한다
+		         //SecurityContextHolder.getContext():현재 로그인 정보 박스 꺼냄
+		         //setAuthentication(): Authentication 객체를 새로 설정하는 메서드
+		         //createNewAuthentication(): 새로운 Authentication 객체를 만드는 메서드
+		         SecurityContextHolder.getContext()
+		         	.setAuthentication(createNewAuthentication(authentication, userAccount.getMember().getMemID())); 
+				
+				return "redirect:/";	
 			}else {
 				System.out.println("회원정보수정 실패");
 				rttr.addFlashAttribute("msgType", "실패메세지"); 
@@ -241,6 +273,24 @@ public class MemberController {
 			}
 		}
 	}
+	//기존 인증 정보를 바탕으로, DB에서 최신 사용자 정보와 권한을 가져와 새로운 Authentication 객체를 만들어 반환하는 메서드
+	private Authentication createNewAuthentication(Authentication currentAuth, String username) {
+	      //1. DB에서 최신 회원 정보(로그인)를 다시 불러온다
+	      UserDetails newPrincipal = memberUserDetailsService.loadUserByUsername(username); 
+	      
+	      //2. UsernamePasswordAuthenticationToken: 새 인증 토큰 생성, 다시 암호화해서 값을 넣겠다 
+	      UsernamePasswordAuthenticationToken newAuth = new UsernamePasswordAuthenticationToken(
+	            		newPrincipal,                   // 로그인한 사용자 정보
+	            		currentAuth.getCredentials(),   // 인증 자격 정보(기존 비밀번호)
+	            		newPrincipal.getAuthorities()   // 권한 리스트 (ROLE_USER 등)
+	           );
+	      //3. 기존 Authentication의 부가 정보를 새 Authentication에 부가 정보 넣기(세션 정보 유지 + 로그인 정보 갱신)
+	      newAuth.setDetails(currentAuth.getDetails()); 
+	      //4. 새 Authentication 객체를 반환 → 다시 SecurityContext에 저장
+	      return newAuth; 
+	}
+	
+
 	
 	//회원사진등록 페이지 이동
 	@RequestMapping("/imageForm.do")
@@ -268,15 +318,24 @@ public class MemberController {
 		
 		//파일의 저장경로(request요청 객체가 필요하다) 
 		String savePath = request.getRealPath("resources/upload");
-		
-		
+
 		int fileMaxSize = 10 * 1024 * 1000; // 10mb까지 가능한 파일의 최대크기 
 		
 		System.out.println(savePath); //이미지가 저장된 경로 
 		
-		
 		//로그인한 회원의 프로필 정보를 업데이트 //세션에 저장된 데이터를 키(key)로 꺼낸다
-		Member mvo = (Member)session.getAttribute("mvo");
+		//Member mvo = (Member)session.getAttribute("mvo");
+		
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		//SecurityContextHolder.getContext(): Spring Security가 관리하는 현재 로그인 상태와 권한 정보를 담고 있는 컨텍스트를 가져오기
+		//getAuthentication() : 컨텍스트 안에서 실제 로그인한 사용자 정보를 꺼내기
+		
+		MemberUser userAccount = (MemberUser)authentication.getPrincipal();
+		//현재 로그인한 사용자의 정보(Principal)를 꺼내서 MemberUser 타입으로 반환
+		//getPrincipal(): “누가 로그인했는지”를 가져오는 메서드 → 로그인 했으면 UserDetails를 반환한다
+		
+		Member mvo = userAccount.getMember(); 
+		//MemberUser에서 실제 회원 객체(Member) 가져온다
 		
 		//이미지 업로드 할 떄 기존 회원의 이미지를 삭제를 해주는 기능
 		String oldImg = mvo.getMemProfile(); //MemProfile 값 반환
@@ -336,7 +395,8 @@ public class MemberController {
 		mapper.profileUpdate(mvo);
 		
 		//세션에 새로운 정보 넣어주기 
-		session.setAttribute("mvo", mvo);
+		//session.setAttribute("mvo", mvo);
+		
 		rttr.addFlashAttribute("msgType", "성공메세지"); 
 		rttr.addFlashAttribute("msg", "이미지 변경이 성공했습니다");
 		

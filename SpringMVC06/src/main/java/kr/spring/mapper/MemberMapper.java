@@ -37,6 +37,8 @@ public interface MemberMapper {
 
 	//권한삭제
 	public void authDelete(String memID);
+
+
 	
 	
 	

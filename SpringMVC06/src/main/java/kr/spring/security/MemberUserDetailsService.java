@@ -26,7 +26,7 @@ public class MemberUserDetailsService implements UserDetailsService{
 		//로그인 처리하기
 		//loadUserByUsername로 진행되면 이미 SpringSecurity가 알아서 로그인 기능을 다 끝마친 상태(비밀번호체크할 필요없다) 
 		// 이제 개발자는 중간에 비밀번호를 알 수 있는 방법이 없다 
-		Member mvo = mapper.login(username); 
+		Member mvo = mapper.login(username);        
 		// Spring Security 내부 보안 규정상 우리가 직접만든 클래스 객체 (VO)
 		// 직접만든 클래스(VO) 객체는 내부보안 규정상 바로 담을 수 없다 → 내가 원하는 VO를 담을 수 있게 변환해주는 User Class가 필요하다
 		
