@@ -17,16 +17,25 @@ public class boardController {
 	@Autowired
 	private BoardService service;
 	//BoardService는 인터페이스이다 
-	//구현한 클래스는 BoardServiceImpl이다. 객체가 부모타입인 BoardService로 업케스팅 된다 
+	//구현한 클래스는 BoardServiceImpl이다 → 객체가 부모타입인 BoardService로 업케스팅 된다 
 	
 	
-	@GetMapping("/boardList.do")
+	@RequestMapping("/register")
+	public String register() {
+		return "board/register";
+	}
+	
+	
+	@GetMapping("/list")
 	public String boardList(Model model) {
-		List<Board> list = service.getList(); //자식에서 기능을 구현시켰고 업케이스팅하면
-		                                      // 자식타입의 getList()가 실행된다
+		List<Board> list = service.getList(); //자식에서 기능을 구현시켰고 업케이스팅하면 자식타입의 getList()가 실행된다	
+		                                      //service에 기능요청
 		model.addAttribute("list", list);
 		return "board/list";
 	}
+	
+	
+	
 	
 	
 	

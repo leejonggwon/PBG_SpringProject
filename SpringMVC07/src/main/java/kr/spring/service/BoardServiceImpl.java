@@ -20,3 +20,17 @@ public class BoardServiceImpl implements BoardService {
 		return list;
 	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
