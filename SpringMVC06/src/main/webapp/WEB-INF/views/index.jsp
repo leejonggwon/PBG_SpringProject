@@ -64,7 +64,7 @@
 	</div>
 	
 	
-	<!-- 회원가입 성공시 띄워줄 모달창 -->
+   <!-- 회원가입 성공시 띄워줄 모달창 -->
    <div class="modal fade" id="myMessage" role="dialog">
      <div class="modal-dialog">
      

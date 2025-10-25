@@ -39,8 +39,15 @@
 	</insert>
 	
 	
+	<!-- resultType은 꼭 명시를 해야한다 -->
+	<select id="login" parameterType="kr.spring.entity.Member" resultType="kr.spring.entity.Member">
+		SELECT * FROM TBLMEMBER WHERE MEMID = #{memID} AND MEMPWD = #{memPwd}
+	</select>
 	
-	
+	<!-- 게시글상세보기  -->
+	<select id="read" parameterType="int" resultType="kr.spring.entity.Board">
+		SELECT * FROM TBLBOARD WHERE IDX = #{idx}
+	</select>
 	
 	
 	

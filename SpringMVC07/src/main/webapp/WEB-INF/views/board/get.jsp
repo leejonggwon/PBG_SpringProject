@@ -22,24 +22,11 @@
 	  <div class="panel panel-default">
 		<div class="panel-heading">Board</div>
 		<div class="panel-body">
-			<form action="${cpath}/board/register" method="post"> <!-- POST방식: 작성한 글 등록 -->
-				
-				<input type="hidden" name="memID" value="${mvo.memID}">
-				<div class="form-group" >
-					<label>제목</label>
-					<input type="text" name="title" class="form-control">
-				</div>
-				<div class="form-group" >
-					<label>내용</label>
-					<textarea class="form-control" name="content" rows="10" cols=""></textarea>
-				</div>
-				<div class="form-group" >
-					<label>작성자</label>
-					<input value="${mvo.memName}" readonly="readonly" type="text" name="writer" class="form-control">
-				</div> 
-				<button type="submit" class="btn btn-default btn-sm">등록</button>
-				<button type="reset" class="btn btn-default btn-sm">취소</button>
-			</form>
+			<table>
+			
+			
+			</table>
+			
 		</div>
 		<div class="panel-footer">스프링게시판 - 이종권</div>
 	  </div>

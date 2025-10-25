@@ -19,7 +19,7 @@ SELECT * FROM TBLBOARD;
 
 INSERT INTO TBLBOARD
 SELECT IFNULL(MAX(IDX) + 1, 1),
-'user01', '공지사항입니다', '다음주 월요일 정상 등원하겠습니다', '교육운영부',
+'admin', '공지사항입니다', '다음주 월요일 정상 등원하겠습니다', '관리자',
 NOW(), 0, IFNULL(MAX(BOARDGROUP) + 1, 1), 0 , 0, 1
 FROM TBLBOARD;
 --MAX(IDX) 와 MAX(BOARDGROUP) 모두 같은 FROM TBLBOARD에서 계산되기 때문에 SELECT는 한 번만 필요하다--
@@ -27,21 +27,21 @@ FROM TBLBOARD;
 
 INSERT INTO TBLBOARD
 SELECT IFNULL(MAX(IDX) + 1, 1),
-'user01', '가을 운동회 안내', '10월 25일(금) 전교생 운동회가 열립니다. 편한 복장으로 참여해주세요!', '교육운영부',
+'admin', '가을 운동회 안내', '10월 25일(금) 전교생 운동회가 열립니다. 편한 복장으로 참여해주세요!', '관리자',
 NOW(), 0, IFNULL(MAX(BOARDGROUP) + 1, 1), 0, 0, 1
 FROM TBLBOARD;
 
 
 INSERT INTO TBLBOARD
 SELECT IFNULL(MAX(IDX) + 1, 1),
-'user02', '10월 급식 일정 안내', '10월 급식표를 홈페이지 자료실에 업로드했습니다. 참고 부탁드립니다.', '행정부',
+'admin', '10월 급식 일정 안내', '10월 급식표를 홈페이지 자료실에 업로드했습니다. 참고 부탁드립니다.', '관리자',
 NOW(), 0, IFNULL(MAX(BOARDGROUP) + 1, 1), 0, 0, 1
 FROM TBLBOARD;
 
 
 INSERT INTO TBLBOARD
 SELECT IFNULL(MAX(IDX) + 1, 1),
-'user02', '학부모 상담 주간 안내', '다음 주 월요일부터 금요일까지 학부모 상담 주간이 진행됩니다.', '행정부',
+'admin', '학부모 상담 주간 안내', '다음 주 월요일부터 금요일까지 학부모 상담 주간이 진행됩니다.', '관리자',
 NOW(), 0, IFNULL(MAX(BOARDGROUP) + 1, 1), 0, 0, 1
 FROM TBLBOARD;
 
@@ -65,6 +65,10 @@ CREATE TABLE TBLMEMBER(
 SELECT * FROM TBLMEMBER;
 
 DELETE FROM TBLMEMBER;
+
+INSERT INTO TBLMEMBER(MEMID, MEMPWD, MEMNAME, MEMPHONE)
+VALUES('admin', '1234', '관리자', '010-1234-1234');
+
 
 INSERT INTO TBLMEMBER(MEMID, MEMPWD, MEMNAME, MEMPHONE)
 VALUES('user01', '1234', '손흥민', '010-1234-1234');
