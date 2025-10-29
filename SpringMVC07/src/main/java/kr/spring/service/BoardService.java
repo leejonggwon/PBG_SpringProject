@@ -20,6 +20,9 @@ public interface BoardService {
 
 	//게시글상세보기
 	public Board get(int idx);
+
+	//게시글 수정
+	public void modify(Board vo);
 }
 
 

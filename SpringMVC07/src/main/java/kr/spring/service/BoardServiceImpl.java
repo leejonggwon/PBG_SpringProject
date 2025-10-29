@@ -43,8 +43,17 @@ public class BoardServiceImpl implements BoardService {
 	}
 	//대부분 Mapper는 DB에 관점에 이름을 지어주고 
 	//Service, Controller는 클라이언트/업무 중심 이름을 지어주는것이 일반적이다
-		  
 
+	//게시글 업데이트
+	@Override
+	public void modify(Board vo) {
+		//보통 DB에 있는 키워드를 사용한다 	
+		mapper.update(vo); 
+	}
+	
+	
+	
+	
 }
 
 

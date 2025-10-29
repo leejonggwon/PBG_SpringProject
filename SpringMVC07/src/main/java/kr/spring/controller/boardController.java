@@ -24,6 +24,26 @@ public class boardController {
 	//BoardService 구현한 클래스는 BoardServiceImpl을 가져다 사용한다 
 	//BoardServiceImpl인데 BoardServiceImpl타입으로 들어가는 이유는
 	//→ *객체가 부모타입인 BoardService로 업케스팅 된다(다형성을 이유로)
+	
+	
+	//게시글 수정기능
+	//같은 이름의 메소드: 오버로딩
+	@PostMapping("/modify")
+	public String modify(Board vo) {
+		//보통 서비스까지 메소드명과 URL요청값을 동일하게 한다
+		service.modify(vo); 
+		return "redirect:/board/list"; //DB변경이 있으면 redirect 사용
+	}
+	
+	
+	//게시글 수정화면 
+	@GetMapping("/modify")
+	public String modify(@RequestParam("idx") int idx, Model model) {
+		//수정화면에는 새로 DB를 조회하므로 service.get(idx)을 그대로 사용한다
+		Board vo = service.get(idx);  
+		model.addAttribute("vo", vo); 
+		return "board/modify";
+	}
 
 
 	//게시글 상세보기

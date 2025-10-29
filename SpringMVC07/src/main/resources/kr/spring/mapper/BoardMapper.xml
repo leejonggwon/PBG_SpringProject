@@ -50,6 +50,11 @@
 	</select>
 	
 	
+	<update id="update" parameterType="kr.spring.entity.Board">
+		UPDATE TBLBOARD 
+		SET TITLE = #{title}, CONTENT = #{content}
+		WHERE IDX = #{idx}
+	</update>
 	
 	
 	
@@ -57,3 +62,23 @@
 	
 	
 </mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

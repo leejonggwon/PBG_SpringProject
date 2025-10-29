@@ -8,4 +8,5 @@
 <aop-project name="SpringMVC03"/>
 <aop-project name="SpringMVC07"/>
 <aop-project name="SpringMVC03_Project_marathon"/>
+<aop-project name="SpringBook"/>
 </aop-reference-model>

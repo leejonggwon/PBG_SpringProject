@@ -6,23 +6,23 @@
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
-		<item key="selection" value="savePath"/>
+		<item key="selection" value="fclear"/>
 		<list key="findhistory">
+			<item value="fclear"/>
+			<item value="frm"/>
+			<item value="loadList"/>
+			<item value="goList"/>
+			<item value="goForm"/>
+			<item value="bookList"/>
+			<item value="nt"/>
+			<item value="boardList"/>
+			<item value="id"/>
+			<item value="id=t"/>
+			<item value="id=&quot;t&quot;"/>
+			<item value="t"/>
+			<item value="view"/>
 			<item value="savePath"/>
 			<item value="join."/>
-			<item value="join"/>
-			<item value="update"/>
-			<item value="upfate"/>
-			<item value="updae"/>
-			<item value="checkType"/>
-			<item value="ta"/>
-			<item value="#frm"/>
-			<item value="goList"/>
-			<item value="hidden"/>
-			<item value="&#x09;&lt;filter&gt; "/>
-			<item value="&lt;c:forEach items=&quot;${list}&quot; var=&quot;board&quot;&gt;"/>
-			<item value="vo"/>
-			<item value="/Users/EGOVEDU/eGovFrame-3.10.0/"/>
 		</list>
 		<list key="replacehistory">
 		</list>

@@ -16,6 +16,8 @@ public interface BoardMapper {
 	public Member login(Member vo);
 
 	public Board read(int idx); //게시글상세보기
+
+	public void update(Board vo); //게시글수정
 }
 
 

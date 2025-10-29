@@ -30,19 +30,20 @@ import lombok.extern.log4j.Log4j;
 public class DataSouceTest {
 	// root-context.xml이 이상없는지 test하는 클래스 
 	
-	//1. Connection이 잘되는지 테스트
+	//Connection이 잘되는지 테스트
 	@Autowired //root-context.xml에 있는 id가 dataSource인 녀석을 사용하겠다 
 	private DataSource dataSource; //javax.sql
 	
-	//2. mapper 테스트
+	//mapper 테스트
 	@Autowired
 	private BoardMapper mapper;
 	
-	//3. Service 테스트
+	//Service 테스트
 	@Autowired
 	private BoardServiceImpl service;
 	
-	//4. 콘트롤러 테스트
+	
+	//**콘트롤러 테스트
 	@Autowired
 	private WebApplicationContext ctx; 
 	//Spring Container 메모리 공간 객체
@@ -62,20 +63,33 @@ public class DataSouceTest {
 	
 	
 	
-	//6. insertSelectKey 테스트
-	//mapper 이미 @Autowired해서 사용하면 된다 
+	
+	//컨트롤러 테스트(modify)
 	@Test
-	public void testInsert() {
-		Board vo = new Board();
-		vo.setMemID("admin");
-		vo.setTitle("insertSelectKey 테스트 글");
-		vo.setContent("insertSelectKey 테스트 입니다");
-		vo.setWriter("관리자");
-		mapper.insertSelectKey(vo);
+	public void testController() throws Exception{
+		log.info( //org.apache.commons.logging //로그를 남기는 표준 API 제공
+				mockMvc.perform(MockMvcRequestBuilders.get("/board/modify?idx=3")) //board에 modify?idx=3를 요청하면 게시글 목록을 볼 수 있다 
+				.andReturn()       //return값을 받아오겠다
+				.getModelAndView() //controller의 model값과 view경로를 다 받아오겠다 
+				); 
 	}
 	
+	
+	
+//	//insertSelectKey 테스트
+//	//mapper 이미 @Autowired해서 사용하면 된다 
+//	@Test
+//	public void testInsert() {
+//		Board vo = new Board();
+//		vo.setMemID("admin");
+//		vo.setTitle("insertSelectKey 테스트 글");
+//		vo.setContent("insertSelectKey 테스트 입니다");
+//		vo.setWriter("관리자");
+//		mapper.insertSelectKey(vo);
+//	}
+	
 
-//	//5. insert 테스트
+//	//insert 테스트
 //	//mapper 이미 @Autowired해서 사용하면 된다 
 //	@Test
 //	public void testInsert() {
@@ -88,7 +102,7 @@ public class DataSouceTest {
 //	}
 	
 	
-//	//4. 컨트롤러 테스트
+//	//컨트롤러 테스트
 //	@Test
 //	public void testController() throws Exception{
 //		log.info( //org.apache.commons.logging //로그를 남기는 표준 API 제공
@@ -100,7 +114,7 @@ public class DataSouceTest {
 	
 
 	 
-//	//3. Service 테스트
+//	//Service 테스트
 //	@Test
 //	public void testGetList() {
 //		List<Board> list = service.getList();
