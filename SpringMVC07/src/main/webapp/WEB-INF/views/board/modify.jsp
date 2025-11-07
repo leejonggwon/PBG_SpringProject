@@ -48,8 +48,19 @@
 				</tr>
 				<tr>
 					<td colspan="2" style="text-align:center">
+					<!-- 로그인한 상태이고 로그인한 사람과 아이디와 게시글 쓴사람 아이디가 일치하면 수정삭제 버튼기능 활성화한다-->
+					<c:if test="${not empty mvo && mvo.memID eq vo.memID }">
 						<button type="submit" class="btn btn-sm btn-primary">수정</button>
-						<button type="button" onclick="location.href='${cpath}/board/remove?idx=${vo.idx}'" class="btn btn-sm btn-success">삭제</button>   
+						<button type="button" onclick="location.href='${cpath}/board/remove?idx=${vo.idx}'" 
+						        class="btn btn-sm btn-success">삭제</button>   
+					</c:if>
+					
+					<c:if test="${empty mvo or mvo.memID ne vo.memID }">
+						<button disabled="disabled" type="submit" class="btn btn-sm btn-primary">수정</button>
+						<button disabled="disabled" type="button" onclick="location.href='${cpath}/board/remove?idx=${vo.idx}'" 
+						        class="btn btn-sm btn-success">삭제</button>   
+					</c:if>		
+								      					       
 						<button type="button" onclick="location.href='${cpath}/board/list'" class="btn btn-sm btn-warning">목록</button>
 					</td>
 				</tr>

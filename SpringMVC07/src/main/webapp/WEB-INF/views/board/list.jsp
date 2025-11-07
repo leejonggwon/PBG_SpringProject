@@ -21,6 +21,7 @@
 		<h2>Spring MVC07</h2>
 		<div class="panel panel-default">
 			<div class="panel-heading">
+			
 			<c:if test="${empty mvo}"> <!-- session 정보 없을때(로그아웃상태) 로그인창이 보인다 -->
 				<form class="form-inline" action="${cpath}/login/loginProcess" method="post">
 					<div class="form-group">
@@ -59,11 +60,18 @@
 					<tbody> <!-- tbody: 테이블안에 영역구분하기 위한 태그 -->
 						<c:forEach items="${list}" var="vo" varStatus="i"> <!-- model.addAttribute("list", list) -->
 				            <tr>
-				                <td>${list.size() - i.index}</td> <!--i.count:1부터, i.index:0부터 <td>${i.count}</td>-->
+				                <td>${list.size() - i.index}</td> <!--i.count:1부터, i.index:0부터 <td>${i.count}</td>-->			              			             
 				                <td>
 					                <a href="${cpath}/board/get?idx=${vo.idx}">
-					                	${vo.title}
+					                	<c:if test="${vo.boardLevel > 0}">
+					                		<c:forEach begin="0" end="${vo.boardLevel}" step="1">
+					                			<span style="padding-left: 5px"></span>
+					                		</c:forEach>
+					                		ㄴ[답글]
+					                	</c:if>
+					                		${vo.title}
 					                </a>
+					                
 				                </td> 
 				                <td>${vo.writer}</td>
 				                <td>
@@ -105,13 +113,12 @@
      </div>
    </div>
 	
-	
 
 	<script type="text/javascript">
 		//페이지가 다 로드 되면 함수를 실행하겠다 
 		$(document).ready(function() {
 			
-			var result = "${result}"; //rttr.addFlashAttribute("result", vo.getIdx())
+			var result = "${result}"; //rttr.addFlashAttribute("result", vo.getIdx())에서 받아온다
 			checkModal(result); //checkModal()함수로 이동 
 			
 			$("#regBtn").click(function(){

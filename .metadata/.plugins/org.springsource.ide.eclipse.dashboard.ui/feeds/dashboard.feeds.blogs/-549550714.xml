@@ -1,215 +1,79 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Spring]]></title><description><![CDATA[Level up your Java code and explore what Spring can do for you.]]></description><link>https://spring.io</link><generator>GatsbyJS</generator><lastBuildDate>Wed, 29 Oct 2025 00:43:20 GMT</lastBuildDate><item><title><![CDATA[Introducing Spring AI Agents and Spring AI Bench]]></title><link>https://spring.io/blog/2025/10/28/agents-and-benchmarks</link><guid isPermaLink="true">https://spring.io/blog/2025/10/28/agents-and-benchmarks</guid><dc:creator><![CDATA[markpollack]]></dc:creator><pubDate>Tue, 28 Oct 2025 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;I&apos;d like to introduce two new projects that are part of the &lt;a href=&quot;https://springaicommunity.mintlify.app&quot;&gt;Spring AI Community&lt;/a&gt; GitHub organization: &lt;a href=&quot;https://springaicommunity.mintlify.app/projects/incubating/spring-ai-agents&quot;&gt;Spring AI Agents&lt;/a&gt;, and &lt;a href=&quot;https://springaicommunity.mintlify.app/projects/incubating/spring-ai-bench&quot;&gt;Spring AI Bench&lt;/a&gt;.  These two projects focus on using agentic coding tools—tools you likely already have in your enterprise.&lt;/p&gt;
-&lt;p&gt;In 2025 AI coding agents have matured to the point that they need to be seriously considered for enterprise Java development and general SDLC tasks.  CLI Tools like Claude Code, Google’s Gemini CLI, Amazon Q Developer, and OpenAI’s assistants are examples from leading large AI labs, but there are also smaller startups and open-source options.  These agentic coding tools can reason about architecture, grok large code bases, and hold great promise to help developers ship software faster.  They are often used in a “human in the loop” style, but they can also be instructed to execute autonomously until they determine the goal has been completed.&lt;/p&gt;
-&lt;p&gt;Spring AI Agents defines a lightweight but powerful portable abstraction: the AgentClient. It acts as a consistent interface for invoking autonomous CLI-based agents.  This allows developers to use the agentic tools they already have while providing flexibility to avoid locking into one single provider.&lt;/p&gt;
-&lt;p&gt;However, AgentClient is only one piece of the developer toolbox you need to be effective using agentic tools.  Spring AI Agents provides the following abstractions, which, when combined, can produce the most effective results:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;Goals:&lt;/strong&gt; the objectives that the agent is to complete, such as increasing code coverage, labeling issues, or reviewing and merging pull requests.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Context:&lt;/strong&gt; the data and environment the agent reasons over - source files, logs, structured datasets, and documentation.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Tools:&lt;/strong&gt; Custom capabilities made available to the model to invoke when needed, most often exposed through the Model Context Protocol.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Judges:&lt;/strong&gt; evaluators that verify outcomes and assess quality against predefined criteria.  These can be deterministic, e.g. a code coverage number or AI-driven, using the LLM–as–Judge pattern.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Sandbox:&lt;/strong&gt; An abstraction of where the Agent will execute their work safely and reproducibly.  Current support is for local execution and in a Docker container.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;The companion project, Spring AI Bench, is a benchmark suite for evaluating agents on goal-directed &lt;strong&gt;enterprise workflows.&lt;/strong&gt;  It evaluates how effectively different agents have completed their goals and can be considered the test harness that runs any agent via Spring AI Agents.&lt;/p&gt;
-&lt;p&gt;The need for this project came from my investigation of existing Agentic benchmarks. I discovered they were focused primarily on Python and addressed only the use case of providing a code patch for GitHub issues. You see the following pattern in the literature: &lt;strong&gt;SWE-bench&lt;/strong&gt; posts strong numbers on its &lt;strong&gt;static, curated Python issue set, yet when a new set of curated issues is introduced&lt;/strong&gt;, the numbers drop dramatically. On SWE-bench Verified, agents score &lt;strong&gt;60-75%&lt;/strong&gt; on static Python sets; on SWE-bench-Live, the same runs fall to &lt;strong&gt;19%&lt;/strong&gt; - a &lt;strong&gt;3× drop&lt;/strong&gt;. On &lt;strong&gt;SWE-bench-Java&lt;/strong&gt;, Java tasks land around &lt;strong&gt;~7-10%&lt;/strong&gt; compared to Python&apos;s ~75% on the same benchmark family, showing an &lt;strong&gt;order of magnitude gap&lt;/strong&gt;. For engineering leaders, volatile scores translate into volatile decisions.&lt;/p&gt;
-&lt;p&gt;None of this implies agents are weak; it implies the &lt;strong&gt;yardsticks are dated&lt;/strong&gt;. The &lt;strong&gt;SWE-agent&lt;/strong&gt; is thousands of lines of Python, but the ~100-line &lt;a href=&quot;https://github.com/SWE-agent/mini-swe-agent&quot;&gt;&lt;strong&gt;mini-SWE-agent&lt;/strong&gt;&lt;/a&gt; (a simple agentic loop with chat memory and a single tool—bash) achieves competitive SWE-Bench results.  Turns out, there are no benchmarks to judge the capabilities of today&apos;s and tomorrow’s modern set of agentic CLI tools.&lt;/p&gt;
-&lt;p&gt;Early runs are promising. Multi-label issue classification across more than a hundred domain-specific labels matched or exceeded published F1 scores. PR-merge agents have processed hundreds of pull requests on the Spring AI code base, generating structured reports - risk assessments, architecture notes, and backport analysis.  This significantly reduced review time while improving consistency.  Simple code coverage benchmarks revealed that while leading models can both achieve the same coverage number, there are differences in the code quality and level of instruction following between leading models.&lt;/p&gt;
-&lt;p&gt;What&apos;s next: Both projects are incubating in the Spring AI Community organization.  Snapshot builds are available in Maven Central. We&apos;re also working with leaders of the &lt;a href=&quot;https://dpaia.dev/&quot;&gt;Developer Productivity AI Arena (DPAIA)&lt;/a&gt; initiative, which was created to address the issues I raised here.&lt;/p&gt;
-&lt;p&gt;The Spring AI Community looks forward to your feedback as we move from the year of agents to a new era of using agents effectively.&lt;/p&gt;
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Spring]]></title><description><![CDATA[Level up your Java code and explore what Spring can do for you.]]></description><link>https://spring.io</link><generator>GatsbyJS</generator><lastBuildDate>Fri, 07 Nov 2025 10:37:56 GMT</lastBuildDate><item><title><![CDATA[A Bootiful Podcast: The Vaadin team, live from Vaadin Create 2025]]></title><link>https://spring.io/blog/2025/11/06/a-bootiful-podcasd-vaadin-team</link><guid isPermaLink="true">https://spring.io/blog/2025/11/06/a-bootiful-podcasd-vaadin-team</guid><dc:creator><![CDATA[joshlong]]></dc:creator><pubDate>Thu, 06 Nov 2025 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;Hi, Spring fans! In this installment, I had the privilege to sit down with Vaadin legends Joonas Lehtinen, Marcus Hellberg, and Leif Åstrand at the amazing Vaadin Create 2025 event in Frankfurt, Germany.&lt;/p&gt;
+&lt;iframe title=&quot;The Vaadin team, live from Vaadin Create 2025&quot; allowtransparency=&quot;true&quot; height=&quot;300&quot; width=&quot;100%&quot; style=&quot;border: none; min-width: min(100%, 430px);height:300px;&quot; scrolling=&quot;no&quot; data-name=&quot;pb-iframe-player&quot; src=&quot;https://www.podbean.com/player-v2/?from=embed&amp;i=fd4rp-19b656e-pb&amp;square=1&amp;share=1&amp;download=1&amp;fonts=Arial&amp;skin=1&amp;font-color=&amp;rtl=0&amp;logo_link=&amp;btn-skin=7&amp;size=300&quot; loading=&quot;lazy&quot; allowfullscreen=&quot;&quot;&gt;&lt;/iframe&gt;</content:encoded></item><item><title><![CDATA[Spring Batch 6.0.0-RC2 available now!]]></title><link>https://spring.io/blog/2025/11/06/spring-batch-6-0-0-rc2-released</link><guid isPermaLink="true">https://spring.io/blog/2025/11/06/spring-batch-6-0-0-rc2-released</guid><dc:creator><![CDATA[fmbenhassine]]></dc:creator><pubDate>Thu, 06 Nov 2025 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;I am pleased to announce that Spring Batch &lt;code&gt;6.0.0-RC2&lt;/code&gt; is now available from Maven Central!&lt;/p&gt;
+&lt;h2 id=&quot;whats-new-in-spring-batch-600-rc2&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#whats-new-in-spring-batch-600-rc2&quot; aria-label=&quot;whats new in spring batch 600 rc2 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;What&apos;s new in Spring Batch 6.0.0-RC2?&lt;/h2&gt;
+&lt;p&gt;This second release candidate introduces a long-awaited feature which is the use of contextual lambda expressions to configure batch artefacts.
+This new style of configuration provides a more concise and readable way to define item readers and writers.&lt;/p&gt;
+&lt;p&gt;For example, instead of using the traditional builder pattern like in the following snippet to define a delimited file reader:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-java&quot;&gt;var reader = new FlatFileItemReaderBuilder()
+    .resource(...)
+    .delimited()
+    .delimiter(&quot;,&quot;)
+    .quoteCharacter(&apos;&quot;&apos;)
+    ...
+    .build();
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;You can now use a lambda expression to configure the delimited options like this:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-java&quot;&gt;var reader = new FlatFileItemReaderBuilder()
+    .resource(...)
+    .delimited(config -&gt; config.delimiter(&apos;,&apos;).quoteCharcter( &apos;&quot;&apos; ))
+    ...
+    .build();
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;This release also comes with several bug fixes, performance improvements and dependency upgrades.&lt;/p&gt;
+&lt;p&gt;For the complete list of changes, please check the &lt;a href=&quot;https://github.com/spring-projects/spring-batch/releases/tag/v6.0.0-RC2&quot;&gt;release notes&lt;/a&gt;.&lt;/p&gt;
+&lt;h2 id=&quot;feedback&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#feedback&quot; aria-label=&quot;feedback permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Feedback&lt;/h2&gt;
+&lt;p&gt;I would like to thank all contributors who had a role in this release! As we continue
+our work on Spring Batch 6, we look forward to your feedback on &lt;a href=&quot;https://github.com/spring-projects/spring-batch/issues&quot;&gt;Github Issues&lt;/a&gt;, &lt;a href=&quot;https://github.com/spring-projects/spring-batch/discussions&quot;&gt;Github Discussions&lt;/a&gt; and &lt;a href=&quot;https://twitter.com/springbatch&quot;&gt;X&lt;/a&gt;.&lt;/p&gt;
 &lt;hr&gt;
-&lt;h2 id=&quot;resources&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#resources&quot; aria-label=&quot;resources permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Resources&lt;/h2&gt;
-&lt;p&gt;&lt;strong&gt;Projects:&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://spring.io/projects/spring-batch&quot;&gt;Spring Batch Home&lt;/a&gt;|&lt;a href=&quot;https://github.com/spring-projects/spring-batch&quot;&gt;Source on Github&lt;/a&gt;|&lt;a href=&quot;https://docs.spring.io/spring-batch/reference/6.0/index.html&quot;&gt;Reference documentation&lt;/a&gt;&lt;/p&gt;</content:encoded></item><item><title><![CDATA[Spring Boot 4.0.0-RC2 available now]]></title><link>https://spring.io/blog/2025/11/06/spring-boot-4-0-0-RC2-available-now</link><guid isPermaLink="true">https://spring.io/blog/2025/11/06/spring-boot-4-0-0-RC2-available-now</guid><dc:creator><![CDATA[philwebb]]></dc:creator><pubDate>Thu, 06 Nov 2025 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;On behalf of the team and everyone who has contributed, I&apos;m happy to announce that Spring Boot &lt;code&gt;4.0.0-RC2&lt;/code&gt; has been released and is now available from Maven Central.&lt;/p&gt;
+&lt;p&gt;This release includes &lt;a href=&quot;https://github.com/spring-projects/spring-boot/releases/tag/v4.0.0-RC2&quot;&gt;63 enhancements, documentation improvements, dependency upgrades, and bug fixes&lt;/a&gt;. Notable new features include:&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;https://github.com/spring-ai-community/spring-ai-bench&quot;&gt;Spring AI Bench&lt;/a&gt; - GitHub repository&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://spring-ai-community.github.io/spring-ai-agents/&quot;&gt;Spring AI Agents&lt;/a&gt; - Documentation&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://springaicommunity.mintlify.app&quot;&gt;Spring AI Community&lt;/a&gt; - Community portal&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://dpaia.dev/&quot;&gt;Developer Productivity AI Arena (DPAIA)&lt;/a&gt; - Industry initiative for modern agent benchmarking&lt;/li&gt;
+&lt;li&gt;Modularization of spring-boot-micrometer-tracing&lt;/li&gt;
+&lt;li&gt;Restoration of Jersey Support&lt;/li&gt;
+&lt;li&gt;A few bug fixes and last minute updates before GA&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;&lt;strong&gt;Research References:&lt;/strong&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;https://www.swebench.com/&quot;&gt;SWE-bench&lt;/a&gt; - Original benchmark suite&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://arxiv.org/abs/2505.23419&quot;&gt;SWE-bench-Live&lt;/a&gt; - Fresh issues benchmark showing 60%→19% drop&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://arxiv.org/abs/2408.14354&quot;&gt;SWE-bench-Java&lt;/a&gt; - Multi-language benchmark showing Java ~7-10% vs Python ~75%&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://github.com/SWE-agent/mini-swe-agent&quot;&gt;mini-SWE-agent&lt;/a&gt; - Minimal agent achieving competitive results&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://modelcontextprotocol.io/&quot;&gt;Model Context Protocol&lt;/a&gt; - MCP specification&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://betterbench.stanford.edu/&quot;&gt;BetterBench&lt;/a&gt; - Benchmark quality framework&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;strong&gt;Conference Talks:&lt;/strong&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;https://youtu.be/Sw3PlFXfWj4?si=2oMs91yejatCvhD5&amp;#x26;t=2220&quot;&gt;Devoxx 2025: Spring AI Agents and Spring AI Bench&lt;/a&gt; - Mark Pollack&apos;s talk introducing both projects&lt;/li&gt;
-&lt;/ul&gt;</content:encoded></item><item><title><![CDATA[Modularizing Spring Boot]]></title><link>https://spring.io/blog/2025/10/28/modularizing-spring-boot</link><guid isPermaLink="true">https://spring.io/blog/2025/10/28/modularizing-spring-boot</guid><dc:creator><![CDATA[spring-boot-team]]></dc:creator><pubDate>Tue, 28 Oct 2025 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;Continuing our &lt;a href=&quot;https://spring.io/blog/2025/09/02/road_to_ga_introduction&quot;&gt;Road to GA series&lt;/a&gt;, this week we&apos;re exploring the modularization effort happening with Spring Boot 4.&lt;/p&gt;
-&lt;p&gt;When Spring Boot 1.0 was released in 2014, it shipped with a single &lt;code&gt;spring-boot-autoconfigure&lt;/code&gt; jar weighing in at 182 KiB.
-Of course, that initial version didn&apos;t support a great deal, but over the years, that has changed.&lt;/p&gt;
-&lt;p&gt;One of Spring&apos;s greatest strengths is the sheer number of technologies that it supports, but each new technology brings a cost.
-Each time we support something new, the autoconfigure jar grows.
-With Spring Boot 3.5, that single &lt;code&gt;spring-boot-autoconfigure&lt;/code&gt; jar is now 2 MiB!&lt;/p&gt;
-&lt;p&gt;While disk space is cheap, most of the classes actually aren&apos;t interesting for you because they target a technology you may not have in your application.
-That means you&apos;ll get a lot of auto-complete suggestions for classes and configuration properties that are just unnecessary.
-This adds confusion and mental load, and we&apos;re going to change that with Spring Boot 4.&lt;/p&gt;
-&lt;p&gt;So, grab a mind-soothing tea and join us for the ride!&lt;/p&gt;
-&lt;h2 id=&quot;a-modular-spring-boot-4&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#a-modular-spring-boot-4&quot; aria-label=&quot;a modular spring boot 4 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;A Modular Spring Boot 4&lt;/h2&gt;
-&lt;p&gt;In Spring Boot 4, we are introducing a fundamental change in how auto-configurations are packaged, delivered, and consumed.
-Instead of a single, monolithic &lt;code&gt;spring-boot-autoconfigure&lt;/code&gt; jar, we are now splitting functionality into small and more focused modules.&lt;/p&gt;
-&lt;p&gt;This change is motivated by maintainability, clarity, and a leaner runtime footprint.
-It has ripple effects in package structure, starters, and how end users migrate from Spring Boot 3 to Spring Boot 4.
-Every technology supported by Spring Boot now has its own starter, some of which are new in Spring Boot 4.&lt;/p&gt;
-&lt;h2 id=&quot;why-modularize-the-codebase&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#why-modularize-the-codebase&quot; aria-label=&quot;why modularize the codebase permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Why Modularize the Codebase?&lt;/h2&gt;
-&lt;p&gt;Now, you may ask yourself: why do this?
-Why touch almost everything in the codebase and split it up?
-In fact, this has been a very challenging piece of work, and one that we started before Spring Boot 3.5 was even released.
-The benefits, however, are quite compelling:&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Maintainability and architectural clarity&lt;/strong&gt;:
-With smaller modules and enforced boundaries, the team and our contributors can reason about each domain more clearly.
-Module boundaries become contracts rather than soft conventions.
-Your IDE also offers a much more focused view of the world.
-No more code completion suggestions of classes you&apos;re never going to need, and only the configuration properties you&apos;re actually using show up in the IDE popups.&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Reduced artifact sizes and footprint&lt;/strong&gt;:
-Instead of shipping one large autoconfigure jar containing many features you might not use, your application only pulls in the relevant modules.
-This reduces classpath overhead, startup scan costs, and disk space.&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Stronger signals and avoidance of accidental auto-configuration&lt;/strong&gt;:
-Because modules are scoped, Spring Boot has a much stronger signal about the reason you&apos;ve pulled in a dependency.
-Did you include the &lt;code&gt;spring-webflux&lt;/code&gt; jar for server-side &lt;code&gt;@Controller&lt;/code&gt; support, or because you want to use &lt;code&gt;WebClient&lt;/code&gt;?
-With focused modules, we actually know.
-You&apos;ll never again need to call &lt;code&gt;SpringApplication.setWebApplicationType(WebApplicationType.NONE)&lt;/code&gt; because there won&apos;t even be any web server auto-configuration on the classpath if you&apos;re only using &lt;code&gt;WebClient&lt;/code&gt; through the new &lt;code&gt;spring-boot-webclient&lt;/code&gt; module.&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;New use-cases enabled&lt;/strong&gt;:
-We&apos;re already seeing modularization open up new use-cases, and we think there will be more in the future.
-For example, you may now use Micrometer metrics independently of Actuator.
-You may bring in just the module that publishes metrics without needing the full actuator dependency chain, which is difficult with Spring Boot 3.&lt;/p&gt;
-&lt;h2 id=&quot;test-support&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#test-support&quot; aria-label=&quot;test support permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Test Support&lt;/h2&gt;
-&lt;p&gt;It turns out that &lt;code&gt;spring-boot-autoconfigure&lt;/code&gt; is not the only jar that needed modularizing.
-Whilst not as large, the &lt;code&gt;spring-boot-test-autoconfigure&lt;/code&gt; jar also needed to be split up.
-For example, the &lt;code&gt;@AutoConfigureDataJdbc&lt;/code&gt; annotation is used for testing Spring Data JDBC, so it should be aligned with the &lt;code&gt;spring-boot-data-jdbc&lt;/code&gt; module.&lt;/p&gt;
-&lt;p&gt;We didn&apos;t want to put test support code in the module itself, so instead we&apos;ve created test-specific modules.
-For our example above, the annotation moved to a &lt;code&gt;spring-boot-data-jdbc-test&lt;/code&gt; jar.&lt;/p&gt;
-&lt;p&gt;To help keep things simple, we&apos;ve also made sure there&apos;s a test starter POM for every regular starter that we ship.
-For example, if your app depends on &lt;code&gt;spring-boot-starter-webmvc&lt;/code&gt; then it should also have a test-scoped dependency on &lt;code&gt;spring-boot-starter-webmvc-test&lt;/code&gt;.&lt;/p&gt;
-&lt;h2 id=&quot;how-to-migrate-to-spring-boot-4&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#how-to-migrate-to-spring-boot-4&quot; aria-label=&quot;how to migrate to spring boot 4 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;How to Migrate to Spring Boot 4&lt;/h2&gt;
-&lt;p&gt;The effort involved with migrating an application from Spring Boot 3 to 4 will vary depending on a number of factors.
-For most applications, we hope the process will be just a few updates to your &lt;code&gt;pom.xml&lt;/code&gt; or &lt;code&gt;build.gradle&lt;/code&gt; file and a few package import fixes.&lt;/p&gt;
-&lt;p&gt;Here&apos;s the process that most applications should follow:&lt;/p&gt;
-&lt;h3 id=&quot;1-refine-your-main-starter-dependencies&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#1-refine-your-main-starter-dependencies&quot; aria-label=&quot;1 refine your main starter dependencies permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;1. Refine Your Main Starter Dependencies&lt;/h3&gt;
-&lt;p&gt;All existing starters now pull in their related modules transitively.
-This means that if you&apos;re already using starters, your application will have most of the modules that it needs.
-One thing you might need to do is add starters for technologies that previously didn&apos;t have one.
-Here&apos;s a typical Spring Boot 3 web application Maven POM:&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-xml&quot;&gt;&amp;#x3C;dependency&gt;
-  &amp;#x3C;groupId&gt;org.springframework.boot&amp;#x3C;/groupId&gt;
-  &amp;#x3C;artifactId&gt;spring-boot-starter-web&amp;#x3C;/artifactId&gt;
-&amp;#x3C;/dependency&gt;
-&amp;#x3C;dependency&gt;
-  &amp;#x3C;groupId&gt;org.springframework.boot&amp;#x3C;/groupId&gt;
-  &amp;#x3C;artifactId&gt;spring-boot-starter-security&amp;#x3C;/artifactId&gt;
-&amp;#x3C;/dependency&gt;
-&amp;#x3C;dependency&gt;
-  &amp;#x3C;groupId&gt;org.flywaydb&amp;#x3C;/groupId&gt;
-  &amp;#x3C;artifactId&gt;flyway-core&amp;#x3C;/artifactId&gt;
-&amp;#x3C;/dependency&gt;
+&lt;p&gt;Please see the &lt;a href=&quot;https://github.com/spring-projects/spring-boot/wiki/Spring-Boot-4.0.0-RC2-Release-Notes&quot;&gt;release notes&lt;/a&gt; for more details and upgrade instructions.&lt;/p&gt;
+&lt;p&gt;Thanks to all those who have contributed with issue reports and pull requests.&lt;/p&gt;
+&lt;h3 id=&quot;how-can-you-help&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#how-can-you-help&quot; aria-label=&quot;how can you help permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;How can you help?&lt;/h3&gt;
+&lt;p&gt;If you&apos;re interested in helping out, check out the &lt;a href=&quot;https://github.com/spring-projects/spring-boot/labels/status%3A%20ideal-for-contribution&quot;&gt;&quot;ideal for contribution&quot; tag&lt;/a&gt; in the issue repository. If you have general questions, please ask on &lt;a href=&quot;https://stackoverflow.com&quot;&gt;stackoverflow.com&lt;/a&gt; using the &lt;a href=&quot;https://stackoverflow.com/tags/spring-boot&quot;&gt;&lt;code&gt;spring-boot&lt;/code&gt; tag&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://spring.io/projects/spring-boot/&quot;&gt;Project Page&lt;/a&gt; | &lt;a href=&quot;https://github.com/spring-projects/spring-boot&quot;&gt;GitHub&lt;/a&gt; | &lt;a href=&quot;https://github.com/spring-projects/spring-boot/issues&quot;&gt;Issues&lt;/a&gt; | &lt;a href=&quot;https://docs.spring.io/spring-boot/4.0/&quot;&gt;Documentation&lt;/a&gt; | &lt;a href=&quot;https://stackoverflow.com/questions/tagged/spring-boot&quot;&gt;Stack Overflow&lt;/a&gt;&lt;/p&gt;</content:encoded></item><item><title><![CDATA[Spring gRPC Next Steps for 1.0.0]]></title><link>https://spring.io/blog/2025/11/05/spring-grpc-next-steps</link><guid isPermaLink="true">https://spring.io/blog/2025/11/05/spring-grpc-next-steps</guid><dc:creator><![CDATA[dsyer]]></dc:creator><pubDate>Wed, 05 Nov 2025 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;This is a new blog post in the &lt;a href=&quot;https://spring.io/blog/2025/09/02/road_to_ga_introduction&quot;&gt;Road to GA series&lt;/a&gt;, this time updating everyone on the plans to integrate &lt;a href=&quot;https://github.com/spring-projects/spring-grpc&quot;&gt;Spring gRPC&lt;/a&gt; with &lt;a href=&quot;https://github.com/spring-projects/spring-boot&quot;&gt;Spring Boot&lt;/a&gt; 4. The original plan was to move the autoconfiguration from Spring gRPC into Spring Boot in time for the 4.0 release. Unfortunately we haven&apos;t been able to find the time to merge that change, but the good news is that we have instead added support for Spring Boot 4 to the existing Spring gRPC project, and are planning a 1.0 release in the coming days. This arrangement will continue until the merge can finally happen, most likely in an early milestone of Spring Boot 4.1. Users of Spring gRPC who are looking for longer term support will find it through this path, and as long as they continue to upgrade Spring Boot it should be a very straighforward process.&lt;/p&gt;
+&lt;p&gt;For the transition period (Spring gRPC 1.0 and Spring Boot 4.0), the BOM (bill of materials), autoconfiguration and starters, which are the recommended mechanism for consuming Spring gRPC, will stay at their current co-ordinates, i.e. with a groupId of &lt;code&gt;org.springframework.grpc&lt;/code&gt;. So if you have been using Spring gRPC 0.12.0, you most likely can just change the version in your dependency management. The autoconfiguration classes themselves will have a package name change, so if you happen to be using those explicitly anywhere (probably a minority use case) you might have to change the imports as well. There might be other changes you have to make to your application to do with the migration from &lt;a href=&quot;https://github.com/spring-projects/spring-boot/wiki/Spring-Boot-4.0-Migration-Guide&quot;&gt;Spring Boot 3.x to 4.x&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;There is one exception: the &lt;code&gt;spring-grpc-test&lt;/code&gt; jar has been renamed to &lt;code&gt;spring-grpc-test-spring-boot-autoconfigure&lt;/code&gt; to better reflect its purpose. So you will have to change that dependency in your test scope.&lt;/p&gt;
+&lt;p&gt;Once the autoconfiguration is merged (projected to be in Spring Boot 4.1) you won&apos;t need a separate BOM and all you need do is change the co-ordinates in your dependency management for the starters. We will publish explicit guidance on that when the time comes.&lt;/p&gt;
+&lt;h2 id=&quot;a-simple-example&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#a-simple-example&quot; aria-label=&quot;a simple example permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;A simple example&lt;/h2&gt;
+&lt;p&gt;Suppose you had a gRPC server based on the old 0.12.0 release. With Maven it would look like this:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-xml&quot;&gt;&amp;#x3C;dependencyManagement&gt;
+	&amp;#x3C;dependencies&gt;
+		&amp;#x3C;dependency&gt;
+			&amp;#x3C;groupId&gt;org.springframework.grpc&amp;#x3C;/groupId&gt;
+			&amp;#x3C;artifactId&gt;spring-grpc-dependencies&amp;#x3C;/artifactId&gt;
+			&amp;#x3C;version&gt;0.12.0&amp;#x3C;/version&gt;
+			&amp;#x3C;type&gt;pom&amp;#x3C;/type&gt;
+			&amp;#x3C;scope&gt;import&amp;#x3C;/scope&gt;
+		&amp;#x3C;/dependency&gt;
+	&amp;#x3C;/dependencies&gt;
+&amp;#x3C;/dependencyManagement&gt;
+&amp;#x3C;dependencies&gt;
+	&amp;#x3C;dependency&gt;
+		&amp;#x3C;groupId&gt;org.springframework.grpc&amp;#x3C;/groupId&gt;
+		&amp;#x3C;artifactId&gt;spring-grpc-spring-boot-starter&amp;#x3C;/artifactId&gt;
+	&amp;#x3C;/dependency&gt;
+...
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;In Spring Boot 3, Flyway would be auto-configured when the Flyway jar was present.
-With Spring Boot 4, you&apos;ll now need to include the Flyway starter to make sure you have the &lt;code&gt;spring-boot-flyway&lt;/code&gt; module.
-We&apos;ve also taken the opportunity to rename a few starters to make them more consistent.
-Here, the &lt;code&gt;web&lt;/code&gt; starter is now named &lt;code&gt;webmvc&lt;/code&gt;:&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-xml&quot;&gt;&amp;#x3C;dependency&gt;
-  &amp;#x3C;groupId&gt;org.springframework.boot&amp;#x3C;/groupId&gt;
-  &amp;#x3C;artifactId&gt;spring-boot-starter-webmvc&amp;#x3C;/artifactId&gt;
-&amp;#x3C;/dependency&gt;
-&amp;#x3C;dependency&gt;
-  &amp;#x3C;groupId&gt;org.springframework.boot&amp;#x3C;/groupId&gt;
-  &amp;#x3C;artifactId&gt;spring-boot-starter-security&amp;#x3C;/artifactId&gt;
-&amp;#x3C;/dependency&gt;
-&amp;#x3C;dependency&gt;
-  &amp;#x3C;groupId&gt;org.springframework.boot&amp;#x3C;/groupId&gt;
-  &amp;#x3C;artifactId&gt;spring-boot-starter-flyway&amp;#x3C;/artifactId&gt;
-&amp;#x3C;/dependency&gt;
+&lt;p&gt;To upgrade to 1.0.0 you would just change the &lt;code&gt;&amp;#x3C;version&gt;&lt;/code&gt;. The same would work for Gradle - just change the version of the dependency management in&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-groovy&quot;&gt;dependencyManagement {
+    imports {
+        mavenBom &apos;org.springframework.grpc:spring-grpc-dependencies:0.12.0&apos;
+    }
+}
+dependencies {
+    implementation &apos;org.springframework.grpc:spring-grpc-spring-boot-starter&apos;
+...
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;You can find the list of starters for every technology in &lt;a href=&quot;https://github.com/spring-projects/spring-boot/wiki/Spring-Boot-4.0-Migration-Guide#starters&quot;&gt;the migration guide&lt;/a&gt;.&lt;/p&gt;
-&lt;h3 id=&quot;2-use-the-new-test-starters&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#2-use-the-new-test-starters&quot; aria-label=&quot;2 use the new test starters permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;2. Use the New Test Starters&lt;/h3&gt;
-&lt;p&gt;Each of the main starters that you use has a corresponding test starter that you&apos;ll also want to add.
-Doing so ensures you get the correct testing support.
-Make sure that you add the test starters to the &lt;code&gt;test&lt;/code&gt; scope.
-For our example application above, we&apos;d use the following test starters:&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-xml&quot;&gt;&amp;#x3C;dependency&gt;
-  &amp;#x3C;groupId&gt;org.springframework.boot&amp;#x3C;/groupId&gt;
-  &amp;#x3C;artifactId&gt;spring-boot-starter-webmvc-test&amp;#x3C;/artifactId&gt;
-  &amp;#x3C;scope&gt;test&amp;#x3C;/scope&gt;
-&amp;#x3C;/dependency&gt;
-&amp;#x3C;dependency&gt;
-  &amp;#x3C;groupId&gt;org.springframework.boot&amp;#x3C;/groupId&gt;
-  &amp;#x3C;artifactId&gt;spring-boot-starter-security-test&amp;#x3C;/artifactId&gt;
-  &amp;#x3C;scope&gt;test&amp;#x3C;/scope&gt;
-&amp;#x3C;/dependency&gt;
-&amp;#x3C;dependency&gt;
-  &amp;#x3C;groupId&gt;org.springframework.boot&amp;#x3C;/groupId&gt;
-  &amp;#x3C;artifactId&gt;spring-boot-starter-flyway-test&amp;#x3C;/artifactId&gt;
-  &amp;#x3C;scope&gt;test&amp;#x3C;/scope&gt;
-&amp;#x3C;/dependency&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;This will include everything you need to test web components, controllers, mock MVC, security, and Flyway.&lt;/p&gt;
-&lt;h3 id=&quot;3-adjust-manual-or-custom-configuration&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#3-adjust-manual-or-custom-configuration&quot; aria-label=&quot;3 adjust manual or custom configuration permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;3. Adjust Manual or Custom Configuration&lt;/h3&gt;
-&lt;p&gt;If your project or any custom starter previously depended on &lt;code&gt;spring-boot-autoconfigure&lt;/code&gt; or pulled in auto-configuration classes manually, you will need to replace those imports/dependencies with the new modular equivalents.&lt;/p&gt;
-&lt;p&gt;You&apos;ll also need to update package names if you reference Spring Boot&apos;s packages.
-Because modules now begin with &lt;code&gt;org.springframework.boot.&amp;#x3C;module&gt;&lt;/code&gt;, imports of auto-configuration support classes may need to change.
-The same also applies to customizers, for example.&lt;/p&gt;
-&lt;h3 id=&quot;4-review-custom-starters-and-shared-libraries&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#4-review-custom-starters-and-shared-libraries&quot; aria-label=&quot;4 review custom starters and shared libraries permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;4. Review Custom Starters and Shared Libraries&lt;/h3&gt;
-&lt;p&gt;If your organization maintains custom Spring Boot starters or shared dependencies, you should reevaluate them in light of modularization.
-We strongly discourage supporting both Spring Boot 3 and 4 within the same artifact, due to refactorings in package names and modules.&lt;/p&gt;
-&lt;h2 id=&quot;classic-modules&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#classic-modules&quot; aria-label=&quot;classic modules permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Classic Modules&lt;/h2&gt;
-&lt;p&gt;To ease the transition, Spring Boot 4 retains Classic Starter POMs.
-These &quot;classic starters&quot; bundle all the (modular) auto-configuration modules without their transitive dependencies.
-In effect, the classic starters act as a helpful tool if you have problems upgrading.
-You can adopt classic starters to &quot;get up and running&quot;, fix any package imports, and then, over time, migrate to more selective module dependencies.
-To use the classic starters, your dependencies would look something like this:&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-xml&quot;&gt;&amp;#x3C;dependency&gt;
-  &amp;#x3C;groupId&gt;org.springframework.boot&amp;#x3C;/groupId&gt;
-  &amp;#x3C;artifactId&gt;spring-boot-starter-classic&amp;#x3C;/artifactId&gt;
-&amp;#x3C;/dependency&gt;
-&amp;#x3C;dependency&gt;
-  &amp;#x3C;groupId&gt;org.springframework.boot&amp;#x3C;/groupId&gt;
-  &amp;#x3C;artifactId&gt;spring-boot-starter-test-classic&amp;#x3C;/artifactId&gt;
-  &amp;#x3C;scope&gt;test&amp;#x3C;/scope&gt;
-&amp;#x3C;/dependency&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id=&quot;conclusion&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#conclusion&quot; aria-label=&quot;conclusion permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Conclusion&lt;/h2&gt;
-&lt;p&gt;Spring Boot 4&apos;s modularization of auto-configurations is a deliberate architectural step toward a more maintainable, composable, and lean framework.
-By splitting functionality into focused modules, introducing classic starters, and providing test-starters, Spring Boot gives you the tools for an incremental upgrade path.
-While there is some migration overhead (especially for custom or deeply coupled code), the benefits in clarity, footprint, and runtime behavior make it a worthwhile investment.&lt;/p&gt;
-&lt;p&gt;If you&apos;re planning a migration, try to use just the modules you need to create a lighter and more expressive application.
-If you need more time to complete your migration, use the classic starters and adopt modularization when it fits your schedule.&lt;/p&gt;
-&lt;p&gt;As always, we welcome any feedback that you might have.
-If you find bugs, please report them on our &lt;a href=&quot;https://github.com/spring-projects/spring-boot/issues&quot;&gt;GitHub issue tracker&lt;/a&gt;.
-Thank you to everyone who has been following the milestones and release candidates and has already done so.&lt;/p&gt;</content:encoded></item><item><title><![CDATA[Spring Tools 4.32.1 released]]></title><link>https://spring.io/blog/2025/10/28/spring-tools-4-32-1-released</link><guid isPermaLink="true">https://spring.io/blog/2025/10/28/spring-tools-4-32-1-released</guid><dc:creator><![CDATA[martinlippert]]></dc:creator><pubDate>Tue, 28 Oct 2025 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;On behalf of the team and everyone who has contributed, I am pleased to announce the 4.32.1 release of the Spring Tools
-for Visual Studio Code, Eclipse and Theia.&lt;/p&gt;
-&lt;p&gt;This is a maintenance release that includes 4 bugfixes. At the moment, there are no further maintenance releases planned
-for the Spring Tools 4.x line.&lt;/p&gt;
-&lt;p&gt;Detailed changes can be found in the release notes: &lt;a href=&quot;https://github.com/spring-projects/spring-tools/releases/tag/4.32.1.RELEASE&quot;&gt;https://github.com/spring-projects/spring-tools/releases/tag/4.32.1.RELEASE&lt;/a&gt;&lt;/p&gt;
-&lt;h4 id=&quot;downloads&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#downloads&quot; aria-label=&quot;downloads permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;downloads&lt;/h4&gt;
-&lt;p&gt;To download the distribution for Eclipse and find links to the marketplace entries for Visual Studio Code and Theia, please go visit:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Spring Tools: &lt;a href=&quot;https://spring.io/tools/&quot;&gt;https://spring.io/tools/&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;Next up is the first release of the Spring Tools 5 generation, currently scheduled for late November 2025.&lt;/p&gt;</content:encoded></item><item><title><![CDATA[This Week in Spring - October 28th, 2025]]></title><link>https://spring.io/blog/2025/10/28/this-week-in-spring-october-28th-2025</link><guid isPermaLink="true">https://spring.io/blog/2025/10/28/this-week-in-spring-october-28th-2025</guid><dc:creator><![CDATA[joshlong]]></dc:creator><pubDate>Tue, 28 Oct 2025 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;Hi, Spring fans! Welcome to another installment of &lt;em&gt;This Week in Spring&lt;/em&gt;! It&apos;s a wonderful tuesday here in my home town of San Francisco as I write this from my condo&apos;s balcony, fresh off more than three weeks on the road.&lt;/p&gt;
-&lt;p&gt;By the time we&apos;ll speak again in a week, Halloween will have come and gone. Are you all ready for Halloween? What&apos;re you gonna dress as? I always go as PHP code. The horror!&lt;/p&gt;
-&lt;p&gt;The excitement is &lt;em&gt;building&lt;/em&gt; for Spring Boot 4 and Spring Framework 7, both of which are scheduled to be released in November of 2025. So fun! There&apos;s a &lt;em&gt;ton&lt;/em&gt; of good stuff to look at this week, so let&apos;s dive into it!&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;https://spring.io/blog/2025/10/28/modularizing-spring-boot&quot;&gt;Modularizing Spring Boot&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://spring.io/blog/2025/10/28/spring-tools-4-32-1-released&quot;&gt;Spring Tools 4.32.1 released&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://spring.io/blog/2025/10/27/spring-ai-anthropic-prompt-caching-blog&quot;&gt;Prompt Caching Support in Spring AI with Anthropic Claude&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://spring.io/blog/2025/10/27/spring-modulith-2-0-rc1-1-4-4-and-1-3-10-released&quot;&gt;Spring Modulith 2.0 RC1, 1.4.4, and 1.3.0 released&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://spring.io/blog/2025/10/24/spring-shell-4-0-0-m1-released&quot;&gt;Spring Shell 4.0.0 M1 is available&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;in last week&apos;s installment I talked to MCP, reactor, and Spring team  legend &lt;a href=&quot;https://spring.io/blog/2025/10/23/a-bootiful-podcast-dariusz-j%C4%99drzejczyk&quot;&gt;engineer Dariusz Jędrzejczyk&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://spring.io/blog/2025/10/23/spring-boot-3-4-11-available-now&quot;&gt;Spring Boot 3.4.11 available now&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://spring.io/blog/2025/10/23/spring-boot-3-5-7-available-now&quot;&gt;Spring Boot 3.5.7 is available now&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://spring.io/blog/2025/10/23/spring-boot-4-0-0-RC1-available-now&quot;&gt;Spring Boot 4.0.0 RC1 available now&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://spring.io/blog/2025/10/22/spring-batch-6-0-0-rc1-released&quot;&gt;Spring Batch 6.0.0 RC1 is available now&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://spring.io/blog/2025/10/22/spring-integration-7-0-0-RC1-released&quot;&gt;Spring Integration 7.0 RC1&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://spring.io/blog/2025/10/22/spring-amqp-4-0-0-rc1-available&quot;&gt;Spring AMQP 4.0 RC1&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://spring.io/blog/2025/10/22/spring-for-apache-pulsar-1-2-11-and-2-0-0-RC1-are-now-available&quot;&gt;Spring for Apache Pulsar 1.2.11 and 2.0.0 RC1 are now available&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://spring.io/blog/2025/10/22/spring-integration-aws-eol&quot;&gt;New Home for Spring Integration AWS&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;I love this new support &lt;a href=&quot;https://spring.io/blog/2025/10/21/multi-factor-authentication-in-spring-security-7&quot;&gt;for multi-factor authentication in Spring Security 7&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://spring.io/blog/2025/10/21/spring-authorization-server-1-5-3-and-1-4-6-available-now&quot;&gt;Spring Authorization Server 1.5.3 and 1.4.6 available now&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://spring.io/blog/2025/10/21/spring-for-graphql-1-4-3-released&quot;&gt;Spring for GraphQL 1.4.3 released&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://spring.io/blog/2025/10/21/spring-for-graphql-2-0-0-rc1-released&quot;&gt;Spring for GraphQL 2.0.0 RC1&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://spring.io/blog/2025/10/21/spring-kafka-4&quot;&gt;Spring for Apache Kafka 4.0.0 RC1 is available now&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://spring.io/blog/2025/10/21/spring-ws-4-0-16-available-now&quot;&gt;Spring Web Services 4.0.16 is available now&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://spring.io/blog/2025/10/21/spring-ws-4-1-2-available-now&quot;&gt;Spring Web Services 4.0.12 is available now&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://spring.io/blog/2025/10/21/spring-ws-5-0-0-RC1-available-now&quot;&gt;Spring Web Services 5.0.0 RC1 is available now&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</content:encoded></item></channel></rss>
+&lt;p&gt;from &lt;code&gt;0.12.0&lt;/code&gt; to &lt;code&gt;1.0.0&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;If you used the starters to manage dependencies, like in the sample above and in the samples in Spring gRPC, the rest of your application code should not need any changes.&lt;/p&gt;
+&lt;p&gt;If you refer to the autoconfiguration classes directly the package imports will change, for instance with a server you might have a &lt;code&gt;GrpcServerFactoryCustomizer&lt;/code&gt;. None of the samples in the project need to do this, so you might not need to do anything either.&lt;/p&gt;
+&lt;h2 id=&quot;immediate-deprecations&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#immediate-deprecations&quot; aria-label=&quot;immediate deprecations permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Immediate Deprecations&lt;/h2&gt;
+&lt;p&gt;The autoconfiguration and starter dependencies in Spring gRPC will be immediately deprecated on release. This is intentional and really nothing to worry about. It just makes it clear that we plan to supercede them with the next minor release (1.1.0 and Spring Boot 4.1), so the deprecations are all just to anticipate name changes in the dependency co-ordinates. There shouldn&apos;t be any need to deprecate classes or methods - we want the migration to the next release to be as easy as possible. The deprecation will come in the form of a repeat of this announcement when the 1.0.0 release is published.&lt;/p&gt;
+&lt;h2 id=&quot;summary&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#summary&quot; aria-label=&quot;summary permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Summary&lt;/h2&gt;
+&lt;p&gt;Spring gRPC 1.0 is coming soon with the usual OSS and commercial support arrangements. There are currently no snapshots to try, but as soon as the build is green we will be publishing 1.0.0-RC1 to tide you over to 1.0.0. I will update this article when that happens. The new release will be dependent on Spring Boot 4.0, instead of being a dependency &lt;em&gt;of&lt;/em&gt; Spring Boot as originally planned. There should be minimal disruption for projects already using version 0.x of Spring gRPC.&lt;/p&gt;</content:encoded></item></channel></rss>

@@ -23,6 +23,12 @@ public interface BoardService {
 
 	//게시글 수정
 	public void modify(Board vo);
+
+	//게시글 삭제
+	public void remove(int idx);
+
+	//댓글등록기능
+	public void reply(Board vo);
 }
 
 

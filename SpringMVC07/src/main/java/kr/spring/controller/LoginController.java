@@ -35,7 +35,6 @@ public class LoginController {
 		if(mvo != null) {
 			session.setAttribute("mvo", mvo); //세션저장
 		}
-
 		return "redirect:/board/list";
 	}
 	

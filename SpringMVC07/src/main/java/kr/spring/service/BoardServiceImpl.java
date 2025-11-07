@@ -44,11 +44,50 @@ public class BoardServiceImpl implements BoardService {
 	//대부분 Mapper는 DB에 관점에 이름을 지어주고 
 	//Service, Controller는 클라이언트/업무 중심 이름을 지어주는것이 일반적이다
 
+	
 	//게시글 업데이트
 	@Override
 	public void modify(Board vo) {
 		//보통 DB에 있는 키워드를 사용한다 	
 		mapper.update(vo); 
+	}
+
+	
+	//게시글삭제
+	@Override
+	public void remove(int idx) {
+		mapper.delete(idx); 
+	}
+
+	//리플기능
+	@Override
+	public void reply(Board vo) {
+		//답글기능만들기
+		//vo 정보 : idx, 답글작성자ID, title, 답글내용, 답글작성자이름, indate=null, count=0, 
+		// boardGroup=0, boardSequence=0, boardLevel=0, boardAvailable=0  
+		System.out.println("vo 정보 : " + vo);
+		
+		//부모글의 idx를 기준으로 부모의 boardGroup값이 필요하다
+		//부모글의 정보 가져오기 
+		Board parent = mapper.read(vo.getIdx());
+		
+		//parent 정보 : idx, ID, title, contnent, writer, indate, count=0, 
+		// boardGroup=11, boardSequence=0, boardLevel=0, boardAvailable=1
+		System.out.println("parent 정보 : " + parent);
+				
+		//부모글의 BoardGroup값을 vo에 BoardGroup에 입력한다
+		vo.setBoardGroup(parent.getBoardGroup()); 
+		//시퀀스와 레벨은 부모글에 +1 해주면 된다 
+		vo.setBoardSequence(parent.getBoardSequence() + 1);
+		vo.setBoardLevel(parent.getBoardLevel() + 1);
+		
+		//현재 넣으려는 답글을 제외한 기존 같은 그룹의 댓글의
+		// 시퀀스 값을 1씩 올려줘야한다 
+		mapper.replySeqUpdate(parent);
+		
+		//답변저장기능 
+		mapper.replyInsert(vo);
+		
 	}
 	
 	

@@ -26,6 +26,44 @@ public class boardController {
 	//→ *객체가 부모타입인 BoardService로 업케스팅 된다(다형성을 이유로)
 	
 	
+	//댓글등록기능
+	//Board vo = 부모글 번호, 작성ID, 제목, 답글, 작성자 이름
+	@PostMapping("/reply")
+	public String reply(Board vo) {  
+		service.reply(vo);
+		return "redirect:/board/list";
+	}
+	
+	
+	//댓글기능 페이지 이동기능
+	@GetMapping("/reply")
+	public String reply(@RequestParam("idx") int idx, Model model) {
+		//idx는 답글을 달고 싶어하는 게시글 번호를 의미한다 
+		// service.get(idx)은 답글을 달고싶은 게스글 정보를 가져온다  
+		Board vo = service.get(idx);
+		model.addAttribute("vo", vo); 
+		return "board/reply";
+	}
+	
+	
+	
+	//삭제기능
+	@GetMapping("/remove")
+	public String remove(@RequestParam("idx") int idx) {
+		service.remove(idx);
+		return "redirect:/board/list";
+	}
+
+	//게시글 수정화면 
+	@GetMapping("/modify")
+	public String modify(@RequestParam("idx") int idx, Model model) {
+		//수정화면에는 새로 DB를 조회하므로 service.get(idx)을 그대로 사용한다
+		Board vo = service.get(idx);  
+		model.addAttribute("vo", vo); 
+		return "board/modify";
+	}
+	
+	
 	//게시글 수정기능
 	//같은 이름의 메소드: 오버로딩
 	@PostMapping("/modify")
@@ -35,16 +73,6 @@ public class boardController {
 		return "redirect:/board/list"; //DB변경이 있으면 redirect 사용
 	}
 	
-	
-	//게시글 수정화면 
-	@GetMapping("/modify")
-	public String modify(@RequestParam("idx") int idx, Model model) {
-		//수정화면에는 새로 DB를 조회하므로 service.get(idx)을 그대로 사용한다
-		Board vo = service.get(idx);  
-		model.addAttribute("vo", vo); 
-		return "board/modify";
-	}
-
 
 	//게시글 상세보기
 	@GetMapping("/get")
@@ -62,10 +90,13 @@ public class boardController {
 	@PostMapping("/register")
 	public String register(Board vo, RedirectAttributes rttr) { 
 		//RedirectAttributes: redirect 할 때 데이터를 전달하기 위한 객체
+		System.out.println("전 " + vo.getIdx());
+		
 	    service.register(vo);
-	    rttr.addFlashAttribute("result", vo.getIdx()); //(key, value)
+	    rttr.addFlashAttribute("result", vo.getIdx()); //(key, value)형태로 
 	    // addFlashAttribute로 데이터를 넣어야 리다이렉트 이후 JSP에서 꺼내서 사용할 수 있음
-	  
+	    
+	    System.out.println("후 " + vo.getIdx()); //selectKey태그의 order="BEFORE"때문에 쿼리문 실행전에 getIdx값이 나온다
 	    return "redirect:/board/list"; 
 	}
 

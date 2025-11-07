@@ -18,6 +18,17 @@ public interface BoardMapper {
 	public Board read(int idx); //게시글상세보기
 
 	public void update(Board vo); //게시글수정
+
+	public void delete(int idx);
+
+	//새로운 댓글이 들어올 때 기존의 댓글 순서를 +1 하는 기능
+	public void replySeqUpdate(Board parent);
+
+	//답글저장기능 
+	public void replyInsert(Board vo); 
+	
+	
+	
 }
 
 
