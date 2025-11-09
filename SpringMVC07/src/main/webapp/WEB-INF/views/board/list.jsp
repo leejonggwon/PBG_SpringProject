@@ -62,16 +62,30 @@
 				            <tr>
 				                <td>${list.size() - i.index}</td> <!--i.count:1부터, i.index:0부터 <td>${i.count}</td>-->			              			             
 				                <td>
-					                <a href="${cpath}/board/get?idx=${vo.idx}">
-					                	<c:if test="${vo.boardLevel > 0}">
-					                		<c:forEach begin="0" end="${vo.boardLevel}" step="1">
-					                			<span style="padding-left: 5px"></span>
-					                		</c:forEach>
-					                		ㄴ[답글]
-					                	</c:if>
-					                		${vo.title}
-					                </a>
-					                
+				                	<!-- 삭제하는 경우  -->
+				                	<c:if test="${vo.boardAvailable == 0}"> 
+				                		<a href="javascript:alert('삭제된 게시글 입니다')">
+					                		<c:if test="${vo.boardLevel > 0}">
+						                		<c:forEach begin="0" end="${vo.boardLevel}" step="1">
+						                			<span style="padding-left: 10px"></span>
+						                		</c:forEach>
+						                		ㄴ[댓글]
+						                	</c:if>
+				                			삭제된 게시글 입니다.
+				                		</a>
+				                	</c:if>
+				                	<!-- 삭제아닌 경우  -->
+					                <c:if test="${vo.boardAvailable == 1}"> 
+						                <a href="${cpath}/board/get?idx=${vo.idx}">
+						                	<c:if test="${vo.boardLevel > 0}">
+						                		<c:forEach begin="0" end="${vo.boardLevel}" step="1">
+						                			<span style="padding-left: 10px"></span>
+						                		</c:forEach>
+						                		ㄴ[댓글]
+						                	</c:if>
+						                		${vo.title}
+						                </a>
+						             </c:if>   
 				                </td> 
 				                <td>${vo.writer}</td>
 				                <td>

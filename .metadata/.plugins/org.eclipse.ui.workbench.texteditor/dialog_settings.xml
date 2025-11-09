@@ -6,8 +6,10 @@
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
-		<item key="selection" value="fclear"/>
+		<item key="selection" value="result"/>
 		<list key="findhistory">
+			<item value="result"/>
+			<item value="register"/>
 			<item value="fclear"/>
 			<item value="frm"/>
 			<item value="loadList"/>
@@ -21,8 +23,6 @@
 			<item value="id=&quot;t&quot;"/>
 			<item value="t"/>
 			<item value="view"/>
-			<item value="savePath"/>
-			<item value="join."/>
 		</list>
 		<list key="replacehistory">
 		</list>

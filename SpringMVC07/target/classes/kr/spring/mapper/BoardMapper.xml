@@ -58,11 +58,12 @@
 	
 	<!-- 게시글삭제 -->
 	<delete id="delete" parameterType="int">
-	DELETE FROM TBLBOARD
+	UPDATE TBLBOARD
+	SET BOARDAVAILABLE = 0
 	WHERE IDX = #{idx}
 	</delete>
 	
-	<!-- BOARDSEQUENCE + 1 -->
+	<!-- BOARDSEQUENCE + 1 기능 -->
 	<!-- parent 부모글 : boardSequence=0, boardLevel=0, boardAvailable=1 -->
 	<update id="replySeqUpdate" parameterType="kr.spring.entity.Board"  >
 		UPDATE TBLBOARD
