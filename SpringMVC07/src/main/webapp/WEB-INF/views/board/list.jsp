@@ -64,14 +64,14 @@
 				                <td>
 				                	<!-- 삭제하는 경우  -->
 				                	<c:if test="${vo.boardAvailable == 0}"> 
-				                		<a href="javascript:alert('삭제된 게시글 입니다')">
+				                		<a href="javascript:alert('작성자에 의해 삭제된 게시글 입니다')">
 					                		<c:if test="${vo.boardLevel > 0}">
 						                		<c:forEach begin="0" end="${vo.boardLevel}" step="1">
 						                			<span style="padding-left: 10px"></span>
 						                		</c:forEach>
 						                		ㄴ[댓글]
 						                	</c:if>
-				                			삭제된 게시글 입니다.
+				                			작성자에 의해 삭제된 게시글 입니다.
 				                		</a>
 				                	</c:if>
 				                	<!-- 삭제아닌 경우  -->
@@ -83,9 +83,9 @@
 						                		</c:forEach>
 						                		ㄴ[댓글]
 						                	</c:if>
-						                		${vo.title}
+						                		<c:out value="${vo.title}"></c:out>				              
 						                </a>
-						             </c:if>   
+						            </c:if>   
 				                </td> 
 				                <td>${vo.writer}</td>
 				                <td>

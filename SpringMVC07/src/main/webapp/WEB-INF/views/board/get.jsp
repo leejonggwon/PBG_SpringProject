@@ -33,12 +33,12 @@
 				</tr>
 				<tr>
 					<td>제목</td>
-					<td>${vo.title}</td>
+					<td><c:out value="${vo.title}"/></td>
 				</tr>
 				<tr>
 					<td>내용</td>
 					<td>
-						<textarea class="form-control" readonly="readonly" rows="10" cols="">${vo.content}</textarea>
+						<textarea class="form-control" readonly="readonly" rows="10" cols=""><c:out value="${vo.content}"/></textarea>
 					</td>
 				</tr>
 				<tr>
@@ -48,30 +48,66 @@
 				<tr>
 					<td colspan="2" style="text-align:center">
 						<c:if test="${not empty mvo}"> <!-- mvo가 비어있지 않는 상황: 로그인한 상황을 말한다 -->
-						<button onclick="location.href='${cpath}/board/reply?idx=${vo.idx}'" class="btn btn-sm btn-primary">답글</button>
-						<button onclick="location.href='${cpath}/board/modify?idx=${vo.idx}'" class="btn btn-sm btn-success">수정화면</button>   
+						<button data-btn="reply" class="btn btn-sm btn-primary">답글</button>
+						<button data-btn="modify" class="btn btn-sm btn-success">수정화면</button>   
 						</c:if>
 						
-						<c:if test="${empty mvo}">
+						<c:if test="${empty mvo}"> <!--로그인 안한 상황을 말한다 -->
 						<button disabled="disabled" class="btn btn-sm btn-primary">답글</button>
-						<button disabled="disabled" onclick="location.href='${cpath}/board/modify?idx=${vo.idx}'" class="btn btn-sm btn-success">수정</button>   
+						<button disabled="disabled" class="btn btn-sm btn-success">수정</button>   
 						</c:if>
 						
-						<button onclick="location.href='${cpath}/board/list'" class="btn btn-sm btn-warning">목록</button>
+						<button data-btn="list" class="btn btn-sm btn-warning">목록</button>
 					</td>
 				</tr>
 			</table>
+			
+			<form id="frm" method="get" action="">
+				<input id="idx" type="hidden" name="idx" value="${vo.idx}" >
+			</form>
+			
 		</div>
 		<div class="panel-footer">스프링게시판 - 이종권</div>
 	  </div>
 	</div>
 	
 	<script type="text/javascript">
-
+		//링크처리하기 
+		$(document).ready(function() { //로딩되면 함수를 작동시키겠다 
+			
+			$("button").on("click", function(e){ //버튼을 클릭하면 함수실행한다 
+			
+				var formData = $("#frm"); //form 태그 action값 주소를 바꿔주기위해 요소 가져오기 
+				var btn = $(this).data("btn"); //현재 발생한 이벤트(클릭한 버튼요소)의 data-btn 속성값인
+				                               // reply, modify, list 등 btn의 값을 가져온다  	 	
+						                                                  
+				if(btn == "reply"){ //답글버튼을 누르면
+					formData.attr("action","${cpath}/board/reply"); //action 속성을 reply URL경로로 바꿔준다 
+				}else if(btn == "modify"){
+					formData.attr("action","${cpath}/board/modify"); 
+				}else if(btn == "list"){
+					formData.attr("action","${cpath}/board/list"); 
+					formData.find("#idx").remove(); //id="frm"요소안에 id="idx"를 찾아서 삭제한다
+				}
+				
+				formData.submit(); //form태그의 id="frm"에 submit을 작동한다 
+			});
+		});
+		
 	</script>
 	
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
 
 
 
