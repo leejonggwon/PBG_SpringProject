@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import kr.spring.entity.Board;
+import kr.spring.entity.Criteria;
 import kr.spring.service.BoardService;
 
 @Controller //@Controller로 인식
@@ -109,9 +110,11 @@ public class boardController {
 	
 	
 	@GetMapping("/list")
-	public String boardList(Model model) {
-		List<Board> list = service.getList(); //자식에서 기능을 구현시켰고 업케이스팅하면 자식타입의 getList()가 실행된다	
-		                                      //service에 기능요청
+	public String boardList(Model model, Criteria cri) {
+		//이제는 페이지 정보를 알고 있는 Criteria 객체를 Service에게 전달
+		List<Board> list = service.getList(cri); 
+		//페이징 처리에 필요한 PageMaker 객체도 생성해야한다 
+		                                         
 		model.addAttribute("list", list);
 		return "board/list";
 	}

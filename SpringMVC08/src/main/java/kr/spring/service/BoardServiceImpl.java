@@ -3,6 +3,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import kr.spring.entity.Board;
+import kr.spring.entity.Criteria;
 import kr.spring.entity.Member;
 import kr.spring.mapper.BoardMapper;
 
@@ -13,11 +14,11 @@ public class BoardServiceImpl implements BoardService {
 	@Autowired
 	private BoardMapper mapper;
 
-	//인터페이스의 추상메서드를 구현한다
+	//인터페이스의 추상메서드를 구현한다 
 	@Override
-	public List<Board> getList() {
+	public List<Board> getList(Criteria cri) {
 		//게시글 전체목록 가져오기 기능
-		List<Board> list = mapper.getList();
+		List<Board> list = mapper.getList(cri);
 		return list;
 	}
 	
