@@ -9,6 +9,13 @@ public class Criteria { //기준이라는 뜻
 	
 	private int perPageNum; //한 페이지당 보여줄 게시글 개수, 보통10개
 	
+	//Criteria 기본 셋팅 생성자를 통해서 하기
+	public Criteria() {
+		this.page = 1;        
+		this.perPageNum = 10;
+	}
+	
+	
 	//** 현재 페이지의 게시글의 시작번호를 구하는 메소드 
 	// 1page 당 → 1 ~ 10 게시글을 보여주고, 2page → 11 ~ 20, 3page → 21 ~ 30 이다
 	// 예외: mysql에서는 시작값을 0으로 인식하는 특징이 있으므로 

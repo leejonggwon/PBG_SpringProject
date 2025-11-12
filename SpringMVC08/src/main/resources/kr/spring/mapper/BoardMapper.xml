@@ -7,7 +7,8 @@
 		ORDER BY BOARDGROUP DESC, BOARDSEQUENCE ASC
 		LIMIT #{pageStart}, #{perPageNum}
 	</select>
-	<!-- 3번페이지라면 20~29번까지  -->
+	<!--  LIMIT 20, 10 : 20번째 글부터 10개 가져오기 -->
+	
 	
 	<insert id="insert" parameterType="kr.spring.entity.Board">
 		INSERT INTO TBLBOARD(IDX, MEMID, TITLE, CONTENT, WRITER, BOARDGROUP, BOARDSEQUENCE, BOARDLEVEL, BOARDAVAILABLE)
@@ -86,6 +87,10 @@
 		#{boardGroup}, #{boardSequence}, #{boardLevel}, 1)
 	</insert>
 	
+	<!-- 총게시글수 -->
+	<select id="totalCount" resultType="int">
+		SELECT COUNT(*) FROM TBLBOARD 
+	</select>
 	
 	
 </mapper>

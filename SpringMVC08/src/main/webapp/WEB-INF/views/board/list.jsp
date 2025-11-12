@@ -60,7 +60,7 @@
 					<tbody> <!-- tbody: 테이블안에 영역구분하기 위한 태그 -->
 						<c:forEach items="${list}" var="vo" varStatus="i"> <!-- model.addAttribute("list", list) -->
 				            <tr>
-				                <td>${list.size() - i.index}</td> <!--i.count:1부터, i.index:0부터 <td>${i.count}</td>-->			              			             
+				                <td>${pageMaker.totalCount - ((pageMaker.cri.page - 1) * pageMaker.cri.perPageNum + i.index)}</td>
 				                <td>
 				                	<!-- 삭제하는 경우  -->
 				                	<c:if test="${vo.boardAvailable == 0}"> 
@@ -87,6 +87,7 @@
 						                </a>
 						            </c:if>   
 				                </td> 
+				                
 				                <td>${vo.writer}</td>
 				                <td>
 				                	<fmt:formatDate value="${vo.indate}" pattern="yyyy-MM-dd"/>			             
@@ -98,11 +99,27 @@
 					<c:if test="${not empty mvo}"><!-- 로그인시 글쓰기 버튼 노출 -->
 					<tr>
 						<td colspan="5">
-							<button id="regBtn" class="btn bts-xs btn-info pull-right">글쓰기</button>
+							<button id="regBtn" class="btn btn-sm btn-primary pull-right">글쓰기</button>
 						</td>
 					</tr>		
 					</c:if>	
 				</table>
+				
+				<div class="pull-right">				
+				  <ul class="pagination">
+				    <!-- 페이지번호 처리하기 -->
+				    <c:forEach var="pageNum" begin="${pageMaker.startPage}" end="${pageMaker.endPage}" >
+				    	<c:if test="${pageMaker.cri.page == pageNum}">
+				    		<li class="active"><a href="${cpath}/board/list?page=${pageNum}">${pageNum}</a></li>	
+				    	</c:if>
+				    				
+				    	<c:if test="${pageMaker.cri.page != pageNum}">
+				    		<li><a href="${cpath}/board/list?page=${pageNum}">${pageNum}</a></li>	
+				    	</c:if>				 
+				    </c:forEach>			    
+				  </ul>
+				</div>			
+				
 			</div>
 			<div class="panel-footer">스프링게시판 - 이종권</div>
 		</div>

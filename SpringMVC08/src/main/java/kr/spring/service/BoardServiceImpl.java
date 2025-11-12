@@ -90,6 +90,14 @@ public class BoardServiceImpl implements BoardService {
 		mapper.replyInsert(vo);
 		
 	}
+
+	//전체 게시글 개수
+	@Override
+	public int totalCount() {
+		return mapper.totalCount();
+	}
+
+
 	
 	
 	

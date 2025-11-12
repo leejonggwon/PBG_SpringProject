@@ -48,7 +48,7 @@ FROM TBLBOARD;
 
 SELECT * FROM TBLBOARD;
 
---DELETE FROM TBLBOARD;--
+DELETE FROM TBLBOARD;
 
 
 CREATE TABLE TBLMEMBER(
@@ -79,7 +79,99 @@ VALUES('user02', '1234', '김연아', '010-1234-1234');
 
 
 
+--게시글 입력--
+INSERT INTO TBLBOARD
+SELECT IFNULL(MAX(IDX)+1,1), 'admin', '퇴근 후 시스템 점검 안내', '퇴근 후 시스템 점검이 진행될 예정입니다.', '관리자', NOW(), 0, IFNULL(MAX(BOARDGROUP)+1,1), 0, 0, 1 FROM TBLBOARD;
 
+INSERT INTO TBLBOARD
+SELECT IFNULL(MAX(IDX)+1,1), 'admin', '사내 이메일 필터링 안내', '사내 이메일 필터링 정책 변경 안내입니다.', '관리자', NOW(), 0, IFNULL(MAX(BOARDGROUP)+1,1), 0, 0, 1 FROM TBLBOARD;
+
+INSERT INTO TBLBOARD
+SELECT IFNULL(MAX(IDX)+1,1), 'admin', '회의실 예약 시스템 안내', '회의실 예약 시스템 사용법 변경 안내입니다.', '관리자', NOW(), 0, IFNULL(MAX(BOARDGROUP)+1,1), 0, 0, 1 FROM TBLBOARD;
+
+INSERT INTO TBLBOARD
+SELECT IFNULL(MAX(IDX)+1,1), 'admin', '사내 보안 강화 안내', '사내 보안 정책 강화 및 비밀번호 변경 안내입니다.', '관리자', NOW(), 0, IFNULL(MAX(BOARDGROUP)+1,1), 0, 0, 1 FROM TBLBOARD;
+
+INSERT INTO TBLBOARD
+SELECT IFNULL(MAX(IDX)+1,1), 'admin', '연말 휴가 안내', '연말 휴가 일정 및 신청 안내입니다.', '관리자', NOW(), 0, IFNULL(MAX(BOARDGROUP)+1,1), 0, 0, 1 FROM TBLBOARD;
+
+INSERT INTO TBLBOARD
+SELECT IFNULL(MAX(IDX)+1,1), 'admin', '사내 시스템 점검 안내', '서버 점검 일정 안내입니다.', '관리자', NOW(), 0, IFNULL(MAX(BOARDGROUP)+1,1), 0, 0, 1 FROM TBLBOARD;
+
+INSERT INTO TBLBOARD
+SELECT IFNULL(MAX(IDX)+1,1), 'admin', '사내 복지 제도 안내', '사내 복지 제도 변경 안내입니다.', '관리자', NOW(), 0, IFNULL(MAX(BOARDGROUP)+1,1), 0, 0, 1 FROM TBLBOARD;
+
+INSERT INTO TBLBOARD
+SELECT IFNULL(MAX(IDX)+1,1), 'admin', '연차 사용 안내', '연차 사용 및 승인 안내입니다.', '관리자', NOW(), 0, IFNULL(MAX(BOARDGROUP)+1,1), 0, 0, 1 FROM TBLBOARD;
+
+INSERT INTO TBLBOARD
+SELECT IFNULL(MAX(IDX)+1,1), 'admin', '사내 교육 안내', '사내 교육 일정 안내입니다.', '관리자', NOW(), 0, IFNULL(MAX(BOARDGROUP)+1,1), 0, 0, 1 FROM TBLBOARD;
+
+INSERT INTO TBLBOARD
+SELECT IFNULL(MAX(IDX)+1,1), 'admin', '사내 이메일 사용 안내', '이메일 사용 규정 안내입니다.', '관리자', NOW(), 0, IFNULL(MAX(BOARDGROUP)+1,1), 0, 0, 1 FROM TBLBOARD;
+
+INSERT INTO TBLBOARD
+SELECT IFNULL(MAX(IDX)+1,1), 'admin', '사내 근태 관리 안내', '근태 관리 및 출퇴근 기록 안내입니다.', '관리자', NOW(), 0, IFNULL(MAX(BOARDGROUP)+1,1), 0, 0, 1 FROM TBLBOARD;
+
+INSERT INTO TBLBOARD
+SELECT IFNULL(MAX(IDX)+1,1), 'admin', '사내 회식 일정 안내', '사내 회식 일정 및 장소 안내입니다.', '관리자', NOW(), 0, IFNULL(MAX(BOARDGROUP)+1,1), 0, 0, 1 FROM TBLBOARD;
+
+INSERT INTO TBLBOARD
+SELECT IFNULL(MAX(IDX)+1,1), 'admin', '사내 출장 보고 안내', '출장 보고서 제출 안내입니다.', '관리자', NOW(), 0, IFNULL(MAX(BOARDGROUP)+1,1), 0, 0, 1 FROM TBLBOARD;
+
+INSERT INTO TBLBOARD
+SELECT IFNULL(MAX(IDX)+1,1), 'admin', '사내 보안 교육 안내', '보안 교육 일정 안내입니다.', '관리자', NOW(), 0, IFNULL(MAX(BOARDGROUP)+1,1), 0, 0, 1 FROM TBLBOARD;
+
+INSERT INTO TBLBOARD
+SELECT IFNULL(MAX(IDX)+1,1), 'admin', '사내 자료실 이용 안내', '자료실 이용 규정 안내입니다.', '관리자', NOW(), 0, IFNULL(MAX(BOARDGROUP)+1,1), 0, 0, 1 FROM TBLBOARD;
+
+INSERT INTO TBLBOARD
+SELECT IFNULL(MAX(IDX)+1,1), 'admin', '사내 회의 일정 안내', '회의 일정 및 회의실 안내입니다.', '관리자', NOW(), 0, IFNULL(MAX(BOARDGROUP)+1,1), 0, 0, 1 FROM TBLBOARD;
+
+INSERT INTO TBLBOARD
+SELECT IFNULL(MAX(IDX)+1,1), 'admin', '사내 공용 장비 사용 안내', '프린터 및 공용 장비 사용 안내입니다.', '관리자', NOW(), 0, IFNULL(MAX(BOARDGROUP)+1,1), 0, 0, 1 FROM TBLBOARD;
+
+INSERT INTO TBLBOARD
+SELECT IFNULL(MAX(IDX)+1,1), 'admin', '사내 회의록 공유 안내', '회의록 공유 및 기록 안내입니다.', '관리자', NOW(), 0, IFNULL(MAX(BOARDGROUP)+1,1), 0, 0, 1 FROM TBLBOARD;
+
+INSERT INTO TBLBOARD
+SELECT IFNULL(MAX(IDX)+1,1), 'admin', '사내 전자결재 안내', '전자결재 사용법 안내입니다.', '관리자', NOW(), 0, IFNULL(MAX(BOARDGROUP)+1,1), 0, 0, 1 FROM TBLBOARD;
+
+INSERT INTO TBLBOARD
+SELECT IFNULL(MAX(IDX)+1,1), 'admin', '사내 근무 규정 안내', '근무 시간 및 규정 안내입니다.', '관리자', NOW(), 0, IFNULL(MAX(BOARDGROUP)+1,1), 0, 0, 1 FROM TBLBOARD;
+
+INSERT INTO TBLBOARD
+SELECT IFNULL(MAX(IDX)+1,1), 'admin', '사내 시스템 점검 안내(월별)', '월별 시스템 점검 안내입니다.', '관리자', NOW(), 0, IFNULL(MAX(BOARDGROUP)+1,1), 0, 0, 1 FROM TBLBOARD;
+
+INSERT INTO TBLBOARD
+SELECT IFNULL(MAX(IDX)+1,1), 'admin', '사내 공지사항 테스트', '사내 게시판 테스트 글 21입니다.', '관리자', NOW(), 0, IFNULL(MAX(BOARDGROUP)+1,1), 0, 0, 1 FROM TBLBOARD;
+
+INSERT INTO TBLBOARD
+SELECT IFNULL(MAX(IDX)+1,1), 'admin', '사내 공지사항 테스트', '사내 게시판 테스트 글 22입니다.', '관리자', NOW(), 0, IFNULL(MAX(BOARDGROUP)+1,1), 0, 0, 1 FROM TBLBOARD;
+
+INSERT INTO TBLBOARD
+SELECT IFNULL(MAX(IDX)+1,1), 'admin', '사내 공지사항 테스트', '사내 게시판 테스트 글 23입니다.', '관리자', NOW(), 0, IFNULL(MAX(BOARDGROUP)+1,1), 0, 0, 1 FROM TBLBOARD;
+
+INSERT INTO TBLBOARD
+SELECT IFNULL(MAX(IDX)+1,1), 'admin', '사내 공지사항 테스트', '사내 게시판 테스트 글 24입니다.', '관리자', NOW(), 0, IFNULL(MAX(BOARDGROUP)+1,1), 0, 0, 1 FROM TBLBOARD;
+
+INSERT INTO TBLBOARD
+SELECT IFNULL(MAX(IDX)+1,1), 'admin', '사내 공지사항 테스트', '사내 게시판 테스트 글 25입니다.', '관리자', NOW(), 0, IFNULL(MAX(BOARDGROUP)+1,1), 0, 0, 1 FROM TBLBOARD;
+
+INSERT INTO TBLBOARD
+SELECT IFNULL(MAX(IDX)+1,1), 'admin', '사내 공지사항 테스트', '사내 게시판 테스트 글 26입니다.', '관리자', NOW(), 0, IFNULL(MAX(BOARDGROUP)+1,1), 0, 0, 1 FROM TBLBOARD;
+
+INSERT INTO TBLBOARD
+SELECT IFNULL(MAX(IDX)+1,1), 'admin', '사내 공지사항 테스트', '사내 게시판 테스트 글 27입니다.', '관리자', NOW(), 0, IFNULL(MAX(BOARDGROUP)+1,1), 0, 0, 1 FROM TBLBOARD;
+
+INSERT INTO TBLBOARD
+SELECT IFNULL(MAX(IDX)+1,1), 'admin', '사내 공지사항 테스트', '사내 게시판 테스트 글 28입니다.', '관리자', NOW(), 0, IFNULL(MAX(BOARDGROUP)+1,1), 0, 0, 1 FROM TBLBOARD;
+
+INSERT INTO TBLBOARD
+SELECT IFNULL(MAX(IDX)+1,1), 'admin', '사내 공지사항 테스트', '사내 게시판 테스트 글 29입니다.', '관리자', NOW(), 0, IFNULL(MAX(BOARDGROUP)+1,1), 0, 0, 1 FROM TBLBOARD;
+
+INSERT INTO TBLBOARD
+SELECT IFNULL(MAX(IDX)+1,1), 'admin', '사내 공지사항 테스트', '사내 게시판 테스트 글 30입니다.', '관리자', NOW(), 0, IFNULL(MAX(BOARDGROUP)+1,1), 0, 0, 1 FROM TBLBOARD;
 
 
 

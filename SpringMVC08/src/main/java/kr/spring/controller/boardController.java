@@ -12,6 +12,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import kr.spring.entity.Board;
 import kr.spring.entity.Criteria;
+import kr.spring.entity.PageMaker;
 import kr.spring.service.BoardService;
 
 @Controller //@Controller로 인식
@@ -81,6 +82,7 @@ public class boardController {
 		//@RequestParam 쿼리스트링이나 폼 데이터에서 하나의 값을 가져올 때 사용하는 어노테이션
 		Board vo = service.get(idx); //idx와 일치하는 상세게시글
 		//받아온 Board 객체를 get.jsp에 사용하기 위해 Model에 담는다
+
 		model.addAttribute("vo", vo); 
 		return "board/get";
 	}
@@ -111,11 +113,24 @@ public class boardController {
 	
 	@GetMapping("/list")
 	public String boardList(Model model, Criteria cri) {
-		//이제는 페이지 정보를 알고 있는 Criteria 객체를 Service에게 전달
+		//이제는 페이지 정보를 알고 있는 Criteria 객체를 Service에게 전달해준다
 		List<Board> list = service.getList(cri); 
-		//페이징 처리에 필요한 PageMaker 객체도 생성해야한다 
-		                                         
+		
+		//페이징 처리에 필요한 PageMaker 객체도 생성해야한다
+		PageMaker pageMaker = new PageMaker();
+		
+		//PageMaker가 페이징 기법을 하기위해 Criteria 정보가 필요하다 
+		pageMaker.setCri(cri);       
+		
+		//totalCount는 서비스를 통해 totalCount 메소드를 통해 구한다
+		pageMaker.setTotalCount(service.totalCount()); 
+		
 		model.addAttribute("list", list);
+		
+		//페이징 정보를 알고있는 객체를 전달한다 
+		//pageMaker에는 Criteria 정보, 총 게시글 수 정보를 가지고 있다
+		model.addAttribute("pageMaker", pageMaker);
+		
 		return "board/list";
 	}
 	

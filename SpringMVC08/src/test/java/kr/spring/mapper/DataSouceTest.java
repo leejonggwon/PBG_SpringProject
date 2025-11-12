@@ -19,6 +19,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 import kr.spring.entity.Board;
+import kr.spring.entity.Criteria;
 import kr.spring.service.BoardServiceImpl;
 import lombok.extern.log4j.Log4j;
 
@@ -62,17 +63,48 @@ public class DataSouceTest {
 	}
 	
 	
-	
-	
-	//컨트롤러 테스트(modify)
+	//페이징 Service 테스트
+	//생성자에서 설정한 페이지1번에 보여줄 게시글10개가 출력이 된다
 	@Test
-	public void testController() throws Exception{
-		log.info( //org.apache.commons.logging //로그를 남기는 표준 API 제공
-				mockMvc.perform(MockMvcRequestBuilders.get("/board/modify?idx=3")) //board에 modify?idx=3를 요청하면 게시글 목록을 볼 수 있다 
-				.andReturn()       //return값을 받아오겠다
-				.getModelAndView() //controller의 model값과 view경로를 다 받아오겠다 
-				); 
+	public void testGetList() {
+		Criteria cri = new Criteria();
+		cri.setPage(2);
+		cri.setPerPageNum(5);
+		
+		List<Board> list = service.getList(cri);
+		
+		for(Board vo: list) {
+			System.out.println(vo.toString());
+		}
 	}
+	
+	
+	
+	
+//	//페이징기능 게시글 목록(list) 컨트롤러 테스트
+//	//pageMaker=PageMaker(cri=Criteria(page=1, perPageNum=10), totalCount=13, startPage=1, endPage=2, prev=false, next=false, displayPageNum=10)
+//	@Test
+//	public void testController() throws Exception {
+//	    log.info(
+//	        mockMvc.perform(
+//	                MockMvcRequestBuilders.get("/board/list")  // list 요청                        
+//	        )
+//	        .andReturn()
+//	        .getModelAndView() // Model과 View 정보 모두 가져옴
+//	    );
+//	}
+//	
+
+	
+//	//컨트롤러 테스트(modify)
+//	@Test
+//	public void testController() throws Exception{
+//		log.info( //org.apache.commons.logging //로그를 남기는 표준 API 제공
+//				mockMvc.perform(MockMvcRequestBuilders.get("/board/modify?idx=3")) //board에 modify?idx=3를 요청하면 게시글 목록을 볼 수 있다 
+//				.andReturn()       //return값을 받아오겠다
+//				.getModelAndView() //controller의 model값과 view경로를 다 받아오겠다 
+//				); 
+//	}
 	
 	
 	

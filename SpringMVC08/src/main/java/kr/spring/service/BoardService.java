@@ -30,6 +30,13 @@ public interface BoardService {
 
 	//댓글등록기능
 	public void reply(Board vo);
+
+	//전체 게시글 수 
+	public int totalCount();
+
+
+	
+	
 }
 
 

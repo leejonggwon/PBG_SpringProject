@@ -26,10 +26,16 @@ public interface BoardMapper {
 	public void replySeqUpdate(Board parent);
 
 	//답글저장기능 
-	public void replyInsert(Board vo); 
+	public void replyInsert(Board vo);
+
+	//전체 게시글 수 
+	public int totalCount();
+
+
+
+
 	
-	
-	
+
 }
 
 
