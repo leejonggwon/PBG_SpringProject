@@ -6,8 +6,10 @@
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
-		<item key="selection" value="result"/>
+		<item key="selection" value=""/>
 		<list key="findhistory">
+			<item value="gson"/>
+			<item value="form"/>
 			<item value="result"/>
 			<item value="register"/>
 			<item value="fclear"/>
@@ -21,8 +23,6 @@
 			<item value="id"/>
 			<item value="id=t"/>
 			<item value="id=&quot;t&quot;"/>
-			<item value="t"/>
-			<item value="view"/>
 		</list>
 		<list key="replacehistory">
 		</list>

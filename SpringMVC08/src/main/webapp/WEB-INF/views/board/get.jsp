@@ -64,6 +64,8 @@
 			
 			<form id="frm" method="get" action="">
 				<input id="idx" type="hidden" name="idx" value="${vo.idx}" >
+				<input type="hidden" name="page" value="${cri.page}">
+				<input type="hidden" name="perPageNum" value="${cri.perPageNum}">			
 			</form>
 			
 		</div>
@@ -73,10 +75,9 @@
 	
 	<script type="text/javascript">
 		//링크처리하기 
-		$(document).ready(function() { //로딩되면 함수를 작동시키겠다 
-			
+		$(document).ready(function() { //로딩되면 함수를 작동시키겠다 	
 			$("button").on("click", function(e){ //버튼을 클릭하면 함수실행한다 
-			
+		
 				var formData = $("#frm"); //form 태그 action값 주소를 바꿔주기위해 요소 가져오기 
 				var btn = $(this).data("btn"); //현재 발생한 이벤트(클릭한 버튼요소)의 data-btn 속성값인
 				                               // reply, modify, list 등 btn의 값을 가져온다  	 	

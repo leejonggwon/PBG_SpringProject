@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -31,15 +32,17 @@ public class boardController {
 	//댓글등록기능
 	//Board vo = 부모글 번호, 작성ID, 제목, 답글, 작성자 이름
 	@PostMapping("/reply")
-	public String reply(Board vo) {  
+	public String reply(Board vo, Criteria cri, RedirectAttributes rttr) {  
 		service.reply(vo);
+		rttr.addAttribute("page",cri.getPage());
+		rttr.addAttribute("perPageNum",cri.getPerPageNum());
 		return "redirect:/board/list";
 	}
 	
 	
 	//댓글기능 페이지 이동기능
 	@GetMapping("/reply")
-	public String reply(@RequestParam("idx") int idx, Model model) {
+	public String reply(@RequestParam("idx") int idx, Model model, @ModelAttribute("cri") Criteria cri) {
 		//idx는 답글을 달고 싶어하는 게시글 번호를 의미한다 
 		// service.get(idx)은 답글을 달고싶은 게스글 정보를 가져온다  
 		Board vo = service.get(idx);
@@ -47,18 +50,21 @@ public class boardController {
 		return "board/reply";
 	}
 	
-	
-	
 	//삭제기능
 	@GetMapping("/remove")
-	public String remove(@RequestParam("idx") int idx) {
+	public String remove(@RequestParam("idx") int idx, Criteria cri, RedirectAttributes rttr) {
 		service.remove(idx);
+		
+		//page 이름으로 매개변수로 받아온 cri.page 값을 넣어준다 
+		rttr.addAttribute("page",cri.getPage());
+		rttr.addAttribute("perPageNum",cri.getPerPageNum());
+		
 		return "redirect:/board/list";
 	}
 
 	//게시글 수정화면 
 	@GetMapping("/modify")
-	public String modify(@RequestParam("idx") int idx, Model model) {
+	public String modify(@RequestParam("idx") int idx, Model model, @ModelAttribute("cri") Criteria cri) {
 		//수정화면에는 새로 DB를 조회하므로 service.get(idx)을 그대로 사용한다
 		Board vo = service.get(idx);  
 		model.addAttribute("vo", vo); 
@@ -69,16 +75,20 @@ public class boardController {
 	//게시글 수정기능
 	//같은 이름의 메소드: 오버로딩
 	@PostMapping("/modify")
-	public String modify(Board vo) {
+	public String modify(Board vo, Criteria cri, RedirectAttributes rttr) {
 		//보통 서비스까지 메소드명과 URL요청값을 동일하게 한다
 		service.modify(vo); 
+		
+		rttr.addAttribute("page",cri.getPage());
+		rttr.addAttribute("perPageNum",cri.getPerPageNum());
+		
 		return "redirect:/board/list"; //DB변경이 있으면 redirect 사용
 	}
 	
 
 	//게시글 상세보기
-	@GetMapping("/get")
-	public String get(@RequestParam("idx") int idx, Model model) {
+	@GetMapping("/get")                                          // model.addAttribute(cri)와 같은역할 
+	public String get(@RequestParam("idx") int idx, Model model, @ModelAttribute("cri") Criteria cri) {
 		//@RequestParam 쿼리스트링이나 폼 데이터에서 하나의 값을 가져올 때 사용하는 어노테이션
 		Board vo = service.get(idx); //idx와 일치하는 상세게시글
 		//받아온 Board 객체를 get.jsp에 사용하기 위해 Model에 담는다

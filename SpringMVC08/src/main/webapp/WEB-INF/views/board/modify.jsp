@@ -26,46 +26,46 @@
 	  <div class="panel panel-default">
 		<div class="panel-heading">Board</div>
 		<div class="panel-body">
-			<form action="${cpath}/board/modify" method="post">
-			<table class="table table-bordered table-hover">
-				<tr>
-					<td>번호</td>
-					<td><input readonly="readonly" value="${vo.idx}" name="idx" type="text" class="form-control"></td>
-				</tr>
-				<tr>
-					<td>제목</td>
-					<td><input value="<c:out value='${vo.title}'/>" name="title" type="text" class="form-control"></td>
-				</tr>
-				<tr>
-					<td>내용</td>
-					<td>
-						<textarea name="content" class="form-control" rows="10" cols=""><c:out value="${vo.content}"/></textarea>
-					</td>
-				</tr>
-				<tr>
-					<td>작성자</td>
-					<td><input readonly="readonly" value="${vo.writer}" name="writer" type="text" class="form-control"></td>
-				</tr>
-				<tr>
-					<td colspan="2" style="text-align:center">
-					<!-- 로그인한 상태이고 로그인한 사람과 아이디와 게시글 쓴사람 아이디가 일치하면 수정삭제 버튼기능 활성화한다-->
-					<c:if test="${not empty mvo && mvo.memID eq vo.memID }">
-						<button type="submit" class="btn btn-sm btn-primary">수정</button>
-						<button data-btn="remove" type="button" class="btn btn-sm btn-success">삭제</button>   
-					</c:if>
-					
-					<c:if test="${empty mvo or mvo.memID ne vo.memID }">
-						<button disabled="disabled" type="submit" class="btn btn-sm btn-primary">수정</button>
-						<button disabled="disabled" type="button" class="btn btn-sm btn-success">삭제</button> 					  
-					</c:if>									      					       
-						<button data-btn="list" type="button" class="btn btn-sm btn-warning">목록</button>
-					</td>
-				</tr>
-			</table>
-			</form>
-			
-			<form id="frm" method="get" action="">
-				<input id="idx" type="hidden" name="idx" value="${vo.idx}">
+		 	<form id="frm">
+				<table class="table table-bordered table-hover">
+					<tr>
+						<td>번호</td>
+						<td><input id="idx" readonly="readonly" value="${vo.idx}" name="idx" type="text" class="form-control"></td>
+					</tr>
+					<tr>
+						<td>제목</td>
+						<td><input id="title" value="<c:out value='${vo.title}'/>" name="title" type="text" class="form-control"></td>
+					</tr>
+					<tr>
+						<td>내용</td>
+						<td>
+							<textarea id="content" name="content" class="form-control" rows="10" cols=""><c:out value="${vo.content}"/></textarea>
+						</td>
+					</tr>
+					<tr>
+						<td>작성자</td>
+						<td><input id="writer" readonly="readonly" value="${vo.writer}" name="writer" type="text" class="form-control"></td>
+					</tr>
+					<tr>
+						<td colspan="2" style="text-align:center">
+						<!-- 로그인한 상태이고 로그인한 사람과 아이디와 게시글 쓴사람 아이디가 일치하면 수정삭제 버튼기능 활성화한다-->
+						<c:if test="${not empty mvo && mvo.memID eq vo.memID }">
+							<button data-btn="modify" type="button" class="btn btn-sm btn-primary">수정</button>
+							<button data-btn="remove" type="button" class="btn btn-sm btn-success">삭제</button>   
+						</c:if>
+						
+						<c:if test="${empty mvo or mvo.memID ne vo.memID }">
+							<button disabled="disabled" type="button" class="btn btn-sm btn-primary">수정</button>
+							<button disabled="disabled" type="button" class="btn btn-sm btn-success">삭제</button> 					  
+						</c:if>									      					       
+							<button data-btn="list" type="button" class="btn btn-sm btn-warning">목록</button>
+						</td>
+					</tr>
+				</table>
+	
+				<input type="hidden" name="page" value="${cri.page}">
+				<input type="hidden" name="perPageNum" value="${cri.perPageNum}">	
+				
 			</form>
 			
 		</div>
@@ -81,9 +81,24 @@
 				
 				if(btn == "remove"){
 					formData.attr("action", "${cpath}/board/remove");
+					formData.attr("method", "get");
+					
+					formData.find("#title").remove();
+					formData.find("#content").remove();
+					formData.find("#writer").remove();
+								
 				}else if(btn == "list"){
 					formData.attr("action", "${cpath}/board/list");
-					formData.find("#idx").remove();
+					formData.find("#idx").remove(); //목록으로 갈때는 idx가 필요가 없다
+					formData.attr("method", "get");
+					
+					formData.find("#title").remove();
+					formData.find("#content").remove();
+					formData.find("#writer").remove();			
+					
+				}else if(btn == "modify"){
+					formData.attr("action", "${cpath}/board/modify");
+					formData.attr("method", "post");
 				}
 				formData.submit();
 			});

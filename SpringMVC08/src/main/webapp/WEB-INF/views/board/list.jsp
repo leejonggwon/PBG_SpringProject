@@ -76,7 +76,7 @@
 				                	</c:if>
 				                	<!-- 삭제아닌 경우  -->
 					                <c:if test="${vo.boardAvailable == 1}"> 
-						                <a href="${cpath}/board/get?idx=${vo.idx}">
+						                <a class="move" href="${vo.idx}">                                                                                          
 						                	<c:if test="${vo.boardLevel > 0}">
 						                		<c:forEach begin="0" end="${vo.boardLevel}" step="1">
 						                			<span style="padding-left: 10px"></span>
@@ -105,21 +105,42 @@
 					</c:if>	
 				</table>
 				
-				<div class="pull-right">				
+				<div style="text-align: center">				
 				  <ul class="pagination">
+				  	
+				  	<!-- 이전버튼처리 -->
+				  	<c:if test="${pageMaker.prev}">
+				  		<li class="paginate_button previous">
+				  			<a href="${pageMaker.startPage - 1}">◀</a>
+				  		</li>
+				  	</c:if>
+				  
 				    <!-- 페이지번호 처리하기 -->
 				    <c:forEach var="pageNum" begin="${pageMaker.startPage}" end="${pageMaker.endPage}" >
 				    	<c:if test="${pageMaker.cri.page == pageNum}">
-				    		<li class="active"><a href="${cpath}/board/list?page=${pageNum}">${pageNum}</a></li>	
+				    		<li class="paginate_button active"><a href="${pageNum}">${pageNum}</a></li>	
 				    	</c:if>
 				    				
 				    	<c:if test="${pageMaker.cri.page != pageNum}">
-				    		<li><a href="${cpath}/board/list?page=${pageNum}">${pageNum}</a></li>	
+				    		<li class="paginate_button"><a href="${pageNum}">${pageNum}</a></li>	
 				    	</c:if>				 
-				    </c:forEach>			    
+				    </c:forEach>					   
+				    
+				    	<!-- 다음버튼처리 -->
+				  	<c:if test="${pageMaker.next}">
+				  		<li class="paginate_button previous">
+				  			<a href="${pageMaker.endPage + 1}">▶</a>
+				  		</li>
+				  	</c:if>				  				  		    
 				  </ul>
-				</div>			
-				
+				  
+				  <!-- 페이지 버튼을 클릭했을 때 페이지 이동을 처리하기 위한 숨겨진(form) 전송용 폼 -->
+				  <form action="${cpath}/board/list" id="pageFrm">
+				  	<input type="hidden" id="page" name="page" value="${pageMaker.cri.page}">
+				  	<input type="hidden" id="perPageNum" name="perPageNum" value="${pageMaker.cri.perPageNum}">			  	
+				  </form>
+				 
+				</div>	 					
 			</div>
 			<div class="panel-footer">스프링게시판 - 이종권</div>
 		</div>
@@ -148,6 +169,43 @@
 	<script type="text/javascript">
 		//페이지가 다 로드 되면 함수를 실행하겠다 
 		$(document).ready(function() {
+			
+			//**페이지 번호 클릭 시 이동하기 
+			//form태그의 id=pageFrm 인 요소를 선택
+			var pageFrm = $("#pageFrm");
+			
+			//<li class="paginate_button"의 a태그를 클릭하면 함수를 실행한다 
+			$(".paginate_button a").on("click", function(e){ 			
+				//e : 현재 클릭한 a태그 요소 차체를 의미한다			
+				// board/5 → board/list?page=5&perPageNum=10
+			 	e.preventDefault(); //a태그의 링크이동 기능을 막는다 
+			 	
+				var page = $(this).attr("href"); //클릭한 a 태그의 href 값을 읽어서 page 변수에 담는다
+				
+				//id=pageFrm인 form태그 안에서 
+				// id=page 요소를 찾아서 value 변수에 page값(현재 클릭한 a태그의 href값)을 입력
+				pageFrm.find("#page").val(page); 
+				pageFrm.submit(); //form태그 제출된다 
+			});
+			
+			//**상세보기 클릭 시 이동
+			//class="move"의 a태그를 클릭하면 함수를 실행한다
+			$(".move").on("click", function(e){
+				e.preventDefault(); //a태그의 링크이동 기능을 막는다 
+				
+				//게시글 클릭한 a태그의 href값(idx) 가져오기
+				var idx = $(this).attr("href"); 
+				
+				//idx 정보를 넘길 hidden input 태그 생성
+				var tag = "<input type='hidden' name='idx' value='" + idx + "'>";
+				
+				pageFrm.append(tag); //id=pageFrm인 form태그에 hidden input 태그 추가한다
+				
+				//form이 데이터를 전송할 URL을 바꾼다
+				pageFrm.attr("action", "${cpath}/board/get");
+				pageFrm.submit();
+			});
+			
 			
 			var result = "${result}"; //rttr.addFlashAttribute("result", vo.getIdx())에서 받아온다
 			checkModal(result); //checkModal()함수로 이동 
