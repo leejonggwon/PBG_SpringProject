@@ -160,14 +160,7 @@ public class boardController {
 		
 		return "board/list";
 	}
-	
-	
-	
-	
 
-	
-	
-	
 }
 
 
