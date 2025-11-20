@@ -1,0 +1,45 @@
+package kr.spring.entity;
+
+import java.sql.Date;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+import lombok.Data;
+
+@Entity //(javax.persistence) //Board VO가 DataBase Table로 만들때 설정하는 부분 
+@Data //geter setter
+public class Board {
+	//Board VO가 ORM기능을 통해서 TABLE로 형성이 될것이다
+	
+	@Id //(javax.persistence) //PK의 의미
+	@GeneratedValue(strategy = GenerationType.IDENTITY) //DB가 PK 번호를 자동 증가해서 만들어주도록 맡기는 옵션: auto_increment와 같음
+	private Long idx; //게시글 고유번호(호환을 위해서 long형으로 해준다)
+	
+	private String title;
+	
+	@Column(length = 2200) //길이지정 → 길이지정 따로 안할떄는 길이 255
+	private String content;
+	
+	@Column(updatable = false) //update 실행할때 writer 안바꿔 주겠다
+	private String writer;
+	
+	//Date는 insert 안되고 update 안되게 하겠다 
+	//Date 초기값으로 datetime 형태로 저장이 되고 현재시간이 들어가게 하겠다
+	@Column(insertable = false, updatable = false, columnDefinition="datetime default now()")
+	private Date indate;
+	
+	@Column(insertable = false, updatable = false, columnDefinition= "int default 0")
+	private Long count;
+}
+
+
+
+
+
+
+
+

@@ -6,8 +6,11 @@
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
-		<item key="selection" value=""/>
+		<item key="selection" value="paginate_button"/>
 		<list key="findhistory">
+			<item value="paginate_button"/>
+			<item value="id=&quot;pageFrm&quot;"/>
+			<item value="pageFrm"/>
 			<item value="gson"/>
 			<item value="form"/>
 			<item value="result"/>
@@ -20,9 +23,6 @@
 			<item value="bookList"/>
 			<item value="nt"/>
 			<item value="boardList"/>
-			<item value="id"/>
-			<item value="id=t"/>
-			<item value="id=&quot;t&quot;"/>
 		</list>
 		<list key="replacehistory">
 		</list>

@@ -33,8 +33,21 @@ VALUES
 ('스터디 모집', '백엔드 스터디 함께하실 분 구합니다!', '개발자A'),
 ('오류 해결법 공유', 'MySQL 연결 오류 해결법 정리해봤어요.', '지식나눔이');
 
+-- MVC 01~04까지 적용된 회원 테이블 --
+CREATE TABLE MEMBER(
+	MEMIDX INT AUTO_INCREMENT,
+	MEMID VARCHAR(20) NOT NULL,
+	MEMPASSWORD VARCHAR(100) NOT NULL,
+	MEMNAME VARCHAR(20) NOT NULL,
+	MEMAGE INT,
+	MEMGENDER VARCHAR(20),
+	MEMEMAIL VARCHAR(50),
+	MEMPROFILE VARCHAR(50), 
+	PRIMARY KEY(MEMID)
+);
 
 
+-- MVC05 부터 적용 회원 테이블 --
 -- 회원 테이블 --
 CREATE TABLE MEMBER(
 	MEMIDX INT NOT NULL, -- AUTO_INCREMENT를 넣으면 PRIMARY KEY가 된다 --
