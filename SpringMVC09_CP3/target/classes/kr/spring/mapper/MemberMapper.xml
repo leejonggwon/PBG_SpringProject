@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.spring.mapper.MemberMapper">
+
+
+	<!-- resultType은 꼭 명시를 해야한다 -->
+	<select id="login" parameterType="kr.spring.entity.Member" resultType="kr.spring.entity.Member">
+		SELECT * FROM CM_MEMBER WHERE MEMID = #{memID} AND MEMPASSWORD = #{memPassword}
+	</select>
+
+	<update id="profileUpdate" parameterType="kr.spring.entity.Member">
+		UPDATE CM_MEMBER 
+		SET MEMPROFILE = #{memProfile}
+		WHERE MEMID = #{memID}
+	</update>
+	
+	<update id="update" parameterType="kr.spring.entity.Member">
+   		UPDATE CM_MEMBER
+  		SET MEMPASSWORD = #{memPassword}, MEMNAME = #{memName}, MEMAGE = #{memAge}, MEMGENDER = #{memGender}, MEMEMAIL = #{memEmail}, MEMPROFILE = #{memProfile}
+  		WHERE MEMID = #{memID}
+	</update>
+	
+	
+
+</mapper>

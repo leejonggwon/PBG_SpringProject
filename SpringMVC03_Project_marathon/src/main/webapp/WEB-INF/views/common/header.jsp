@@ -15,6 +15,7 @@
 	<!-- 메뉴바 -->
 	<nav class="navbar navbar-default">
 		<div class="container-fluid">
+		
 			<div class="navbar-header">
 				<button type="button" class="navbar-toggle" data-toggle="collapse"
 					data-target="#myNavbar">
@@ -23,6 +24,7 @@
 				</button>
 				<a class="navbar-brand" href="#">SEOUL MARATHON</a>
 			</div>
+				
 			<div class="collapse navbar-collapse" id="myNavbar">
 				<ul class="nav navbar-nav">
 					<li class="#"><a href="${contextPath}/">메인</a></li> <!--루트(/)만 입력하면 controller(context path)가 생략되므로, 명시적으로 /controller/를 입력 -->

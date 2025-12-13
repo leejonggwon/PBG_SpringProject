@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--*MyBatis는 매퍼 XML 파일에 SQL문을 작성하고, 자바의 인터페이스와 매핑해서 SQL을 실행하는 방식 -->
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- MyBatis에서 select, insert, update, delete 같은 태그를 쓸 수 있는 이유는 
+     MyBatis가 미리 정의한 XML 규칙(DTD)을 따르기 때문이다 -->
+      
+<!--*BoardMapper.xml는 인터페이스와 이름을 똑같이 맞춰준다 -->
+
+<!--*namespace에 인터페이스 이름을 명시해 두었기 때문에, MyBatis가 BoardMapper 인터페이스와 이 XML 파일을 연결할 수 있다 -->
+<mapper namespace="kr.spring.mapper.BoardMapper">  
+
+
+<!-- id: 호출할 메서드 이름과 동일하게 설정, 
+     resultType: SQL 실행 결과의 반환 타입을 지정  
+                 여기서는 Board 객체로 매핑되므로 → kr.spring.entity.Board-->
+<select id="getLists" resultType="kr.spring.entity.Board"> 
+	SELECT * FROM BOARD ORDER BY INDATE DESC
+</select>	
+
+
+<!-- parameterType: 전달받는 매개변수의 타입 (여기서는 Board 객체)-->
+<insert id="boardInsert" parameterType="kr.spring.entity.Board"> 
+	INSERT INTO BOARD(TITLE, CONTENT, WRITER) 
+	VALUES (#{title}, #{content}, #{writer})
+</insert>
+<!-- #{필드명} → MyBatis 전용 바인딩 문법-->
+
+
+<!-- #{idx}는 파라미터를 의미하므로 parameterType="int"로 지정해준다.
+     실행 결과는 Board 객체로 반환되므로 resultType="kr.spring.entity.Board"로 설정한다. -->
+<select id="boardContent" parameterType="int" resultType="kr.spring.entity.Board"> 
+	SELECT * FROM BOARD WHERE IDX = #{idx}
+</select>
+
+
+<delete id="boardDelete" parameterType="int">
+	DELETE FROM BOARD WHERE IDX = #{idx}
+</delete>
+
+
+<update id="boardUpdate" parameterType="kr.spring.entity.Board">
+	UPDATE BOARD SET TITLE = #{title}, CONTENT = #{content}, WRITER = #{writer} WHERE IDX = #{idx}
+</update>
+
+
+<update id="boardCount" parameterType="int">
+	UPDATE BOARD SET COUNT = COUNT + 1 WHERE IDX = #{idx}
+</update>
+
+
+</mapper>
+
+
+
+

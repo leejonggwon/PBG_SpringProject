@@ -1,299 +1,293 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Spring]]></title><description><![CDATA[Level up your Java code and explore what Spring can do for you.]]></description><link>https://spring.io</link><generator>GatsbyJS</generator><lastBuildDate>Wed, 19 Nov 2025 00:38:20 GMT</lastBuildDate><item><title><![CDATA[OpenTelemetry with Spring Boot]]></title><link>https://spring.io/blog/2025/11/18/opentelemetry-with-spring-boot</link><guid isPermaLink="true">https://spring.io/blog/2025/11/18/opentelemetry-with-spring-boot</guid><dc:creator><![CDATA[mhalbritter]]></dc:creator><pubDate>Tue, 18 Nov 2025 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;This is a new blog post in the &lt;a href=&quot;https://spring.io/blog/2025/09/02/road_to_ga_introduction&quot;&gt;Road to GA series&lt;/a&gt;, and this time we&apos;re taking a look at OpenTelemetry with Spring Boot.&lt;/p&gt;
-&lt;h2 id=&quot;introduction&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#introduction&quot; aria-label=&quot;introduction permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Introduction&lt;/h2&gt;
-&lt;p&gt;In modern cloud native architectures, observability is no longer optional; it is a fundamental requirement. You want to understand what your application is doing via metrics, how requests are flowing through it via traces, and what it is saying via logs.&lt;/p&gt;
-&lt;p&gt;The &lt;a href=&quot;https://opentelemetry.io/&quot;&gt;OpenTelemetry project&lt;/a&gt;, sometimes abbreviated as OTel, provides a vendor-neutral, open-source framework to collect, process, and export telemetry data. Backed by the &lt;a href=&quot;https://www.cncf.io/&quot;&gt;Cloud Native Computing Foundation&lt;/a&gt;, it offers an API, an SDK, a standard wire protocol called OTLP for exporting data, and a pluggable architecture (including the OpenTelemetry Collector) for handling ingestion, processing, and export to backends.&lt;/p&gt;
-&lt;p&gt;Instrumented projects and libraries use the API to emit observability data. The SDK, which implements that API, is used to configure how data is collected and exported. The collector is an optional component that can help to aggregate and filter data, but you can also send the data directly to any capable backend.&lt;/p&gt;
-&lt;p&gt;The Spring ecosystem has strong observability support via &lt;a href=&quot;https://micrometer.io/&quot;&gt;Micrometer&lt;/a&gt;, and combining Spring Boot with OpenTelemetry is a powerful way to cover all observability signals (metrics, traces, and logs). The key enabler here is the OTLP protocol rather than a specific library.&lt;/p&gt;
-&lt;p&gt;In this post, we&apos;ll walk through what OpenTelemetry means and see how you can integrate with Spring Boot to cover the observability story perfectly.&lt;/p&gt;
-&lt;h2 id=&quot;using-opentelemetry-with-spring-boot&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#using-opentelemetry-with-spring-boot&quot; aria-label=&quot;using opentelemetry with spring boot permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Using OpenTelemetry with Spring Boot&lt;/h2&gt;
-&lt;p&gt;When you choose to integrate OpenTelemetry with Spring Boot, there are a few alternative paths, from &quot;just drop in a runtime agent&quot; to &quot;use built-in Spring support&quot;. You have three options:&lt;/p&gt;
-&lt;h3 id=&quot;use-the-opentelemetry-java-agent&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#use-the-opentelemetry-java-agent&quot; aria-label=&quot;use the opentelemetry java agent permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Use the OpenTelemetry Java Agent&lt;/h3&gt;
-&lt;p&gt;&lt;a href=&quot;https://opentelemetry.io/docs/zero-code/java/agent/getting-started/&quot;&gt;Getting started&lt;/a&gt; is simple: You attach the &lt;code&gt;opentelemetry-javaagent.jar&lt;/code&gt; via the &lt;code&gt;-javaagent&lt;/code&gt; flag at startup. This agent does bytecode-instrumentation for libraries (HTTP, JDBC, Spring, etc.). This is the easiest &quot;zero code change&quot; path. The agent figures out traces, spans (a span is the atomic part of a trace), metrics, etc.&lt;/p&gt;
-&lt;p&gt;The main problem with that approach is that the Java agent has to closely match your library versions because the agent modifies their bytecode. If there&apos;s a mismatch between the versions the agent has been tested with and the versions you use, issues can be hard to diagnose. Also, if you&apos;re using GraalVM&apos;s native-image or want to use Java&apos;s AOT cache, you have to jump through additional hoops. Additionally, if you&apos;re already using an agent, they may conflict.&lt;/p&gt;
-&lt;h3 id=&quot;use-the-3rd-party-opentelemetry-spring-boot-starter&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#use-the-3rd-party-opentelemetry-spring-boot-starter&quot; aria-label=&quot;use the 3rd party opentelemetry spring boot starter permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Use the 3rd-party OpenTelemetry Spring Boot Starter&lt;/h3&gt;
-&lt;p&gt;OpenTelemetry has its own Spring Boot starter, which &lt;a href=&quot;https://opentelemetry.io/docs/zero-code/java/spring-boot-starter/out-of-the-box-instrumentation/&quot;&gt;instruments some technologies&lt;/a&gt;.
-However, &lt;a href=&quot;https://opentelemetry.io/docs/zero-code/java/spring-boot-starter/&quot;&gt;they note&lt;/a&gt; that the OpenTelemetry Java Agent is their default choice of instrumenting and that the starter should only be used if the agent can&apos;t be used. Also, while &lt;a href=&quot;https://opentelemetry.io/blog/2024/spring-starter-stable/&quot;&gt;the starter itself is marked as stable&lt;/a&gt;, it pulls in dependencies with an alpha suffix.&lt;/p&gt;
-&lt;h3 id=&quot;use-the-opentelemetry-spring-boot-starter-from-the-spring-team&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#use-the-opentelemetry-spring-boot-starter-from-the-spring-team&quot; aria-label=&quot;use the opentelemetry spring boot starter from the spring team permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Use the OpenTelemetry Spring Boot Starter from the Spring team&lt;/h3&gt;
-&lt;p&gt;With Spring Boot 4.0, we&apos;re introducing a new Spring Boot Starter for OpenTelemetry. It is called &lt;code&gt;spring-boot-starter-opentelemetry&lt;/code&gt; (we&apos;re really clever with those names, aren&apos;t we) and is selectable via the &quot;OpenTelemetry&quot; dependency on &lt;a href=&quot;https://start.spring.io/&quot;&gt;start.spring.io&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;We may be biased, but this is our favorite option to get observability in a Spring Boot application.&lt;/p&gt;
-&lt;p&gt;The starter includes the OpenTelemetry API and components to export Micrometer signals via OTLP. Micrometer Tracing with the OpenTelemetry bridge uses the OpenTelemetry API to export traces in OTLP format. The Micrometer &lt;a href=&quot;https://docs.micrometer.io/micrometer/reference/implementations/otlp.html&quot;&gt;OtlpMeterRegistry&lt;/a&gt; is used to send metrics collected via the Micrometer API to your OpenTelemetry-capable metrics backend via the OTLP protocol.&lt;/p&gt;
-&lt;p&gt;To reiterate: It&apos;s the protocol that matters, not the library used. Even though the Spring portfolio projects use Micrometer as their observability API, it is perfectly possible to export the signals via OTLP to any OpenTelemetry-capable backend, as you&apos;ll see soon.&lt;/p&gt;
-&lt;p&gt;Spring Boot also supports sending logs via OTLP to an OpenTelemetry-capable backend, but it doesn&apos;t install log appenders into Logback and Log4j2 out of the box. This may change in the future, but even right now, it&apos;s not hard to do, and we&apos;re walking through the setup in this blog post, too.&lt;/p&gt;
-&lt;p&gt;The rest of this blog post will focus on how to get a seamless OpenTelemetry experience in your Spring Boot application using the new Spring Boot Starter for OpenTelemetry from the Spring team.&lt;/p&gt;
-&lt;h2 id=&quot;exporting-metrics&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#exporting-metrics&quot; aria-label=&quot;exporting metrics permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Exporting metrics&lt;/h2&gt;
-&lt;p&gt;As hinted earlier, Spring Boot uses the Micrometer OTLP registry to export Micrometer metrics via OTLP to any OpenTelemetry-capable backend. The required dependency, &lt;code&gt;io.micrometer:micrometer-registry-otlp&lt;/code&gt;, is already included in the &lt;code&gt;spring-boot-starter-opentelemetry&lt;/code&gt;.&lt;/p&gt;
-&lt;p&gt;To enable it in your application, you have to set the &lt;code&gt;management.otlp.metrics.export.url&lt;/code&gt; property, e.g.&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-properties&quot;&gt;management.otlp.metrics.export.url=http://localhost:4318/v1/metrics
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Spring]]></title><description><![CDATA[Level up your Java code and explore what Spring can do for you.]]></description><link>https://spring.io</link><generator>GatsbyJS</generator><lastBuildDate>Fri, 12 Dec 2025 18:49:52 GMT</lastBuildDate><item><title><![CDATA[Spring Data 2025.1.1, 2025.0.7 and 2024.1.13 released]]></title><link>https://spring.io/blog/2025/12/12/spring-data-2025-1-1-2025-0-7-and-2024-1-13-released</link><guid isPermaLink="true">https://spring.io/blog/2025/12/12/spring-data-2025-1-1-2025-0-7-and-2024-1-13-released</guid><dc:creator><![CDATA[mp911de]]></dc:creator><pubDate>Fri, 12 Dec 2025 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;On behalf of the team and everyone who has contributed, I’m pleased to announce the availability of &lt;code&gt;2025.1.1&lt;/code&gt;, &lt;code&gt;2025.0.7&lt;/code&gt; and &lt;code&gt;2024.1.13&lt;/code&gt; service releases. These releases ship with dependency upgrades and bug fixes.&lt;/p&gt;
+&lt;p&gt;The upcoming Spring Boot releases will pick up the above releases by next week.&lt;/p&gt;
+&lt;h2 id=&quot;end-of-open-source-support-for-spring-data-20241x-33x-generation&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#end-of-open-source-support-for-spring-data-20241x-33x-generation&quot; aria-label=&quot;end of open source support for spring data 20241x 33x generation permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;End of Open Source support for Spring Data 2024.1.x (3.3.x generation)&lt;/h2&gt;
+&lt;p&gt;Spring Data 2024.1.13 marks the end of open source support for Spring Data 2024.1.x (used by Spring Boot 3.3.x). Please upgrade to Spring Data &lt;code&gt;2025.1.x&lt;/code&gt; or &lt;code&gt;2025.0.x&lt;/code&gt; at your earliest convenience. If you are not yet ready to upgrade, commercial support for Spring Data &lt;code&gt;2024.1.x&lt;/code&gt; is available.&lt;/p&gt;
+&lt;h2 id=&quot;202511&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#202511&quot; aria-label=&quot;202511 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;2025.1.1&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Spring Data Commons &lt;code&gt;4.0.1&lt;/code&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/commons/docs/4.0.1/api/&quot;&gt;Javadoc&lt;/a&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/commons/reference/4.0/&quot;&gt;Documentation&lt;/a&gt; - &lt;a href=&quot;https://github.com/spring-projects/spring-data-commons/releases/tag/4.0.1&quot;&gt;Changelog&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Spring Data JPA &lt;code&gt;4.0.1&lt;/code&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/jpa/docs/4.0.1/api/&quot;&gt;Javadoc&lt;/a&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/jpa/reference/4.0/&quot;&gt;Documentation&lt;/a&gt; - &lt;a href=&quot;https://github.com/spring-projects/spring-data-jpa/releases/tag/4.0.1&quot;&gt;Changelog&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Spring Data for Apache Cassandra &lt;code&gt;5.0.1&lt;/code&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/cassandra/docs/5.0.1/api/&quot;&gt;Javadoc&lt;/a&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/cassandra/reference/5.0/&quot;&gt;Documentation&lt;/a&gt; - &lt;a href=&quot;https://github.com/spring-projects/spring-data-cassandra/releases/tag/5.0.1&quot;&gt;Changelog&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Spring Data Neo4j &lt;code&gt;8.0.1&lt;/code&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/neo4j/docs/8.0.1/api/&quot;&gt;Javadoc&lt;/a&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/neo4j/reference/8.0/&quot;&gt;Documentation&lt;/a&gt; - &lt;a href=&quot;https://github.com/spring-projects/spring-data-neo4j/releases/tag/8.0.1&quot;&gt;Changelog&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Spring Data KeyValue &lt;code&gt;4.0.1&lt;/code&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/keyvalue/docs/4.0.1/api/&quot;&gt;Javadoc&lt;/a&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/keyvalue/reference/4.0/&quot;&gt;Documentation&lt;/a&gt; - &lt;a href=&quot;https://github.com/spring-projects/spring-data-keyvalue/releases/tag/4.0.1&quot;&gt;Changelog&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Spring Data MongoDB &lt;code&gt;5.0.1&lt;/code&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/mongodb/docs/5.0.1/api/&quot;&gt;Javadoc&lt;/a&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/mongodb/reference/5.0/&quot;&gt;Documentation&lt;/a&gt; - &lt;a href=&quot;https://github.com/spring-projects/spring-data-mongodb/releases/tag/5.0.1&quot;&gt;Changelog&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Spring Data LDAP &lt;code&gt;4.0.1&lt;/code&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/ldap/docs/4.0.1/api/&quot;&gt;Javadoc&lt;/a&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/ldap/reference/4.0/&quot;&gt;Documentation&lt;/a&gt; - &lt;a href=&quot;https://github.com/spring-projects/spring-data-ldap/releases/tag/4.0.1&quot;&gt;Changelog&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Spring Data REST &lt;code&gt;5.0.1&lt;/code&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/rest/docs/5.0.1/api/&quot;&gt;Javadoc&lt;/a&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/rest/reference/5.0/&quot;&gt;Documentation&lt;/a&gt; - &lt;a href=&quot;https://github.com/spring-projects/spring-data-rest/releases/tag/5.0.1&quot;&gt;Changelog&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Spring Data Redis &lt;code&gt;4.0.1&lt;/code&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/redis/docs/4.0.1/api/&quot;&gt;Javadoc&lt;/a&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/redis/reference/4.0/&quot;&gt;Documentation&lt;/a&gt; - &lt;a href=&quot;https://github.com/spring-projects/spring-data-redis/releases/tag/4.0.1&quot;&gt;Changelog&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Spring Data Elasticsearch &lt;code&gt;6.0.1&lt;/code&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/elasticsearch/docs/6.0.1/api/&quot;&gt;Javadoc&lt;/a&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/elasticsearch/reference/6.0/&quot;&gt;Documentation&lt;/a&gt; - &lt;a href=&quot;https://github.com/spring-projects/spring-data-elasticsearch/releases/tag/6.0.1&quot;&gt;Changelog&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Spring Data Couchbase &lt;code&gt;6.0.1&lt;/code&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/couchbase/docs/6.0.1/api/&quot;&gt;Javadoc&lt;/a&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/couchbase/reference/6.0/&quot;&gt;Documentation&lt;/a&gt; - &lt;a href=&quot;https://github.com/spring-projects/spring-data-couchbase/releases/tag/6.0.1&quot;&gt;Changelog&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Spring Data Relational &lt;code&gt;4.0.1&lt;/code&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/relational/docs/4.0.1/api/&quot;&gt;Javadoc&lt;/a&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/relational/reference/4.0/&quot;&gt;Documentation&lt;/a&gt; - &lt;a href=&quot;https://github.com/spring-projects/spring-data-relational/releases/tag/4.0.1&quot;&gt;Changelog&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&quot;202507&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#202507&quot; aria-label=&quot;202507 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;2025.0.7&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Spring Data Commons &lt;code&gt;3.5.7&lt;/code&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/commons/docs/3.5.7/api/&quot;&gt;Javadoc&lt;/a&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/commons/reference/3.5/&quot;&gt;Documentation&lt;/a&gt; - &lt;a href=&quot;https://github.com/spring-projects/spring-data-commons/releases/tag/3.5.7&quot;&gt;Changelog&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Spring Data JPA &lt;code&gt;3.5.7&lt;/code&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/jpa/docs/3.5.7/api/&quot;&gt;Javadoc&lt;/a&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/jpa/reference/3.5/&quot;&gt;Documentation&lt;/a&gt; - &lt;a href=&quot;https://github.com/spring-projects/spring-data-jpa/releases/tag/3.5.7&quot;&gt;Changelog&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Spring Data for Apache Cassandra &lt;code&gt;4.5.7&lt;/code&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/cassandra/docs/4.5.7/api/&quot;&gt;Javadoc&lt;/a&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/cassandra/reference/4.5/&quot;&gt;Documentation&lt;/a&gt; - &lt;a href=&quot;https://github.com/spring-projects/spring-data-cassandra/releases/tag/4.5.7&quot;&gt;Changelog&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Spring Data Neo4j &lt;code&gt;7.5.7&lt;/code&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/neo4j/docs/7.5.7/api/&quot;&gt;Javadoc&lt;/a&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/neo4j/reference/7.5/&quot;&gt;Documentation&lt;/a&gt; - &lt;a href=&quot;https://github.com/spring-projects/spring-data-neo4j/releases/tag/7.5.7&quot;&gt;Changelog&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Spring Data KeyValue &lt;code&gt;3.5.7&lt;/code&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/keyvalue/docs/3.5.7/api/&quot;&gt;Javadoc&lt;/a&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/keyvalue/reference/3.5/&quot;&gt;Documentation&lt;/a&gt; - &lt;a href=&quot;https://github.com/spring-projects/spring-data-keyvalue/releases/tag/3.5.7&quot;&gt;Changelog&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Spring Data MongoDB &lt;code&gt;4.5.7&lt;/code&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/mongodb/docs/4.5.7/api/&quot;&gt;Javadoc&lt;/a&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/mongodb/reference/4.5/&quot;&gt;Documentation&lt;/a&gt; - &lt;a href=&quot;https://github.com/spring-projects/spring-data-mongodb/releases/tag/4.5.7&quot;&gt;Changelog&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Spring Data LDAP &lt;code&gt;3.5.7&lt;/code&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/ldap/docs/3.5.7/api/&quot;&gt;Javadoc&lt;/a&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/ldap/reference/3.5/&quot;&gt;Documentation&lt;/a&gt; - &lt;a href=&quot;https://github.com/spring-projects/spring-data-ldap/releases/tag/3.5.7&quot;&gt;Changelog&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Spring Data REST &lt;code&gt;4.5.7&lt;/code&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/rest/docs/4.5.7/api/&quot;&gt;Javadoc&lt;/a&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/rest/reference/4.5/&quot;&gt;Documentation&lt;/a&gt; - &lt;a href=&quot;https://github.com/spring-projects/spring-data-rest/releases/tag/4.5.7&quot;&gt;Changelog&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Spring Data Redis &lt;code&gt;3.5.7&lt;/code&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/redis/docs/3.5.7/api/&quot;&gt;Javadoc&lt;/a&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/redis/reference/3.5/&quot;&gt;Documentation&lt;/a&gt; - &lt;a href=&quot;https://github.com/spring-projects/spring-data-redis/releases/tag/3.5.7&quot;&gt;Changelog&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Spring Data Elasticsearch &lt;code&gt;5.5.7&lt;/code&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/elasticsearch/docs/5.5.7/api/&quot;&gt;Javadoc&lt;/a&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/elasticsearch/reference/5.5/&quot;&gt;Documentation&lt;/a&gt; - &lt;a href=&quot;https://github.com/spring-projects/spring-data-elasticsearch/releases/tag/5.5.7&quot;&gt;Changelog&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Spring Data Couchbase &lt;code&gt;5.5.7&lt;/code&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/couchbase/docs/5.5.7/api/&quot;&gt;Javadoc&lt;/a&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/couchbase/reference/5.5/&quot;&gt;Documentation&lt;/a&gt; - &lt;a href=&quot;https://github.com/spring-projects/spring-data-couchbase/releases/tag/5.5.7&quot;&gt;Changelog&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Spring Data Relational &lt;code&gt;3.5.7&lt;/code&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/relational/docs/3.5.7/api/&quot;&gt;Javadoc&lt;/a&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/relational/reference/3.5/&quot;&gt;Documentation&lt;/a&gt; - &lt;a href=&quot;https://github.com/spring-projects/spring-data-relational/releases/tag/3.5.7&quot;&gt;Changelog&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&quot;2024113&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#2024113&quot; aria-label=&quot;2024113 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;2024.1.13&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Spring Data Commons &lt;code&gt;3.4.13&lt;/code&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/commons/docs/3.4.13/api/&quot;&gt;Javadoc&lt;/a&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/commons/reference/3.4/&quot;&gt;Documentation&lt;/a&gt; - &lt;a href=&quot;https://github.com/spring-projects/spring-data-commons/releases/tag/3.4.13&quot;&gt;Changelog&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Spring Data JPA &lt;code&gt;3.4.13&lt;/code&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/jpa/docs/3.4.13/api/&quot;&gt;Javadoc&lt;/a&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/jpa/reference/3.4/&quot;&gt;Documentation&lt;/a&gt; - &lt;a href=&quot;https://github.com/spring-projects/spring-data-jpa/releases/tag/3.4.13&quot;&gt;Changelog&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Spring Data for Apache Cassandra &lt;code&gt;4.4.13&lt;/code&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/cassandra/docs/4.4.13/api/&quot;&gt;Javadoc&lt;/a&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/cassandra/reference/4.4/&quot;&gt;Documentation&lt;/a&gt; - &lt;a href=&quot;https://github.com/spring-projects/spring-data-cassandra/releases/tag/4.4.13&quot;&gt;Changelog&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Spring Data Neo4j &lt;code&gt;7.4.13&lt;/code&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/neo4j/docs/7.4.13/api/&quot;&gt;Javadoc&lt;/a&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/neo4j/reference/7.4/&quot;&gt;Documentation&lt;/a&gt; - &lt;a href=&quot;https://github.com/spring-projects/spring-data-neo4j/releases/tag/7.4.13&quot;&gt;Changelog&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Spring Data KeyValue &lt;code&gt;3.4.13&lt;/code&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/keyvalue/docs/3.4.13/api/&quot;&gt;Javadoc&lt;/a&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/keyvalue/reference/3.4/&quot;&gt;Documentation&lt;/a&gt; - &lt;a href=&quot;https://github.com/spring-projects/spring-data-keyvalue/releases/tag/3.4.13&quot;&gt;Changelog&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Spring Data MongoDB &lt;code&gt;4.4.13&lt;/code&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/mongodb/docs/4.4.13/api/&quot;&gt;Javadoc&lt;/a&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/mongodb/reference/4.4/&quot;&gt;Documentation&lt;/a&gt; - &lt;a href=&quot;https://github.com/spring-projects/spring-data-mongodb/releases/tag/4.4.13&quot;&gt;Changelog&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Spring Data LDAP &lt;code&gt;3.4.13&lt;/code&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/ldap/docs/3.4.13/api/&quot;&gt;Javadoc&lt;/a&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/ldap/reference/3.4/&quot;&gt;Documentation&lt;/a&gt; - &lt;a href=&quot;https://github.com/spring-projects/spring-data-ldap/releases/tag/3.4.13&quot;&gt;Changelog&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Spring Data REST &lt;code&gt;4.4.13&lt;/code&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/rest/docs/4.4.13/api/&quot;&gt;Javadoc&lt;/a&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/rest/reference/4.4/&quot;&gt;Documentation&lt;/a&gt; - &lt;a href=&quot;https://github.com/spring-projects/spring-data-rest/releases/tag/4.4.13&quot;&gt;Changelog&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Spring Data Redis &lt;code&gt;3.4.13&lt;/code&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/redis/docs/3.4.13/api/&quot;&gt;Javadoc&lt;/a&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/redis/reference/3.4/&quot;&gt;Documentation&lt;/a&gt; - &lt;a href=&quot;https://github.com/spring-projects/spring-data-redis/releases/tag/3.4.13&quot;&gt;Changelog&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Spring Data Elasticsearch &lt;code&gt;5.4.13&lt;/code&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/elasticsearch/docs/5.4.13/api/&quot;&gt;Javadoc&lt;/a&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/elasticsearch/reference/5.4/&quot;&gt;Documentation&lt;/a&gt; - &lt;a href=&quot;https://github.com/spring-projects/spring-data-elasticsearch/releases/tag/5.4.13&quot;&gt;Changelog&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Spring Data Couchbase &lt;code&gt;5.4.13&lt;/code&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/couchbase/docs/5.4.13/api/&quot;&gt;Javadoc&lt;/a&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/couchbase/reference/5.4/&quot;&gt;Documentation&lt;/a&gt; - &lt;a href=&quot;https://github.com/spring-projects/spring-data-couchbase/releases/tag/5.4.13&quot;&gt;Changelog&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Spring Data Relational &lt;code&gt;3.4.13&lt;/code&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/relational/docs/3.4.13/api/&quot;&gt;Javadoc&lt;/a&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/relational/reference/3.4/&quot;&gt;Documentation&lt;/a&gt; - &lt;a href=&quot;https://github.com/spring-projects/spring-data-relational/releases/tag/3.4.13&quot;&gt;Changelog&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</content:encoded></item><item><title><![CDATA[Spring Cloud 2024.0.3 (aka Northfields) Has Been Released]]></title><link>https://spring.io/blog/2025/12/12/spring-cloud-2024-0-3-aka-northfields-has-been-released</link><guid isPermaLink="true">https://spring.io/blog/2025/12/12/spring-cloud-2024-0-3-aka-northfields-has-been-released</guid><dc:creator><![CDATA[ryanjbaxter]]></dc:creator><pubDate>Fri, 12 Dec 2025 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;On behalf of the community, I am pleased to announce that the General Availability (RELEASE) of the &lt;a href=&quot;https://cloud.spring.io&quot;&gt;Spring Cloud 2024.0.3&lt;/a&gt; Release Train is available today. The release can be found in &lt;a href=&quot;https://repo1.maven.org/maven2/org/springframework/cloud/spring-cloud-dependencies/2024.0.3/&quot;&gt;Maven Central&lt;/a&gt;. You can check out the 2024.0.3 &lt;a href=&quot;https://github.com/spring-cloud/spring-cloud-release/wiki/Spring-Cloud-2024.0.3-Release-Notes&quot;&gt;release notes for more information&lt;/a&gt;.&lt;/p&gt;
+&lt;h2 id=&quot;notable-changes-in-the-202403-release-train&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#notable-changes-in-the-202403-release-train&quot; aria-label=&quot;notable changes in the 202403 release train permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Notable Changes in the 2024.0.3 Release Train&lt;/h2&gt;
+&lt;p&gt;This release uses Spring Boot 3.4.12.&lt;/p&gt;
+&lt;p&gt;A complete list of issues resolved in this release can be found in the GitHub project &lt;a href=&quot;https://github.com/orgs/spring-cloud/projects/179&quot;&gt;2024.0.3&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;This is the final open source release of the Spring Cloud 2024.0.x release train.  Open source support &lt;a href=&quot;https://spring.io/projects/spring-cloud#support&quot;&gt;ends at
+the end of December 2025&lt;/a&gt;.&lt;/strong&gt;&lt;/p&gt;
+&lt;h3 id=&quot;spring-cloud-openfeign&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#spring-cloud-openfeign&quot; aria-label=&quot;spring cloud openfeign permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Spring Cloud Openfeign&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Set max requests based on http client properties (&lt;a href=&quot;https://github.com/spring-cloud/spring-cloud-openfeign/pull/1286&quot;&gt;#1286&lt;/a&gt;)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&quot;spring-cloud-kubernetes&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#spring-cloud-kubernetes&quot; aria-label=&quot;spring cloud kubernetes permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Spring Cloud Kubernetes&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Loadbalancer with SERVICE mode cannot discover newly created services (&lt;a href=&quot;https://github.com/spring-cloud/spring-cloud-kubernetes/issues/1970&quot;&gt;#1970&lt;/a&gt;)&lt;/li&gt;
+&lt;li&gt;Cannot disable leaderElection for /info endpoint (&lt;a href=&quot;https://github.com/spring-cloud/spring-cloud-kubernetes/issues/2085&quot;&gt;#2085&lt;/a&gt;)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&quot;spring-cloud-function&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#spring-cloud-function&quot; aria-label=&quot;spring cloud function permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Spring Cloud Function&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Preserve AWS X-Ray Context In Spring Cloud Function Custom Runtime (&lt;a href=&quot;https://github.com/spring-cloud/spring-cloud-function/issues/1306&quot;&gt;#1306&lt;/a&gt;)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&quot;spring-cloud-gateway&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#spring-cloud-gateway&quot; aria-label=&quot;spring cloud gateway permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Spring Cloud Gateway&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;GatewayTagsProvider not working as documented (&lt;a href=&quot;https://github.com/spring-cloud/spring-cloud-gateway/issues/4007&quot;&gt;#4007&lt;/a&gt;)&lt;/li&gt;
+&lt;li&gt;FormFilter Issue: Incorrect Handling of URL-Encoded Parameters in Query String (&lt;a href=&quot;https://github.com/spring-cloud/spring-cloud-gateway/issues/3929&quot;&gt;#3929&lt;/a&gt;)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&quot;spring-cloud-config&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#spring-cloud-config&quot; aria-label=&quot;spring cloud config permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Spring Cloud Config&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;RefNotFoundException thrown when using &lt;code&gt;spring.cloud.config.send-all-labels=true&lt;/code&gt; with invalid commit ID (&lt;a href=&quot;https://github.com/spring-cloud/spring-cloud-config/issues/3126&quot;&gt;#3126&lt;/a&gt;)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The following modules were updated as part of 2024.0.3:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Module&lt;/th&gt;
+&lt;th&gt;Version&lt;/th&gt;
+&lt;th&gt;Issues&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Spring Cloud Bus&lt;/td&gt;
+&lt;td&gt;4.2.2&lt;/td&gt;
+&lt;td&gt;(&lt;a href=&quot;https://github.com/spring-cloud/spring-cloud-bus/releases/tag/v4.2.2&quot;&gt;issues&lt;/a&gt;)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Spring Cloud Zookeeper&lt;/td&gt;
+&lt;td&gt;4.2.3&lt;/td&gt;
+&lt;td&gt;(&lt;a href=&quot;https://github.com/spring-cloud/spring-cloud-zookeeper/releases/tag/v4.2.3&quot;&gt;issues&lt;/a&gt;)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Spring Cloud Openfeign&lt;/td&gt;
+&lt;td&gt;4.2.3&lt;/td&gt;
+&lt;td&gt;(&lt;a href=&quot;https://github.com/spring-cloud/spring-cloud-openfeign/releases/tag/v4.2.3&quot;&gt;issues&lt;/a&gt;)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Spring Cloud Task&lt;/td&gt;
+&lt;td&gt;3.2.3&lt;/td&gt;
+&lt;td&gt;(&lt;a href=&quot;https://github.com/spring-cloud/spring-cloud-task/releases/tag/v3.2.3&quot;&gt;issues&lt;/a&gt;)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Spring Cloud Kubernetes&lt;/td&gt;
+&lt;td&gt;3.2.3&lt;/td&gt;
+&lt;td&gt;(&lt;a href=&quot;https://github.com/spring-cloud/spring-cloud-kubernetes/releases/tag/v3.2.3&quot;&gt;issues&lt;/a&gt;)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Spring Cloud Function&lt;/td&gt;
+&lt;td&gt;4.2.4&lt;/td&gt;
+&lt;td&gt;(&lt;a href=&quot;https://github.com/spring-cloud/spring-cloud-function/releases/tag/v4.2.4&quot;&gt;issues&lt;/a&gt;)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Spring Cloud Vault&lt;/td&gt;
+&lt;td&gt;4.2.3&lt;/td&gt;
+&lt;td&gt;(&lt;a href=&quot;https://github.com/spring-cloud/spring-cloud-vault/releases/tag/v4.2.3&quot;&gt;issues&lt;/a&gt;)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Spring Cloud Commons&lt;/td&gt;
+&lt;td&gt;4.2.4&lt;/td&gt;
+&lt;td&gt;(&lt;a href=&quot;https://github.com/spring-cloud/spring-cloud-commons/releases/tag/v4.2.4&quot;&gt;issues&lt;/a&gt;)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Spring Cloud Circuitbreaker&lt;/td&gt;
+&lt;td&gt;3.2.3&lt;/td&gt;
+&lt;td&gt;(&lt;a href=&quot;https://github.com/spring-cloud/spring-cloud-circuitbreaker/releases/tag/v3.2.3&quot;&gt;issues&lt;/a&gt;)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Spring Cloud Netflix&lt;/td&gt;
+&lt;td&gt;4.2.3&lt;/td&gt;
+&lt;td&gt;(&lt;a href=&quot;https://github.com/spring-cloud/spring-cloud-netflix/releases/tag/v4.2.3&quot;&gt;issues&lt;/a&gt;)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Spring Cloud Stream&lt;/td&gt;
+&lt;td&gt;4.2.3&lt;/td&gt;
+&lt;td&gt;(&lt;a href=&quot;https://github.com/spring-cloud/spring-cloud-stream/releases/tag/v4.2.3&quot;&gt;issues&lt;/a&gt;)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Spring Cloud Gateway&lt;/td&gt;
+&lt;td&gt;4.2.7&lt;/td&gt;
+&lt;td&gt;(&lt;a href=&quot;https://github.com/spring-cloud/spring-cloud-gateway/releases/tag/v4.2.7&quot;&gt;issues&lt;/a&gt;)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Spring Cloud Config&lt;/td&gt;
+&lt;td&gt;4.2.4&lt;/td&gt;
+&lt;td&gt;(&lt;a href=&quot;https://github.com/spring-cloud/spring-cloud-config/releases/tag/v4.2.4&quot;&gt;issues&lt;/a&gt;)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Spring Cloud Build&lt;/td&gt;
+&lt;td&gt;4.2.4&lt;/td&gt;
+&lt;td&gt;(&lt;a href=&quot;https://github.com/spring-cloud/spring-cloud-build/releases/tag/v4.2.4&quot;&gt;issues&lt;/a&gt;)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Spring Cloud Consul&lt;/td&gt;
+&lt;td&gt;4.2.3&lt;/td&gt;
+&lt;td&gt;(&lt;a href=&quot;https://github.com/spring-cloud/spring-cloud-consul/releases/tag/v4.2.3&quot;&gt;issues&lt;/a&gt;)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Spring Cloud Contract&lt;/td&gt;
+&lt;td&gt;4.2.3&lt;/td&gt;
+&lt;td&gt;(&lt;a href=&quot;https://github.com/spring-cloud/spring-cloud-contract/releases/tag/v4.2.3&quot;&gt;issues&lt;/a&gt;)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Spring Cloud Starter Build&lt;/td&gt;
+&lt;td&gt;2024.0.3&lt;/td&gt;
+&lt;td&gt;(&lt;a href=&quot;https://github.com/spring-cloud/spring-cloud-starter-build/releases/tag/v2024.0.3&quot;&gt;issues&lt;/a&gt;)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;As always, we welcome feedback on &lt;a href=&quot;https://github.com/spring-cloud/&quot;&gt;GitHub&lt;/a&gt;, on &lt;a href=&quot;https://gitter.im/spring-cloud/spring-cloud&quot;&gt;Gitter&lt;/a&gt;, on &lt;a href=&quot;https://stackoverflow.com/questions/tagged/spring-cloud&quot;&gt;Stack Overflow&lt;/a&gt;, or on &lt;a href=&quot;https://twitter.com/SpringCloud&quot;&gt;Twitter&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;To get started with Maven with a BOM (dependency management only):&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;
+&amp;#x3C;dependencyManagement&gt;
+    &amp;#x3C;dependencies&gt;
+        &amp;#x3C;dependency&gt;
+            &amp;#x3C;groupId&gt;org.springframework.cloud&amp;#x3C;/groupId&gt;
+            &amp;#x3C;artifactId&gt;spring-cloud-dependencies&amp;#x3C;/artifactId&gt;
+            &amp;#x3C;version&gt;2024.0.3&amp;#x3C;/version&gt;
+            &amp;#x3C;type&gt;pom&amp;#x3C;/type&gt;
+            &amp;#x3C;scope&gt;import&amp;#x3C;/scope&gt;
+        &amp;#x3C;/dependency&gt;
+    &amp;#x3C;/dependencies&gt;
+&amp;#x3C;/dependencyManagement&gt;
+&amp;#x3C;dependencies&gt;
+    &amp;#x3C;dependency&gt;
+        &amp;#x3C;groupId&gt;org.springframework.cloud&amp;#x3C;/groupId&gt;
+        &amp;#x3C;artifactId&gt;spring-cloud-starter-config&amp;#x3C;/artifactId&gt;
+    &amp;#x3C;/dependency&gt;
+    &amp;#x3C;dependency&gt;
+        &amp;#x3C;groupId&gt;org.springframework.cloud&amp;#x3C;/groupId&gt;
+        &amp;#x3C;artifactId&gt;spring-cloud-starter-netflix-eureka-client&amp;#x3C;/artifactId&gt;
+    &amp;#x3C;/dependency&gt;
+    ...
+&amp;#x3C;/dependencies&gt;
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;With that, Micrometer exports metrics in OTLP format to the backend. The Micrometer team has also added so-called observation conventions for OpenTelemetry. Signals in OpenTelemetry adhere to the &lt;a href=&quot;https://opentelemetry.io/docs/concepts/semantic-conventions/&quot;&gt;OpenTelemetry Semantic Convention&lt;/a&gt;, and the observation conventions in Micrometer implement the stable parts of the OpenTelemetry Semantic Convention. To use them in Spring Boot, you have to define some configuration (this will &lt;a href=&quot;https://github.com/spring-projects/spring-boot/pull/47935&quot;&gt;likely be improved in the future&lt;/a&gt;):&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-java&quot;&gt;@Configuration(proxyBeanMethods = false)
-public class OpenTelemetryConfiguration {
-
-    @Bean
-    OpenTelemetryServerRequestObservationConvention openTelemetryServerRequestObservationConvention() {
-        return new OpenTelemetryServerRequestObservationConvention();
-    }
-
-    @Bean
-    OpenTelemetryJvmCpuMeterConventions openTelemetryJvmCpuMeterConventions() {
-        return new OpenTelemetryJvmCpuMeterConventions(Tags.empty());
-    }
-
-    @Bean
-    ProcessorMetrics processorMetrics() {
-        return new ProcessorMetrics(List.of(), new OpenTelemetryJvmCpuMeterConventions(Tags.empty()));
-    }
-
-    @Bean
-    JvmMemoryMetrics jvmMemoryMetrics() {
-        return new JvmMemoryMetrics(List.of(), new OpenTelemetryJvmMemoryMeterConventions(Tags.empty()));
-    }
-
-    @Bean
-    JvmThreadMetrics jvmThreadMetrics() {
-        return new JvmThreadMetrics(List.of(), new OpenTelemetryJvmThreadMeterConventions(Tags.empty()));
-    }
-
-    @Bean
-    ClassLoaderMetrics classLoaderMetrics() {
-        return new ClassLoaderMetrics(new OpenTelemetryJvmClassLoadingMeterConventions());
-    }
-
+&lt;p&gt;or with Gradle:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;buildscript {
+dependencies {
+classpath &quot;io.spring.gradle:dependency-management-plugin:1.0.2.RELEASE&quot;
 }
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Spring Boot doesn&apos;t auto-configure the OpenTelemetry API for metrics. If you really want to use the OpenTelemetry metrics API (which we don&apos;t recommend) instead of the Micrometer API, or if you have a library that uses the OpenTelemetry metrics API, please take a look at &lt;a href=&quot;https://docs.spring.io/spring-boot/4.0-SNAPSHOT/reference/actuator/observability.html#actuator.observability.opentelemetry.metrics.api-and-sdk&quot;&gt;the Spring Boot documentation&lt;/a&gt; on how to get that working.&lt;/p&gt;
-&lt;h2 id=&quot;exporting-traces&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#exporting-traces&quot; aria-label=&quot;exporting traces permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Exporting traces&lt;/h2&gt;
-&lt;p&gt;The Spring projects use the Micrometer Observation API to create observations. An observation is an interesting concept in Micrometer because it can be translated into a metric &lt;strong&gt;and&lt;/strong&gt; a trace.&lt;/p&gt;
-&lt;p&gt;The traces generated by the observations are then adapted through the &lt;code&gt;io.micrometer:micrometer-tracing-bridge-otel&lt;/code&gt; dependency (which is also included in the &lt;code&gt;spring-boot-starter-opentelemetry&lt;/code&gt;) to the OpenTelemetry API.&lt;/p&gt;
-&lt;p&gt;Spring Boot contains auto-configuration for the OpenTelemetry SDK. For traces, it installs an &lt;code&gt;OtlpHttpSpanExporter&lt;/code&gt; (or &lt;code&gt;OtlpGrpcSpanExporter&lt;/code&gt; if you prefer gRPC to HTTP). With this exporter in place, the OpenTelemetry SDK now starts sending traces (which originate from a Micrometer Observation) in the OTLP format to your backend.&lt;/p&gt;
-&lt;p&gt;To enable it in your application, you have to set the &lt;code&gt;management.opentelemetry.tracing.export.otlp.endpoint&lt;/code&gt; property, e.g.:&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-properties&quot;&gt;management.opentelemetry.tracing.export.otlp.endpoint=http://localhost:4318/v1/traces
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id=&quot;exporting-logs&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#exporting-logs&quot; aria-label=&quot;exporting logs permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Exporting logs&lt;/h2&gt;
-&lt;p&gt;As said earlier, Spring Boot contains auto-configuration that configures the OpenTelemetry SDK with the ability to export logs in OTLP format.
-However, it does not install an appender into Logback or Log4j2, so while the underlying infrastructure is there, no logs are actually exported.
-To export logs in OTLP format, you have to do two things:&lt;/p&gt;
-&lt;p&gt;First, set the property &lt;code&gt;management.opentelemetry.logging.export.otlp.endpoint&lt;/code&gt;, e.g.:&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-properties&quot;&gt;management.opentelemetry.logging.export.otlp.endpoint=http://localhost:4318/v1/logs
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;And second, install an appender in Logback or Log4j2 that sends the log entries to the OpenTelemetry API.&lt;/p&gt;
-&lt;p&gt;For Logback, we first need to include the &lt;code&gt;io.opentelemetry.instrumentation:opentelemetry-logback-appender-1.0:2.21.0-alpha&lt;/code&gt; dependency (&lt;code&gt;-alpha&lt;/code&gt; in the version number means that it is marked as unstable; unfortunately, there are no non-alpha versions for the appender. &lt;a href=&quot;https://github.com/open-telemetry/opentelemetry-java-instrumentation/blob/main/VERSIONING.md#stable-vs-alpha&quot;&gt;You can read more about that here&lt;/a&gt;).&lt;/p&gt;
-&lt;p&gt;Then we have to create a custom logback configuration, which lives in the &lt;code&gt;src/main/resources/logback-spring.xml&lt;/code&gt; file:&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-xml&quot;&gt;&amp;#x3C;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
-&amp;#x3C;configuration&gt;
-    &amp;#x3C;include resource=&quot;org/springframework/boot/logging/logback/base.xml&quot;/&gt;
-
-    &amp;#x3C;appender name=&quot;OTEL&quot; class=&quot;io.opentelemetry.instrumentation.logback.appender.v1_0.OpenTelemetryAppender&quot;&gt;
-    &amp;#x3C;/appender&gt;
-
-    &amp;#x3C;root level=&quot;INFO&quot;&gt;
-        &amp;#x3C;appender-ref ref=&quot;CONSOLE&quot;/&gt;
-        &amp;#x3C;appender-ref ref=&quot;OTEL&quot;/&gt;
-    &amp;#x3C;/root&gt;
-&amp;#x3C;/configuration&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;This configuration imports the base configuration for Logback from Spring Boot, and then defines an additional appender called &lt;code&gt;OTEL&lt;/code&gt;, which sends all log events to the OpenTelemetry API. This appender is then added to the root logger, effectively sending all log entries to the OpenTelemetry API in addition to the console.&lt;/p&gt;
-&lt;p&gt;The last thing to do is to let the &lt;code&gt;OpenTelemetryAppender&lt;/code&gt; know which OpenTelemetry API instance to use. For this, we can create a small bean that gets the &lt;code&gt;OpenTelemetry&lt;/code&gt; instance injected:&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-java&quot;&gt;@Component
-class InstallOpenTelemetryAppender implements InitializingBean {
-
-    private final OpenTelemetry openTelemetry;
-
-    InstallOpenTelemetryAppender(OpenTelemetry openTelemetry) {
-        this.openTelemetry = openTelemetry;
-    }
-
-    @Override
-    public void afterPropertiesSet() {
-        OpenTelemetryAppender.install(this.openTelemetry);
-    }
-    
 }
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id=&quot;beware-the-context&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#beware-the-context&quot; aria-label=&quot;beware the context permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Beware the context&lt;/h2&gt;
-&lt;p&gt;Logging, metrics, and tracing use contextual information, like the current trace ID. By default, when Micrometer Tracing is on the classpath, Spring Boot adjusts the log pattern to also include the trace ID and the span ID in the log message. This can be very useful if you&apos;re trying to find the logs belonging to a trace.&lt;/p&gt;
-&lt;p&gt;One useful pattern is to include the trace ID of the request in the response from the server, e.g., via an HTTP header. This way, if users get an error response from your HTTP endpoint, they can include the trace ID in the ticket, and you can use this trace ID to get all the logs belonging to exactly this erroneous request.&lt;/p&gt;
-&lt;p&gt;Putting the trace ID in a header can be achieved with this Servlet filter:&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-java&quot;&gt;@Component
-class TraceIdFilter extends OncePerRequestFilter {
-    
-    private final Tracer tracer;
 
-    TraceIdFilter(Tracer tracer) {
-        this.tracer = tracer;
-    }
 
-    @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        String traceId = getTraceId();
-        if (traceId != null) {
-            response.setHeader(&quot;X-Trace-Id&quot;, traceId);
-        }
-        filterChain.doFilter(request, response);
-    }
 
-    private @Nullable String getTraceId() {
-        TraceContext context = this.tracer.currentTraceContext().context();
-        return context != null ? context.traceId() : null;
-    }
-    
+apply plugin: &quot;io.spring.dependency-management&quot;
+
+dependencyManagement {
+imports {
+mavenBom &apos;org.springframework.cloud:spring-cloud-dependencies:2024.0.3&apos;
 }
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;One thing you&apos;ll note if you&apos;re dealing with methods that switch threads, e.g., &lt;code&gt;@Async&lt;/code&gt; annotated methods or the use of Spring&apos;s &lt;code&gt;AsyncTaskExecutor&lt;/code&gt;, is that the context is lost in the new thread.
-The lost context affects logs, which don&apos;t include the trace ID anymore, and traces, which lose spans.&lt;/p&gt;
-&lt;p&gt;The context is lost because it is stored inside a &lt;code&gt;ThreadLocal&lt;/code&gt;, which doesn&apos;t get transferred into the new thread. However, the solution is quite simple: Use the &lt;code&gt;ContextPropagatingTaskDecorator&lt;/code&gt; in the &lt;code&gt;AsyncTaskExecutor&lt;/code&gt; (which is also used for &lt;code&gt;@Async&lt;/code&gt; annotated methods).
-The &lt;code&gt;ContextPropagatingTaskDecorator&lt;/code&gt; uses Micrometer&apos;s Context Propagation API to make sure that the trace context is transferred to new threads. Installing the &lt;code&gt;ContextPropagatingTaskDecorator&lt;/code&gt; is simple: just define a &lt;code&gt;@Bean&lt;/code&gt; method, as shown in the following code snippet:&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-java&quot;&gt;@Configuration(proxyBeanMethods = false)
-public class ContextPropagationConfiguration {
-
-    @Bean
-    ContextPropagatingTaskDecorator contextPropagatingTaskDecorator() {
-        return new ContextPropagatingTaskDecorator();
-    }
-
 }
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Spring Boot&apos;s auto-configuration looks for &lt;code&gt;TaskDecorator&lt;/code&gt; beans and installs them into the &lt;code&gt;AsyncTaskExecutor&lt;/code&gt;. With the &lt;code&gt;ContextPropagatingTaskDecorator&lt;/code&gt; in place, the context is now transferred to new threads, fixing lost trace IDs in logs and lost spans. The whole setup with the &lt;code&gt;ContextPropagatingTaskDecorator&lt;/code&gt; will &lt;a href=&quot;https://github.com/spring-projects/spring-boot/issues/48033&quot;&gt;likely be improved in the future&lt;/a&gt; for a more seamless experience.&lt;/p&gt;
-&lt;h2 id=&quot;context-propagation-again&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#context-propagation-again&quot; aria-label=&quot;context propagation again permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Context propagation, again&lt;/h2&gt;
-&lt;p&gt;If you&apos;re dealing with multiple services, wouldn&apos;t it be nice if the trace ID were the same over all services so that you can look at one trace and see all involved services? Or find logs from all services participating in that trace? That&apos;s where the &quot;distributed&quot; in distributed tracing is coming from.&lt;/p&gt;
-&lt;p&gt;Now, have you ever wondered how the called service knows that it is part of an ongoing trace? This is context propagation again, but this time the context is not propagated over threads but over process boundaries.&lt;/p&gt;
-&lt;p&gt;There&apos;s a &lt;a href=&quot;https://www.w3.org/TR/trace-context/&quot;&gt;W3C recommendation&lt;/a&gt; for context propagation over HTTP, and Spring Boot configures all involved components to use this out of the box. The sending party has to add the current trace ID into a header, and the receiving party has to extract the trace ID from the header and restore the context.&lt;/p&gt;
-&lt;p&gt;This all works seamlessly, as long as you follow one simple rule: you do not talk about Fight Club. Oh, sorry, wrong script. The one rule you must follow is: Do not &lt;code&gt;new&lt;/code&gt; up a &lt;code&gt;RestTemplate&lt;/code&gt; / &lt;code&gt;RestClient&lt;/code&gt; / &lt;code&gt;WebClient&lt;/code&gt; yourself. Instead, inject a &lt;code&gt;RestTemplateBuilder&lt;/code&gt; / &lt;code&gt;RestClient.Builder&lt;/code&gt; / &lt;code&gt;WebClient.Builder&lt;/code&gt; and use that to create the client.&lt;/p&gt;
-&lt;p&gt;Spring Boot auto-configures the builders with all the needed infrastructure to automatically send the trace context in a header. If you create a client with &lt;code&gt;new&lt;/code&gt; yourself, this infrastructure is not there, and the context is not propagated, leading to sad on-call team members and red tiles in sprint retros.&lt;/p&gt;
-&lt;h2 id=&quot;lets-see-it-in-action&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#lets-see-it-in-action&quot; aria-label=&quot;lets see it in action permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Let&apos;s see it in action&lt;/h2&gt;
-&lt;p&gt;We&apos;ve prepared &lt;a href=&quot;https://github.com/mhalbritter/spring-boot-and-opentelemetry&quot;&gt;a sample project&lt;/a&gt; that you can use to play around with OpenTelemetry observability. It consists of three services:&lt;/p&gt;
-&lt;p&gt;The user service uses an in-memory H2 database and Spring Data JDBC to look up users by user ID. It exposes an HTTP API to find a user by the given user ID.&lt;/p&gt;
-&lt;p&gt;The greeting service has an HTTP API that returns a greeting in a language specified by the &lt;code&gt;Accept-Language&lt;/code&gt; header. It knows greetings in English, German, and Spanish.&lt;/p&gt;
-&lt;p&gt;The hello service is the entry point. It has an HTTP API that takes a user ID and returns a greeting for that user. To do that, it calls the user service with the user ID to get the user&apos;s name. It also calls the greeting service to get the greeting. It then combines the user&apos;s name with the greeting and returns it.&lt;/p&gt;
-&lt;p&gt;First, let&apos;s start all three services. The setup also includes the &lt;code&gt;spring-boot-docker-compose&lt;/code&gt; module, which automatically detects the Docker Compose configuration file named &lt;code&gt;compose.yaml&lt;/code&gt; and calls &lt;code&gt;docker compose up&lt;/code&gt;. The &lt;code&gt;compose.yaml&lt;/code&gt; file contains one service using the &lt;code&gt;grafana/otel-lgtm&lt;/code&gt; image. The &lt;a href=&quot;https://grafana.com/docs/opentelemetry/docker-lgtm/&quot;&gt;Grafana LGTM stack&lt;/a&gt; contains OTLP-capable logs, metrics, and traces backends, all packaged together in one UI, which we can use to look at the observability signals.&lt;/p&gt;
-&lt;p&gt;After the Docker container is up and running, Spring Boot automatically configures the exporters for OTLP logs, metrics, and traces to point to the Docker container. That&apos;s why we don&apos;t find the OTLP export properties mentioned sooner in the &lt;code&gt;application.properties&lt;/code&gt;; it&apos;s all happening behind the scenes. When you deploy it to production, you have to set the properties yourself.&lt;/p&gt;
-&lt;p&gt;Now let&apos;s execute our first request:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;&gt; curl -i http://localhost:8080/api/1
-HTTP/1.1 200 
-X-Trace-Id: 0dbe0809731e35081d6db16c2ca0ef91
-Content-Type: application/json
-Content-Length: 12
 
-Hello Moritz
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Cool, that worked. Now let&apos;s try it in German:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;&gt; curl -i http://localhost:8080/api/1 --header &quot;Accept-Language: de&quot;
-HTTP/1.1 200 
-X-Trace-Id: 6c0753c7ec390fff15fcf05f536e21cd
-Content-Type: application/json
-Content-Length: 12
-
-Hallo Moritz
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Nice, we now have two trace IDs to play around with. Notice how the trace IDs for the requests are included in the &lt;code&gt;X-Trace-Id&lt;/code&gt; header, using the Servlet filter from above.&lt;/p&gt;
-&lt;p&gt;Let&apos;s look into the Grafana UI if we have some logs (&lt;em&gt;you can click the images to enlarge them&lt;/em&gt;):&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;https://static.spring.io/blog/mhalbritter/20251118/1-logs.jpg&quot;&gt;&lt;img src=&quot;https://static.spring.io/blog/mhalbritter/20251118/1-logs.jpg&quot; alt=&quot;A screenshot of Grafana, showing logs from all three services&quot; title=&quot;Logs for all three services&quot;&gt;&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;Here, we can see that the logs have been sent via OTLP to Grafana, and we&apos;re now able to view all logs from the three services in one UI. It is also possible to find the logs from all services for a trace ID.&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;https://static.spring.io/blog/mhalbritter/20251118/2-logs-by-trace-id.jpg&quot;&gt;&lt;img src=&quot;https://static.spring.io/blog/mhalbritter/20251118/2-logs-by-trace-id.jpg&quot; alt=&quot;A screenshot of Grafana, showing logs from all three services for a given trace id&quot; title=&quot;Logs from all three services for a given trace id&quot;&gt;&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;Now let&apos;s look if we can find the trace for the trace ID.&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;https://static.spring.io/blog/mhalbritter/20251118/3-trace.jpg&quot;&gt;&lt;img src=&quot;https://static.spring.io/blog/mhalbritter/20251118/3-trace.jpg&quot; alt=&quot;A screenshot of Grafana, showing the trace details&quot; title=&quot;Trace details&quot;&gt;&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;Found it! Here we can see that the hello service calls the greeting service and the user service in a nice waterfall diagram. You can also expand a span to see the span attributes:&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;https://static.spring.io/blog/mhalbritter/20251118/4-span-en-us.jpg&quot;&gt;&lt;img src=&quot;https://static.spring.io/blog/mhalbritter/20251118/4-span-en-us.jpg&quot; alt=&quot;A screenshot of Grafana, showing a span with the en-US locale&quot; title=&quot;Span showing the en-US locale&quot;&gt;&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;In this case, we&apos;ve used Micrometer&apos;s &lt;code&gt;@SpanTag&lt;/code&gt; to attach the greeting locale (&lt;code&gt;en_US&lt;/code&gt;) and the user ID (&lt;code&gt;1&lt;/code&gt;) to the span. Let&apos;s look at the second trace, which should have the German locale in there:&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;https://static.spring.io/blog/mhalbritter/20251118/5-span-de.jpg&quot;&gt;&lt;img src=&quot;https://static.spring.io/blog/mhalbritter/20251118/5-span-de.jpg&quot; alt=&quot;A screenshot of Grafana, showing a span with the de locale&quot; title=&quot;Span showing the de locale&quot;&gt;&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;Very good, works as expected.&lt;/p&gt;
-&lt;p&gt;Last stop, let&apos;s look at the metrics generated by the services:&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;https://static.spring.io/blog/mhalbritter/20251118/6-custom-metrics.jpg&quot;&gt;&lt;img src=&quot;https://static.spring.io/blog/mhalbritter/20251118/6-custom-metrics.jpg&quot; alt=&quot;A screenshot of Grafana, showing the custom say-hello metric&quot; title=&quot;The say-hello custom metric&quot;&gt;&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;Here you can see a custom metric, called &lt;code&gt;say-hello&lt;/code&gt; (created by annotating a method with &lt;code&gt;@Observed(name = &quot;say-hello&quot;)&lt;/code&gt;), which counts how many times a hello message has been generated.&lt;/p&gt;
-&lt;p&gt;You also get a lot of metrics about your application out of the box, such as the number of threads in executors, your HTTP server, etc.&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;https://static.spring.io/blog/mhalbritter/20251118/7-thread-metrics.jpg&quot;&gt;&lt;img src=&quot;https://static.spring.io/blog/mhalbritter/20251118/7-thread-metrics.jpg&quot; alt=&quot;A screenshot of Grafana, showing a part of the thread metrics&quot; title=&quot;Some of the thread metrics&quot;&gt;&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;Or a lot of JVM metrics:&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;https://static.spring.io/blog/mhalbritter/20251118/8-jvm-metrics.jpg&quot;&gt;&lt;img src=&quot;https://static.spring.io/blog/mhalbritter/20251118/8-jvm-metrics.jpg&quot; alt=&quot;A screenshot of Grafana, showing a part of the JVM metrics&quot; title=&quot;Some of the JVM metrics&quot;&gt;&lt;/a&gt;&lt;/p&gt;
-&lt;h2 id=&quot;conclusion&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#conclusion&quot; aria-label=&quot;conclusion permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Conclusion&lt;/h2&gt;
-&lt;p&gt;We hope you had fun during this whirlwind tour through OpenTelemetry with Spring Boot. As you saw, Spring Boot has nice integrations with OpenTelemetry. Whether you use Micrometer&apos;s Observation API or not, this doesn&apos;t really matter from the OTel integration perspective. It&apos;s the protocol, OTLP, that matters and abstracts away the API that has been used to instrument the application.&lt;/p&gt;
-&lt;p&gt;Spring Boot 4.0 with the new OpenTelemetry starter will be released on November 20th. &lt;a href=&quot;https://github.com/micrometer-metrics/micrometer/releases/tag/v1.16.0&quot;&gt;Micrometer 1.16&lt;/a&gt;, with OpenTelemetry enhancements and lots of other new features, has already been released. If you find any issues or have great ideas on how to improve the whole OpenTelemetry story, please reach out to us in &lt;a href=&quot;https://github.com/spring-projects/spring-boot/issues&quot;&gt;our issue tracker&lt;/a&gt;!&lt;/p&gt;</content:encoded></item><item><title><![CDATA[Spring for GraphQL 2.0.0 goes GA]]></title><link>https://spring.io/blog/2025/11/18/spring-for-graphql-2-0-0-goes-ga</link><guid isPermaLink="true">https://spring.io/blog/2025/11/18/spring-for-graphql-2-0-0-goes-ga</guid><dc:creator><![CDATA[bclozel]]></dc:creator><pubDate>Tue, 18 Nov 2025 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;I am pleased to announce that Spring for GraphQL 2.0 is now generally available and ships new features:&lt;/p&gt;
+dependencies {
+compile &apos;org.springframework.cloud:spring-cloud-starter-config&apos;
+compile &apos;org.springframework.cloud:spring-cloud-starter-netflix-eureka-client&apos;
+...
+}
+&lt;/code&gt;&lt;/pre&gt;</content:encoded></item><item><title><![CDATA[A Bootiful Podcast: The legendary Rossen Stoyanchev on API versioning, declarative interface clients, RestTestClients, and more]]></title><link>https://spring.io/blog/2025/12/11/a-bootiful-podcast-rossen-stoyanchev</link><guid isPermaLink="true">https://spring.io/blog/2025/12/11/a-bootiful-podcast-rossen-stoyanchev</guid><dc:creator><![CDATA[joshlong]]></dc:creator><pubDate>Thu, 11 Dec 2025 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;Hi, Spring fans! Welcome to another installment of a &lt;em&gt;Bootiful Podcast&lt;/em&gt;! In this installment I talk to the legendary Rossen Stoyanchev on API versioning, declarative interface clients, RestTestClients, and more!&lt;/p&gt;
+&lt;iframe title=&quot;The legendary Rossen Stoyanchev on API versioning, declarative interface clients, RestTestClients, and more&quot; allowtransparency=&quot;true&quot; height=&quot;300&quot; width=&quot;100%&quot; style=&quot;border: none; min-width: min(100%, 430px);height:300px;&quot; scrolling=&quot;no&quot; data-name=&quot;pb-iframe-player&quot; src=&quot;https://www.podbean.com/player-v2/?from=embed&amp;i=i3bei-19eaedb-pb&amp;square=1&amp;share=1&amp;download=1&amp;fonts=Arial&amp;skin=1&amp;font-color=&amp;rtl=0&amp;logo_link=&amp;btn-skin=7&amp;size=300&quot; loading=&quot;lazy&quot; allowfullscreen=&quot;&quot;&gt;&lt;/iframe&gt;</content:encoded></item><item><title><![CDATA[Spring AI 2.0.0-M1 Available Now]]></title><link>https://spring.io/blog/2025/12/11/spring-ai-2-0-0-M1-available-now</link><guid isPermaLink="true">https://spring.io/blog/2025/12/11/spring-ai-2-0-0-M1-available-now</guid><dc:creator><![CDATA[markpollack]]></dc:creator><pubDate>Thu, 11 Dec 2025 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;On behalf of the Spring AI engineering team and everyone who has contributed, I&apos;m happy to announce that Spring AI &lt;code&gt;2.0.0-M1&lt;/code&gt; has been released and is now available from Maven Central.&lt;/p&gt;
+&lt;p&gt;Spring AI 2.0.0-M1 represents the first milestone of the 2.x series, built on &lt;strong&gt;Spring Boot 4.0 and Spring Framework 7.0&lt;/strong&gt; with a Jakarta EE 11 baseline. This major platform upgrade, contributed by Dmitry Bedrin with Paul Bakker from Netflix (&lt;a href=&quot;https://github.com/spring-projects/spring-ai/pull/4774&quot;&gt;#4774&lt;/a&gt;), aligns Spring AI with the latest Spring ecosystem.&lt;/p&gt;
+&lt;h2 id=&quot;release-summary&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#release-summary&quot; aria-label=&quot;release summary permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Release Summary&lt;/h2&gt;
+&lt;p&gt;This release includes &lt;a href=&quot;https://github.com/spring-projects/spring-ai/releases/tag/v2.0.0-M1&quot;&gt;67 improvements, bug fixes, and documentation updates&lt;/a&gt;. Key focus areas include:&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;a new GraphQL Java 25 baseline&lt;/li&gt;
-&lt;li&gt;Nullability and JSpecify support in the project API&lt;/li&gt;
-&lt;li&gt;Nullability checks for your application during Schema Mapping Inspection&lt;/li&gt;
-&lt;li&gt;Flexible binding for input types&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;ArgumentValue&lt;/code&gt; support for client input&lt;/li&gt;
-&lt;li&gt;Multiple queries with &lt;code&gt;DgsGraphQlClient&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;Kotlin extensions for &lt;code&gt;GraphQlClient&lt;/code&gt; and &lt;code&gt;GraphQlTester&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Improvements&lt;/strong&gt;: 25 enhancements to expand capabilities and functionality&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Stability&lt;/strong&gt;: 7 bug fixes addressing community-reported issues&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Documentation&lt;/strong&gt;: 32 improvements to help developers&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Security&lt;/strong&gt;: 3 dependency upgrades for enhanced security&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;You can get a full picture of this new major release with &lt;a href=&quot;https://github.com/spring-projects/spring-graphql/wiki/Spring-for-GraphQL-2.0&quot;&gt;our release notes on the wiki&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;Thanks to the community for your feedback and for testing the release candidates, this helped us to shape this new generation.
-Collaborating with the GraphQL Java team is always a pleasure, and we&apos;re sure that &lt;a href=&quot;https://github.com/graphql-java/graphql-java/releases/tag/v25.0&quot;&gt;you will love the new GraphQL Java 25.0 features&lt;/a&gt;.&lt;/p&gt;
-&lt;h2 id=&quot;how-can-you-help&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#how-can-you-help&quot; aria-label=&quot;how can you help permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;How can you help?&lt;/h2&gt;
-&lt;p&gt;If you have general questions, please ask on &lt;a href=&quot;https://stackoverflow.com&quot;&gt;stackoverflow.com&lt;/a&gt; using the &lt;a href=&quot;https://stackoverflow.com/tags/spring-graphql&quot;&gt;&lt;code&gt;spring-graphql&lt;/code&gt; tag&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;https://spring.io/projects/spring-graphql/&quot;&gt;Project Page&lt;/a&gt; | &lt;a href=&quot;https://github.com/spring-projects/spring-graphql&quot;&gt;GitHub&lt;/a&gt; | &lt;a href=&quot;https://github.com/spring-projects/spring-graphql/issues&quot;&gt;Issues&lt;/a&gt; | &lt;a href=&quot;https://docs.spring.io/spring-graphql/reference&quot;&gt;Documentation&lt;/a&gt; | &lt;a href=&quot;https://stackoverflow.com/questions/tagged/spring-graphql&quot;&gt;Stack Overflow&lt;/a&gt;&lt;/p&gt;</content:encoded></item><item><title><![CDATA[Spring for Apache Kafka 4.0.0 goes GA]]></title><link>https://spring.io/blog/2025/11/18/spring-kafka-4</link><guid isPermaLink="true">https://spring.io/blog/2025/11/18/spring-kafka-4</guid><dc:creator><![CDATA[sobychacko]]></dc:creator><pubDate>Tue, 18 Nov 2025 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;On behalf of the team and everyone who contributed, we are pleased to announce that Spring for Apache Kafka &lt;code&gt;4.0.0&lt;/code&gt; is now generally available.
-We extend our gratitude to all contributors who made this release possible.&lt;/p&gt;
-&lt;h4 id=&quot;release-journey-and-highlights&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#release-journey-and-highlights&quot; aria-label=&quot;release journey and highlights permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Release Journey and Highlights&lt;/h4&gt;
-&lt;p&gt;The development of Spring for Apache Kafka &lt;code&gt;4.0.0&lt;/code&gt; began in March 2025 with the first milestone release and progressed through five milestone releases and one release candidate over an 8-month development cycle before reaching general availability in November 2025.&lt;/p&gt;
-&lt;p&gt;This release includes new features, bug fixes, improved documentation, and updated dependencies.&lt;/p&gt;
-&lt;h5 id=&quot;major-highlights&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#major-highlights&quot; aria-label=&quot;major highlights permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Major Highlights&lt;/h5&gt;
-&lt;p&gt;&lt;strong&gt;Kafka 4.0 and Apache Kafka Queues Support (KIP-932)&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Thanks to all those who have contributed with issue reports and pull requests.&lt;/p&gt;
+&lt;h2 id=&quot;key-highlights&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#key-highlights&quot; aria-label=&quot;key highlights permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Key Highlights&lt;/h2&gt;
 &lt;ul&gt;
-&lt;li&gt;Upgraded to Apache Kafka client version &lt;code&gt;4.1.1&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;Added comprehensive support for Kafka&apos;s new share consumer pattern (Preview Mode)&lt;/li&gt;
-&lt;li&gt;Introduced &lt;code&gt;SharedConsumerContainer&lt;/code&gt; and factory support with full acknowledgment capabilities&lt;/li&gt;
-&lt;li&gt;Added &lt;code&gt;ShareKafkaListener&lt;/code&gt; annotation for queue-based consumption&lt;/li&gt;
+&lt;li&gt;Significant functionality enhancements with 25 improvements&lt;/li&gt;
+&lt;li&gt;Documentation updates with 32 improvements&lt;/li&gt;
+&lt;li&gt;Updated dependencies for better security and performance&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;&lt;strong&gt;Observability and Tracing Enhancements&lt;/strong&gt;&lt;/p&gt;
+&lt;h2 id=&quot;key-functional-areas-enhanced&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#key-functional-areas-enhanced&quot; aria-label=&quot;key functional areas enhanced permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Key Functional Areas Enhanced&lt;/h2&gt;
+&lt;p&gt;This release brings significant improvements across major functional areas of Spring AI:&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;Per-record observations support in batch listeners&lt;/li&gt;
-&lt;li&gt;Enhanced reply tracing for &lt;code&gt;ReplyingKafkaTemplate&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;Improved error metric collection with proper exception reporting&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;strong&gt;Spring Framework 7.0 Integration&lt;/strong&gt;&lt;/p&gt;
+&lt;li&gt;&lt;strong&gt;Spring Boot 4.0 and Spring Framework 7.0 Upgrade&lt;/strong&gt; - Updated platform foundation from Spring Boot 3.x to Spring Boot 4.0 GA and Spring Framework 7.0, requiring Java 21 for development. Thanks to Dmitry Bedrin (&lt;a href=&quot;https://github.com/bedrin&quot;&gt;@bedrin&lt;/a&gt;) and Paul Bakker from Netflix (&lt;a href=&quot;https://github.com/paulbakker&quot;&gt;@paulbakker&lt;/a&gt;) for the comprehensive upgrade effort (&lt;a href=&quot;https://github.com/spring-projects/spring-ai/pull/4774&quot;&gt;#4774&lt;/a&gt;)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Redis Chat Memory Repository&lt;/strong&gt; - Added Redis-based chat memory implementation with Spring Boot starter for persistent conversation storage across sessions, including text search capabilities, range query support, and HNSW index parameter tuning for improved vector search performance. Thanks to Brian Sam-Bodden (&lt;a href=&quot;https://github.com/bsbodden&quot;&gt;@bsbodden&lt;/a&gt;) from Redis for the original Redis chat memory contribution&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Redis Vector Store Enhancements&lt;/strong&gt; - Enhanced Redis vector store with text search capabilities, range-based vector queries, and HNSW index tuning (M, efConstruction, efRuntime parameters) for optimized similarity search performance. Thanks to Brian Sam-Bodden (&lt;a href=&quot;https://github.com/bsbodden&quot;&gt;@bsbodden&lt;/a&gt;) again.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Google GenAI and Gemini Enhancements&lt;/strong&gt; - Added ThinkingLevel support in ThinkingConfig for Gemini models and updated Google GenAI SDK to 1.30.0. Thanks to Dan Dobrin (&lt;a href=&quot;https://github.com/ddobrin&quot;&gt;@ddobrin&lt;/a&gt;) from Google for his contributions to Google AI integration (&lt;a href=&quot;https://github.com/spring-projects/spring-ai/pull/4984&quot;&gt;#4984&lt;/a&gt;)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Official OpenAI Java SDK Integration&lt;/strong&gt; - Integrated native support for the official OpenAI Java SDK, with default chat model updated to gpt-5-mini. Thanks to Julien Dubois (&lt;a href=&quot;https://github.com/jdubois&quot;&gt;@jdubois&lt;/a&gt;) from Microsoft for the SDK integration (&lt;a href=&quot;https://github.com/spring-projects/spring-ai/pull/4688&quot;&gt;#4688&lt;/a&gt;)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Anthropic Claude Enhancements&lt;/strong&gt; - Comprehensive updates to Claude integration:
 &lt;ul&gt;
-&lt;li&gt;Full compatibility with Spring Framework &lt;code&gt;7.0.0&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;JSpecify nullability annotations throughout the codebase&lt;/li&gt;
-&lt;li&gt;Removed dependency on Spring Retry in favor of Spring Framework&apos;s core retry mechanism&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Claude 4.5 Models&lt;/strong&gt;: Added support for the latest Claude 4.5 Opus and Haiku model variants (&lt;a href=&quot;https://github.com/spring-projects/spring-ai/commit/01ace16e5cd366f88014dd64b14facac1b21f684&quot;&gt;01ace16&lt;/a&gt;)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Citations API&lt;/strong&gt;: New Citations API support enabling Claude to reference specific parts of provided documents (plain text, PDF, custom content blocks) when generating responses. Supported on Claude 3.7 Sonnet and Claude 4 models (&lt;a href=&quot;https://github.com/spring-projects/spring-ai/commit/e91eda9&quot;&gt;e91eda9&lt;/a&gt;)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Claude Skills with Files API&lt;/strong&gt;: Comprehensive integration with Anthropic&apos;s pre-built Skills for document generation, enabling Claude to create downloadable files (&lt;a href=&quot;https://github.com/spring-projects/spring-ai/commit/bd906255bbd6bdc8bee0d526e0265728cd149c61&quot;&gt;bd90625&lt;/a&gt;)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Tool Choice Support&lt;/strong&gt;: Fine-grained control over how Claude uses tools with four modes (Auto, Any, Tool, None). Thanks to Austin Dase (&lt;a href=&quot;https://github.com/adase11&quot;&gt;@adase11&lt;/a&gt;) for the contribution (&lt;a href=&quot;https://github.com/spring-projects/spring-ai/pull/4637&quot;&gt;#4637&lt;/a&gt;)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Prompt Caching Improvements&lt;/strong&gt;: Bug fixes for SYSTEM_ONLY and CONVERSATION_HISTORY cache strategies aligned with Anthropic&apos;s recommended incremental caching patterns&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;&lt;strong&gt;Jackson 3 Support&lt;/strong&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Azure Cosmos DB Chat Memory&lt;/strong&gt; - Added Spring Boot starter for Azure Cosmos DB chat memory repository for conversation history storage&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Model Context Protocol (MCP) Updates&lt;/strong&gt; - Enhanced MCP client auto-configuration with optional handlers registry support and improved compatibility with beans having unresolvable types&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;GemFire Vector Store Authentication&lt;/strong&gt; - Added username and password authentication support for GemFire Vector Store&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&quot;whats-next&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#whats-next&quot; aria-label=&quot;whats next permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;What&apos;s Next&lt;/h2&gt;
+&lt;p&gt;We will be taking some time to figure out the scope and timing of the 2.0 GA release. Will keep everyone posted!&lt;/p&gt;
+&lt;h2 id=&quot;resources&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#resources&quot; aria-label=&quot;resources permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Resources&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&quot;https://spring.io/projects/spring-ai/&quot;&gt;Project Page&lt;/a&gt; | &lt;a href=&quot;https://github.com/spring-projects/spring-ai&quot;&gt;GitHub&lt;/a&gt; | &lt;a href=&quot;https://github.com/spring-projects/spring-ai/issues&quot;&gt;Issues&lt;/a&gt; | &lt;a href=&quot;https://docs.spring.io/spring-ai/docs/2.0.0-M1/reference/html&quot;&gt;Documentation&lt;/a&gt; | &lt;a href=&quot;https://stackoverflow.com/questions/tagged/spring-ai&quot;&gt;Stack Overflow&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&quot;-contributors&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#-contributors&quot; aria-label=&quot; contributors permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;🙏 Contributors&lt;/h2&gt;
+&lt;p&gt;Thanks to all the community contributors who made this release possible:&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;Added Jackson 3 (&lt;code&gt;tools.jackson&lt;/code&gt;) support while maintaining Jackson 2 compatibility&lt;/li&gt;
-&lt;li&gt;Jackson 2 support is now deprecated&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;strong&gt;Performance Optimizations&lt;/strong&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Improved &lt;code&gt;acknowledge(int index)&lt;/code&gt; performance in batch acknowledgment&lt;/li&gt;
-&lt;li&gt;Optimized ArrayList allocations in &lt;code&gt;BatchMessagingMessageConverter&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;Added header match performance caching&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;strong&gt;Other Notable Features&lt;/strong&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Support for adding (not just overriding) record interceptors&lt;/li&gt;
-&lt;li&gt;Configurable &lt;code&gt;CompositeBatchInterceptor&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;KafkaAdmin.deleteTopics()&lt;/code&gt; method&lt;/li&gt;
-&lt;li&gt;Enhanced SpEL/placeholder resolution in &lt;code&gt;RetryableTopic&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;Improved container stopping events with proper reason tracking&lt;/li&gt;
-&lt;li&gt;Enhanced &lt;code&gt;SmartMessageConverter&lt;/code&gt; support for batch listeners&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h5 id=&quot;release-notes&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#release-notes&quot; aria-label=&quot;release notes permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Release Notes&lt;/h5&gt;
-&lt;p&gt;&lt;code&gt;4.0.0&lt;/code&gt; release notes: &lt;a href=&quot;https://github.com/spring-projects/spring-kafka/releases/tag/v4.0.0&quot;&gt;https://github.com/spring-projects/spring-kafka/releases/tag/v4.0.0&lt;/a&gt;&lt;/p&gt;
-&lt;h5 id=&quot;earlier-milestone-releases&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#earlier-milestone-releases&quot; aria-label=&quot;earlier milestone releases permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Earlier Milestone Releases&lt;/h5&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;https://github.com/spring-projects/spring-kafka/releases/tag/v4.0.0-M1&quot;&gt;https://github.com/spring-projects/spring-kafka/releases/tag/v4.0.0-M1&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://github.com/spring-projects/spring-kafka/releases/tag/v4.0.0-M2&quot;&gt;https://github.com/spring-projects/spring-kafka/releases/tag/v4.0.0-M2&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://github.com/spring-projects/spring-kafka/releases/tag/v4.0.0-M3&quot;&gt;https://github.com/spring-projects/spring-kafka/releases/tag/v4.0.0-M3&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://github.com/spring-projects/spring-kafka/releases/tag/v4.0.0-M4&quot;&gt;https://github.com/spring-projects/spring-kafka/releases/tag/v4.0.0-M4&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://github.com/spring-projects/spring-kafka/releases/tag/v4.0.0-M5&quot;&gt;https://github.com/spring-projects/spring-kafka/releases/tag/v4.0.0-M5&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://github.com/spring-projects/spring-kafka/releases/tag/v4.0.0-RC1&quot;&gt;https://github.com/spring-projects/spring-kafka/releases/tag/v4.0.0-RC1&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h4 id=&quot;spring-boot-integration&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#spring-boot-integration&quot; aria-label=&quot;spring boot integration permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Spring Boot Integration&lt;/h4&gt;
-&lt;p&gt;The &lt;code&gt;4.0.0&lt;/code&gt; release will be integrated into the upcoming Spring Boot &lt;code&gt;4.0.0&lt;/code&gt; release.&lt;/p&gt;
-&lt;h4 id=&quot;other-releases&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#other-releases&quot; aria-label=&quot;other releases permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Other Releases&lt;/h4&gt;
-&lt;p&gt;In addition to the &lt;code&gt;4.0.0&lt;/code&gt; GA, we also released a patch release for &lt;a href=&quot;https://github.com/spring-projects/spring-kafka/releases/tag/v3.3.11&quot;&gt;3.3.11&lt;/a&gt;.
-The &lt;code&gt;3.3.11&lt;/code&gt; release will be integrated with the upcoming Spring Boot &lt;code&gt;3.5.8&lt;/code&gt; and &lt;code&gt;3.4.12&lt;/code&gt; releases.&lt;/p&gt;
-&lt;p&gt;Two commercial versions of Spring for Apache Kafka—&lt;a href=&quot;https://docs.enterprise.spring.io/spring-kafka/reference/index.html&quot;&gt;3.2.12&lt;/a&gt; and &lt;a href=&quot;https://docs.enterprise.spring.io/spring-kafka/reference/3.1/index.html&quot;&gt;3.1.14&lt;/a&gt;—have also been released.
-These enterprise releases will be integrated into the upcoming Spring Boot commercial releases &lt;code&gt;3.3.16&lt;/code&gt; and &lt;code&gt;3.2.19&lt;/code&gt;, respectively.&lt;/p&gt;
-&lt;h4 id=&quot;community-feedback&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#community-feedback&quot; aria-label=&quot;community feedback permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Community Feedback&lt;/h4&gt;
-&lt;p&gt;As always, we welcome your feedback and suggestions.&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;https://github.com/spring-projects/spring-kafka&quot;&gt;GitHub&lt;/a&gt; | &lt;a href=&quot;https://github.com/spring-projects/spring-kafka/issues&quot;&gt;Issues&lt;/a&gt; | &lt;a href=&quot;https://docs.spring.io/spring-kafka/reference/4.0/&quot;&gt;Documentation&lt;/a&gt; | &lt;a href=&quot;https://stackoverflow.com/tags/spring-kafka&quot;&gt;Stack Overflow&lt;/a&gt;&lt;/p&gt;</content:encoded></item><item><title><![CDATA[Spring Vault 4.0 goes GA]]></title><link>https://spring.io/blog/2025/11/18/spring-vault-4-0-goes-ga</link><guid isPermaLink="true">https://spring.io/blog/2025/11/18/spring-vault-4-0-goes-ga</guid><dc:creator><![CDATA[mp911de]]></dc:creator><pubDate>Tue, 18 Nov 2025 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;On behalf of the team, it is my very great pleasure to announce that Spring Vault 4.0 is now generally available from Maven Central.&lt;/p&gt;
-&lt;p&gt;This release ships with several refinements and new features. Highlights of the new release include:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Upgrade to Spring Framework 7.0 as baseline upgrade&lt;/li&gt;
-&lt;li&gt;Support for Spring Framework&apos;s &lt;code&gt;RestClient&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;Upgrade to Jackson 3 (preserving Jackson 2 compatibility)&lt;/li&gt;
-&lt;li&gt;Support for Reactor, Jetty, and JDK &lt;code&gt;ClientHttpRequestFactory&lt;/code&gt; implementations&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;Head over to the &lt;a href=&quot;https://github.com/spring-projects/spring-vault/wiki/Spring-Vault-4.0-Release-Notes&quot;&gt;release notes&lt;/a&gt; page in our wiki to find out more details.
-Thanks to everyone who has contributed to Spring Vault over the years!&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;http://projects.spring.io/spring-vault/&quot;&gt;Project Page&lt;/a&gt; | &lt;a href=&quot;https://github.com/spring-projects/spring-vault&quot;&gt;GitHub&lt;/a&gt; | &lt;a href=&quot;https://github.com/spring-projects/spring-vault/issues&quot;&gt;Issues&lt;/a&gt; | &lt;a href=&quot;http://docs.spring.io/spring-vault/reference/4.0/&quot;&gt;Documentation&lt;/a&gt; | &lt;a href=&quot;http://stackoverflow.com/questions/tagged/spring-vault&quot;&gt;Stack Overflow&lt;/a&gt;&lt;/p&gt;</content:encoded></item></channel></rss>
+&lt;li&gt;&lt;a href=&quot;https://github.com/academey&quot;&gt;academey (@academey)&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/apappascs&quot;&gt;Alexandros Pappas (@apappascs)&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/andy1199&quot;&gt;Andy (@andy1199)&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/jiangbaojun&quot;&gt;Baojun Jiang (@jiangbaojun)&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/CorgiBoyG&quot;&gt;CorgiBoyG (@CorgiBoyG)&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/bsbodden&quot;&gt;Brian Sam-Bodden (@bsbodden)&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/dafriz&quot;&gt;David Frizelle (@dafriz)&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/ddobrin&quot;&gt;Dan Dobrin (@ddobrin)&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/bedrin&quot;&gt;Dmitry Bedrin (@bedrin)&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/ericbottard&quot;&gt;Eric Bottard (@ericbottard)&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/jhuynh1&quot;&gt;Jason Huynh (@jhuynh1)&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/dev-jonghoonpark&quot;&gt;jonghoon park (@dev-jonghoonpark)&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/jdubois&quot;&gt;Julien Dubois (@jdubois)&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/leehaut&quot;&gt;lance (@leehaut)&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/parazit-IR&quot;&gt;MohammadAli Jalalkamali (@parazit-IR)&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/q-nathangrand&quot;&gt;NathanGrand (@q-nathangrand)&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/nicolaskrier&quot;&gt;Nicolas Krier (@nicolaskrier)&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/nbreunese&quot;&gt;Nils Breunese (@nbreunese)&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/onebywang&quot;&gt;oneby-wang (@onebywang)&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/paulbakker&quot;&gt;Paul Bakker, Netflix (@paulbakker)&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/roryp&quot;&gt;Rory Preddy (@roryp)&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/lsh1215&quot;&gt;sanghun (@lsh1215)&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/JGoP-L&quot;&gt;shaojie (@JGoP-L)&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/YunKuiLu&quot;&gt;YunKui Lu (@YunKuiLu)&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/ybezsonov&quot;&gt;Yuriy Bezsonov (@ybezsonov)&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</content:encoded></item></channel></rss>

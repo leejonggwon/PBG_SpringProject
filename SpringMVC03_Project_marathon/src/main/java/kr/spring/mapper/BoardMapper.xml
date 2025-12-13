@@ -15,13 +15,13 @@
      resultType: SQL 실행 결과의 반환 타입을 지정  
                  여기서는 Board 객체로 매핑되므로 → kr.spring.entity.Board-->
 <select id="getLists" resultType="kr.spring.entity.Board"> 
-	SELECT * FROM BOARD ORDER BY INDATE DESC
+	SELECT * FROM MR_BOARD ORDER BY INDATE DESC
 </select>	
 
 
 <!-- parameterType: 전달받는 매개변수의 타입 (여기서는 Board 객체)-->
 <insert id="boardInsert" parameterType="kr.spring.entity.Board"> 
-	INSERT INTO BOARD(MEMID, TITLE, CONTENT, WRITER) 
+	INSERT INTO MR_BOARD(MEMID, TITLE, CONTENT, WRITER) 
 	VALUES (#{memID}, #{title}, #{content}, #{writer})
 </insert>
 <!-- #{필드명} → MyBatis 전용 바인딩 문법-->
@@ -30,22 +30,22 @@
 <!-- #{idx}는 파라미터를 의미하므로 parameterType="int"로 지정해준다.
      실행 결과는 Board 객체로 반환되므로 resultType="kr.spring.entity.Board"로 설정한다. -->
 <select id="boardContent" parameterType="int" resultType="kr.spring.entity.Board"> 
-	SELECT * FROM BOARD WHERE IDX = #{idx}
+	SELECT * FROM MR_BOARD WHERE IDX = #{idx}
 </select>
 
 
 <delete id="boardDelete" parameterType="int">
-	DELETE FROM BOARD WHERE IDX = #{idx}
+	DELETE FROM MR_BOARD WHERE IDX = #{idx}
 </delete>
 
 
 <update id="boardUpdate" parameterType="kr.spring.entity.Board">
-	UPDATE BOARD SET TITLE = #{title}, CONTENT = #{content}, WRITER = #{writer} WHERE IDX = #{idx}
+	UPDATE MR_BOARD SET TITLE = #{title}, CONTENT = #{content}, WRITER = #{writer} WHERE IDX = #{idx}
 </update>
 
 
 <update id="boardCount" parameterType="int">
-	UPDATE BOARD SET COUNT = COUNT + 1 WHERE IDX = #{idx}
+	UPDATE MR_BOARD SET COUNT = COUNT + 1 WHERE IDX = #{idx}
 </update>
 
 
