@@ -64613,3 +64613,7 @@ java.lang.NullPointerException: null
 2025-12-13 09:17:39,133 [Worker-2245: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource
 2025-12-13 09:17:39,135 [Worker-2245: Building] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
 2025-12-13 09:17:39,136 [Worker-2245: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource
+2025-12-13 09:17:42,667 [Worker-2289: Building] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2025-12-13 09:17:42,669 [Worker-2289: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 8 resources
+2025-12-13 09:17:42,670 [Worker-2289: Building] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2025-12-13 09:17:42,671 [Worker-2289: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource
