@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocatio="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd"
+	xmlns:websocket="http://www.springframework.org/schema/websocket"
+	xsi:schemaLocation="http://www.springframework.org/schema/websocket http://www.springframework.org/schema/websocket/spring-websocket-4.3.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.3.xsd">
+
+<!-- TODO 004 Spring WebSocket 객체(bean) 연결-->
+<websocket:handlers>
+	<websocket:mapping handler="wsChat.do" path="/wsChat.do"/>
+</websocket:handlers>
+
+<!-- TODO 015 Spring WebSocket wsChatGr.do HttpSession의 값을 자동으로 WebSocketSession의 값도 처리 해줌-->
+<websocket:handlers>
+	<websocket:mapping handler="wsChatGr.do" path="/wsChatGr.do"/>
+	<websocket:handshake-interceptors>
+		<!-- HttpSession의 값을 자동으로 WebSocketSession에 담아준다 -->
+		<bean class="org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor"></bean>
+	</websocket:handshake-interceptors>
+</websocket:handlers>
+</beans>
+

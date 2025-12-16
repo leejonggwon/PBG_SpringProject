@@ -1,0 +1,88 @@
+package com.min.edu;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.servlet.ServletConfig;
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpSession;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.context.ServletConfigAware;
+
+import lombok.extern.slf4j.Slf4j;
+
+@Controller
+@Slf4j
+public class ChatController implements ServletConfigAware {
+	
+	private ServletContext servletContext; //서버가 준 ServletContext를 나중에 계속 쓰려고 보관하는 변수
+
+    //서블릿이 생성될 때 서버가 호출하고, 웹 애플리케이션 전체 정보를 담은 ServletContext를 멤버 변수에 저장하는 역할을 한다.
+	@Override
+	public void setServletConfig(ServletConfig servletConfig) {
+		servletContext = servletConfig.getServletContext();
+		System.out.println("setServletConfig 생성값 :" + servletContext);
+	}
+	
+	@GetMapping(value="/")
+	public String index() {
+		return "index";
+	}
+	
+	@GetMapping(value="/chatOneToMany.do")
+	public String chatOneToMany() {
+		log.info("ChatController 일대다 화면이동 요청");
+		return "chatOneToMany";
+	}
+	
+	//-----------Group 채팅 시작-----------------------
+	
+	
+	//TODO 010 그룹 채팅 이동화면
+	@GetMapping(value="/chatGroup.do")
+	public String chatGroup() {
+		log.info("ChatController 그룹 구성을 위한 화면이동");
+		return "chatGroup";
+	}
+
+	//TODO 012 사용자의 아이디와 그룹은 session에 담는다. 채팅참여자의 전체 목록을 servletContext에 담아준다   
+	@GetMapping(value="/socketOpen.do")	
+	public String socketOpen(String gr_id, String mem_id, HttpSession session) {
+		//Parameter 정보를 HttpSession에 담는 작업으로 자동으로 Bean의 HandShake_Handler에 의해서 WebSocketSession에 담아준다 
+		//참여자를 HttpSession에 담는다
+		
+		session.setAttribute("gr_id", gr_id); //로그인정보를 담는것과 같다
+		session.setAttribute("mem_id", mem_id);
+		
+		//서버 전체에 계속해서 참여자의 정보를 담기위해서 ServletContext를 사용한다 
+		Map<String, String> chatList = (Map<String, String>)servletContext.getAttribute("chatList");
+		if(chatList == null) {
+			chatList = new HashMap<String, String>();
+			chatList.put(mem_id, gr_id);
+			servletContext.setAttribute("chatList", chatList);
+		}else {
+			chatList.put(mem_id, gr_id);
+			servletContext.setAttribute("chatList", chatList);
+		}
+		
+		log.info("ChatController 웹소캣 목록:{}", servletContext.getAttribute("chatList"));
+		
+		return "chatGroupView";
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
+
+	
+	
+	
+}
