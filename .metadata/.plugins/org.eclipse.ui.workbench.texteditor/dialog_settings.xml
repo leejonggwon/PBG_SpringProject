@@ -6,30 +6,30 @@
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
-		<item key="selection" value="register_checkModal"/>
+		<item key="selection" value="regForm"/>
 		<list key="findhistory">
-			<item value="register_checkModal"/>
-			<item value="result"/>
-			<item value="checkModal"/>
-			<item value="viewChatList"/>
-			<item value="memList"/>
-			<item value="group"/>
-			<item value="viewList"/>
-			<item value="send"/>
-			<item value="chatList"/>
-			<item value="String part1"/>
-			<item value="nickName"/>
-			<item value="#$nickName_"/>
-			<item value="SimpleDateFormat sdf"/>
-			<item value="String part2"/>
-			<item value="get_id"/>
+			<item value="regForm"/>
+			<item value="submit"/>
+			<item value="${cpath}/list"/>
+			<item value="attr"/>
+			<item value="getMember"/>
+			<item value="내용전송"/>
+			<item value="나가기"/>
+			<item value="chat_btn"/>
+			<item value="입장"/>
+			<item value="채팅그룹명"/>
+			<item value="hr"/>
+			<item value="outchat_btn"/>
+			<item value="채팅방"/>
+			<item value="chat"/>
+			<item value="내용"/>
 		</list>
 		<list key="replacehistory">
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
-		<item key="DIALOG_X_ORIGIN" value="1520"/>
-		<item key="DIALOG_Y_ORIGIN" value="554"/>
+		<item key="DIALOG_X_ORIGIN" value="1509"/>
+		<item key="DIALOG_Y_ORIGIN" value="262"/>
 		<item key="DIALOG_WIDTH" value="340"/>
 		<item key="DIALOG_HEIGHT" value="454"/>
 		<item key="DIALOG_FONT_NAME" value="1|맑은 고딕|9.0|0|WINDOWS|1|-15|0|0|0|400|0|0|0|1|0|0|0|0|맑은 고딕"/>

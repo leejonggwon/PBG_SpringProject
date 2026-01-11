@@ -1,0 +1,19 @@
+--Spring03애 바뀌고 06까지 사용했던 BOARD--
+
+SELECT * FROM BOARD;
+
+DELETE FROM BOARD WHERE idx=9;
+
+INSERT INTO BOARD (TITLE, CONTENT, WRITER) VALUES
+('공지사항 안내', '안녕하세요. 게시판 이용과 관련된 공지사항을 안내드립니다. 많은 이용 부탁드립니다.', 'admin'),
+('자유게시판 첫 글입니다', '자유롭게 소통할 수 있는 공간입니다. 편하게 글 남겨주세요.', 'apple'),
+('프로젝트 진행 후기', '이번 프로젝트를 진행하면서 느낀 점과 개선 사항을 정리해보았습니다.', 'spring'),
+('질문 있습니다', '게시판 기능 구현 중 오류가 발생했는데 해결 방법을 알고 싶습니다.', 'java'),
+('스터디 모집합니다', '함께 공부할 스터디원을 모집합니다. 관심 있으신 분들은 댓글 부탁드립니다.', 'samsung');
+
+SELECT * FROM MEMBER;
+
+DROP TABLE AUTH;
+DROP TABLE MEMBER;
+
+
