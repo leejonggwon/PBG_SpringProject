@@ -2,7 +2,7 @@
 
 SELECT * FROM BOARD;
 
-DELETE FROM BOARD WHERE idx=9;
+DELETE FROM BOARD WHERE idx BETWEEN 6 AND 11;
 
 INSERT INTO BOARD (TITLE, CONTENT, WRITER) VALUES
 ('공지사항 안내', '안녕하세요. 게시판 이용과 관련된 공지사항을 안내드립니다. 많은 이용 부탁드립니다.', 'admin'),

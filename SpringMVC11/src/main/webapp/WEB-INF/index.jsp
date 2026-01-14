@@ -39,6 +39,12 @@
       			<p class="card-text"><a href="${cpath}/member/login">로그인</a></p>
       		</div>
       	</div>
+      	<div class="card bg-default">
+      		<div class="card-body text-center">
+      			<p class="card-text"><a href="${cpath}/member/joinForm">회원가입</a></p>
+      		</div>
+      	</div>
+      	
       </div>
     </div>
   </div>
