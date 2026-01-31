@@ -26,7 +26,7 @@ public class Member {
 	
 	private String name; //이름
 	
-	private boolean ebled; //계정 활성화/비활성화 부분
+	private boolean ebled; //계정 활성화/비활성화 부분(enabled)
 	
 	
 }

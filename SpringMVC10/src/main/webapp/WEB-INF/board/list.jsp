@@ -110,7 +110,7 @@
     			</div>
     		</div>
     	</div>
-    </div> 
+    </div>  
     <div class="card-footer">스프링 - 이종권</div>
   </div>
   
@@ -138,6 +138,7 @@
   				regForm.find("#content").attr("readonly", false);
 				
   				var upBtn = "<button onclick='goUpdate()' class='btn btn-sm btn-info' type='button'>수정완료</button>";
+  				
   				$("#update").html(upBtn); //id="update"에 선택한 요소 안의 내용을 통째로 바꾸겠다		
   				//$("#update").text(upBtn); 로 하면 텍스트가 바뀐다 
   			}
@@ -147,7 +148,7 @@
   		}); //버튼클릭
   		
   		$("a").on("click", function(e){
-  			//a 태그의 기본 동작(href에 의한 페이지 이동)을 막는다
+  			//a 태그의 기본 동작(href에 의한 페이지 이동)을 막는다	
   			e.preventDefault(); 
   			
   			//클릭한 해당 요소의 href 속성값을 가져오겠다(idx값) //<a href="${vo.idx}">
@@ -181,6 +182,9 @@
   		//display는 HTML 속성이 아니라 CSS속성이기 때문에 attr()로 안된다  
   		$("#regDiv").css("display", "none");
   		$("#updateDiv").css("display", "block");
+  		
+  		//$("#regDiv").hide();    // 등록 폼 숨기기
+		//$("#updateDiv").show(); // 수정 폼 보이기
   		
   		regForm.find("#idx").val(vo.idx);			
   	}

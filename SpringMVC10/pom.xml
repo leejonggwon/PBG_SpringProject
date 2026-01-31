@@ -48,11 +48,13 @@
 			<artifactId>mysql-connector-java</artifactId>		
 		</dependency>
 		
+		<!--JSP에서 쓰는 JSTL 태그 라이브러리-->
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>jstl</artifactId>		
 		</dependency>
 		
+		<!--JSP를 Servlet으로 변환해주는 엔진-->
 		<dependency>
 			<groupId>org.apache.tomcat.embed</groupId>
 			<artifactId>tomcat-embed-jasper</artifactId>		

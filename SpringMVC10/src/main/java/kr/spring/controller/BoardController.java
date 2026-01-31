@@ -45,6 +45,7 @@ public class BoardController {
 	}
 	
 	//삭제기능
+	//변수명과 파라미터명이 같으면 @RequestParam을 생략할 수 있다 
 	@GetMapping("/remove")
 	public String remove(@RequestParam("idx") Long idx) {
 		boardService.delete(idx);

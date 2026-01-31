@@ -10,7 +10,7 @@ import javax.persistence.Id;
 
 import lombok.Data;
 import lombok.ToString;
-
+//@Table(name = "BT_BOARD") 이렇게 테이블이름 명시할 수 있다 
 @Entity //(javax.persistence) //Board VO가 DataBase에 Table로 만들때 설정하는 부분 
 @Data   //getter setter
 @ToString
