@@ -17,6 +17,7 @@ public class CustomUser extends User { //User는 UserDetail에 상속받는다
 	
 	private Member member;
 	
+	//생성자
 	public CustomUser(Member member) {
 		super(member.getUsername(), member.getPassword(),
 				AuthorityUtils.createAuthorityList("ROLE_" + member.getRole().toString()));

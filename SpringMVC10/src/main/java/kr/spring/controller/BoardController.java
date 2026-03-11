@@ -31,10 +31,10 @@ public class BoardController {
 	@PostMapping("/register")
 	public String register(Board vo) {
 		boardService.register(vo);
-		return "redirect:/list";
+		return "redirect:/list"; 
 	}
 	
-	//게시글 상세보기
+	//게시글 상세보기(비동기)
 	//일반 Controller에서 비동기방식 응답해야하는 메소드가 있다면
 	// RestController를 만들거나 ResponseBody 어노테이션을 붙여줘야한다
 	//Board의 idx는 Long 타입이다 

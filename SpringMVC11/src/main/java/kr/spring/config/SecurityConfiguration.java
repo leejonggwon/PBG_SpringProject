@@ -14,7 +14,7 @@ public class SecurityConfiguration {
 	//로그인기능을 해주는 기능
 	// 로그인 창에 입력된 아이디(username)를 들고 DB로 달려가서 유저의 정보를 싹 긁어오는 담당자
 	@Autowired
-	private UerDetailsServiceImpl userService; 
+	private UserDetailsServiceImpl userService; 
 	
 	//비밀번호 인코딩 기능
 	// 사용자가 입력한 생짜 비밀번호와 DB에 저장된 암호화된 비밀번호가 일치하는지 확인하는 기계
@@ -39,17 +39,18 @@ public class SecurityConfiguration {
 		 	.loginPage("/member/login") 
 		 	//시큐리티가 제공하는 기본창 말고 우리가만든 별도의 로그인 폼을 사용하겠다
 		 	//로그인 페이지는 member/login를 사용한다  
-		 	.defaultSuccessUrl("/board/list") //로그인 성공시 "board/list"로 이동하겠다
+		 	.defaultSuccessUrl("/board/list") 
+		 	//로그인 성공시 "board/list"로 이동하겠다
 		 	.and() 
 		 	.logout() 
 		 	.logoutUrl("/member/logout") 
 		 	//Spring Security에서 제공하는 기본 로그아웃을 사용하겠다 
 		 	//로그아웃 실행하고 싶다면 "member/logout"으로 요청하겠다 
 		 	.logoutSuccessUrl("/"); //로그아웃하고 "/" 로 이동하겠다 
-		 
-		 //로그인할 때 사용자정보조회는 userService 사용한다라고 Spring Security에 알려주는 설정
-		 //로그인 검사를 할 때, DB에서 유저 정보를 꺼내오는 담당자로 userService를 지정한다'는 뜻
+		
 		 http.userDetailsService(userService);
+		 //http에 로그인 하는 기능이 있는 userService를 등록시킨다
+		 //로그인할 때 사용자정보조회는 userService 사용한다라고 Spring Security에 알려주는 설정
 		 
 		return http.build(); //내부환경설정을 적용시키겠다 
 	}

@@ -25,7 +25,7 @@ public class BoardServiceImpl implements BoardService {
 	//게시글등록
 	@Override
 	public void register(Board vo) {
-		boardRepository.save(vo);
+		boardRepository.save(vo); //save 메소는 JPA가 만든것
 	}
 
 	//게시글 상세보기

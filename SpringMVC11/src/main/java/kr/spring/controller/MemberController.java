@@ -18,7 +18,8 @@ public class MemberController {
 	private MemberService memberService;
 	
 	@Autowired
-	private PasswordEncoder passwordEncoder;
+	private PasswordEncoder passwordEncoder; 
+	//사용자의 비밀번호를 안전하게 해싱(Hashing)해서 저장하거나, 로그인할 때 입력한 비밀번호가 DB에 있는 거랑 맞는지 비교할 때 쓰는 도구
 	
 	@GetMapping("/login")
 	public String login() {

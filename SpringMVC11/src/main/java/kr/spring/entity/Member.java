@@ -22,7 +22,7 @@ public class Member {
 	
 	//Spring Security에는 권한도 반드시 있어야한다 
 	@Enumerated(EnumType.STRING) //@Enumerated → 열거형(권한이 여러개이기 떄문에)
-	private Role role;
+	private Role role; //권한클래스 대신 Enum 클래스(열거형 클래스)로 대체를 한다 
 	
 	private String name; //이름
 	

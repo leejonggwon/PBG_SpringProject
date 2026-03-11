@@ -1,403 +1,121 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Spring]]></title><description><![CDATA[Level up your Java code and explore what Spring can do for you.]]></description><link>https://spring.io</link><generator>GatsbyJS</generator><lastBuildDate>Sat, 31 Jan 2026 00:48:38 GMT</lastBuildDate><item><title><![CDATA[Spring gRPC 1.0.2 Available Now]]></title><link>https://spring.io/blog/2026/01/30/spring-grpc-1</link><guid isPermaLink="true">https://spring.io/blog/2026/01/30/spring-grpc-1</guid><dc:creator><![CDATA[onobc]]></dc:creator><pubDate>Fri, 30 Jan 2026 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;On behalf of the team and everyone who has contributed, I&apos;m happy to announce that Spring gRPC &lt;code&gt;1.0.2&lt;/code&gt; maintenance release is available from Maven Central.&lt;/p&gt;
-&lt;p&gt;Please see the &lt;a href=&quot;https://github.com/spring-projects/spring-grpc/releases/tag/v1.0.2&quot;&gt;release notes&lt;/a&gt; for more details.&lt;/p&gt;
-&lt;p&gt;We want to take this opportunity to again thank all our users and contributors.&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;https://spring.io/projects/spring-grpc/&quot;&gt;Project Page&lt;/a&gt; | &lt;a href=&quot;https://github.com/spring-projects/spring-grpc&quot;&gt;GitHub&lt;/a&gt;&lt;/p&gt;</content:encoded></item><item><title><![CDATA[A Bootiful Podcast: Start Your Year with Java Right with Java Developer Advocate Billy Korando]]></title><link>https://spring.io/blog/2026/01/29/a-bootiful-podcast-billy-korando</link><guid isPermaLink="true">https://spring.io/blog/2026/01/29/a-bootiful-podcast-billy-korando</guid><dc:creator><![CDATA[joshlong]]></dc:creator><pubDate>Thu, 29 Jan 2026 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;Hi, Spring (and Java) fans! In this episode I am beyond delighted to talk Java developer advocate and longtime friend of the show Billy Korando about the latest-and-greatest in the Java ecosystem.&lt;/p&gt;
-&lt;iframe title=&quot;Start Your Year with Java Right with Java Developer Advocate Billy Korando&quot; allowtransparency=&quot;true&quot; height=&quot;300&quot; width=&quot;100%&quot; style=&quot;border: none; min-width: min(100%, 430px);height:300px;&quot; scrolling=&quot;no&quot; data-name=&quot;pb-iframe-player&quot; src=&quot;https://www.podbean.com/player-v2/?from=embed&amp;i=kj4af-1a30538-pb&amp;square=1&amp;share=1&amp;download=1&amp;fonts=Arial&amp;skin=1&amp;font-color=&amp;rtl=0&amp;logo_link=&amp;btn-skin=7&amp;size=300&quot; loading=&quot;lazy&quot; allowfullscreen=&quot;&quot;&gt;&lt;/iframe&gt;</content:encoded></item><item><title><![CDATA[Spring AI Agentic Patterns (Part 5): Building Interoperable Agents with the Agent2Agent (A2A) Protocol]]></title><link>https://spring.io/blog/2026/01/29/spring-ai-agentic-patterns-a2a-integration</link><guid isPermaLink="true">https://spring.io/blog/2026/01/29/spring-ai-agentic-patterns-a2a-integration</guid><dc:creator><![CDATA[ilayaperumalg]]></dc:creator><pubDate>Thu, 29 Jan 2026 00:00:00 GMT</pubDate><content:encoded>&lt;img style=&quot;display: block; margin: auto;&quot; align=&quot;right&quot; src=&quot;https://raw.githubusercontent.com/spring-io/spring-io-static/refs/heads/main/blog/igopinathan/20260129/spring-ai-a2a-logo.png&quot; width=&quot;200&quot;&gt;
-&lt;p&gt;The &lt;strong&gt;Agent2Agent (A2A) Protocol&lt;/strong&gt; is an open standard for seamless AI agent communication. It enables agents to discover capabilities, exchange messages, and coordinate workflows across platforms—regardless of their implementation.&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;&lt;a href=&quot;https://github.com/spring-ai-community/spring-ai-a2a&quot;&gt;Spring AI A2A&lt;/a&gt;&lt;/strong&gt; integrates the A2A Java SDK with Spring AI through Spring Boot autoconfiguration. It seamlessly connects the A2A protocol with Spring AI&apos;s &lt;code&gt;ChatClient&lt;/code&gt; and tools, enabling you to expose your agents as A2A servers.&lt;/p&gt;
-&lt;p&gt;This post is part of the &lt;strong&gt;Spring AI Agentic Patterns&lt;/strong&gt; series. While previous posts covered making individual agents more capable (&lt;a href=&quot;https://spring.io/blog/2026/01/13/spring-ai-generic-agent-skills/&quot;&gt;Agent Skills&lt;/a&gt;, &lt;a href=&quot;https://spring.io/blog/2026/01/16/spring-ai-ask-user-question-tool/&quot;&gt;AskUserQuestionTool&lt;/a&gt;, &lt;a href=&quot;https://spring.io/blog/2026/01/20/spring-ai-agentic-patterns-3-todowrite/&quot;&gt;TodoWriteTool&lt;/a&gt;, &lt;a href=&quot;https://spring.io/blog/2026/01/27/spring-ai-agentic-patterns-4-task-subagents/&quot;&gt;Sub-agent orchestration&lt;/a&gt;), this post shows how the A2A Protocol enables agents to collaborate across system boundaries through practical examples.&lt;/p&gt;
-&lt;h2 id=&quot;agent2agent-a2a-protocol&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#agent2agent-a2a-protocol&quot; aria-label=&quot;agent2agent a2a protocol permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Agent2Agent (A2A) Protocol&lt;/h2&gt;
-&lt;p&gt;The &lt;a href=&quot;https://a2a-protocol.org/&quot;&gt;A2A Protocol&lt;/a&gt; is an open standard for AI agent communication, providing a vendor-neutral foundation that enables agents to discover capabilities, exchange messages, and coordinate workflows. Built on HTTP, SSE, and JSON-RPC standards.&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Agent Discovery&lt;/strong&gt; is the foundation of A2A communication. Agents discover each other&apos;s capabilities through the &lt;strong&gt;AgentCard&lt;/strong&gt;—a standardized JSON document exposed at &lt;code&gt;/.well-known/agent-card.json&lt;/code&gt; that describes an agent&apos;s identity, capabilities, and skills. This follows a three-step pattern: &lt;strong&gt;Discovery&lt;/strong&gt; → &lt;strong&gt;Initiation&lt;/strong&gt; → &lt;strong&gt;Completion&lt;/strong&gt;.&lt;/p&gt;
-&lt;p&gt;The protocol defines two roles: &lt;strong&gt;A2A Server&lt;/strong&gt; agents expose endpoints for discovery and message handling, while &lt;strong&gt;A2A Client&lt;/strong&gt; agents initiate communication by discovering remote agents and sending messages.&lt;/p&gt;
-&lt;p&gt;The &lt;strong&gt;&lt;a href=&quot;https://github.com/a2aproject/a2a-java&quot;&gt;A2A Java SDK&lt;/a&gt;&lt;/strong&gt; provides a Java implementation with server-side components for processing requests and managing tasks, and client-side components for calling remote agents. It supports multiple transports (HTTP, SSE, JSON-RPC) and handles low-level protocol details.&lt;/p&gt;
-&lt;h2 id=&quot;spring-ai-a2a-integration&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#spring-ai-a2a-integration&quot; aria-label=&quot;spring ai a2a integration permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Spring AI A2A Integration&lt;/h2&gt;
-&lt;p&gt;While the A2A Java SDK provides the protocol implementation, integrating it with Spring AI requires additional plumbing. This is where the &lt;strong&gt;Spring AI A2A&lt;/strong&gt; project comes in.&lt;/p&gt;
-&lt;p&gt;The &lt;code&gt;spring-ai-a2a&lt;/code&gt; project currently focuses on the &lt;strong&gt;server-side integration&lt;/strong&gt;, enabling you to expose your Spring AI agents as A2A-compliant servers.&lt;/p&gt;
-&lt;img style=&quot;display: block; margin: auto;&quot; src=&quot;https://raw.githubusercontent.com/spring-io/spring-io-static/refs/heads/main/blog/igopinathan/20260129/spring-ai-a2a-integration.png&quot; width=&quot;700&quot;&gt;
-&lt;p&gt;This covers:&lt;/p&gt;
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Spring]]></title><description><![CDATA[Level up your Java code and explore what Spring can do for you.]]></description><link>https://spring.io</link><generator>GatsbyJS</generator><lastBuildDate>Wed, 11 Mar 2026 06:19:13 GMT</lastBuildDate><item><title><![CDATA[ This Week in Spring - March 10th, 2026]]></title><link>https://spring.io/blog/2026/03/10/this-week-in-spring-march-10th-2026</link><guid isPermaLink="true">https://spring.io/blog/2026/03/10/this-week-in-spring-march-10th-2026</guid><dc:creator><![CDATA[joshlong]]></dc:creator><pubDate>Tue, 10 Mar 2026 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;Hi, Spring fans! Welcome to another installment of &lt;em&gt;This Week in Spring&lt;/em&gt;. As I write this, I am preparing for a trip to Rust, Germany, for one of the best Java conferences in Europe: JavaLand, along with its new companion event, DevLand. It should be fun. Will you be around? If so, say hi.&lt;/p&gt;
+&lt;p&gt;We have a lot to cover, so let&apos;s dive in.&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;Spring Boot Auto-configuration&lt;/strong&gt;: Autoconfigured A2A endpoints&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Spring AI Integration&lt;/strong&gt;: Direct integration with Spring AI&apos;s &lt;code&gt;ChatClient&lt;/code&gt; and &lt;code&gt;tools&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;JSON-RPC Transport via REST Controllers&lt;/strong&gt;: Currently implements JSON-RPC transport for agent communication. Controllers provide endpoints for agent cards and message handling.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;AgentExecutor Implementation&lt;/strong&gt;: &lt;code&gt;DefaultAgentExecutor&lt;/code&gt; that bridges A2A SDK and Spring AI&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;Here&apos;s what the integration handles for you:&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-java&quot;&gt;// The framework automatically exposes these A2A endpoints (relative to your context path):
-POST   /                                  // Handle JSON-RPC sendMessage requests
-GET    /.well-known/agent-card.json      // Agent card (standard A2A location)
-GET    /card                              // Agent card (alternative endpoint)
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id=&quot;how-it-works&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#how-it-works&quot; aria-label=&quot;how it works permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;How It Works&lt;/h2&gt;
-&lt;img style=&quot;display: block; margin: auto;&quot; src=&quot;https://raw.githubusercontent.com/spring-io/spring-io-static/refs/heads/main/blog/igopinathan/20260129/spring-ai-a2a-flow.png&quot; width=&quot;700&quot;&gt;
-&lt;p&gt;&lt;strong&gt;Step-by-step:&lt;/strong&gt;&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;&lt;strong&gt;Agent Discovery&lt;/strong&gt; : Before communication begins, the client fetches the server&apos;s &lt;code&gt;AgentCard&lt;/code&gt; from &lt;code&gt;/.well-known/agent-card.json&lt;/code&gt; to discover capabilities, skills, and protocol details&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Request Reception&lt;/strong&gt;: &lt;code&gt;MessageController&lt;/code&gt; receives the A2A JSON-RPC &lt;code&gt;sendMessage&lt;/code&gt; request at the root endpoint&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Execution&lt;/strong&gt;: Routes to your &lt;code&gt;AgentExecutor&lt;/code&gt; bean (Spring AI A2A provides the default implementation: &lt;code&gt;DefaultAgentExecutor&lt;/code&gt;)&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Handler Invocation&lt;/strong&gt;: The &lt;code&gt;ChatClientExecutorHandler&lt;/code&gt; lambda is invoked with the Spring AI ChatClient and request context&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Spring AI ChatClient Response&lt;/strong&gt;: The Spring AI &lt;code&gt;ChatClient&lt;/code&gt; response is packaged as an A2A JSON-RPC message&lt;/li&gt;
-&lt;/ol&gt;
-&lt;h2 id=&quot;getting-started&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#getting-started&quot; aria-label=&quot;getting started permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Getting Started&lt;/h2&gt;
-&lt;p&gt;Let&apos;s build interoperable agent systems with Spring AI A2A. We&apos;ll start with prerequisites and setup, then work through practical examples: a single-agent server and a multi-agent orchestration.&lt;/p&gt;
-&lt;h3 id=&quot;prerequisites&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#prerequisites&quot; aria-label=&quot;prerequisites permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Prerequisites&lt;/h3&gt;
+&lt;li&gt;The Kotlin tutorial has been updated &lt;a href=&quot;https://kotlinlang.org/lp/kotlin-spring-ai-tutorial/&quot;&gt;with information about Spring AI&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;In last week&apos;s installment of &lt;em&gt;A Bootiful Podcast&lt;/em&gt;, I had the privilege of talking &lt;a href=&quot;https://spring.io/blog/2026/03/05/a-bootiful-podcast-jennifer-reif&quot;&gt;to Neo4J developer advocate extraordinaire Jennifer Reif&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Want to secure your Spring Shell CLI-based applications? Check out this video I did &lt;a href=&quot;https://youtu.be/rLIQTY9Gg04?si=qQMeLiUIz7OHWcin&quot;&gt;on using Spring Security and OAuth device code grants&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Want to learn more about security? Check out this video looking at &lt;a href=&quot;https://youtu.be/RRY_d2kZsj0?si=2vzMaMsRHJ3MO6Nj&quot;&gt;the new Spring Security 7&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;In particular, if you want to learn about securing your Spring AI MCP agents, &lt;a href=&quot;https://youtu.be/Mpd1740f2Vs?si=Sc_-U_3WyZV8srrc&quot;&gt;check out this video&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;AWS is hosting a webinar &lt;a href=&quot;https://aws-experience.com/emea/smb/e/f2e47/building-java-ai-agents-with-spring-ai&quot;&gt;on building Java AI agents with Spring AI&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Baeldung has a nice post on &lt;a href=&quot;https://www.baeldung.com/spring-ai-explainable-agents-capture-llm-tool-call-reasoning&quot;&gt;explainable LLM tool call reasoning with Spring AI&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Have you checked out the support for consuming Anthropic Skills from within a Spring AI application using the new Spring AI community Skills support? It becomes even more powerful when &lt;a href=&quot;https://youtu.be/eTh1Ti32QDU?si=aNvKv76OdYYnjZo0&quot;&gt;paired with the new SkillsJars project&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;I also published a full video looking at Spring gRPC 1.0, including setup, building clients and services, observability, security, and more. Watch it &lt;a href=&quot;https://youtu.be/RRY_d2kZsj0?si=2vzMaMsRHJ3MO6Nj&quot;&gt;here&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Migrating to modular monoliths &lt;a href=&quot;https://blog.jetbrains.com/idea/2026/02/migrating-to-modular-monolith-using-spring-modulith-and-intellij-idea/&quot;&gt;when using Spring Modulith&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;A nice &lt;a href=&quot;https://simonwillison.net/2026/Feb/23/agentic-engineering-patterns/&quot;&gt;roundup of agentic patterns&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</content:encoded></item><item><title><![CDATA[A Bootiful Podcast: Neo4j legend Jennifer Reif]]></title><link>https://spring.io/blog/2026/03/05/a-bootiful-podcast-jennifer-reif</link><guid isPermaLink="true">https://spring.io/blog/2026/03/05/a-bootiful-podcast-jennifer-reif</guid><dc:creator><![CDATA[joshlong]]></dc:creator><pubDate>Thu, 05 Mar 2026 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;Hi, Spring fans! In this installment, I talk to Jennifer Reif, developer advocate at Neo4J, about graph RAG, graph databases, GraphQL, Neo4J, Spring Data Neo4J, and more.&lt;/p&gt;
+&lt;p&gt;#neo4j #graphRag #AI #artificialintelligence&lt;/p&gt;
+&lt;iframe title=&quot;Neo4j legend Jennifer Reif&quot; allowtransparency=&quot;true&quot; height=&quot;300&quot; width=&quot;100%&quot; style=&quot;border: none; min-width: min(100%, 430px);height:300px;&quot; scrolling=&quot;no&quot; data-name=&quot;pb-iframe-player&quot; src=&quot;https://www.podbean.com/player-v2/?from=embed&amp;i=cuapw-1a63034-pb&amp;square=1&amp;share=1&amp;download=1&amp;fonts=Arial&amp;skin=1&amp;font-color=&amp;rtl=0&amp;logo_link=&amp;btn-skin=7&amp;size=300&quot; loading=&quot;lazy&quot; allowfullscreen=&quot;&quot;&gt;&lt;/iframe&gt;</content:encoded></item><item><title><![CDATA[ This Week in Spring - March 3rd, 2026]]></title><link>https://spring.io/blog/2026/03/03/this-week-in-spring-march-3rd-2026</link><guid isPermaLink="true">https://spring.io/blog/2026/03/03/this-week-in-spring-march-3rd-2026</guid><dc:creator><![CDATA[joshlong]]></dc:creator><pubDate>Tue, 03 Mar 2026 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;Hi Spring fans! Welcome to another rip-roaring installment of &lt;em&gt;This Week in Spring&lt;/em&gt;! I&apos;m writing this in an Uber en route to the airport to get to awsome Atlanta, GA, for Devnexus 2026! Who&apos;s goin&apos;? You goin&apos;? We - the Spring team - will be there in force! Come say hi at the boothes or come see our many, many talks there!&lt;/p&gt;
+&lt;p&gt;Anyway, I&apos;ve got a flight to catch so let&apos;s dive right into this wonderful week&apos;s roundup!&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;Java 17 or later&lt;/li&gt;
-&lt;li&gt;Spring Boot 4.0.1&lt;/li&gt;
-&lt;li&gt;Spring AI 2.0.0-M2&lt;/li&gt;
-&lt;li&gt;An LLM provider (OpenAI, Anthropic, etc.)&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id=&quot;dependencies&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#dependencies&quot; aria-label=&quot;dependencies permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Dependencies&lt;/h3&gt;
-&lt;p&gt;Add the Spring AI A2A starter to your project to expose your Spring AI agent as an A2A server:&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-xml&quot;&gt;&amp;#x3C;dependency&gt;
-   &amp;#x3C;groupId&gt;org.springaicommunity&amp;#x3C;/groupId&gt;
-   &amp;#x3C;artifactId&gt;spring-ai-a2a-server-autoconfigure&amp;#x3C;/artifactId&gt;
-   &amp;#x3C;version&gt;0.2.0&amp;#x3C;/version&gt;
-&amp;#x3C;/dependency&gt;
+&lt;li&gt;this post is &lt;em&gt;really&lt;/em&gt; cool: want to make your run-of-the-mill Spring Boot + Tomcat + JPA applications scale a lot higher? Upgrade to Spring Framework 7.0.6, and check out this wonderful blog looking at some low-touch &lt;a href=&quot;https://spring.io/blog/2026/02/25/optimizing-spring-mvc&quot;&gt;and very useful advice&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;in this post, I look at how to use Device code authorization in an &lt;a href=&quot;https://youtu.be/rLIQTY9Gg04?si=bQz886KkjEzMdVmK&quot;&gt;OAuth context to secure Spring Shell (CLI-powered!) applications&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;I did a video that looked the &lt;a href=&quot;https://www.youtube.com/watch?v=RRY_d2kZsj0&amp;#x26;t=7s&quot;&gt;new Spring gRPC 1.0&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Baeldung has a nice post on the &lt;a href=&quot;https://www.baeldung.com/spring-ai-mcp-annotations&quot;&gt;new MCP annotations&lt;/a&gt; in Spring AI&lt;/li&gt;
+&lt;li&gt;want to learn how to use - to consume  - Anthropic Skills from a Spring AI application? Want to make their deployment, packaging, and reuse even easier? Check out &lt;a href=&quot;https://www.youtube.com/watch?v=eTh1Ti32QDU&quot;&gt;Spring AI and the new Skillsjars project&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;the Spring Data team is making it easier to reference &lt;a href=&quot;https://spring.io/blog/2026/02/27/moving-beyond-strings-in-spring-data&quot;&gt;properties through typed expressions&lt;/a&gt; when building queries&lt;/li&gt;
+&lt;li&gt;in last week&apos;s installment of &lt;em&gt;A Bootiful Podcast&lt;/em&gt;, I talked to John Willis, author of &lt;a href=&quot;https://spring.io/blog/2026/02/26/a-bootiful-podcast-john-willis&quot;&gt;&quot;Rebels of Reason&quot;&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;an interesting blog indeed: how to use &lt;a href=&quot;https://dev.to/ayshriv/building-ai-applications-with-spring-ai-and-azure-openai-j6k&quot;&gt;Spring AI and Azure OpenAI&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;if you&apos;re using Embabel, the agentic framework built on top of Spring AI, &lt;a href=&quot;https://medium.com/embabel/agent-memory-is-not-a-greenfield-problem-ground-it-in-your-existing-data-9272cabe1561&quot;&gt;then check out this awesome post talking about agent memory&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;our friend Siva has a new Anthropic &lt;em&gt;skill&lt;/em&gt; you can use to make &lt;a href=&quot;https://x.com/sivalabs/status/2025877821353340946?s=12&quot;&gt;writing sensible, Spring Modulith-based applications a snap&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;you&apos;ve heard that we developed the official Java MCP  SDK, yah? It &lt;a href=&quot;https://modelcontextprotocol.io/docs/sdk#available-sdks&quot;&gt;was recently ranked as tier 2 across all the SDKs&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;not to do with Spring, per se, but interesting: a look at &lt;a href=&quot;https://simonwillison.net/2026/Feb/23/agentic-engineering-patterns/&quot;&gt;agentic patterns&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</content:encoded></item><item><title><![CDATA[Moving beyond Strings in Spring Data]]></title><link>https://spring.io/blog/2026/02/27/moving-beyond-strings-in-spring-data</link><guid isPermaLink="true">https://spring.io/blog/2026/02/27/moving-beyond-strings-in-spring-data</guid><dc:creator><![CDATA[mp911de]]></dc:creator><pubDate>Fri, 27 Feb 2026 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;If you&apos;ve worked with data access in Java and especially with Spring Data for a while, then you are familiar with various Query and Update programming models. You write data access code. You refactor a property name. You run your tests. They fail.
+Your query strings? Still pointing to the old property name because strings don&apos;t refactor.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-java&quot;&gt;Sort.by(&quot;firstName&quot;, &quot;lastName&quot;);
+
+where(&quot;address.country&quot;).is(…);
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;This starter includes the A2A Java SDK (v0.3.3.Final) as a transitive dependency.&lt;/p&gt;
-&lt;p&gt;For applications that need to call remote A2A agents, explicitly add the A2A SDK client:&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-xml&quot;&gt;&amp;#x3C;dependency&gt;
-   &amp;#x3C;groupId&gt;io.github.a2asdk&amp;#x3C;/groupId&gt;
-   &amp;#x3C;artifactId&gt;a2a-java-sdk-client&amp;#x3C;/artifactId&gt;
-   &amp;#x3C;version&gt;0.3.3.Final&amp;#x3C;/version&gt;
-&amp;#x3C;/dependency&gt;
+&lt;p&gt;Query construction often involves referencing domain properties by strings, whether for predicates, sorting, or path navigation.
+This approach is simple and intentionally lightweight. It requires no additional setup and integrates naturally into application code. For many use cases, it&apos;s a reasonable default.
+However, String-based property references come with limitations that become more apparent as applications evolve over time.&lt;/p&gt;
+&lt;h2 id=&quot;string-based-property-references-in-practice&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#string-based-property-references-in-practice&quot; aria-label=&quot;string based property references in practice permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;String-based property references in practice&lt;/h2&gt;
+&lt;p&gt;Using strings to refer to properties is a pragmatic design choice. They require no additional setup, no code generation, and no build process changes. However, this simplicity comes with inherent fragility, shifting some responsibility to runtime.&lt;/p&gt;
+&lt;p&gt;Property names expressed as strings are not validated by the compiler. Typographical errors, outdated names after refactoring, or mismatches between the domain model and query definitions will compile successfully and typically surface only when the code is executed. In some cases, tests can detect these issues early, but this is not always feasible.&lt;/p&gt;
+&lt;p&gt;Strings provide limited context for refactoring. IDEs can reliably update method and field references, but string literals lack semantic context, as they are effectively textual content. With a significant distance between execution points and query declarations, it becomes increasingly difficult for tools to associate them with the relevant domain types. In larger codebases, this can lead to subtle errors that are easy to miss.&lt;/p&gt;
+&lt;p&gt;These issues are not new, and they are not unique to Spring Data. They are a natural consequence of stringly-typed programming APIs.&lt;/p&gt;
+&lt;h2 id=&quot;metamodel-based-approaches&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#metamodel-based-approaches&quot; aria-label=&quot;metamodel based approaches permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Metamodel-based approaches&lt;/h2&gt;
+&lt;p&gt;The Java ecosystem offers several alternatives based on metamodels. These approaches represent domain models or database schemas in a structured, type-safe form.&lt;/p&gt;
+&lt;p&gt;Frameworks such as Querydsl and the JPA Metamodel Generator rely on annotation processing to generate metamodel classes. Their use in application code is rather convenient, as the following examples illustrate, reflecting the underlying domain model:&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Querydsl&lt;/strong&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-java&quot;&gt;QPerson person = QPerson.person;
+query.where(person.firstName.eq(&quot;John&quot;));
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id=&quot;configuration&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#configuration&quot; aria-label=&quot;configuration permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Configuration&lt;/h3&gt;
-&lt;p&gt;Configure your application in &lt;code&gt;application.properties&lt;/code&gt;:&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-properties&quot;&gt;# Server configuration
-server.servlet.context-path=/weather
-
-# LLM Configuration (example with Anthropic Claude)
-spring.ai.anthropic.api-key=${ANTHROPIC_API_KEY}
-spring.ai.anthropic.chat.options.model=claude-sonnet-4-5-20250929
-
-# For multi-agent orchestration (Example 2), configure remote agent URLs:
-# remote.agents.urls=http://localhost:10001/foo/,http://localhost:10002/bar/
+&lt;p&gt;&lt;strong&gt;JPA Criteria API&lt;/strong&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-java&quot;&gt;CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+CriteriaQuery&amp;#x3C;Person&gt; query = cb.createQuery(Person.class);
+Root&amp;#x3C;Person&gt; person = query.from(Person.class);
+query.where(cb.equal(person.get(Person_.firstName), &quot;John&quot;));
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id=&quot;example-1-agent-server&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#example-1-agent-server&quot; aria-label=&quot;example 1 agent server permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Example 1: Agent Server&lt;/h3&gt;
-&lt;p&gt;Expose a Spring AI application with tools as an A2A server:&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-java&quot;&gt;@Configuration
-public class WeatherAgentConfiguration {
-
-   @Bean
-   public AgentCard agentCard(@Value(&quot;${server.port:8080}&quot;) int port,
-           @Value(&quot;${server.servlet.context-path:/}&quot;) String contextPath) {
-       // This AgentCard is automatically exposed at /.well-known/agent-card.json
-       // Other agents discover this agent&apos;s capabilities through this endpoint
-       return new AgentCard.Builder()
-           .name(&quot;Weather Agent&quot;)
-           .description(&quot;Provides weather information for cities&quot;)
-           .url(&quot;http://localhost:&quot; + port + contextPath + &quot;/&quot;)
-           .version(&quot;1.0.0&quot;)
-           .capabilities(new AgentCapabilities.Builder().streaming(false).build())
-           .defaultInputModes(List.of(&quot;text&quot;))
-           .defaultOutputModes(List.of(&quot;text&quot;))
-           .skills(List.of(new AgentSkill.Builder()
-               .id(&quot;weather_search&quot;)
-               .name(&quot;Search weather&quot;)
-               .description(&quot;Get temperature for any city&quot;)
-               .tags(List.of(&quot;weather&quot;))
-               .examples(List.of(&quot;What&apos;s the weather in London?&quot;))
-               .build()))
-           .protocolVersion(&quot;0.3.0&quot;)
-           .build();
-   }
-
-   @Bean
-   public AgentExecutor agentExecutor(ChatClient.Builder chatClientBuilder, WeatherTools weatherTools) {
-
-       ChatClient chatClient = chatClientBuilder.clone()
-           .defaultSystem(&quot;You are a weather assistant. Use the temperature tool to answer questions.&quot;)
-           .defaultTools(weatherTools)  // Register Spring AI tools
-           .build();
-
-       return new DefaultAgentExecutor(chatClient, (chat, requestContext) -&gt; {
-           String userMessage = DefaultAgentExecutor.extractTextFromMessage(requestContext.getMessage());
-           return chat.prompt().user(userMessage).call().content();
-       });
-   }
-}
-
-@Service
-class WeatherTools {
-    ...
-}
+&lt;p&gt;Generated metamodels provide compile-time validation. At the same time, they typically introduce build-time code generation and often additional dependencies. When refactoring, the generated code must be regenerated consistently, which can become a source of friction.&lt;/p&gt;
+&lt;p&gt;These metamodels work best within their intended scope: The JPA metamodel integrates naturally with the Criteria API and Spring Data JPA’s &lt;code&gt;Specification&lt;/code&gt; support. Outside of those contexts, additional integration layers are required. Spring Data provides adapters such as &lt;code&gt;JpaSort&lt;/code&gt; (for JPA Metamodel path expressions) or &lt;code&gt;QSort&lt;/code&gt; (for Querydsl order specifiers), but availability and feature coverage varies across modules.&lt;/p&gt;
+&lt;p&gt;Other libraries, such as jOOQ, focus more directly on the database schema. jOOQ&apos;s plugins can aid with generating a metamodel during the build reflecting tables and columns:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-java&quot;&gt;Result result =
+    create.select()
+          .from(PERSON)
+          .where(PERSON.FIRST_NAME.eq(&quot;John&quot;))
+          .fetch();
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Your Spring AI agent is now an A2A-compliant server. Other agents can &lt;strong&gt;discover&lt;/strong&gt; its capabilities through the standard &lt;code&gt;/.well-known/agent-card.json&lt;/code&gt; endpoint and then send weather queries via POST to the root endpoint. The autoconfiguration handles exposing both the AgentCard and message endpoints.&lt;/p&gt;
-&lt;h3 id=&quot;example-2-agent-client&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#example-2-agent-client&quot; aria-label=&quot;example 2 agent client permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Example 2: Agent Client&lt;/h3&gt;
-&lt;p&gt;Here&apos;s a practical example of an agent client: A host agent that orchestrates specialized agents for travel planning (Airbnb accommodations and weather information).&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-java&quot;&gt;@Service
-public class RemoteAgentConnections {
-
-   private final Map&amp;#x3C;String, AgentCard&gt; agentCards = new HashMap&amp;#x3C;&gt;();
-
-   public RemoteAgentConnections(@Value(&quot;${remote.agents.urls}&quot;) List&amp;#x3C;String&gt; agentUrls) {
-       // Discover remote agents at startup (see Agent Discovery section above)
-       for (String url : agentUrls) {
-           String path = new URI(url).getPath();
-           AgentCard card = A2A.getAgentCard(url, path + &quot;.well-known/agent-card.json&quot;, null);
-           this.agentCards.put(card.name(), card);
-       }
-   }
-
-   @Tool(description = &quot;Sends a task to a remote agent. Use this to delegate work to specialized agents.&quot;)
-   public String sendMessage(
-           @ToolParam(description = &quot;The name of the agent&quot;) String agentName,
-           @ToolParam(description = &quot;The task description to send&quot;) String task) {
-
-       AgentCard agentCard = this.agentCards.get(agentName);
-
-       // Create A2A message
-       Message message = new Message.Builder()
-           .role(Message.Role.USER)
-           .parts(List.of(new TextPart(task, null)))
-           .build();
-
-       // Use A2A Java SDK Client
-       CompletableFuture&amp;#x3C;String&gt; responseFuture = new CompletableFuture&amp;#x3C;&gt;();
-
-       Client client = Client.builder(agentCard)
-           .clientConfig(new ClientConfig.Builder()
-               .setAcceptedOutputModes(List.of(&quot;text&quot;))
-               .build())
-           .withTransport(JSONRPCTransport.class, new JSONRPCTransportConfig())
-           .addConsumers(List.of(consumer -&gt; {
-               if (consumer instanceof TextPart textPart) {
-                   responseFuture.complete(textPart.getText());
-               }
-           }))
-           .build();
-
-       client.sendMessage(message);
-       return responseFuture.get(60, TimeUnit.SECONDS);
-   }
-
-   public String getAgentDescriptions() {
-       return agentCards.values().stream()
-           .map(card -&gt; card.name() + &quot;: &quot; + card.description())
-           .collect(Collectors.joining(&quot;\n&quot;));
-   }
-}
-
-@Configuration
-public class HostAgentConfiguration {
-
-   @Bean
-   public ChatClient routingChatClient(ChatClient.Builder chatClientBuilder,
-           RemoteAgentConnections remoteAgentConnections) {
-
-       String systemPrompt = &quot;&quot;&quot;
-           You coordinate tasks across specialized agents.
-           Available agents:
-           %s
-           Use the sendMessage tool to delegate tasks to the appropriate agent.
-           &quot;&quot;&quot;.formatted(remoteAgentConnections.getAgentDescriptions());
-
-       return chatClientBuilder
-           .defaultSystem(systemPrompt)
-           .defaultTools(remoteAgentConnections)  // Register as Spring AI tool
-           .build();
-   }
-}
+&lt;p&gt;Each of these approaches involves tradeoffs between safety, flexibility, and operational complexity.&lt;/p&gt;
+&lt;h2 id=&quot;build-infrastructure-considerations&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#build-infrastructure-considerations&quot; aria-label=&quot;build infrastructure considerations permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Build infrastructure considerations&lt;/h2&gt;
+&lt;p&gt;Metamodel generation typically employs annotation processors or dedicated build plugins. In more mature projects where domain models change rather infrequently, repetitive generation yields the same generated metamodel code at the expense of build time.&lt;/p&gt;
+&lt;p&gt;IDE support for generated sources has evolved over time, leading to an improved overall experience, but behavior varies across environments and may require explicit configuration. None of these concerns is prohibitive, but each contributes to overall project complexity in areas that are rarely revisited. Thus, complexity leads to higher troubleshooting efforts in comparison to areas that are revisited rather often by project maintainers.&lt;/p&gt;
+&lt;h2 id=&quot;type-safe-property-references&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#type-safe-property-references&quot; aria-label=&quot;type safe property references permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Type-safe property references&lt;/h2&gt;
+&lt;p&gt;So far, we have discussed existing approaches, their adverse effects on maintainability, and how increased distance contributes to classes of potential bugs. In an ideal world, modern data access code should be able to leverage language primitives to reference properties for type- and refactoring-safety, and with Spring Data &lt;code&gt;2026.0.0-M1&lt;/code&gt; we are proud to introduce first-class support for type-safe property references.&lt;/p&gt;
+&lt;p&gt;Let&apos;s go back to our very first example:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-java&quot;&gt;Sort.by(&quot;firstName&quot;, &quot;lastName&quot;);
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;strong&gt;What&apos;s happening here:&lt;/strong&gt;&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;The host agent (client) &lt;strong&gt;discovers&lt;/strong&gt; remote agents at startup by fetching their &lt;code&gt;AgentCard&lt;/code&gt; from the standard &lt;code&gt;.well-known/agent-card.json&lt;/code&gt; endpoints&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;RemoteAgentConnections&lt;/code&gt; is registered as a Spring AI &lt;code&gt;@Tool&lt;/code&gt; with the &lt;code&gt;ChatClient&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;When a user asks &quot;Plan a trip to London&quot;, the LLM decides which agents to call via the &lt;code&gt;sendMessage&lt;/code&gt; tool&lt;/li&gt;
-&lt;li&gt;The tool uses the &lt;strong&gt;A2A Java SDK Client&lt;/strong&gt; to communicate with remote agents&lt;/li&gt;
-&lt;li&gt;Results are aggregated and returned to the user&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;This pattern enables LLM-driven routing—the model decides which specialized agents to invoke based on the user&apos;s query.&lt;/p&gt;
-&lt;h2 id=&quot;whats-next&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#whats-next&quot; aria-label=&quot;whats next permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;What&apos;s Next&lt;/h2&gt;
-&lt;p&gt;While the current release focuses on server-side integration, the Spring AI community is exploring opportunities to enhance the A2A client experience for Spring AI applications.&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Potential Future Enhancements:&lt;/strong&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;Security&lt;/strong&gt;: Support for A2A authentication and authorization&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Agent Discovery&lt;/strong&gt;: Spring Boot autoconfiguration for discovering and routing to A2A agents&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Client Auto-configuration&lt;/strong&gt;: Autoconfigured A2A client connections with Spring-friendly abstractions&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Multiple Transport Support&lt;/strong&gt;: SSE (Server-Sent Events) for real-time streaming responses, expanding beyond the current JSON-RPC implementation&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Enhanced Observability&lt;/strong&gt;: Spring Boot Actuator integration for monitoring A2A interactions&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;These enhancements would provide additional support for building Spring AI applications that act as A2A agent clients, providing consistent integration patterns for both client and server implementations.&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Want to contribute?&lt;/strong&gt; The Spring AI A2A project welcomes community contributions. Check out the &lt;a href=&quot;https://github.com/spring-ai-community/spring-ai-a2a&quot;&gt;GitHub repository&lt;/a&gt; to get involved.&lt;/p&gt;
-&lt;h2 id=&quot;conclusion&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#conclusion&quot; aria-label=&quot;conclusion permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Conclusion&lt;/h2&gt;
-&lt;p&gt;The A2A Protocol represents a significant step toward interoperable AI agent ecosystems. By standardizing how agents communicate, it removes barriers to building sophisticated multi-agent systems.&lt;/p&gt;
-&lt;p&gt;The Spring AI A2A community project provides the integration needed to participate in this ecosystem. Through Spring Boot autoconfiguration, you can expose your Spring AI agents as A2A servers, integrate with other A2A-compliant agents, and build orchestration patterns that leverage Spring Boot&apos;s conventions.&lt;/p&gt;
-&lt;p&gt;As the A2A ecosystem grows, more agents, tools, and platforms may adopt this standard, expanding options for agent collaboration and composition.&lt;/p&gt;
-&lt;p&gt;To begin integrating A2A Protocol support with your Spring AI agents, refer to the resources below.&lt;/p&gt;
-&lt;h2 id=&quot;resources&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#resources&quot; aria-label=&quot;resources permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Resources&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;https://a2a-protocol.org/&quot;&gt;A2A Protocol Specification&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://github.com/a2aproject/a2a-java&quot;&gt;A2A Java SDK&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://github.com/spring-ai-community/spring-ai-a2a&quot;&gt;Spring AI A2A Community Project&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://docs.spring.io/spring-ai/reference/&quot;&gt;Spring AI Documentation&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://github.com/spring-ai-community/spring-ai-a2a/tree/main/spring-ai-a2a-examples/airbnb-planner&quot;&gt;Example: Travel Planner Multi-Agent System&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h4 id=&quot;series-links&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#series-links&quot; aria-label=&quot;series links permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Series Links&lt;/h4&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;Part 1&lt;/strong&gt;: &lt;a href=&quot;https://spring.io/blog/2026/01/13/spring-ai-generic-agent-skills&quot;&gt;Agent Skills&lt;/a&gt; - Modular, reusable capabilities&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Part 2&lt;/strong&gt;: &lt;a href=&quot;https://spring.io/blog/2026/01/16/spring-ai-ask-user-question-tool&quot;&gt;AskUserQuestionTool&lt;/a&gt; - Interactive workflows&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Part 3&lt;/strong&gt;: &lt;a href=&quot;https://spring.io/blog/2026/01/20/spring-ai-agentic-patterns-3-todowrite/&quot;&gt;TodoWriteTool&lt;/a&gt; - Structured planning&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Part 4&lt;/strong&gt;: &lt;a href=&quot;https://spring.io/blog/2026/01/27/spring-ai-agentic-patterns-4-task-subagents&quot;&gt;Subagent Orchestration&lt;/a&gt; - Hierarchical agent architectures&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Part 5&lt;/strong&gt;: A2A Integration (this post) - Building interoperable agents with the Agent2Agent protocol&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Part (soon)&lt;/strong&gt;: Subagent Extension Framework (coming soon) - Protocol-agnostic agent orchestration&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h4 id=&quot;related-spring-ai-blogs&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#related-spring-ai-blogs&quot; aria-label=&quot;related spring ai blogs permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Related Spring AI Blogs&lt;/h4&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;https://spring.io/blog/2025/12/11/spring-ai-tool-search-tools-tzolov&quot;&gt;Dynamic Tool Discovery&lt;/a&gt; - Achieve 34-64% token savings&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://spring.io/blog/2025/12/23/spring-ai-tool-argument-augmenter-tzolov&quot;&gt;Tool Argument Augmentation&lt;/a&gt; - Capture LLM reasoning during tool execution&lt;/li&gt;
-&lt;/ul&gt;</content:encoded></item><item><title><![CDATA[Spring Cloud 2025.1.1 (aka Oakwood) Has Been Released]]></title><link>https://spring.io/blog/2026/01/29/spring-cloud-2025-1-1-aka-oakwood-has-been-released</link><guid isPermaLink="true">https://spring.io/blog/2026/01/29/spring-cloud-2025-1-1-aka-oakwood-has-been-released</guid><dc:creator><![CDATA[ryanjbaxter]]></dc:creator><pubDate>Thu, 29 Jan 2026 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;On behalf of the community, I am pleased to announce that the General Availability (RELEASE) of the &lt;a href=&quot;https://cloud.spring.io&quot;&gt;Spring Cloud 2025.1.1&lt;/a&gt; Release Train is available today. The release can be found in &lt;a href=&quot;https://repo1.maven.org/maven2/org/springframework/cloud/spring-cloud-dependencies/2025.1.1/&quot;&gt;Maven Central&lt;/a&gt;. You can check out the 2025.1.1 &lt;a href=&quot;https://github.com/spring-cloud/spring-cloud-release/wiki/Spring-Cloud-2025.1-Release-Notes&quot;&gt;release notes for more information&lt;/a&gt;.&lt;/p&gt;
-&lt;h2 id=&quot;notable-changes-in-the-202511-release-train&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#notable-changes-in-the-202511-release-train&quot; aria-label=&quot;notable changes in the 202511 release train permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Notable Changes in the 2025.1.1 Release Train&lt;/h2&gt;
-&lt;p&gt;Spring Cloud 2025.0.0 is incompatible with Spring Boot 4.0.1 and later 4.0.x releases due to changes in Spring Boot.  This Spring Cloud release introduces compatibility with Spring Boot 4.0.1 and later 4.0.x release for the 2025.1.x Spring Cloud release train.&lt;/p&gt;
-&lt;h3 id=&quot;spring-cloud-kubernetes&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#spring-cloud-kubernetes&quot; aria-label=&quot;spring cloud kubernetes permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Spring Cloud Kubernetes&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;New leader election implementations for the Kubernetes Java Client (&lt;a href=&quot;https://github.com/spring-cloud/spring-cloud-kubernetes/pull/2107&quot;&gt;#2107&lt;/a&gt;) and Fabric8 Client (&lt;a href=&quot;https://github.com/spring-cloud/spring-cloud-kubernetes/pull/2108&quot;&gt;#2108&lt;/a&gt;)&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;The following modules were updated as part of 2025.1.1:&lt;/p&gt;
-&lt;table&gt;
-&lt;thead&gt;
-&lt;tr&gt;
-&lt;th&gt;Module&lt;/th&gt;
-&lt;th&gt;Version&lt;/th&gt;
-&lt;th&gt;Issues&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-&lt;tbody&gt;
-&lt;tr&gt;
-&lt;td&gt;Spring Cloud Netflix&lt;/td&gt;
-&lt;td&gt;5.0.1&lt;/td&gt;
-&lt;td&gt;(&lt;a href=&quot;https://github.com/spring-cloud/spring-cloud-netflix/releases/tag/v5.0.1&quot;&gt;issues&lt;/a&gt;)&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;Spring Cloud Stream&lt;/td&gt;
-&lt;td&gt;5.0.1&lt;/td&gt;
-&lt;td&gt;(&lt;a href=&quot;https://github.com/spring-cloud/spring-cloud-stream/releases/tag/v5.0.1&quot;&gt;issues&lt;/a&gt;)&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;Spring Cloud Consul&lt;/td&gt;
-&lt;td&gt;5.0.1&lt;/td&gt;
-&lt;td&gt;(&lt;a href=&quot;https://github.com/spring-cloud/spring-cloud-consul/releases/tag/v5.0.1&quot;&gt;issues&lt;/a&gt;)&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;Spring Cloud Circuitbreaker&lt;/td&gt;
-&lt;td&gt;5.0.1&lt;/td&gt;
-&lt;td&gt;(&lt;a href=&quot;https://github.com/spring-cloud/spring-cloud-circuitbreaker/releases/tag/v5.0.1&quot;&gt;issues&lt;/a&gt;)&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;Spring Cloud Starter Build&lt;/td&gt;
-&lt;td&gt;2025.1.1&lt;/td&gt;
-&lt;td&gt;(&lt;a href=&quot;https://github.com/spring-cloud/spring-cloud-starter-build/releases/tag/v2025.1.1&quot;&gt;issues&lt;/a&gt;)&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;Spring Cloud Config&lt;/td&gt;
-&lt;td&gt;5.0.1&lt;/td&gt;
-&lt;td&gt;(&lt;a href=&quot;https://github.com/spring-cloud/spring-cloud-config/releases/tag/v5.0.1&quot;&gt;issues&lt;/a&gt;)&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;Spring Cloud Build&lt;/td&gt;
-&lt;td&gt;5.0.1&lt;/td&gt;
-&lt;td&gt;(&lt;a href=&quot;https://github.com/spring-cloud/spring-cloud-build/releases/tag/v5.0.1&quot;&gt;issues&lt;/a&gt;)&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;Spring Cloud Gateway&lt;/td&gt;
-&lt;td&gt;5.0.1&lt;/td&gt;
-&lt;td&gt;(&lt;a href=&quot;https://github.com/spring-cloud/spring-cloud-gateway/releases/tag/v5.0.1&quot;&gt;issues&lt;/a&gt;)&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;Spring Cloud Bus&lt;/td&gt;
-&lt;td&gt;5.0.1&lt;/td&gt;
-&lt;td&gt;(&lt;a href=&quot;https://github.com/spring-cloud/spring-cloud-bus/releases/tag/v5.0.1&quot;&gt;issues&lt;/a&gt;)&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;Spring Cloud Vault&lt;/td&gt;
-&lt;td&gt;5.0.1&lt;/td&gt;
-&lt;td&gt;(&lt;a href=&quot;https://github.com/spring-cloud/spring-cloud-vault/releases/tag/v5.0.1&quot;&gt;issues&lt;/a&gt;)&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;Spring Cloud Contract&lt;/td&gt;
-&lt;td&gt;5.0.2&lt;/td&gt;
-&lt;td&gt;(&lt;a href=&quot;https://github.com/spring-cloud/spring-cloud-contract/releases/tag/v5.0.2&quot;&gt;issues&lt;/a&gt;)&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;Spring Cloud Function&lt;/td&gt;
-&lt;td&gt;5.0.1&lt;/td&gt;
-&lt;td&gt;(&lt;a href=&quot;https://github.com/spring-cloud/spring-cloud-function/releases/tag/v5.0.1&quot;&gt;issues&lt;/a&gt;)&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;Spring Cloud Task&lt;/td&gt;
-&lt;td&gt;5.0.1&lt;/td&gt;
-&lt;td&gt;(&lt;a href=&quot;https://github.com/spring-cloud/spring-cloud-task/releases/tag/v5.0.1&quot;&gt;issues&lt;/a&gt;)&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;Spring Cloud Kubernetes&lt;/td&gt;
-&lt;td&gt;5.0.1&lt;/td&gt;
-&lt;td&gt;(&lt;a href=&quot;https://github.com/spring-cloud/spring-cloud-kubernetes/releases/tag/v5.0.1&quot;&gt;issues&lt;/a&gt;)&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;Spring Cloud Commons&lt;/td&gt;
-&lt;td&gt;5.0.1&lt;/td&gt;
-&lt;td&gt;(&lt;a href=&quot;https://github.com/spring-cloud/spring-cloud-commons/releases/tag/v5.0.1&quot;&gt;issues&lt;/a&gt;)&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;Spring Cloud Openfeign&lt;/td&gt;
-&lt;td&gt;5.0.1&lt;/td&gt;
-&lt;td&gt;(&lt;a href=&quot;https://github.com/spring-cloud/spring-cloud-openfeign/releases/tag/v5.0.1&quot;&gt;issues&lt;/a&gt;)&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;Spring Cloud Zookeeper&lt;/td&gt;
-&lt;td&gt;5.0.1&lt;/td&gt;
-&lt;td&gt;(&lt;a href=&quot;https://github.com/spring-cloud/spring-cloud-zookeeper/releases/tag/v5.0.1&quot;&gt;issues&lt;/a&gt;)&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-&lt;p&gt;As always, we welcome feedback on &lt;a href=&quot;https://github.com/spring-cloud/&quot;&gt;GitHub&lt;/a&gt;, on &lt;a href=&quot;https://gitter.im/spring-cloud/spring-cloud&quot;&gt;Gitter&lt;/a&gt;, on &lt;a href=&quot;https://stackoverflow.com/questions/tagged/spring-cloud&quot;&gt;Stack Overflow&lt;/a&gt;, or on &lt;a href=&quot;https://twitter.com/SpringCloud&quot;&gt;Twitter&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;To get started with Maven with a BOM (dependency management only):&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;
-&amp;#x3C;dependencyManagement&gt;
-    &amp;#x3C;dependencies&gt;
-        &amp;#x3C;dependency&gt;
-            &amp;#x3C;groupId&gt;org.springframework.cloud&amp;#x3C;/groupId&gt;
-            &amp;#x3C;artifactId&gt;spring-cloud-dependencies&amp;#x3C;/artifactId&gt;
-            &amp;#x3C;version&gt;2025.1.1&amp;#x3C;/version&gt;
-            &amp;#x3C;type&gt;pom&amp;#x3C;/type&gt;
-            &amp;#x3C;scope&gt;import&amp;#x3C;/scope&gt;
-        &amp;#x3C;/dependency&gt;
-    &amp;#x3C;/dependencies&gt;
-&amp;#x3C;/dependencyManagement&gt;
-&amp;#x3C;dependencies&gt;
-    &amp;#x3C;dependency&gt;
-        &amp;#x3C;groupId&gt;org.springframework.cloud&amp;#x3C;/groupId&gt;
-        &amp;#x3C;artifactId&gt;spring-cloud-starter-config&amp;#x3C;/artifactId&gt;
-    &amp;#x3C;/dependency&gt;
-    &amp;#x3C;dependency&gt;
-        &amp;#x3C;groupId&gt;org.springframework.cloud&amp;#x3C;/groupId&gt;
-        &amp;#x3C;artifactId&gt;spring-cloud-starter-netflix-eureka-client&amp;#x3C;/artifactId&gt;
-    &amp;#x3C;/dependency&gt;
-    ...
-&amp;#x3C;/dependencies&gt;
+&lt;p&gt;Now, let&apos;s transform that into a type-safe variant using method references:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-java&quot;&gt;Sort.by(Person::getFirstName, Person::getLastName)
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;or with Gradle:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;buildscript {
-dependencies {
-classpath &quot;io.spring.gradle:dependency-management-plugin:1.0.2.RELEASE&quot;
-}
-}
+&lt;p&gt;One uses string literals. The other is code. Consider how naturally method references express the intent.&lt;/p&gt;
+&lt;p&gt;The compiler validates that &lt;code&gt;getFirstName()&lt;/code&gt; exists on &lt;code&gt;Person&lt;/code&gt;. Your IDE can navigate to the method definition. Refactoring tools work as expected. It&apos;s type-safe, concise, and does not require additional infrastructure.&lt;/p&gt;
+&lt;p&gt;For nested properties, composition feels similarly natural, although it reads slightly more verbose:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-java&quot;&gt;Sort.by(PropertyPath.of(Person::getAddress).then(Address::getCountry))
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Each step in the path is validated by the type system. Invalid paths fail fast, typically surfaced through your IDE, but in any case at compile time instead of at runtime.
+In addition, promoting the concept of an owning type to the interface allows methods to enforce sensible constraints. For example, a sort definition can ensure that all properties originate from the same domain type:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-java&quot;&gt;Sort.by(Person::getFirstName, Person::getLastName)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;With more context, the type system does the work:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-java&quot;&gt;Sort.by(Person::getFirstName, Order::getOrderDate)
 
+// Compilation error: incompatible owner types as per:
+// &amp;#x3C;T&gt; Sort by(TypedPropertyPath&amp;#x3C;T, ?&gt;... properties)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The benefit isn&apos;t just safety: It&apos;s clarity. The intent is immediately obvious, and the type system enforces correctness.&lt;/p&gt;
+&lt;h2 id=&quot;kotlin-support&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#kotlin-support&quot; aria-label=&quot;kotlin support permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Kotlin support&lt;/h2&gt;
+&lt;p&gt;Kotlin offers first-class support for property references already. Spring Data gradually adopted Kotlin-friendly APIs by leveraging operator overloads for the div (&lt;code&gt;/&lt;/code&gt;) operator for property path navigation. Such applications can use &lt;code&gt;KProperty&lt;/code&gt; references in various &lt;code&gt;Criteria&lt;/code&gt; implementations effectively for all methods accepting &lt;code&gt;TypedPropertyPath&lt;/code&gt; embracing Kotlin&apos;s natural idioms:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-kotlin&quot;&gt;Sort.by(Person::address)
 
+Sort.by(Person::address / Address::city)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Type-safe property paths provide a unified abstraction while respecting the conventions of each language.&lt;/p&gt;
+&lt;h2 id=&quot;migration-path&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#migration-path&quot; aria-label=&quot;migration path permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Migration path&lt;/h2&gt;
+&lt;p&gt;Existing string-based APIs remain unchanged and fully supported. They are and will remain an active design aspect of new functionality. Type-safe property paths come with a sweet-spot for usage and like every other approach also with limitations. For any arrangement requiring dynamic property names at runtime, it is totally fine to continue using strings with their aforementioned limitations (such as accepting a property name through a web request).&lt;/p&gt;
+&lt;p&gt;Type-safe property paths are strictly additive and can be introduced selectively wherever their benefits are most pronounced. For example, consider the following examples alongside their refined type-safe alternatives:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-java&quot;&gt;// Existing code
+where(&quot;firstName&quot;).is(&quot;…&quot;)
+where(&quot;address.country&quot;).is(&quot;…&quot;)
+Sort.by(&quot;firstName&quot;, &quot;lastName&quot;)
 
-apply plugin: &quot;io.spring.dependency-management&quot;
-
-dependencyManagement {
-imports {
-mavenBom &apos;org.springframework.cloud:spring-cloud-dependencies:2025.1.1&apos;
-}
-}
-
-dependencies {
-compile &apos;org.springframework.cloud:spring-cloud-starter-config&apos;
-compile &apos;org.springframework.cloud:spring-cloud-starter-netflix-eureka-client&apos;
-...
-}
-&lt;/code&gt;&lt;/pre&gt;</content:encoded></item></channel></rss>
+// Type-safe variants
+where(Person::getFirstName).is(&quot;…&quot;)
+where(PropertyPath.of(Person::getAddress).then(Address::getCountry)).is(&quot;…&quot;)
+Sort.by(Person::getFirstName, Person::getLastName)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Adoption can be gradual, focusing on areas where refactoring safety or clarity is most valuable. From a performance perspective, method references are introspected once and cached for subsequent usage, resulting in an overall pleasant performance baseline.&lt;/p&gt;
+&lt;h2 id=&quot;looking-forward&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#looking-forward&quot; aria-label=&quot;looking forward permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Looking forward&lt;/h2&gt;
+&lt;p&gt;We believe developers should spend their time building applications, not debugging property name typos. Your tools should work with you, not against you.
+The introduction of support for type-safe property paths represents more than just a set of new interfaces: It is an alignment with how modern Java and Kotlin developers expect to work. Languages provide powerful tools for type safety and refactoring, and our frameworks should leverage those tools rather than work around them.&lt;/p&gt;
+&lt;p&gt;Type-safe property paths eliminate a class of bugs, improve refactoring confidence, and make intent more explicit in code. They allow developers to rely on the compiler and less on convention and discipline. Moving forward, there are several more potential refinements possible to surface type-safe relationships within a query, but that will be part of an ongoing research effort.&lt;/p&gt;
+&lt;p&gt;We shipped type-safe property paths in &lt;a href=&quot;https://spring.io/blog/2026/02/13/spring-data-2026-0-0-m1-released&quot;&gt;Spring Data &lt;code&gt;2026.0.0-M1&lt;/code&gt;&lt;/a&gt; allowing you to explore the new APIs and provide feedback. We are excited to see how you will use them in your projects and how they will evolve based on your feedback.&lt;/p&gt;</content:encoded></item></channel></rss>

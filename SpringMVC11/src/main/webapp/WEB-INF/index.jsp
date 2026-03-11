@@ -26,10 +26,11 @@
   			<p>Main Page</p>
   		</div>
   	</div>
+  	
     <div class="card-body">
       <p class="card-text" style="text-align: left;">메뉴를 선택하세요</p> 	
       <div class="card-group">
-      	<div class="card bg-warning">
+      	<div class="card bg-warning"> <!-- 카드배경색 -->
       		<div class="card-body text-center">
       			<p class="card-text"><a href="${cpath}/board/list">글목록 보기</a></p>
       		</div>
@@ -44,9 +45,9 @@
       			<p class="card-text"><a href="${cpath}/member/joinForm">회원가입</a></p>
       		</div>
       	</div>
-      	
       </div>
     </div>
+    
   </div>
   
 </body>

@@ -44,7 +44,7 @@
     			<div class="card" style="min-height: 500px; max-height: 1000px;">
     				<div class="card-body">
     					<h4 class="card-title">
-							<sec:authentication property="principal.member.name"/>
+							<sec:authentication property="principal.member.name"/> <!-- 회원name출력 -->
 						</h4>
     					<p class="card-text">회원님 Welcome!</p>
     					<form action="${cpath}/member/logout">

@@ -5,7 +5,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-<c:set var="cpath" value="${pageContext.request.contextPath}"/>
+<c:set var="cpath" value="${pageContext.request.contextPath}"/> <!--절대경로-->
 
 <!DOCTYPE html>
 <html lang="en">
@@ -31,7 +31,7 @@
 		</div>
     </div>
     <div class="card-body">
-    	<div class="row">
+    	<div class="row"> <!-- 가로, 세로는 col을 사용한다 -->
     		<div class= "col-lg-2"> 
     			<div class="card" style="min-height: 500px; max-height: 1000px;">
     				<div class="card-body">
@@ -80,7 +80,7 @@
     			<div class="card" style="min-height: 500px; max-height: 1000px;">
     				<div class="card-body">
 						<form id="regForm" action="${cpath}/register" method="post">					
-							<input type="hidden" id="idx" name="idx" value="">
+							<input type="hidden" id="idx" name="idx" value=""> 
 						
     						<div class="form-group">
     							<label for="title">제목</label> 
@@ -129,7 +129,7 @@
   			}else if(oper == "reset"){
   				regForm[0].reset();
   			}else if(oper == "list"){
-  				location.href ="${cpath}/list"; //list 주소로 이동
+  				location.href ="${cpath}/list"; //list 주소로 이동	
   			}else if(oper == "remove"){
   				var idx = regForm.find("#idx").val();
   				location.href = "${cpath}/remove?idx="+idx;
@@ -142,11 +142,9 @@
   				$("#update").html(upBtn); //id="update"에 선택한 요소 안의 내용을 통째로 바꾸겠다		
   				//$("#update").text(upBtn); 로 하면 텍스트가 바뀐다 
   			}
-  			
-  			
-  			
   		}); //버튼클릭
   		
+  		//상세보기 클릭
   		$("a").on("click", function(e){
   			//a 태그의 기본 동작(href에 의한 페이지 이동)을 막는다	
   			e.preventDefault(); 
@@ -158,16 +156,16 @@
   				url : "${cpath}/get",
   				type : "get",
   				data : {"idx" : idx},
-  				dataType : "json",
+  				dataType : "json", //{"idx": 1, "title": "안녕", "writer": "홍길동"}
   				success : printBoard,
-  				error : function(){ alert("error"); }
+  				error : function(){ alert("상세보기 error"); }
   			});//ajax
   			
   		});//a태그클릭
   		
   	});//ready
   	
-  	//서버 통신 성공 후 게시글 정보를 폼에 출력하는 함수
+  	//상세보기 서버 통신 성공 후 게시글 정보를 폼에 출력하는 함수
   	function printBoard(vo){
   		var regForm = $("#regForm");
   		
@@ -180,19 +178,19 @@
   		regForm.find("textarea").attr("readonly", true);
   		
   		//display는 HTML 속성이 아니라 CSS속성이기 때문에 attr()로 안된다  
-  		$("#regDiv").css("display", "none");
-  		$("#updateDiv").css("display", "block");
+  		$("#regDiv").css("display", "none"); //숨김
+  		$("#updateDiv").css("display", "block");//보여주기
   		
-  		//$("#regDiv").hide();    // 등록 폼 숨기기
+  		//$("#regDiv").hide();    // 등록 폼 숨기기(제이쿼리가 제공하는 전용함수)
 		//$("#updateDiv").show(); // 수정 폼 보이기
   		
-  		regForm.find("#idx").val(vo.idx);			
+  		regForm.find("#idx").val(vo.idx); //(삭제기능위해)hidden 타입으로 숨겨둔 idx에 vo.idx 값을 넣는다  			
   	}
   	
   	//수정기능
   	function goUpdate(){
   		var regForm = $("#regForm");
-  		regForm.attr("action", "${cpath}/modify");
+  		regForm.attr("action", "${cpath}/modify"); //action값을 바꿔준다
   		regForm.submit(); //제출
   	}
   	
