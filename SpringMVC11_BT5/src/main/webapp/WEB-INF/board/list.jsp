@@ -21,6 +21,8 @@
   <title>Bootstrap Example</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="${cpath}/resources/css/logoStyle.css">
+
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
   <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.slim.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
@@ -37,17 +39,13 @@
  
   <div class="card">
     <div class="card-header">
-	    <div class="jumbotron jumbotron-fluid">
-		  <div class="container">
-		    <h1>Spring MVC11</h1>
-		    <p>Java → HTML → CSS → JSP&Servlet → Spring F/W → Spring Boot</p>
-		  </div>
-		</div>
+	    <!-- 카드헤더부분 -->
+    	<%@ include file="/WEB-INF/common/header_common.jsp" %>
     </div>
     <div class="card-body">
     	<div class="row">
     		<!-- 첫번째칸 -->
-    		<%@ include file="/WEB-INF/common/common.jsp" %>
+    		<%@ include file="/WEB-INF/common/left_common.jsp" %>
     		
     		<!-- 두번째칸 -->
     		<div class= "col-lg-5">
@@ -55,10 +53,11 @@
     				<div class="card-body">
     					<table class="table table-bordered table-hover">
     						<thead class="table-cnt">
-    							<th style="width: 10%;">번호</th>
-    							<th style="width: 40%;">제목</th>
+    							<th style="width: 8%;">번호</th>
+    							<th style="width: 47%;">제목</th>
     							<th style="width: 10%;">작성자</th>
-    							<th style="width: 25%;">작성일</th>
+    							<th style="width: 10%;">권한</th>
+    							<th style="width: 15%;">작성일</th>
     							<th style="width: 10%;">조회수</th>
     						</thead>
     						<tbody>
@@ -92,7 +91,14 @@
 	    									</c:if>
     									</td> 		
     									<td class="table-cnt">${vo.writer}</td>					
-    									<td class="table-cnt"><fmt:formatDate value="${vo.indate}" pattern="yyyy-MM-dd HH:mm"/></td>
+    									<td class="table-cnt">
+										    <c:choose>
+										        <c:when test="${vo.role == 'ADMIN'}">관리자</c:when>
+										        <c:when test="${vo.role == 'PROFESSOR'}">교수</c:when>									       
+										        <c:otherwise>학생</c:otherwise>
+										    </c:choose>
+										</td>					
+    									<td class="table-cnt"><fmt:formatDate value="${vo.indate}" pattern="yyyy.MM.dd HH:mm"/></td>
     									<td class="table-cnt" id="cnt_${vo.idx}">${vo.count}</td>
     								</tr>
     							</c:forEach>
@@ -164,11 +170,13 @@
     		<div class= "col-lg-5">
     			<div class="card" style="min-height: 500px; max-height: 1000px;">
     				<div class="card-body">
-						<form id="regForm" action="${cpath}/board/register" method="post">					
+						<form id="regForm">					
 							<input type="hidden" id="idx" name="idx" value="">
 							<input type="hidden" id="attached_data" name="attached_data" value="${vo.attached_data}">
 							
 							<input type="hidden" id="username" name="username" value="<sec:authentication property='principal.member.username'/>">
+							<input type="hidden" id="role" name="role" value="<sec:authentication property='principal.member.role'/>">
+							
 							<!-- 페이징정보 -->
 							<input type="hidden" id="page" name="page" value="${pageMaker.cri.page}">
 							<input type="hidden" id="perPageNum" name="perPageNum" value="${pageMaker.cri.perPageNum}">
@@ -193,7 +201,7 @@
     						
     						<div id="download_btn" style="display: none;" class="mb-3">
     							<label>첨부파일</label><br>
-    							<a id="download_link" href="#" class="btn btn-sm btn-warning"></a>					       
+    							<a id="download_link" href="#"></a>					       
     						</div>
     							
     						<div class="form-group">
@@ -229,7 +237,58 @@
     							<button class="btn btn-sm btn-primary" data-oper="list" type="button">새로고침</button>
     						</div> 	
     									
-    					</form>				
+    					</form>		
+    					
+    			
+    			
+    			
+    					
+    		<br>			
+    					
+    					<!-- 댓글작성폼 -->
+		<div class="panel-body" id="cmtform"> 
+			<form id="cmtfrm"> 
+				<input type="hidden" name="idx" >
+				<input type="hidden" name="memID" >					
+				<input type="hidden" name="memName">					
+				<input type="hidden" name="memProfile" >				
+				<table id="cmtTbl" class="table table-bordered table-hover">
+					<tr>
+						<td style="text-align: center; vertical-align: middle;">댓글작성자</td>
+						<td><input readonly="readonly" type="text" name="memNickName"  class="form-control"></td> 
+						<td style="text-align:center; vertical-align:middle; width:80px;">
+							<button class="btn btn-default btn-sm" type="reset" id="fclear">취소</button>
+						</td>
+					</tr>
+					<tr>
+						<td style="text-align: center; vertical-align: middle;">댓글내용</td>
+						<td>
+							<textarea placeholder="댓글을 입력해주세요." rows="2" cols="" " name="cmtContent" class="form-control"></textarea>
+						</td> 
+						<td style="text-align:center; vertical-align:middle; width:80px;"> 
+							<button class="btn btn-primary btn-sm" type="button" onclick="cmtInsert()">댓글등록</button>											
+						</td>
+					</tr>		                        
+				</table>
+			</form>		
+		</div> 
+		
+		<!-- 댓글리스트폼 -->
+		<div class="panel-body">
+			<table id="cmtList" class="table table-bordered table-hover"> 	
+				<tbody id="cmtView">
+					<!--비동기 방식으로 가져온 댓글 나오게할 부분-->		
+				</tbody>				
+			</table>		
+		</div>
+    					
+    					
+    					
+    					
+    					
+    					
+    					
+    							
     				</div>
     			</div>
     		</div>
@@ -271,6 +330,8 @@
   			var currentPage = ${pageMaker.cri.page}
   			
   			if(oper == "register"){ //등록
+  				regForm.attr("action", "${cpath}/board/register");
+  				regForm.attr("method", "post");
   			    regForm.attr("enctype", "multipart/form-data");
   				regForm.submit();
   			}else if(oper == "reset"){ //취소
@@ -289,25 +350,33 @@
   				regForm.find("#title").attr("readonly", false);
   				regForm.find("#content").attr("readonly", false);
   			 					
-  				$("#update").hide();         // 수정 버튼 숨기기
-  				$("#reply").hide(); // 답글쓰기 버튼 숨기기
+  				$("#update").hide(); // '수정' 버튼 숨기기
+  				$("#reply").hide();  // '답글쓰기' 버튼 숨기기
   			    $("#updateComplete").show(); // 수정완료 버튼 보이기
+
+  			    $("#download_btn").hide(); // 파일다운 버튼 보이기
+  			    $("#uploadFile").show();   // 파일첨부 버튼 보이기
+	    
 				
   			}else if(oper =="reply"){
   				
   				// hidden 필드인 #idx에 저장된 부모 게시글의 번호를 가져온다
-  			    var parentIdx = regForm.find("#idx").val();
-  			  	var boardGroup = regForm.find("#board_group").val();
+  			    //var parentIdx = regForm.find("#idx").val();
+  			  	//var boardGroup = regForm.find("#board_group").val();
   				
   				regForm.find("#title").attr("readonly", false).val(""); // .val("") : 기존작성된내용 ""로 변경
   				regForm.find("#content").attr("readonly", false).val("");
   				regForm.find("#writer").val("${user.member.name}");
   				
-  				$("#reply").hide(); // 답글쓰기 버튼 숨기기
-  				$("#update").hide(); // 수정 버튼 숨기기
-  			    $("#replyComplete").show(); // 수정완료 버튼 보이기
+  				
+  				$("#reply").hide(); // '답글쓰기' 버튼 숨기기
+  				$("#update").hide(); // '수정' 버튼 숨기기
+  			    $("#replyComplete").show(); // '답글등록' 버튼 보이기
+  			    
+  		    	$("#download_btn").hide(); // '파일다운' 보이기
+			    $("#uploadFile").show();   // '파일첨부' 버튼 보이기
   								
-  				$("#reply").html(replyBtn); //id="update"에 선택한 요소 안의 내용을 통째로 바꾸겠다		
+  				//$("#reply").html(replyBtn); //id="update"에 선택한 요소 안의 내용을 통째로 바꾸겠다		
   								
   				//$("#update").text(upBtn); 로 하면 텍스트가 바뀐다 
   			}
@@ -359,28 +428,28 @@
   		if (vo.attached_data) {
   		    $("#download_link").attr("href", "${cpath}/board/download/" + vo.attached_data);
   		    
-  		    //버튼 안의 글자를 파일명으로 바꿔줌 (text 이용)
-  		    $("#download_link").text("첨부파일 다운로드 (" + vo.attached_data + ")");
+  		    //download_link <a>태그에 text 표시한다 
+  		    $("#download_link").text( vo.attached_data);
   		    
-  		    // 4. 숨겨져 있던 버튼을 화면에 보여줌
+  		    //숨겨져 있던 버튼을 화면에 보여줌
   		    $("#download_btn").show();
   		} else {
   		    // 파일이 없으면 버튼을 숨김
   		    $("#download_btn").hide();
   		}
 
+  		
   		$("#uploadFile").hide();  //첨부파일 안보인다
   		
-  		
   		//display는 HTML 속성이 아니라 CSS속성이기 때문에 attr()로 안된다  
-  		$("#regDiv").css("display", "none");     //등록 취소 안보인다 
-  		$("#updateDiv").css("display", "block"); //답글쓰기 목록 수정 삭제 보인다 
+  		$("#regDiv").css("display", "none");     //'등록' '취소' 안보인다 
+  		$("#updateDiv").css("display", "block"); //'답글쓰기' '목록' '수정' '삭제' 보인다 
   		
-  		$("#update").show(); //수정 버튼 숨기기
-		$("#updateComplete").hide(); //수정완료 버튼 보이기
+  		$("#update").show();         //'수정' 버튼 보이기
+		$("#updateComplete").hide(); //'수정완료' 버튼 숨기기
 		
-		$("#reply").show(); //수정 버튼 숨기기
-		$("#replyComplete").hide(); //수정완료 버튼 보이기
+		$("#reply").show();         //'답글쓰기'버튼 보이기
+		$("#replyComplete").hide(); //'답글등록'버튼 숨기기
   		
   		regForm.find("#idx").val(vo.idx);           //idx값을 hidden 태그에 넣는다 
   		regForm.find("#username").val(vo.username); 
@@ -407,6 +476,8 @@
   	function goUpdate(){
   		var regForm = $("#regForm");
   		regForm.attr("action", "${cpath}/board/modify");
+  		regForm.attr("method", "post");
+		regForm.attr("enctype", "multipart/form-data");
   		regForm.submit(); //제출
   		alert("수정이 완료되었습니다");
   	}
@@ -415,6 +486,8 @@
   	function goReply(){
   		var regForm = $("#regForm");
   		regForm.attr("action", "${cpath}/board/reply");
+  		regForm.attr("method", "post");
+  		regForm.attr("enctype", "multipart/form-data");
   		regForm.submit(); //제출
   		alert("답글이 게시되었습니다");
   	}

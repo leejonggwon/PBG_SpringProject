@@ -6,32 +6,32 @@
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
-		<item key="selection" value="attached_data"/>
+		<item key="selection" value="button[data-btn]"/>
 		<list key="findhistory">
-			<item value="attached_data"/>
-			<item value="pageFrm"/>
-			<item value="page-item"/>
-			<item value="register"/>
-			<item value="등록"/>
-			<item value="input"/>
-			<item value="move"/>
-			<item value="page"/>
-			<item value="view"/>
+			<item value="button[data-btn]"/>
+			<item value="list"/>
+			<item value="새로고침"/>
+			<item value="selectLike"/>
+			<item value="user"/>
+			<item value="insertLike"/>
 			<item value="likeView"/>
-			<item value="&quot;likeView&quot;"/>
-			<item value="userDetailsService"/>
-			<item value="passwordEncoder"/>
 			<item value="regForm"/>
-			<item value="goUpdate"/>
+			<item value="likePlus"/>
+			<item value="likeBtn"/>
+			<item value="♥"/>
+			<item value="수정화면"/>
+			<item value="답글쓰기"/>
+			<item value="댓등록"/>
+			<item value="대등록"/>
 		</list>
 		<list key="replacehistory">
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
-		<item key="DIALOG_X_ORIGIN" value="111"/>
-		<item key="DIALOG_Y_ORIGIN" value="311"/>
-		<item key="DIALOG_WIDTH" value="340"/>
-		<item key="DIALOG_HEIGHT" value="454"/>
+		<item key="DIALOG_X_ORIGIN" value="1112"/>
+		<item key="DIALOG_Y_ORIGIN" value="41"/>
+		<item key="DIALOG_WIDTH" value="272"/>
+		<item key="DIALOG_HEIGHT" value="363"/>
 		<item key="DIALOG_FONT_NAME" value="1|맑은 고딕|9.0|0|WINDOWS|1|-15|0|0|0|400|0|0|0|1|0|0|0|0|맑은 고딕"/>
 	</section>
 </section>

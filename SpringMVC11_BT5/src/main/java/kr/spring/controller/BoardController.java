@@ -66,69 +66,86 @@ public class BoardController {
 	
 	
 	//게시글등록
+	
 	@PostMapping("/register")
-	public String register(Board vo, @RequestParam("uploadFile") MultipartFile file, RedirectAttributes rttr) {
+	public String register(Board vo, 
+			@RequestParam("uploadFile") MultipartFile file, 
+			RedirectAttributes rttr) {
 
 	    if (file != null && !file.isEmpty()) {
 	        try {
 	            String savePath = "C:/boot_upload/board_upload/";
+	            
+	            //C:\boot_upload\board_upload
 	            File dir = new File(savePath);
+	            //mkdirs(): dir(경로)이 삭제되어 있으면 생성한다	    
 	            if (!dir.exists()) dir.mkdirs();
 
 	            String originalFilename = file.getOriginalFilename();
+	            //파일 이름이 겹치지 않도록 고유한 이름을 만들어 저장한다 시간을 밀리초(ms) 단위로 반환한다 
+	            //1773263966352_lee.png
+	            //UUID.randomUUID().toString() + "_" + originalFilename; 방식도 있음
 	            String saveFilename = System.currentTimeMillis() + "_" + originalFilename;
-
-	            // 실제 파일 저장
+	            
+	            // 저장경로에 파일 저장
 	            file.transferTo(new File(savePath + saveFilename));
 
-	            // 여기서 중요! 
-	            // DB에 저장할 '파일명'을 VO의 String 필드(attached_data)에 직접 넣어줌
+	            // DB에 저장할 '파일명'을 필드(attached_data)에 직접 넣어준다
 	            vo.setAttached_data(saveFilename);
 
 	        } catch (IOException e) {
 	            e.printStackTrace();
 	            rttr.addFlashAttribute("msg", "파일 업로드 실패");
-	            return "redirect:/board/register";
+	            return "redirect:/board/list";
 	        }
-	    }
+	    } //if (file != null && !file.isEmpty())
 
 	    // DB 저장 실행
 	    service.register(vo);
-	    rttr.addFlashAttribute("result", vo.getIdx());
-
 	    return "redirect:/board/list";
 	}
 	
 	
-	
-	
 	//다운로드버튼
-		@GetMapping("/download/{fileName:.+}") // :.+ : 파일 이름 뒤에 붙는 마침표(.)와 확장자까지 잘리지 않게 다 가져와라는 명령
-		public ResponseEntity<Resource> downloadFile(@PathVariable String fileName) {
-		    try {
-		        // 실제 profile 이미지가 저장된 물리적 경로
+	// :.+ : 파일 이름 뒤에 붙는 마침표(.)와 확장자까지 잘리지 않게 다 가져와라는 명령
+	//ResponseEntity : '이 응답이 성공했는지', '어떤 성격의 데이터인지'를 알려주는 부가 정보를 담는 그릇
+	//<Resource> : 실제 내용물
+	@GetMapping("/download/{fileName:.+}") 
+	public ResponseEntity<Resource> downloadFile(@PathVariable String fileName) {
+	   
+		try {
 		        String uploadDir = "C:/boot_upload/board_upload/"; 
-		        //path: 네비게이션 역할
-		        Path path = Paths.get(uploadDir + fileName); //C:\boot_upload\profile_upload\ + a1b2c3d4...abc_test.jpg
-		        //path에 찍힌 주소를 보고, 실제로 그 위치에 가서 파일이라는 '물건'을 집어 올리는 동작"
-		        Resource resource = new UrlResource(path.toUri());
-
-		        if (!resource.exists()) {
-		            return ResponseEntity.notFound().build(); //없으면 404에러 뜬다
-		        }
-
-		        // 1. UUID가 붙은 파일명에서 실제 이름만 추출 (예: uuid_test.jpg -> test.jpg)
-		        String downloadName = fileName;
-		        if (fileName.contains("_")) { 									  //_가 들어가 있나?
-		            downloadName = fileName.substring(fileName.indexOf("_") + 1); //_가 들어가 있는 +1번째 글자부터 끝까지 잘라라!
-		        }
-
-		        // 2. 한글 파일명 깨짐 방지 인코딩
-		        String encodedFileName = UriUtils.encode(downloadName, StandardCharsets.UTF_8);
 		        
+		        //path: 파일이 어디있는지 알려주는 역할(주소와 같은 역할)
+		         //C:\boot_upload\profile_upload\ + a1b2c3d4...abc_test.jpg
+		        Path path = Paths.get(uploadDir + fileName); 
+		        
+		        //resource: 주소에 직접 찾아가서 파일을 내용을 접근할 준비가 되어 있는상태 
+		         //URL [file:/C:/boot_upload/board_upload/1773413837895_communication1.jpg]
+		        // path.toUri() : 컴퓨터가 이해하기 쉬운 URL형식으로 변환
+		        // new UrlResource() : 변환주소를 가지고 실제 파일에 접근하는 리소스객체를 생성
+		        Resource resource = new UrlResource(path.toUri());
+	
+		        if (!resource.exists()) {
+		            return ResponseEntity.notFound().build(); //없으면 404에러
+		        }
+	
+		        // 1. 밀리초가 붙은 파일명에서 실제 이름만 추출 (예: 1773410514179_test.jpg -> test.jpg)
+		        String downloadName = fileName;
+		        //fileName에 '_'가 포함되어 있으면
+		        // '_' 다음 문자부터 끝까지 잘라서 downloadName에 저장
+		        if (fileName.contains("_")) { 
+		            downloadName = fileName.substring(fileName.indexOf("_") + 1); 
+		        }
+	
+		        // 2. 한글 파일명 깨짐 방지 인코딩
+		        //test.jpg
+		        String encodedFileName = UriUtils.encode(downloadName, StandardCharsets.UTF_8);
+		       
 		        // 3. 다운로드 헤더 설정 (다운로드방식과, 최종 파일 이름을 지정)
 		        //  1. attachment: 첨부형태로 다운로드방식
 		        //  2. filename=\"" + encodedFileName + "\" : UUID 떼고 한글인코딩 파일이름 지정
+		        //attachment; filename="test.jpg
 		        String contentDisposition = "attachment; filename=\"" + encodedFileName + "\"";
 		        
 		        //서버가 준비한 택배 상자(파일)를 브라우저에게 최종적으로 던져주는 동작
@@ -137,11 +154,11 @@ public class BoardController {
 		                .contentType(MediaType.APPLICATION_OCTET_STREAM) //내용물 종류 선언
 		                .body(resource);
 
-		    } catch (Exception e) {
-		        e.printStackTrace();
-		        return ResponseEntity.internalServerError().build();
-		    }
-		}
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        return ResponseEntity.internalServerError().build();
+	    }
+	}
 	
 	
 	
@@ -175,11 +192,13 @@ public class BoardController {
 		
 		return "redirect:/board/list";
 	}
+	
+	
+	
 	//수정기능
 	//RedirectAttributes: redirect 할 때 데이터를 담아서 보내는 용도 
 	@PostMapping("/modify") 
-	public String modify(Board vo, Criteria cri, RedirectAttributes rttr) {
-		service.update(vo);
+	public String modify(Board vo, @RequestParam("uploadFile") MultipartFile file, Criteria cri, RedirectAttributes rttr) {
 		
 		rttr.addAttribute("page",cri.getPage());
 		rttr.addAttribute("perPageNum",cri.getPerPageNum());
@@ -187,8 +206,37 @@ public class BoardController {
 		rttr.addAttribute("type",cri.getType());
 		rttr.addAttribute("keyword",cri.getKeyword());
 		
+		if (file != null && !file.isEmpty()) {
+	        try {
+	            String savePath = "C:/boot_upload/board_upload/";
+	            File dir = new File(savePath);
+	            if (!dir.exists()) dir.mkdirs();
+
+	            String originalFilename = file.getOriginalFilename();
+	            String saveFilename = System.currentTimeMillis() + "_" + originalFilename;
+
+	            // 실제 파일 저장
+	            file.transferTo(new File(savePath + saveFilename));
+
+	            // 여기서 중요! 
+	            // DB에 저장할 '파일명'을 VO의 String 필드(attached_data)에 직접 넣어줌
+	            vo.setAttached_data(saveFilename);
+
+	        } catch (IOException e) {
+	            e.printStackTrace();
+	            rttr.addFlashAttribute("msg", "파일 업로드 실패");
+	            return "redirect:/board/list";
+	        }
+	    }
+		
+		rttr.addFlashAttribute("result", vo.getIdx());
+		
+		service.update(vo);
+
 		return "redirect:/board/list";
 	}
+	
+
 	
 	//비동기
 	//조회수실시간반영
@@ -199,10 +247,10 @@ public class BoardController {
 		return vo;
 	}
 	
+
 	//댓글기능
 	@PostMapping("/reply")
-	public String reply(Board vo, Criteria cri, RedirectAttributes rttr) {
-		service.reply(vo);
+	public String reply(Board vo, @RequestParam("uploadFile") MultipartFile file, Criteria cri, RedirectAttributes rttr) {
 		
 		rttr.addAttribute("page",cri.getPage());
 		rttr.addAttribute("perPageNum",cri.getPerPageNum());
@@ -210,6 +258,33 @@ public class BoardController {
 		rttr.addAttribute("type",cri.getType());
 		rttr.addAttribute("keyword",cri.getKeyword());
 		
+		if (file != null && !file.isEmpty()) {
+	        try {
+	            String savePath = "C:/boot_upload/board_upload/";
+	            File dir = new File(savePath);
+	            if (!dir.exists()) dir.mkdirs();
+
+	            String originalFilename = file.getOriginalFilename();
+	            String saveFilename = System.currentTimeMillis() + "_" + originalFilename;
+
+	            // 실제 파일 저장
+	            file.transferTo(new File(savePath + saveFilename));
+
+	            // 여기서 중요! 
+	            // DB에 저장할 '파일명'을 VO의 String 필드(attached_data)에 직접 넣어줌
+	            vo.setAttached_data(saveFilename);
+
+	        } catch (IOException e) {
+	            e.printStackTrace();
+	            rttr.addFlashAttribute("msg", "파일 업로드 실패");
+	            return "redirect:/board/list";
+	        }
+	    }
+		
+		rttr.addFlashAttribute("result", vo.getIdx());
+		
+		service.reply(vo);
+
 		return "redirect:/board/list";
 	}
 	

@@ -4,6 +4,8 @@ import java.sql.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -28,6 +30,9 @@ public class Board { //Board VO가 ORM기능을 통해서 알아서 TABLE로 형
 	private Long idx; //게시글 고유번호(호환을 위해서 long형으로 해준다)
 	
 	private String username;
+	
+	@Enumerated(EnumType.STRING) //@Enumerated → 열거형(권한이 여러개이기 떄문에)
+	private Role role;
 	
 	private String title;
 	
