@@ -65,13 +65,40 @@ public class MemberController {
 		return "member/memberUpdateForm";
 	}
 	
+	
+	
 	//회원가입 기능
 	@PostMapping("/join")
-	public String join(Member m) {
-		m.setPassword(passwordEncoder.encode(m.getPassword()));
-		service.join(m);
-		return "index";
+	public String join(Member m, RedirectAttributes rttr) {
+		
+		if(service.registerCheck(m.getUsername()) == 1 || service.nick_nameCheck(m.getNick_name()) == 1
+				) {
+			rttr.addFlashAttribute("msgType", "실패메세지"); 
+			rttr.addFlashAttribute("msg", "해당 아이디 또는 닉네임은 이미 사용 중입니다");
+			return "redirect:/member/joinForm";
+			
+		}else {
+			m.setProfile("");
+			m.setPassword(passwordEncoder.encode(m.getPassword()));
+			int cnt = service.join(m);
+			System.out.println("cnt값 :"+cnt);
+			
+			if(cnt == 1) {
+				System.out.println("회원가입 성공");
+				rttr.addFlashAttribute("msgType", "성공메세지"); 
+				rttr.addFlashAttribute("msg", "회원가입에 성공했습니다");					
+				return "redirect:/";
+			}else {
+				System.out.println("회원가입 실패");
+				rttr.addFlashAttribute("msgType", "실패메세지"); 
+				rttr.addFlashAttribute("msg", "회원가입에 실패했습니다");
+				
+				return "redirect:/member/joinForm";
+			}			
+		}
 	}
+	
+	
 	
 	//회원가입폼 이동
 	@GetMapping("/adminPage")

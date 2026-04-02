@@ -1,0 +1,116 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+    
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>   
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>	
+
+<c:set var="cpath" value="${pageContext.request.contextPath}"/>
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Boot Academy</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="${cpath}/resources/css/btnStyle.css">
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  
+<style>
+.carousel-inner > .item > img,
+.carousel-inner > .item > a > img {
+	width: 70%;
+	margin: auto;
+}
+</style>
+</head>
+<body>
+
+	<div class="container">
+	<br>
+		
+		 <div class="card">
+			<div class="card-header">Login</div>
+			<div class="card-body">
+				<div class="text-center">
+					<img src="${cpath}/resources/images/mainImages/logo.png" alt="Cinque Terre" >
+				</div>
+			<br>
+			<form action="${cpath}/member/login" method="post"> <!-- controller위치는 views 바로 아래에 있다 -->
+				<table style="text-align: center; border: 1px solid #dddddd" class ="table table-borderd">
+					<tr>
+						<td style="width: 110px; vertical-align: middle;">아이디</td>
+						<td><input type="text" name="username" id="username" class="form-control" maxlength="20" placeholder="아이디를 입력하세요"></td>						
+					</tr>
+					<tr>
+						<td style="width: 110px; vertical-align: middle;">비밀번호</td>
+						<td><input required="required" type="password" name="password" id="password" class="form-control" maxlength="20" placeholder="비밀번호를 입력하세요"></td>								
+					</tr>
+					<tr>
+						<td colspan ="2">
+							<span id="passMessage" style="text-align:center"></span> 
+							<input type="submit" class="btn btn-custom" value="로그인">
+							<a type="button" class="btn btn-outline-dark" href="${cpath}/member/joinForm">회원가입</a>														
+						</td>
+					</tr>
+				</table>
+			</form> <!-- 로그인폼 -->
+			
+			
+			<!-- 이미지 슬라이드 -->
+			<div id="demo" class="carousel slide" data-ride="carousel">
+			  <ul class="carousel-indicators">
+			    <li data-target="#demo" data-slide-to="0" class="active"></li>
+			    <li data-target="#demo" data-slide-to="1"></li>
+			    <li data-target="#demo" data-slide-to="2"></li>
+			  </ul>
+			  <div class="carousel-inner">
+			    <div class="carousel-item active">
+			      <img src="${cpath}/resources/images/mainImages/slide1.png" alt="Los Angeles" width="1100" height="500">
+			      <div class="carousel-caption">
+			        <h3>APPLE</h3>
+			        <p>We had such a great time in APPLE!</p>
+			      </div>   
+			    </div>
+			    <div class="carousel-item">
+			      <img src="${cpath}/resources/images/mainImages/slide2.png" alt="Chicago" width="1100" height="500">
+			      <div class="carousel-caption">
+			        <h3>SAMSUNG</h3>
+			        <p>Thank you, SAMSUNG!</p>
+			      </div>   
+			    </div>
+			    <div class="carousel-item">
+			      <img src="${cpath}/resources/images/mainImages/slide3.png" alt="New York" width="1100" height="500">
+			      <div class="carousel-caption">
+			        <h3>NVIDIA</h3>
+			        <p>We love the NVIDIA!</p>
+			      </div>   
+			    </div>		    
+			    <div class="carousel-item">
+			      <img src="${cpath}/resources/images/mainImages/slide4.png" alt="New York" width="1100" height="500">
+			      <div class="carousel-caption">
+			        <h3>TESLA</h3>
+			        <p>TESLA, you have our hearts!</p>
+			      </div>   
+			    </div>
+			  </div>
+			  <a class="carousel-control-prev" href="#demo" data-slide="prev">
+			    <span class="carousel-control-prev-icon"></span>
+			  </a>
+			  <a class="carousel-control-next" href="#demo" data-slide="next">
+			    <span class="carousel-control-next-icon"></span>
+			  </a>
+			</div><!-- 이미지 슬라이드 -->
+			
+			</div>
+			<div class="card-footer">Copyright © 2026 SpringBoot Academy. All rights reserved.</div>
+		</div>
+	</ul>
+
+</body>
+</html>
