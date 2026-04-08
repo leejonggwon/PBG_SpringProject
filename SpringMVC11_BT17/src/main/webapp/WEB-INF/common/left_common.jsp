@@ -155,8 +155,8 @@
 
 
 				<!-- 공통부분 -->
-				<form action="${cpath}/member/memberUpdateForm">
-					<button class="form-control btn btn-outline-secondary">개인정보수정</button>
+				<form action="${cpath}/member/memberUpdateForm_passwordCheckForm">
+					<button class="form-control btn btn-outline-secondary">계정관리</button>
 				</form>
 				<br>
 

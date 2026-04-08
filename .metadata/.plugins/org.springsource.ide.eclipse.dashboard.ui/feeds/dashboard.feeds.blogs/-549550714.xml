@@ -1,105 +1,493 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Spring]]></title><description><![CDATA[Level up your Java code and explore what Spring can do for you.]]></description><link>https://spring.io</link><generator>GatsbyJS</generator><lastBuildDate>Thu, 02 Apr 2026 06:26:43 GMT</lastBuildDate><item><title><![CDATA[This Week in Spring - March 31st, 2026]]></title><link>https://spring.io/blog/2026/03/31/this-week-in-spring-march-31st-2026</link><guid isPermaLink="true">https://spring.io/blog/2026/03/31/this-week-in-spring-march-31st-2026</guid><dc:creator><![CDATA[joshlong]]></dc:creator><pubDate>Tue, 31 Mar 2026 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;Hi, Spring fans! Welcome to another fun edition of &lt;em&gt;This Week in Spring&lt;/em&gt;! I&apos;m writing to you from beautiful Amsterdam ahead of the wonderful Voxxed Days Amsterdam event, and I&apos;m really looking forward to it. If you&apos;re there, please come say hello!&lt;/p&gt;
-&lt;p&gt;Also, be aware that I&apos;ll be speaking at &lt;a href=&quot;https://www.meetup.com/spring-meetup-paris/events/314034050/?utm_medium=email&amp;#x26;utm_campaign=rsvp-confirmation&quot;&gt;the Paris JUG on the 9th&lt;/a&gt;, as well as at Devoxx France later in the month. Come say &lt;em&gt;bonjour&lt;/em&gt;!&lt;/p&gt;
-&lt;p&gt;And, of course, I am most looking forward to Spring I/O in beautiful Barcelona, Spain, at the middle of the month!&lt;/p&gt;
-&lt;p&gt;We’ve got plenty to cover this week, so let’s jump right in!&lt;/p&gt;
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Spring]]></title><description><![CDATA[Level up your Java code and explore what Spring can do for you.]]></description><link>https://spring.io</link><generator>GatsbyJS</generator><lastBuildDate>Wed, 08 Apr 2026 09:07:15 GMT</lastBuildDate><item><title><![CDATA[Spring AI Agentic Patterns (Part 6): AutoMemoryTools — Persistent Agent Memory Across Sessions]]></title><link>https://spring.io/blog/2026/04/07/spring-ai-agentic-patterns-6-memory-tools</link><guid isPermaLink="true">https://spring.io/blog/2026/04/07/spring-ai-agentic-patterns-6-memory-tools</guid><dc:creator><![CDATA[tzolov]]></dc:creator><pubDate>Tue, 07 Apr 2026 00:00:00 GMT</pubDate><content:encoded>&lt;h4 id=&quot;file-based-long-term-memory-for-spring-ai-agents&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#file-based-long-term-memory-for-spring-ai-agents&quot; aria-label=&quot;file based long term memory for spring ai agents permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;&lt;em&gt;File-Based Long-Term Memory for Spring AI Agents&lt;/em&gt;&lt;/h4&gt;
+&lt;p&gt;Agents are only as useful as what they remember. Spring AI&apos;s &lt;a href=&quot;https://docs.spring.io/spring-ai/reference/2.0-SNAPSHOT/api/chat-memory.html#page-title&quot;&gt;Chat Memory&lt;/a&gt; stores the full conversation and can persist it across restarts, but it stores &lt;em&gt;everything&lt;/em&gt;—and when the window fills, the oldest messages are evicted. The upcoming Session API will add recursive summarization to soften this, but precise facts are still lost when details get compressed away.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;AutoMemoryTools&lt;/code&gt; and &lt;code&gt;AutoMemoryToolsAdvisor&lt;/code&gt;, part of the &lt;a href=&quot;https://github.com/spring-ai-community/spring-ai-agent-utils&quot;&gt;spring-ai-agent-utils&lt;/a&gt; toolkit, give your agents a &lt;strong&gt;durable, file-based long-term memory&lt;/strong&gt; that persists across sessions. The design is inspired by &lt;a href=&quot;https://code.claude.com/docs/en/memory#auto-memory&quot;&gt;Claude Code&apos;s auto-memory system&lt;/a&gt; and the &lt;a href=&quot;https://platform.claude.com/docs/en/agents-and-tools/tool-use/memory-tool&quot;&gt;Claude API Memory Tool specification&lt;/a&gt; - ported to Spring AI so it works with any LLM provider.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Long-Term Memory vs. Conversation History&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;ChatMemory&lt;/code&gt; and &lt;code&gt;AutoMemoryTools&lt;/code&gt; are complementary—a well-configured agent uses both. &lt;code&gt;ChatMemory&lt;/code&gt; keeps the full conversation window: every turn, automatically, bounded by a sliding window. &lt;code&gt;AutoMemoryTools&lt;/code&gt; is the curated layer: the model writes only what is &lt;em&gt;worth keeping forever&lt;/em&gt;—a user preference, a project decision, a behavioral correction—to a typed Markdown file that survives indefinitely. Use &lt;code&gt;ChatMemory&lt;/code&gt; for the current task; use &lt;code&gt;AutoMemoryTools&lt;/code&gt; for facts that should still be available next week.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;This is Part 6 of our Spring AI Agentic Patterns series.&lt;/strong&gt; We&apos;ve covered &lt;a href=&quot;https://spring.io/blog/2026/01/13/spring-ai-generic-agent-skills&quot;&gt;Agent Skills&lt;/a&gt;, &lt;a href=&quot;https://spring.io/blog/2026/01/16/spring-ai-ask-user-question-tool&quot;&gt;AskUserQuestionTool&lt;/a&gt;, &lt;a href=&quot;https://spring.io/blog/2026/01/20/spring-ai-agentic-patterns-3-todowrite/&quot;&gt;TodoWriteTool&lt;/a&gt;, &lt;a href=&quot;https://spring.io/blog/2026/01/27/spring-ai-agentic-patterns-4-task-subagents&quot;&gt;Subagent Orchestration&lt;/a&gt;, and &lt;a href=&quot;https://spring.io/blog/2026/01/29/spring-ai-agentic-patterns-a2a-integration&quot;&gt;A2A Integration&lt;/a&gt;. Now we add memory that outlives the session.&lt;/p&gt;
+&lt;p&gt;🚀 &lt;strong&gt;Want to jump right in?&lt;/strong&gt; Skip to the &lt;a href=&quot;#quick-start&quot;&gt;Quick Start&lt;/a&gt; section.&lt;/p&gt;
+&lt;h2 id=&quot;how-it-works&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#how-it-works&quot; aria-label=&quot;how it works permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;How It Works&lt;/h2&gt;
+&lt;p&gt;The agent manages its own memory through six targeted tools in &lt;code&gt;AutoMemoryTools&lt;/code&gt;, all scoped to a sandboxed memories directory. The diagram below shows the full request flow:&lt;/p&gt;
+&lt;img style=&quot;display: block; margin: auto;&quot; src=&quot;https://raw.githubusercontent.com/spring-io/spring-io-static/refs/heads/main/blog/tzolov/20260407/spring-ai-auto-memory-flow.png&quot; width=&quot;700&quot; alt=&quot;AutoMemoryTools execution flow&quot;&gt;
+&lt;p&gt;&lt;strong&gt;① User request&lt;/strong&gt; — the request, combined with the memory system prompt, flows through the Spring AI advisor stack (&lt;code&gt;ToolCallAdvisor&lt;/code&gt; + &lt;code&gt;ChatMemoryAdvisor&lt;/code&gt;) to the LLM. The LLM decides whether to load, create, or update memories before answering.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;② Tool call&lt;/strong&gt; — the LLM invokes &lt;code&gt;AutoMemoryTools&lt;/code&gt;. The tools read and write typed Markdown files in the configured memory directory — &lt;code&gt;MEMORY.md&lt;/code&gt; as the index, plus individual topic files such as &lt;code&gt;user_profile.md&lt;/code&gt; or &lt;code&gt;project_history.md&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;③ Follow-up retrieve/update&lt;/strong&gt; — the LLM may issue additional tool calls to load specific memory files or update existing ones; for example, loading a file after finding its pointer in &lt;code&gt;MEMORY.md&lt;/code&gt;, or merging entries during consolidation.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;④ Final response&lt;/strong&gt; — once all memory operations are complete, the LLM produces its answer, which flows back through the advisor stack to the user.&lt;/p&gt;
+&lt;h3 id=&quot;memory-system-prompt&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#memory-system-prompt&quot; aria-label=&quot;memory system prompt permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Memory System Prompt&lt;/h3&gt;
+&lt;p&gt;The memory system prompt drives this behaviour. Two variants ship in the jar:&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;https://spring.io/blog/2026/03/27/spring-modulith-2-1-m4-2-0-5-and-1-4-10-released&quot;&gt;Spring Modulith 2.1 M4, 2.0.5, and 1.4.10 released&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://spring.io/blog/2026/03/26/spring-ai-2-0-0-M4-and-1-1-4-and-1-0-5-available&quot;&gt;Spring AI 2.0.0 M4, 1.1.4, 1.0.5 are available now&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://spring.io/blog/2026/03/26/spring-boot-4-0-5-available-now&quot;&gt;Spring Boot 4.0.5 available now&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://spring.io/blog/2026/03/26/spring-boot-4-1-0-M4-available-now&quot;&gt;Spring Boot 4.1.0 M4 available now&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;Spring Cloud Config 5.0.2, 4.3.2, 4.2.6, 4.1.9, and 3.1.13 released and &lt;a href=&quot;https://spring.io/blog/2026/03/23/spring-cloud-config-5-0-2-4-3-2-4-2-6-4-1-9-3-1-13-released&quot;&gt;includes a fix for CVE-2026-22739&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;I really enjoyed this new video on &lt;a href=&quot;https://www.youtube.com/watch?v=k2dERWfL5Fw&quot;&gt;Spring AI 2.0.0 M4 and Embabel 0.3.4!&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;This has nothing to do with Spring, but have you seen Caitie McAffrey&apos;s 2015 talk on applying the Saga pattern (and, by extension, workflow engines) to distributed systems? It&apos;s &lt;a href=&quot;https://www.youtube.com/watch?v=xDuwrtwYHu8&quot;&gt;fantastic and absolutely worth a watch!&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;Here&apos;s a great interview with two of my favorite people: &lt;a href=&quot;https://www.youtube.com/watch?v=D-yp3sB8cu0&quot;&gt;Jakub Pillion and Marcin Grzejszczak&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;Have you checked out the new &lt;a href=&quot;https://spring.academy/guides/app-advisor-intro&quot;&gt;guide on Spring App Advisor&lt;/a&gt;?&lt;/li&gt;
-&lt;li&gt;This is really interesting: a directory &lt;a href=&quot;https://t.co/D3Nti6rgQQ&quot;&gt;of (AI/Anthropic) skills for building Spring and JVM-based applications&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;If you&apos;d like a deep dive on Kafka offset commits with Spring Boot, take a look at this excellent &lt;a href=&quot;https://piotrminkowski.com/2026/03/27/deep-dive-into-kafka-offset-commit-with-spring-boot/&quot;&gt;post on Piotr&apos;s blog&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;The new &lt;em&gt;State of Java 2025&lt;/em&gt; report from JetBrains is &lt;a href=&quot;https://lp.jetbrains.com/the-state-of-java-2025/&quot;&gt;definitely worth a look&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;Our friend Adib Saikali has put together a helpful guide &lt;a href=&quot;https://go-vmware.broadcom.com/lp-mcp-security-guide&quot;&gt;on MCP Security&lt;/a&gt; - be sure to check it out!&lt;/li&gt;
-&lt;li&gt;Are you using the fantastic JobRunr project? It’s a distributed job-scheduling engine, and one of its coolest features is carbon-aware scheduling. With datacenter, electricity, and RAM costs at all-time highs, one way to reduce the cost of running workloads is to schedule them when the local energy grid is less busy. JobRunr introduced carbon-aware scheduling for Europe in the last 18 months, and now it also has &lt;a href=&quot;https://go-vmware.broadcom.com/lp-mcp-security-guide&quot;&gt;support for the USA&lt;/a&gt;. Take a look!&lt;/li&gt;
-&lt;/ul&gt;</content:encoded></item><item><title><![CDATA[Spring Modulith 2.1 M4, 2.0.5, and 1.4.10 released]]></title><link>https://spring.io/blog/2026/03/27/spring-modulith-2-1-m4-2-0-5-and-1-4-10-released</link><guid isPermaLink="true">https://spring.io/blog/2026/03/27/spring-modulith-2-1-m4-2-0-5-and-1-4-10-released</guid><dc:creator><![CDATA[odrotbohm]]></dc:creator><pubDate>Fri, 27 Mar 2026 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;On behalf of the community, I am excited to announce the availability of Spring Modulith 2.1 M4, 2.0.5, and 1.4.10.
-In case you were missing the announcments for 2.1 M3, 2.0.4, and 1.4.9, those were actually released two weeks ago but it became clear pretty quickly that Boot would issue new releases on the 26th. So we decided to follow up with additional releases, too.&lt;/p&gt;
-&lt;p&gt;The bug fix releases primarily ship the usual dependency upgrades. Besides the usual platform upgrades (Spring Boot 4.1 M4), the fourth milestone of our 2.1 release ships the following new features:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;
-&lt;p&gt;Support for event externalization via JobRunr in addition to the Namastack support introduced in 2.1 M2. &lt;a href=&quot;https://github.com/spring-projects/spring-modulith/issues/1637&quot;&gt;GH-1637&lt;/a&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;Allow explicit definition of annotation to trigger entries into the Event Publication Registry. &lt;a href=&quot;https://github.com/spring-projects/spring-modulith/issues/1630&quot;&gt;GH-1630&lt;/a&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;Better AOT support for &lt;code&gt;MomentsJacksonModule&lt;/code&gt;. &lt;a href=&quot;https://github.com/spring-projects/spring-modulith/issues/1596&quot;&gt;GH-1596&lt;/a&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;Properly merge package-based named interfaces. &lt;a href=&quot;https://github.com/spring-projects/spring-modulith/issues/1598&quot;&gt;GH-1598&lt;/a&gt;&lt;/p&gt;
-&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;AUTO_MEMORY_TOOLS_SYSTEM_PROMPT.md&lt;/code&gt; — used with &lt;a href=&quot;#option-a-automemorytoolsadvisor-zero-boilerplate&quot;&gt;Options A&lt;/a&gt; &amp;#x26; &lt;a href=&quot;#option-b-manual-setup-automemorytools-directly&quot;&gt;Option B&lt;/a&gt;; dedicated, sandboxed &lt;code&gt;AutoMemoryTools&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;AUTO_MEMORY_FILESYSTEM_TOOLS_SYSTEM_PROMPT.md&lt;/code&gt; — used with &lt;a href=&quot;#option-c-filesystemtools--shelltools&quot;&gt;Option C&lt;/a&gt;; generic &lt;code&gt;Read&lt;/code&gt;/&lt;code&gt;Write&lt;/code&gt;/&lt;code&gt;Edit&lt;/code&gt; via &lt;code&gt;FileSystemTools&lt;/code&gt;&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;Find more details about the releases in the full changelog for &lt;a href=&quot;https://github.com/spring-projects/spring-modulith/releases/tag/2.1.0-M3&quot;&gt;2.1 M3&lt;/a&gt;, &lt;a href=&quot;https://github.com/spring-projects/spring-modulith/releases/tag/2.1.0-M4&quot;&gt;2.1 M4&lt;/a&gt;, &lt;a href=&quot;https://github.com/spring-projects/spring-modulith/releases/tag/2.0.4&quot;&gt;2.0.4&lt;/a&gt;, &lt;a href=&quot;https://github.com/spring-projects/spring-modulith/releases/tag/2.0.5&quot;&gt;2.0.5&lt;/a&gt;, &lt;a href=&quot;https://github.com/spring-projects/spring-modulith/releases/tag/1.4.9&quot;&gt;1.4.9&lt;/a&gt;, and &lt;a href=&quot;https://github.com/spring-projects/spring-modulith/releases/tag/1.4.10&quot;&gt;1.4.10&lt;/a&gt;.&lt;/p&gt;</content:encoded></item><item><title><![CDATA[Spring AI 2.0.0-M4, 1.1.4 and 1.0.5 are available now]]></title><link>https://spring.io/blog/2026/03/26/spring-ai-2-0-0-M4-and-1-1-4-and-1-0-5-available</link><guid isPermaLink="true">https://spring.io/blog/2026/03/26/spring-ai-2-0-0-M4-and-1-1-4-and-1-0-5-available</guid><dc:creator><![CDATA[ilayaperumalg]]></dc:creator><pubDate>Thu, 26 Mar 2026 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;On behalf of the Spring AI engineering team and everyone who has contributed, I&apos;m happy to announce that Spring AI &lt;code&gt;1.0.5&lt;/code&gt;, &lt;code&gt;1.1.4&lt;/code&gt;, &lt;code&gt;2.0.0-M4&lt;/code&gt; have been released and are now available from Maven Central.&lt;/p&gt;
-&lt;p&gt;These releases deliver important improvements, stability enhancements, and bug fixes across multiple release streams.&lt;/p&gt;
-&lt;h2 id=&quot;release-summary&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#release-summary&quot; aria-label=&quot;release summary permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Release Summary&lt;/h2&gt;
-&lt;p&gt;These releases include a combined total of &lt;strong&gt;51 improvements, bug fixes, and documentation updates&lt;/strong&gt;. See individual release notes: &lt;a href=&quot;https://github.com/spring-projects/spring-ai/releases/tag/v1.0.5&quot;&gt;1.0.5&lt;/a&gt; | &lt;a href=&quot;https://github.com/spring-projects/spring-ai/releases/tag/v1.1.4&quot;&gt;1.1.4&lt;/a&gt; | &lt;a href=&quot;https://github.com/spring-projects/spring-ai/releases/tag/v2.0.0-M4&quot;&gt;2.0.0-M4&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;The focus of these releases includes:&lt;/p&gt;
+&lt;p&gt;Both memory system prompts encode the same memory model, differing only in which operations the model is told to call. They instruct the model to read &lt;code&gt;MEMORY.md&lt;/code&gt; at session start, save via the two-step workflow (&lt;code&gt;MemoryCreate&lt;/code&gt; → &lt;code&gt;MemoryInsert&lt;/code&gt;), apply the four memory types, skip ephemeral content, verify recalled facts before acting on them, and keep the index in sync when deleting or renaming files.&lt;/p&gt;
+&lt;h3 id=&quot;memorymd--the-index-file&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#memorymd--the-index-file&quot; aria-label=&quot;memorymd  the index file permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;MEMORY.md — The Index File&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;MEMORY.md&lt;/code&gt; is the always-loaded index. It&apos;s a flat list of one-line pointers to all memory files:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-markdown&quot;&gt;- [User Profile](user_profile.md) — Alice, backend engineer, prefers short answers
+- [Feedback Testing](feedback_testing.md) — always use real DB in integration tests
+- [Project Auth Rewrite](project_auth.md) — driven by legal compliance, not tech debt
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The model reads this index at the start of each session, then selectively loads the files that look relevant—keeping the context window lean even as memory grows.&lt;/p&gt;
+&lt;h3 id=&quot;memory-file-format&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#memory-file-format&quot; aria-label=&quot;memory file format permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Memory File Format&lt;/h3&gt;
+&lt;p&gt;Each memory is a Markdown file with YAML frontmatter:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-markdown&quot;&gt;---
+name: user profile
+description: Alice — backend engineer, prefers short answers
+type: user
+---
+
+Backend engineer named Alice.
+Prefers concise, direct responses without trailing summaries.
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&quot;memory-types&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#memory-types&quot; aria-label=&quot;memory types permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Memory Types&lt;/h3&gt;
+&lt;p&gt;Not everything is worth keeping. The memory model defines four types, each with clear guidance on what to save and when—so the agent accumulates signal, not noise:&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;Improvements&lt;/strong&gt;: 19 enhancements across all releases&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Stability&lt;/strong&gt;: 29 bug fixes addressing community-reported issues&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Security&lt;/strong&gt;: 3 dependency upgrades for enhanced security and fixes for &lt;a href=&quot;https://spring.io/security/cve-2026-22738&quot;&gt;CVE-2026-22738&lt;/a&gt; , &lt;a href=&quot;https://spring.io/security/cve-2026-22742&quot;&gt;CVE-2026-22742&lt;/a&gt;, &lt;a href=&quot;https://spring.io/security/cve-2026-22743&quot;&gt;CVE-2026-22743&lt;/a&gt; and &lt;a href=&quot;https://spring.io/security/cve-2026-22744&quot;&gt;CVE-2026-22744&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;&lt;code&gt;user&lt;/code&gt;&lt;/strong&gt; — role, goals, expertise, communication style&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;&lt;code&gt;feedback&lt;/code&gt;&lt;/strong&gt; — corrections and confirmed approaches (&quot;stop summarizing&quot;, &quot;yes, that was right&quot;)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;&lt;code&gt;project&lt;/code&gt;&lt;/strong&gt; — decisions and deadlines not in code or git (migration targets, freeze dates)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;&lt;code&gt;reference&lt;/code&gt;&lt;/strong&gt; — pointers to external systems (Linear boards, Grafana dashboards, Slack channels)&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;Thanks to all those who have contributed with issue reports and pull requests.&lt;/p&gt;
-&lt;h2 id=&quot;version-specific-highlights&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#version-specific-highlights&quot; aria-label=&quot;version specific highlights permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Version-Specific Highlights&lt;/h2&gt;
-&lt;h3 id=&quot;spring-ai-105&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#spring-ai-105&quot; aria-label=&quot;spring ai 105 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Spring AI 1.0.5&lt;/h3&gt;
-&lt;p&gt;&lt;strong&gt;Overview:&lt;/strong&gt; 10 improvements with 8 bug fixes and 2 other enhancements&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Key Improvements:&lt;/strong&gt;&lt;/p&gt;
+&lt;h3 id=&quot;memory-operations&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#memory-operations&quot; aria-label=&quot;memory operations permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Memory Operations&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;AutoMemoryTools&lt;/code&gt; exposes six purpose-named, sandboxed operations. Option C achieves the same outcome through the general-purpose &lt;code&gt;FileSystemTools&lt;/code&gt; and &lt;code&gt;ShellTools&lt;/code&gt; operations.&lt;/p&gt;
+&lt;div style=&quot;display: flex; gap: 2rem; align-items: flex-start;&quot;&gt;
+&lt;div style=&quot;flex: 1;&quot;&gt;
+&lt;h4 id=&quot;automemorytools&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#automemorytools&quot; aria-label=&quot;automemorytools permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;AutoMemoryTools&lt;/h4&gt;
+&lt;p&gt;Options A and B use &lt;code&gt;AutoMemoryTools&lt;/code&gt;, which implements the &lt;a href=&quot;https://platform.claude.com/docs/en/agents-and-tools/tool-use/memory-tool&quot;&gt;Claude API Memory Tool specification&lt;/a&gt; one-to-one with purpose-named, sandboxed operations:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Tool&lt;/th&gt;
+&lt;th&gt;Purpose&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;MemoryView&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;Read a file with line numbers, or list a directory two levels deep&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;MemoryCreate&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;Create a new memory file (Step 1 of two-step save)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;MemoryStrReplace&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;Replace an exact, unique string in an existing file&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;MemoryInsert&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;Insert text after a given line number—primary use: appending to &lt;code&gt;MEMORY.md&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;MemoryDelete&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;Delete a file or directory recursively&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;MemoryRename&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;Rename or move a file; updates &lt;code&gt;MEMORY.md&lt;/code&gt; link separately&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+&lt;div style=&quot;flex: 1;&quot;&gt;
+&lt;h4 id=&quot;filesystemtools--shelltools&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#filesystemtools--shelltools&quot; aria-label=&quot;filesystemtools  shelltools permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;FileSystemTools &amp;#x26; ShellTools&lt;/h4&gt;
+&lt;p&gt;Option C uses the general-purpose &lt;code&gt;FileSystemTools&lt;/code&gt; and &lt;code&gt;ShellTools&lt;/code&gt; instead, mapping to the same operations:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Operation&lt;/th&gt;
+&lt;th&gt;Equivalent to&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;Read&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;MemoryView&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;Write&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;MemoryCreate&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;Edit&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;MemoryStrReplace&lt;/code&gt; / &lt;code&gt;MemoryInsert&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;Bash&lt;/code&gt; (e.g. &lt;code&gt;rm&lt;/code&gt;, &lt;code&gt;mv&lt;/code&gt;)&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;MemoryDelete&lt;/code&gt; / &lt;code&gt;MemoryRename&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Options A and B sandbox all paths; Option C has no sandbox — the agent has full filesystem access.&lt;/p&gt;
+&lt;h2 id=&quot;integration-approaches&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#integration-approaches&quot; aria-label=&quot;integration approaches permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Integration Approaches&lt;/h2&gt;
+&lt;p&gt;There are three ways to add long-term memory to a Spring AI agent, ranging from zero-boilerplate to fully manual.
+Choose based on how much control you need over the system prompt, the security concerns and whether your agent already uses general-purpose filesystem tools.&lt;/p&gt;
+&lt;h3 id=&quot;option-a-automemorytoolsadvisor-zero-boilerplate&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#option-a-automemorytoolsadvisor-zero-boilerplate&quot; aria-label=&quot;option a automemorytoolsadvisor zero boilerplate permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Option A: AutoMemoryToolsAdvisor (zero-boilerplate)&lt;/h3&gt;
+&lt;p&gt;Drop a single advisor into your &lt;code&gt;ChatClient&lt;/code&gt; builder:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-java&quot;&gt;ChatClient chatClient = ChatClient.builder(chatModel)
+    .defaultAdvisors(
+        // Long-term memory — facts that survive across sessions
+        AutoMemoryToolsAdvisor.builder()
+            .memoriesRootDirectory(&quot;/home/user/.agent/memories&quot;)
+            .build(),
+
+        // Conversation history — full message window for this session
+        MessageChatMemoryAdvisor.builder(
+            MessageWindowChatMemory.builder().maxMessages(100).build())
+            .build(),
+
+        // Tool calling
+        ToolCallAdvisor.builder().disableInternalConversationHistory().build())
+    .build();
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;On every request the advisor automatically injects &lt;code&gt;AUTO_MEMORY_TOOLS_SYSTEM_PROMPT.md&lt;/code&gt; into the system message, registers all six &lt;code&gt;AutoMemoryTools&lt;/code&gt; (deduplicating any existing registrations), and optionally appends a consolidation reminder if the &lt;code&gt;memoryConsolidationTrigger&lt;/code&gt; fires.&lt;/p&gt;
+&lt;img style=&quot;display: block; margin: auto;&quot; src=&quot;https://raw.githubusercontent.com/spring-io/spring-io-static/refs/heads/main/blog/tzolov/20260407/spring-ai-auto-memory-tools-advisor.png&quot; width=&quot;800&quot; alt=&quot;AutoMemoryTools Advisor&quot;&gt;
+&lt;p&gt;&lt;code&gt;AutoMemoryToolsAdvisor&lt;/code&gt; runs first in the chain, augmenting the request context with the memory system prompt and the six tool definitions before handing off to &lt;code&gt;ToolCallAdvisor&lt;/code&gt; and &lt;code&gt;ChatMemoryAdvisor&lt;/code&gt;. By the time the enriched context reaches the LLM it already contains the conversation history, tool definitions, and memory instructions—everything the model needs to decide what to load, save, or update.&lt;/p&gt;
+&lt;h3 id=&quot;option-b-manual-setup-automemorytools-directly&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#option-b-manual-setup-automemorytools-directly&quot; aria-label=&quot;option b manual setup automemorytools directly permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Option B: Manual Setup (AutoMemoryTools directly)&lt;/h3&gt;
+&lt;p&gt;Wire &lt;code&gt;AutoMemoryTools&lt;/code&gt; into your &lt;code&gt;ChatClient&lt;/code&gt; alongside the companion system prompt:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-java&quot;&gt;@Value(&quot;classpath:/prompt/AUTO_MEMORY_TOOLS_SYSTEM_PROMPT.md&quot;)
+Resource memorySystemPrompt;
+
+@Value(&quot;${agent.memory.dir}&quot;)
+String memoryDir;
+
+ChatClient chatClient = chatClientBuilder
+    .defaultSystem(p -&gt; p
+        .text(memorySystemPrompt)
+        .param(&quot;MEMORIES_ROOT_DIERCTORY&quot;, memoryDir))
+    .defaultTools(
+        AutoMemoryTools.builder().memoriesDir(memoryDir).build(),
+        TodoWriteTool.builder().build())
+    .defaultAdvisors(ToolCallAdvisor.builder().build())
+    .build();
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Use this approach when you want full control over the system prompt structure—for example, combining memory with a custom main system prompt.&lt;/p&gt;
+&lt;h3 id=&quot;option-c-filesystemtools--shelltools&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#option-c-filesystemtools--shelltools&quot; aria-label=&quot;option c filesystemtools  shelltools permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Option C: FileSystemTools + ShellTools&lt;/h3&gt;
+&lt;p&gt;If the agent already has &lt;code&gt;FileSystemTools&lt;/code&gt; and &lt;code&gt;ShellTools&lt;/code&gt; for other tasks, you can implement the same memory pattern without adding &lt;code&gt;AutoMemoryTools&lt;/code&gt; at all. The agent uses the same &lt;code&gt;Read&lt;/code&gt;, &lt;code&gt;Write&lt;/code&gt;, and &lt;code&gt;Edit&lt;/code&gt; operations it would use for any file work—memory is just another directory.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-java&quot;&gt;@Value(&quot;classpath:/prompt/AUTO_MEMORY_FILESYSTEM_TOOLS_SYSTEM_PROMPT.md&quot;)
+Resource memorySystemPrompt;
+
+@Value(&quot;${agent.memory.dir}&quot;)
+String memoryDir;
+
+ChatClient chatClient = chatClientBuilder
+    .defaultSystem(p -&gt; p
+        .text(memorySystemPrompt)
+        .param(&quot;MEMORIES_ROOT_DIERCTORY&quot;, memoryDir))   // tells the agent where to write
+    .defaultTools(
+        ShellTools.builder().build(),         // Bash — mkdir, ls, etc.
+        FileSystemTools.builder().build())    // Read, Write, Edit — memory file operations
+    .defaultAdvisors(ToolCallAdvisor.builder().build())
+    .build();
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The same memory conventions apply—typed files, &lt;code&gt;MEMORY.md&lt;/code&gt; index, two-step save—but there is &lt;strong&gt;no sandbox&lt;/strong&gt;: the agent has full filesystem access and stays in the configured directory by convention only.&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;&lt;/th&gt;
+&lt;th&gt;&lt;code&gt;AutoMemoryTools&lt;/code&gt; (Options A &amp;#x26; B)&lt;/th&gt;
+&lt;th&gt;&lt;code&gt;FileSystemTools&lt;/code&gt; (Option C)&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;Path model&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;Relative paths, sandboxed to memories root&lt;/td&gt;
+&lt;td&gt;Absolute paths, full filesystem access&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;Safety&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;Built-in traversal guard&lt;/td&gt;
+&lt;td&gt;No sandbox — agent follows prompt by convention&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;Tool names&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;Purpose-named (&lt;code&gt;MemoryCreate&lt;/code&gt;, &lt;code&gt;MemoryView&lt;/code&gt;, …)&lt;/td&gt;
+&lt;td&gt;Generic (&lt;code&gt;Write&lt;/code&gt;, &lt;code&gt;Read&lt;/code&gt;, &lt;code&gt;Edit&lt;/code&gt;)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;Best for&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;Memory-only agents, isolation required&lt;/td&gt;
+&lt;td&gt;Agents already using filesystem tools for other tasks&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;This approach follows the &lt;a href=&quot;https://code.claude.com/docs/en/memory&quot;&gt;Claude Code auto-memory pattern&lt;/a&gt; directly, where the same file tools serve both code editing and memory management.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;⚠️ &lt;strong&gt;Security note:&lt;/strong&gt; With &lt;code&gt;FileSystemTools&lt;/code&gt;, the agent can read and write anywhere on the filesystem. Only use this approach in trusted, controlled environments.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&quot;keeping-memory-clean&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#keeping-memory-clean&quot; aria-label=&quot;keeping memory clean permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Keeping Memory Clean&lt;/h2&gt;
+&lt;p&gt;Over time a memory store accumulates redundant, overlapping, or stale entries. Periodically asking the agent to consolidate—merge duplicates, drop outdated facts, tighten descriptions—keeps the store lean and the &lt;code&gt;MEMORY.md&lt;/code&gt; index readable.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Options B and C (explicit):&lt;/strong&gt; just ask:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;USER&gt; Please consolidate your memory — merge duplicates and remove anything outdated.
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;strong&gt;Option A (automatic trigger):&lt;/strong&gt; &lt;code&gt;AutoMemoryToolsAdvisor&lt;/code&gt; accepts a &lt;code&gt;memoryConsolidationTrigger&lt;/code&gt; predicate. When it returns &lt;code&gt;true&lt;/code&gt;, a &lt;code&gt;&amp;#x3C;system-reminder&gt;&lt;/code&gt; is injected into the next request&apos;s system message, prompting the model to consolidate without the user having to ask. The demo uses a dual-condition trigger—time elapsed or the user says &quot;bye&quot;:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-java&quot;&gt;Instant lastInteraction = Instant.now();
+
+AutoMemoryToolsAdvisor.builder()
+    .memoriesRootDirectory(memoryDir)
+    .memoryConsolidationTrigger((request, instant) -&gt; {
+        var previous = lastInteraction;
+        lastInteraction = Instant.now();
+
+        // Consolidate when more than 60 seconds pass between turns
+        if (instant.isAfter(previous.plusSeconds(60))) {
+            return true;
+        }
+        // Also consolidate when the user says goodbye
+        var msg = request.prompt().getLastUserOrToolResponseMessage().getText();
+        return msg != null &amp;#x26;&amp;#x26; msg.toLowerCase().contains(&quot;bye&quot;);
+    })
+    .build()
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Other useful strategies:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-java&quot;&gt;// Probabilistic: ~5% of requests
+.memoryConsolidationTrigger((req, now) -&gt; Math.random() &amp;#x3C; 0.05)
+
+// Turn-count: every 50 calls
+AtomicInteger counter = new AtomicInteger();
+.memoryConsolidationTrigger((req, now) -&gt; counter.incrementAndGet() % 50 == 0)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&quot;quick-start&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#quick-start&quot; aria-label=&quot;quick start permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Quick Start&lt;/h2&gt;
+&lt;h3 id=&quot;1-add-the-dependency&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#1-add-the-dependency&quot; aria-label=&quot;1 add the dependency permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;1. Add the Dependency&lt;/h3&gt;
+&lt;pre&gt;&lt;code class=&quot;language-xml&quot;&gt;&amp;#x3C;dependency&gt;
+    &amp;#x3C;groupId&gt;org.springaicommunity&amp;#x3C;/groupId&gt;
+    &amp;#x3C;artifactId&gt;spring-ai-agent-utils&amp;#x3C;/artifactId&gt;
+    &amp;#x3C;version&gt;0.7.0&amp;#x3C;/version&gt;
+&amp;#x3C;/dependency&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;Note:&lt;/strong&gt; For the latest stable release, check the &lt;a href=&quot;https://github.com/spring-ai-community/spring-ai-agent-utils/releases&quot;&gt;GitHub releases page&lt;/a&gt;. Requires Spring AI &lt;code&gt;2.0.0-M4+&lt;/code&gt;.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&quot;2-configure-the-memory-directory&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#2-configure-the-memory-directory&quot; aria-label=&quot;2 configure the memory directory permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;2. Configure the Memory Directory&lt;/h3&gt;
+&lt;pre&gt;&lt;code class=&quot;language-properties&quot;&gt;# application.properties
+agent.memory.dir=${user.home}/.spring-ai-agent/my-app/memory
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&quot;3-wire-it-up&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#3-wire-it-up&quot; aria-label=&quot;3 wire it up permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;3. Wire It Up&lt;/h3&gt;
+&lt;pre&gt;&lt;code class=&quot;language-java&quot;&gt;@Value(&quot;${agent.memory.dir}&quot;)
+String memoryDir;
+
+ChatClient chatClient = chatClientBuilder
+    .defaultAdvisors(
+        // Long-term memory — facts that survive across sessions
+        AutoMemoryToolsAdvisor.builder()
+            .memoriesRootDirectory(memoryDir)
+            .build(),
+
+        // Conversation history — full message window for this session
+        MessageChatMemoryAdvisor.builder(MessageWindowChatMemory.builder().maxMessages(100).build())
+            .build(),
+
+        // Tool calling
+        ToolCallAdvisor.builder().disableInternalConversationHistory().build())
+    .build();
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&quot;4-see-it-in-action&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#4-see-it-in-action&quot; aria-label=&quot;4 see it in action permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;4. See It in Action&lt;/h3&gt;
+&lt;p&gt;First session:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;USER&gt; My name is Alice. I&apos;m a backend engineer and I prefer short answers.
+USER&gt; Remember: we&apos;re migrating from PostgreSQL to CockroachDB this quarter.
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Second session (new JVM process):&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;USER&gt; What do you know about me?
+ASSISTANT&gt; You&apos;re Alice, a backend engineer. You prefer short answers.
+           You&apos;re migrating from PostgreSQL to CockroachDB this quarter.
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&quot;example-projects&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#example-projects&quot; aria-label=&quot;example projects permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Example Projects&lt;/h2&gt;
+&lt;p&gt;Three runnable examples are available in the repository:&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;&lt;a href=&quot;https://github.com/spring-ai-community/spring-ai-agent-utils/tree/main/examples/memory/memory-tools-advisor-demo&quot;&gt;memory-tools-advisor-demo&lt;/a&gt;&lt;/strong&gt; (Option A) — &lt;code&gt;AutoMemoryToolsAdvisor&lt;/code&gt; + &lt;code&gt;ToolCallAdvisor&lt;/code&gt; + &lt;code&gt;MessageChatMemoryAdvisor&lt;/code&gt; + custom logging advisor, with a dual-condition consolidation trigger.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;&lt;a href=&quot;https://github.com/spring-ai-community/spring-ai-agent-utils/tree/main/examples/memory/memory-tools-demo&quot;&gt;memory-tools-demo&lt;/a&gt;&lt;/strong&gt; (Option B) — &lt;code&gt;AutoMemoryTools&lt;/code&gt; wired manually alongside &lt;code&gt;TodoWriteTool&lt;/code&gt;, showing explicit system prompt composition.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;&lt;a href=&quot;https://github.com/spring-ai-community/spring-ai-agent-utils/tree/main/examples/memory/memory-filesystem-tools-demo&quot;&gt;memory-filesystem-tools-demo&lt;/a&gt;&lt;/strong&gt; (Option C) — same memory conventions implemented with &lt;code&gt;FileSystemTools&lt;/code&gt; + &lt;code&gt;ShellTools&lt;/code&gt;, no dedicated memory tools required.&lt;/p&gt;
+&lt;p&gt;All three support Anthropic Claude, Google Gemini, and OpenAI—uncomment the desired provider in &lt;code&gt;pom.xml&lt;/code&gt; and set the API key.&lt;/p&gt;
+&lt;h2 id=&quot;conclusion&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#conclusion&quot; aria-label=&quot;conclusion permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Conclusion&lt;/h2&gt;
+&lt;p&gt;&lt;code&gt;AutoMemoryTools&lt;/code&gt; is a Spring AI port of the memory patterns Anthropic pioneered in &lt;a href=&quot;https://code.claude.com/docs/en/memory&quot;&gt;Claude Code&lt;/a&gt; and the &lt;a href=&quot;https://platform.claude.com/docs/en/agents-and-tools/tool-use/memory-tool&quot;&gt;Claude API Memory Tool specification&lt;/a&gt;—the &lt;code&gt;MEMORY.md&lt;/code&gt; index, typed files, two-step save, and sandboxed six-operation API—available to any LLM provider via Spring AI.&lt;/p&gt;
+&lt;p&gt;Long-term memory is the missing layer between stateless LLM calls and truly useful agents. Add &lt;code&gt;AutoMemoryToolsAdvisor&lt;/code&gt; and your agent starts accumulating knowledge that survives the session.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Series links:&lt;/strong&gt;&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;Enhanced stability with 8 bug fixes addressing vector store and streaming issues&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Part 1&lt;/strong&gt;: &lt;a href=&quot;https://spring.io/blog/2026/01/13/spring-ai-generic-agent-skills&quot;&gt;Agent Skills&lt;/a&gt; — Modular, reusable capabilities&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Part 2&lt;/strong&gt;: &lt;a href=&quot;https://spring.io/blog/2026/01/16/spring-ai-ask-user-question-tool&quot;&gt;AskUserQuestionTool&lt;/a&gt; — Interactive workflows&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Part 3&lt;/strong&gt;: &lt;a href=&quot;https://spring.io/blog/2026/01/20/spring-ai-agentic-patterns-3-todowrite/&quot;&gt;TodoWriteTool&lt;/a&gt; — Structured planning&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Part 4&lt;/strong&gt;: &lt;a href=&quot;https://spring.io/blog/2026/01/27/spring-ai-agentic-patterns-4-task-subagents&quot;&gt;Subagent Orchestration&lt;/a&gt; — Hierarchical agent architectures&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Part 5&lt;/strong&gt;: &lt;a href=&quot;https://spring.io/blog/2026/01/29/spring-ai-agentic-patterns-a2a-integration&quot;&gt;A2A Integration&lt;/a&gt; — Building interoperable agents&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Part 6&lt;/strong&gt;: AutoMemoryTools (this post) — Long-term memory across sessions&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;&lt;a href=&quot;https://github.com/spring-projects/spring-ai/releases/tag/v1.0.5&quot;&gt;View complete release notes →&lt;/a&gt;&lt;/p&gt;
-&lt;h3 id=&quot;spring-ai-114&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#spring-ai-114&quot; aria-label=&quot;spring ai 114 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Spring AI 1.1.4&lt;/h3&gt;
-&lt;p&gt;&lt;strong&gt;Overview:&lt;/strong&gt; 13 improvements with 1 new feature, 11 bug fixes, and 1 other enhancement&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Key Improvements:&lt;/strong&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Added dynamic structured output control capability&lt;/li&gt;
-&lt;li&gt;Enhanced stability with 11 bug fixes across vector stores, model integrations, and caching&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;a href=&quot;https://github.com/spring-projects/spring-ai/releases/tag/v1.1.4&quot;&gt;View complete release notes →&lt;/a&gt;&lt;/p&gt;
-&lt;h3 id=&quot;spring-ai-200-m4&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#spring-ai-200-m4&quot; aria-label=&quot;spring ai 200 m4 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Spring AI 2.0.0-M4&lt;/h3&gt;
-&lt;p&gt;&lt;strong&gt;Overview:&lt;/strong&gt; 28 improvements with 2 new features, 10 bug fixes, 13 other enhancements, and 3 dependency upgrades&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;📢 Noteworthy:&lt;/strong&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;The Vertex AI model integration classes have been deprecated and will be removed in a future release. Users should plan to migrate to alternative model providers. &lt;a href=&quot;https://github.com/spring-projects/spring-ai/pull/5676&quot;&gt;#5676&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;The ZhiPu AI model integration classes have been deprecated and will be removed in a future release. Users should plan to migrate to alternative model providers. &lt;a href=&quot;https://github.com/spring-projects/spring-ai/pull/5676&quot;&gt;#5676&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;The OCI GenAI model integration classes have been deprecated and will be removed in a future release. Users should plan to migrate to alternative model providers. &lt;a href=&quot;https://github.com/spring-projects/spring-ai/pull/5676&quot;&gt;#5676&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;strong&gt;Key Improvements:&lt;/strong&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Enhanced Google Search integration for Gemini 3.x models&lt;/li&gt;
-&lt;li&gt;Added dynamic structured output control&lt;/li&gt;
-&lt;li&gt;Stability improvements with 10 bug fixes&lt;/li&gt;
-&lt;li&gt;Updated dependencies including Google GenAI SDK 1.44.0, OpenAI SDK 4.28.0, and Anthropic SDK 2.17.0&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;a href=&quot;https://github.com/spring-projects/spring-ai/releases/tag/v2.0.0-M4&quot;&gt;View complete release notes →&lt;/a&gt;&lt;/p&gt;
-&lt;h2 id=&quot;-contributors&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#-contributors&quot; aria-label=&quot; contributors permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;🙏 Contributors&lt;/h2&gt;
-&lt;p&gt;Thanks to all contributors who made these releases possible:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;https://github.com/andresdiegolanda&quot;&gt;Andres (@andresdiegolanda)&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://github.com/ddobrin&quot;&gt;ddobrin (@ddobrin)&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://github.com/dylanwe&quot;&gt;Dylan Weijgertze (@dylanwe)&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://github.com/ericbottard&quot;&gt;Eric Bottard (@ericbottard)&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://github.com/filiphr&quot;&gt;Filip Hrisafov (@filiphr)&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://github.com/ilayaperumalg&quot;&gt;Ilayaperumal Gopinathan (@ilayaperumalg)&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://github.com/jdubois&quot;&gt;Julien Dubois (@jdubois)&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://github.com/nicolaskrier&quot;&gt;Nicolas Krier (@nicolaskrier)&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://github.com/sdeleuze&quot;&gt;Sébastien Deleuze (@sdeleuze)&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://github.com/sobychacko&quot;&gt;Soby Chacko (@sobychacko)&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://github.com/tzolov&quot;&gt;Christian Tzolov (@tzolov)&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://github.com/ZhangDT-sky&quot;&gt;ZhangDT-sky (@ZhangDT-sky)&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&quot;whats-next&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#whats-next&quot; aria-label=&quot;whats next permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;What&apos;s Next&lt;/h2&gt;
-&lt;p&gt;The Spring AI team continues to focus on improving AI application development with Spring Boot. Based on the momentum from these releases, upcoming versions will build on these foundations with enhanced capabilities and developer experience improvements.&lt;/p&gt;
-&lt;p&gt;For the latest updates and to contribute to the project, visit our &lt;a href=&quot;https://github.com/spring-projects/spring-ai&quot;&gt;GitHub repository&lt;/a&gt; or join the discussion in our community channels.&lt;/p&gt;
 &lt;h2 id=&quot;resources&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#resources&quot; aria-label=&quot;resources permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Resources&lt;/h2&gt;
-&lt;p&gt;&lt;a href=&quot;https://spring.io/projects/spring-ai/&quot;&gt;Project Page&lt;/a&gt; | &lt;a href=&quot;https://github.com/spring-projects/spring-ai&quot;&gt;GitHub&lt;/a&gt; | &lt;a href=&quot;https://github.com/spring-projects/spring-ai/issues&quot;&gt;Issues&lt;/a&gt; | &lt;a href=&quot;https://stackoverflow.com/questions/tagged/spring-ai&quot;&gt;Stack Overflow&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Documentation:&lt;/strong&gt; &lt;a href=&quot;https://docs.spring.io/spring-ai/reference/1.0/index.html&quot;&gt;1.0.5 Docs&lt;/a&gt; | &lt;a href=&quot;https://docs.spring.io/spring-ai/reference/index.html&quot;&gt;1.1.4 Docs&lt;/a&gt; | &lt;a href=&quot;https://docs.spring.io/spring-ai/reference/2.0/index.html&quot;&gt;2.0.0-M4 Docs&lt;/a&gt;&lt;/p&gt;</content:encoded></item><item><title><![CDATA[Spring Boot 3.5.13 available now]]></title><link>https://spring.io/blog/2026/03/26/spring-boot-3-5-13-available-now</link><guid isPermaLink="true">https://spring.io/blog/2026/03/26/spring-boot-3-5-13-available-now</guid><dc:creator><![CDATA[wilkinsona]]></dc:creator><pubDate>Thu, 26 Mar 2026 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;On behalf of the team and everyone who has contributed, I&apos;m happy to announce that Spring Boot &lt;code&gt;3.5.13&lt;/code&gt; has been released and is now available from Maven Central.&lt;/p&gt;
-&lt;p&gt;This release includes &lt;a href=&quot;https://github.com/spring-projects/spring-boot/releases/tag/v3.5.13&quot;&gt;15 bug fixes, documentation improvements, and dependency upgrades&lt;/a&gt;. Thanks to all those who have contributed with issue reports and pull requests.&lt;/p&gt;
-&lt;h3 id=&quot;how-can-you-help&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#how-can-you-help&quot; aria-label=&quot;how can you help permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;How can you help?&lt;/h3&gt;
-&lt;p&gt;If you&apos;re interested in helping out, check out the &lt;a href=&quot;https://github.com/spring-projects/spring-boot/labels/status%3A%20ideal-for-contribution&quot;&gt;&quot;ideal for contribution&quot; tag&lt;/a&gt; in the issue repository. If you have general questions, please ask on &lt;a href=&quot;https://stackoverflow.com&quot;&gt;stackoverflow.com&lt;/a&gt; using the &lt;a href=&quot;https://stackoverflow.com/tags/spring-boot&quot;&gt;&lt;code&gt;spring-boot&lt;/code&gt; tag&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;https://spring.io/projects/spring-boot/&quot;&gt;Project Page&lt;/a&gt; | &lt;a href=&quot;https://github.com/spring-projects/spring-boot&quot;&gt;GitHub&lt;/a&gt; | &lt;a href=&quot;https://github.com/spring-projects/spring-boot/issues&quot;&gt;Issues&lt;/a&gt; | &lt;a href=&quot;https://docs.spring.io/spring-boot/3.5&quot;&gt;Documentation&lt;/a&gt; | &lt;a href=&quot;https://stackoverflow.com/questions/tagged/spring-boot&quot;&gt;Stack Overflow&lt;/a&gt;&lt;/p&gt;</content:encoded></item></channel></rss>
+&lt;h4 id=&quot;spring-ai-agent-utils&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#spring-ai-agent-utils&quot; aria-label=&quot;spring ai agent utils permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Spring AI Agent Utils&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;GitHub&lt;/strong&gt;: &lt;a href=&quot;https://github.com/spring-ai-community/spring-ai-agent-utils&quot;&gt;spring-ai-agent-utils&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;AutoMemoryTools docs&lt;/strong&gt;: &lt;a href=&quot;https://spring-ai-community.github.io/spring-ai-agent-utils/latest-snapshot/tools/AutoMemoryTools/&quot;&gt;AutoMemoryTools&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;AutoMemoryToolsAdvisor docs&lt;/strong&gt;: &lt;a href=&quot;https://spring-ai-community.github.io/spring-ai-agent-utils/latest-snapshot/tools/AutoMemoryToolsAdvisor/&quot;&gt;AutoMemoryToolsAdvisor&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Full documentation&lt;/strong&gt;: &lt;a href=&quot;https://spring-ai-community.github.io/spring-ai-agent-utils/latest-snapshot/&quot;&gt;spring-ai-community.github.io/spring-ai-agent-utils&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&quot;example-projects-1&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#example-projects-1&quot; aria-label=&quot;example projects 1 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Example Projects&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/spring-ai-community/spring-ai-agent-utils/tree/main/examples/memory/memory-tools-advisor-demo&quot;&gt;memory-tools-advisor-demo&lt;/a&gt; — full advisor stack (Option A)&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/spring-ai-community/spring-ai-agent-utils/tree/main/examples/memory/memory-tools-demo&quot;&gt;memory-tools-demo&lt;/a&gt; — manual setup (Option B)&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/spring-ai-community/spring-ai-agent-utils/tree/main/examples/memory/memory-filesystem-tools-demo&quot;&gt;memory-filesystem-tools-demo&lt;/a&gt; — filesystem tools approach (Option C)&lt;/li&gt;
+&lt;/ul&gt;</content:encoded></item><item><title><![CDATA[This Week in Spring - April 7th, 2026]]></title><link>https://spring.io/blog/2026/04/07/this-week-in-spring-april-07-2026</link><guid isPermaLink="true">https://spring.io/blog/2026/04/07/this-week-in-spring-april-07-2026</guid><dc:creator><![CDATA[joshlong]]></dc:creator><pubDate>Tue, 07 Apr 2026 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;Hi Spring fans! Welcome to another installment of &lt;em&gt;This Week in Spring&lt;/em&gt;! It&apos;s April 7th, 2026, and I&apos;m on the road! I started the journey for the amazing Voxxed Days Amsterdam show and am now winding my way through France. I visited Colmar, a beautiful city from which the animators on Disney&apos;s &lt;em&gt;Beauty and the Beast&lt;/em&gt; drew some inspiration. Now I&apos;m off to Lyon, to see some of my French colleagues and explore one of the centers of gastronomy in the world. Then, it&apos;s off to Paris, where I&apos;ll be speaking at the Java User Group this Thursday! If you&apos;re local, don&apos;t miss it (&lt;em&gt;ne le ratez pas!&lt;/em&gt;)&lt;/p&gt;
+&lt;p&gt;In the meantime, we&apos;ve got a ton of stuff to go over so let&apos;s dive right into it.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;I was very happy to sit and chat with Oracle Java developer advocate Ana-Maria Mihalceanu in last week&apos;s installment of &lt;a href=&quot;https://spring.io/blog/2026/04/02/a-bootiful-podcast-ana-maria-mihalceanu&quot;&gt;&lt;em&gt;A Bootiful Podcast&lt;/em&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://spring.io/blog/2026/04/02/spring-cloud-2025-0-2-aka-northfields-has-been-released&quot;&gt;Spring Cloud 2025.0.2 (aka Northfields) has been released&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Another banger from Spring AI lead Christian Tsolov on AI agentic patterns with Spring AI, this time looking at &lt;em&gt;auto memory&lt;/em&gt; with the &lt;a href=&quot;https://spring.io/blog/2026/04/07/spring-ai-agentic-patterns-6-memory-tools&quot;&gt;new &lt;code&gt;AutoMemoryTools&lt;/code&gt; to provide persistent agent memory across sessions&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;I love this post from a member of the JobRunr community talking about their new openclaw-alike built on top of the world-class Spring AI, Spring Boot, and JobRunr, a distributed scheduling engine, entitled:&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;a href=&quot;https://foojay.io/today/how-we-built-a-java-ai-agent-by-connecting-the-dots-the-ecosystem-already-had/&quot;&gt;&lt;em&gt;How We Built an Java AI Agent by Connecting the Dots in the Ecosystem&lt;/em&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;This is an awesome &lt;a href=&quot;https://medium.com/graalvm/inside-trivagos-graalvm-migration-native-image-for-graphql-at-scale-912bca9df841&quot;&gt;look at how Trivago&lt;/a&gt; uses Spring Boot and GraalVM at scale.&lt;/li&gt;
+&lt;li&gt;I have been loving Craig Walls&apos; &lt;em&gt;Spring AI Recipes&lt;/em&gt;! His latest looks at using Spring AI&apos;s &lt;code&gt;ChatClient&lt;/code&gt; for a lightweight chat loop.&lt;/li&gt;
+&lt;li&gt;Did you see the JetBrains team&apos;s blog on using Spring Data JPA more elegantly with Kotlin? JPA has its place, but the requirement that it controls the stateful mutations of the entities makes it very verbose when used with either Java or Kotlin. Especially when compared to every other ORM I can think of, including MyBatis, JOOQ, Spring Data JDBC, JDBI, JetBrains&apos; Exposed, etc. So I was very happy to see &lt;a href=&quot;https://blog.jetbrains.com/idea/2026/03/using-spring-data-jpa-with-kotlin/&quot;&gt;this blog post&lt;/a&gt;!&lt;/li&gt;
+&lt;li&gt;This is a very interesting comparison between LangChain4j &lt;a href=&quot;https://medium.com/@maahisoft20/spring-ai-vs-langchain4j-we-built-the-same-ai-agent-twice-one-stayed-debuggable-336b354b43b5&quot;&gt;and Spring AI (and I love how well Spring AI did)&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Eeeenteresting post: fake it till you make it: fault injection &lt;a href=&quot;https://trifork.nl/blog/fault-injection-with-spring/&quot;&gt;with Spring using headers and baggage propagation&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;I really enjoyed this amazing look at the extent to which Apero CAS &lt;a href=&quot;https://medium.com/all-things-software/testing-a-400-module-spring-boot-application-patterns-that-actually-scale-6288c5e9e6ed&quot;&gt;has gone to efficiently test&lt;/a&gt; their Spring-based open-source project - 12000+ tests! - using Spring!&lt;/li&gt;
+&lt;/ul&gt;</content:encoded></item><item><title><![CDATA[Spring Cloud 2025.0.2 (aka Northfields) Has Been Released]]></title><link>https://spring.io/blog/2026/04/02/spring-cloud-2025-0-2-aka-northfields-has-been-released</link><guid isPermaLink="true">https://spring.io/blog/2026/04/02/spring-cloud-2025-0-2-aka-northfields-has-been-released</guid><dc:creator><![CDATA[ryanjbaxter]]></dc:creator><pubDate>Thu, 02 Apr 2026 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;On behalf of the community, I am pleased to announce that the General Availability (RELEASE) of the &lt;a href=&quot;https://cloud.spring.io&quot;&gt;Spring Cloud 2025.0.2&lt;/a&gt; Release Train is available today. The release can be found in &lt;a href=&quot;https://repo1.maven.org/maven2/org/springframework/cloud/spring-cloud-dependencies/2025.0.2/&quot;&gt;Maven Central&lt;/a&gt;. You can check out the 2025.0.2 &lt;a href=&quot;https://github.com/spring-cloud/spring-cloud-release/wiki/Spring-Cloud-2025.0-Release-Notes#202502&quot;&gt;release notes for more information&lt;/a&gt;.&lt;/p&gt;
+&lt;h2 id=&quot;notable-changes-in-the-202502-release-train&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#notable-changes-in-the-202502-release-train&quot; aria-label=&quot;notable changes in the 202502 release train permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Notable Changes in the 2025.0.2 Release Train&lt;/h2&gt;
+&lt;p&gt;This release is based on Spring Boot 3.5.13.&lt;/p&gt;
+&lt;p&gt;For a complete list of changes in this release, see &lt;a href=&quot;https://github.com/orgs/spring-cloud/projects/191&quot;&gt;this GitHub project&lt;/a&gt;.&lt;/p&gt;
+&lt;h3 id=&quot;spring-cloud-openfeign&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#spring-cloud-openfeign&quot; aria-label=&quot;spring cloud openfeign permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Spring Cloud Openfeign&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Upgrade to OpenFeign 13.6.1&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&quot;spring-cloud-kubernetes&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#spring-cloud-kubernetes&quot; aria-label=&quot;spring cloud kubernetes permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Spring Cloud Kubernetes&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Upgrade to Fabric8 7.3.2&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&quot;spring-cloud-netflix&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#spring-cloud-netflix&quot; aria-label=&quot;spring cloud netflix permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Spring Cloud Netflix&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Upgrade to Eureka 2.0.6&lt;/li&gt;
+&lt;li&gt;Exclude &lt;code&gt;commons-configuration&lt;/code&gt; from &lt;code&gt;eureka-client&lt;/code&gt; &lt;a href=&quot;https://github.com/spring-cloud/spring-cloud-netflix/issues/4457&quot;&gt;4457&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&quot;spring-cloud-config&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#spring-cloud-config&quot; aria-label=&quot;spring cloud config permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Spring Cloud Config&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Fix for &lt;a href=&quot;https://spring.io/security/cve-2026-22739&quot;&gt;CVE-2026-22739&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The following modules were updated as part of 2025.0.2:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Module&lt;/th&gt;
+&lt;th&gt;Version&lt;/th&gt;
+&lt;th&gt;Issues&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Spring Cloud Function&lt;/td&gt;
+&lt;td&gt;4.3.2&lt;/td&gt;
+&lt;td&gt;(&lt;a href=&quot;https://github.com/spring-cloud/spring-cloud-function/releases/tag/v4.3.2&quot;&gt;issues&lt;/a&gt;)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Spring Cloud Zookeeper&lt;/td&gt;
+&lt;td&gt;4.3.2&lt;/td&gt;
+&lt;td&gt;(&lt;a href=&quot;https://github.com/spring-cloud/spring-cloud-zookeeper/releases/tag/v4.3.2&quot;&gt;issues&lt;/a&gt;)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Spring Cloud Commons&lt;/td&gt;
+&lt;td&gt;4.3.2&lt;/td&gt;
+&lt;td&gt;(&lt;a href=&quot;https://github.com/spring-cloud/spring-cloud-commons/releases/tag/v4.3.2&quot;&gt;issues&lt;/a&gt;)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Spring Cloud Openfeign&lt;/td&gt;
+&lt;td&gt;4.3.2&lt;/td&gt;
+&lt;td&gt;(&lt;a href=&quot;https://github.com/spring-cloud/spring-cloud-openfeign/releases/tag/v4.3.2&quot;&gt;issues&lt;/a&gt;)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Spring Cloud Kubernetes&lt;/td&gt;
+&lt;td&gt;3.3.2&lt;/td&gt;
+&lt;td&gt;(&lt;a href=&quot;https://github.com/spring-cloud/spring-cloud-kubernetes/releases/tag/v3.3.2&quot;&gt;issues&lt;/a&gt;)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Spring Cloud Starter Build&lt;/td&gt;
+&lt;td&gt;2025.0.2&lt;/td&gt;
+&lt;td&gt;(&lt;a href=&quot;https://github.com/spring-cloud/spring-cloud-starter-build/releases/tag/v2025.0.2&quot;&gt;issues&lt;/a&gt;)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Spring Cloud Vault&lt;/td&gt;
+&lt;td&gt;4.3.2&lt;/td&gt;
+&lt;td&gt;(&lt;a href=&quot;https://github.com/spring-cloud/spring-cloud-vault/releases/tag/v4.3.2&quot;&gt;issues&lt;/a&gt;)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Spring Cloud Circuitbreaker&lt;/td&gt;
+&lt;td&gt;3.3.2&lt;/td&gt;
+&lt;td&gt;(&lt;a href=&quot;https://github.com/spring-cloud/spring-cloud-circuitbreaker/releases/tag/v3.3.2&quot;&gt;issues&lt;/a&gt;)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Spring Cloud Netflix&lt;/td&gt;
+&lt;td&gt;4.3.2&lt;/td&gt;
+&lt;td&gt;(&lt;a href=&quot;https://github.com/spring-cloud/spring-cloud-netflix/releases/tag/v4.3.2&quot;&gt;issues&lt;/a&gt;)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Spring Cloud Stream&lt;/td&gt;
+&lt;td&gt;4.3.2&lt;/td&gt;
+&lt;td&gt;(&lt;a href=&quot;https://github.com/spring-cloud/spring-cloud-stream/releases/tag/v4.3.2&quot;&gt;issues&lt;/a&gt;)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Spring Cloud Gateway&lt;/td&gt;
+&lt;td&gt;4.3.4&lt;/td&gt;
+&lt;td&gt;(&lt;a href=&quot;https://github.com/spring-cloud/spring-cloud-gateway/releases/tag/v4.3.4&quot;&gt;issues&lt;/a&gt;)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Spring Cloud Build&lt;/td&gt;
+&lt;td&gt;4.3.3&lt;/td&gt;
+&lt;td&gt;(&lt;a href=&quot;https://github.com/spring-cloud/spring-cloud-build/releases/tag/v4.3.3&quot;&gt;issues&lt;/a&gt;)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Spring Cloud Consul&lt;/td&gt;
+&lt;td&gt;4.3.2&lt;/td&gt;
+&lt;td&gt;(&lt;a href=&quot;https://github.com/spring-cloud/spring-cloud-consul/releases/tag/v4.3.2&quot;&gt;issues&lt;/a&gt;)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Spring Cloud Contract&lt;/td&gt;
+&lt;td&gt;4.3.3&lt;/td&gt;
+&lt;td&gt;(&lt;a href=&quot;https://github.com/spring-cloud/spring-cloud-contract/releases/tag/v4.3.3&quot;&gt;issues&lt;/a&gt;)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;As always, we welcome feedback on &lt;a href=&quot;https://github.com/spring-cloud/&quot;&gt;GitHub&lt;/a&gt;, on &lt;a href=&quot;https://gitter.im/spring-cloud/spring-cloud&quot;&gt;Gitter&lt;/a&gt;, on &lt;a href=&quot;https://stackoverflow.com/questions/tagged/spring-cloud&quot;&gt;Stack Overflow&lt;/a&gt;, or on &lt;a href=&quot;https://twitter.com/SpringCloud&quot;&gt;Twitter&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;To get started with Maven with a BOM (dependency management only):&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;
+&amp;#x3C;dependencyManagement&gt;
+    &amp;#x3C;dependencies&gt;
+        &amp;#x3C;dependency&gt;
+            &amp;#x3C;groupId&gt;org.springframework.cloud&amp;#x3C;/groupId&gt;
+            &amp;#x3C;artifactId&gt;spring-cloud-dependencies&amp;#x3C;/artifactId&gt;
+            &amp;#x3C;version&gt;2025.0.2&amp;#x3C;/version&gt;
+            &amp;#x3C;type&gt;pom&amp;#x3C;/type&gt;
+            &amp;#x3C;scope&gt;import&amp;#x3C;/scope&gt;
+        &amp;#x3C;/dependency&gt;
+    &amp;#x3C;/dependencies&gt;
+&amp;#x3C;/dependencyManagement&gt;
+&amp;#x3C;dependencies&gt;
+    &amp;#x3C;dependency&gt;
+        &amp;#x3C;groupId&gt;org.springframework.cloud&amp;#x3C;/groupId&gt;
+        &amp;#x3C;artifactId&gt;spring-cloud-starter-config&amp;#x3C;/artifactId&gt;
+    &amp;#x3C;/dependency&gt;
+    &amp;#x3C;dependency&gt;
+        &amp;#x3C;groupId&gt;org.springframework.cloud&amp;#x3C;/groupId&gt;
+        &amp;#x3C;artifactId&gt;spring-cloud-starter-netflix-eureka-client&amp;#x3C;/artifactId&gt;
+    &amp;#x3C;/dependency&gt;
+    ...
+&amp;#x3C;/dependencies&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;or with Gradle:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;buildscript {
+dependencies {
+classpath &quot;io.spring.gradle:dependency-management-plugin:1.0.2.RELEASE&quot;
+}
+}
+
+
+
+apply plugin: &quot;io.spring.dependency-management&quot;
+
+dependencyManagement {
+imports {
+mavenBom &apos;org.springframework.cloud:spring-cloud-dependencies:2025.0.2&apos;
+}
+}
+
+dependencies {
+compile &apos;org.springframework.cloud:spring-cloud-starter-config&apos;
+compile &apos;org.springframework.cloud:spring-cloud-starter-netflix-eureka-client&apos;
+...
+}
+&lt;/code&gt;&lt;/pre&gt;</content:encoded></item><item><title><![CDATA[A Bootiful Podcast: Java developer advocate Ana-Maria Mihalceanu]]></title><link>https://spring.io/blog/2026/04/02/a-bootiful-podcast-ana-maria-mihalceanu</link><guid isPermaLink="true">https://spring.io/blog/2026/04/02/a-bootiful-podcast-ana-maria-mihalceanu</guid><dc:creator><![CDATA[joshlong]]></dc:creator><pubDate>Thu, 02 Apr 2026 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;I had a wonderful chat with Java Developer Advocate Ana-Maria Mihalceanu about Java Flight Recorder, Project Babylon, Project Panama, and so many other exciting things in the Java ecosystem.&lt;/p&gt;
+&lt;iframe title=&quot;Java Developer Advocate Ana-Maria Mihalceanu&quot; allowtransparency=&quot;true&quot; height=&quot;300&quot; width=&quot;100%&quot; style=&quot;border: none; min-width: min(100%, 430px);height:300px;&quot; scrolling=&quot;no&quot; data-name=&quot;pb-iframe-player&quot; src=&quot;https://www.podbean.com/player-v2/?from=embed&amp;i=6xydn-1a8b92f-pb&amp;square=1&amp;share=1&amp;download=1&amp;fonts=Arial&amp;skin=1&amp;font-color=&amp;rtl=0&amp;logo_link=&amp;btn-skin=7&amp;size=300&quot; loading=&quot;lazy&quot; allowfullscreen=&quot;&quot;&gt;&lt;/iframe&gt;</content:encoded></item></channel></rss>

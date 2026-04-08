@@ -33,6 +33,7 @@ public class MemberServiceImpl implements MemberService{
 	public List<Member> memberRoleList() {
 		return mapper.memberRoleList();
 	}
+
 	
 	//회원권한수정
 	@Override
@@ -64,6 +65,38 @@ public class MemberServiceImpl implements MemberService{
 	public int nick_nameCheck(String nick_name) {
 		return mapper.nick_nameCheck(nick_name);
 	}
+
+	//닉네임수정
+	@Override
+	public int update_nick_name(Member m) {
+		return mapper.update_nick_name(m);
+	}
+
+	//비밀번수정
+	@Override
+	public int update_password(Member m) {
+		return mapper.update_password(m);
+	}
+
+	//회원정보수정
+	@Override
+	public int member_update(Member m) {
+		return mapper.member_update(m);
+	}
+
+	//탈퇴하기
+	@Override
+	public int close_account(String username) {
+		return mapper.close_account(username);
+	}
+
+	//프로필이미지삭제
+	@Override
+	public int imageDelete(String username) {
+		return mapper.imageDelete(username);
+	}
+
+	
 	
 	
 	

@@ -343,11 +343,72 @@
     		
     	</div>
     </div> 
-    <div class="card-footer">Copyright © 2026 SpringBoot Academy. All rights reserved.</div>
+    <%@ include file="/WEB-INF/common/bottom_common.jsp" %>
   </div>
+  
+  <!-- 모달작동버튼 -->
+  <div id="openModal" data-toggle="modal" data-target="#myModal"></div>
+  
+  <!-- Bootstrap 비밀번호체크 모달창 -->
+  <div class="modal fade" id="myModal">
+    <div class="modal-dialog">
+      <div id="checkType" class="modal-content">
+      
+        <div class="modal-header">
+          <h4 class="modal-title">메세지확인</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        
+        <div class="modal-body">
+          <p id="checkMessage"></p> 
+        </div>
+        
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-dark" data-dismiss="modal">Close</button>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+  
+  <!-- 모달작동버튼 -->
+  <div id="myMessageOpenModal" data-toggle="modal" data-target="#myMessage"></div>
+  
+  <!-- 수정 실패시 띄워줄 모달창 -->
+  <div class="modal fade" id="myMessage">
+    <div class="modal-dialog">
+      <div id="messageType" class="modal-content">
+      
+        <div class="modal-header">
+          <h4 class="modal-title">${msgType}</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        
+        <div class="modal-body">
+          <p style="white-space: pre-line;">${msg}</p> 
+        </div>
+        
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-dark" data-dismiss="modal">Close</button>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+  
   
   <script type="text/javascript">
   	$(document).ready(function(){
+  		
+  		if(${not empty msgType}){ //들어오는 msgType에 데이터가 감지되는경우
+			if(${msgType eq "실패메세지"}){ //msgType 데이터가 "실패메세지" 인 경우
+				$("#messageType").find(".modal-header").addClass("bg-danger text-white");
+			}else{
+				$("#messageType").find(".modal-header").addClass("bg-primary text-white");
+			}
+			$("#myMessageOpenModal").click(); //모달창 실행
+		}
+  		
   		 		
   		//**페이지 번호 클릭 시 이동하기 
 		//form태그의 id=pageFrm 인 요소를 선택
@@ -875,7 +936,7 @@
 			dataType: 'json',
 			success : function(data){ 			
 				//alert("성공: "+ data);
-				$("#cmt_cmt_count_btn_" + cmt_idx).text("댓글 " + data);
+				$("#cmt_cmt_count_btn_" + cmt_idx).text("대댓글 " + data);
 			}, 
 			error : function(){ alert("댓글당 대댓글수를 나오게 하는 기능 실패");}
 		});

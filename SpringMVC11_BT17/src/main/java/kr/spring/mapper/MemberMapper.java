@@ -25,6 +25,17 @@ public interface MemberMapper {
 
 	int join(Member m); //회원가입
 
+	int update_nick_name(Member m); //닉네임수정
+
+	int update_password(Member m); //비밀번호수정
+
+	int member_update(Member m); //회원정보수정
+
+	int close_account(String username); //탈퇴하기
+
+	int imageDelete(String username); //프로필이미지삭제
+
+
 }
 
 

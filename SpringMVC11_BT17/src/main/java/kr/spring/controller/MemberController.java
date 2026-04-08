@@ -17,7 +17,10 @@ import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -79,6 +82,7 @@ public class MemberController {
 			
 		}else {
 			m.setProfile("");
+			
 			m.setPassword(passwordEncoder.encode(m.getPassword()));
 			int cnt = service.join(m);
 			System.out.println("cnt값 :"+cnt);
@@ -113,6 +117,13 @@ public class MemberController {
 		return list; //비동기 방식의 서버는 JSON데이터를 반환한다 
 	}
 	
+	//회원권한전체조회
+	@GetMapping("/courceAll")  
+	public @ResponseBody List<Member> courceAll() {                                    
+		List<Member> list = service.memberRoleList();
+		return list;  
+	}
+	
 	//회원권한수정
 	@PostMapping("/roleUpdate")  
 	public @ResponseBody Member roleUpdate(Member member) {                                    
@@ -120,7 +131,41 @@ public class MemberController {
 		return member;
 	}
 	
+
+	//계정관리전 현재비밀번호폼으로 이동
+	@GetMapping("/memberUpdateForm_passwordCheckForm")
+	public String memberUpdateForm_passwordCheckForm() {
+		return "member/memberUpdateForm_passwordCheckForm";
+	}
 	
+
+	
+	//현재비밀번호
+	@PostMapping("/passwordCheck")
+	public String passwordCheck(String passwordCheck, Authentication authentication, RedirectAttributes rttr) {
+		
+	    CustomUser customUser = (CustomUser) authentication.getPrincipal();
+	   
+	    //dbPassword값: {bcrypt}$2a$10$TQAHIlZ5Xasxs9Y4j1/GVO5Nloodf58U/58DWiUz3JUNNldgsmw.m
+	    String dbPassword = customUser.getMember().getPassword(); 
+	    
+	    //passwordEncoder.matches(평문, 암호문) 사용
+	    if (passwordEncoder.matches(passwordCheck, dbPassword)) {
+	        rttr.addFlashAttribute("msgType", "성공메세지"); 
+	        rttr.addFlashAttribute("msg", "확인되었습니다.");
+	        
+	        // 성공 시 이동 (원하는 페이지로)
+	        return "redirect:/member/memberUpdateForm"; 
+	    } else {
+	        rttr.addFlashAttribute("msgType", "실패메세지"); 
+	        rttr.addFlashAttribute("msg", "비밀번호가 일치하지 않습니다.");
+	        
+	        return "redirect:/member/memberUpdateForm_passwordCheckForm";
+	    }
+	}
+	
+	
+	//프로필업로드
 	@PostMapping("/imageUpdate")
 	public String imageUpdate(@AuthenticationPrincipal CustomUser customUser, 
 								// 시큐리티가 관리하는 사용자 정보를 customUser라는 이름으로 바로 꺼내준다
@@ -228,6 +273,150 @@ public class MemberController {
 	}
 
 	
+	//닉네임수정 기능
+	@PostMapping("/update_nick_name")
+	public String update_nick_name(Member m, RedirectAttributes rttr, Authentication authentication) {
+			
+			//스프링 시큐리티를 쓰면 사용자가 로그인할 때 
+		    // 인증 토큰(Authentication)이라는 신분증을 만들어서 세션 바구니(SecurityContext)에 넣어두는데
+		    // 그런데 DB를 수정해도 이 신분증은 자동으로 갱신되지 않는다 그래서 수동으로 "신규 신분증 발급"을 해주는 과정이다
+			// 1. DB 수정 (서비스 호출)
+			int cnt = service.update_nick_name(m);
+			
+			if(cnt == 1) {
+				rttr.addFlashAttribute("msgType", "성공메세지"); 
+				rttr.addFlashAttribute("msg", "닉네임수정 되었습니다");									
+			}else {
+				rttr.addFlashAttribute("msgType", "실패메세지"); 
+				rttr.addFlashAttribute("msg", "닉네임수정에 실패했습니다");				
+			}		
+			
+			// 2. 현재 CustomUser 가져오기
+			//getPrincipal()은 현재 접속자의 핵심 정보(ID, 권한 등)를 담고 있다
+			CustomUser customUser = (CustomUser) authentication.getPrincipal();
+		    
+		    // 3. CustomUser 내부의 MemberVO 객체 정보 갱신
+		    // 꺼내온 유저 객체 안에 들어있는 MemberVO의 닉네임을 새로운 값(m.getNick_name())으로 직접 바꿔준다
+			// 세션역할하는 메모리가 바뀐다
+		    customUser.getMember().setNick_name(m.getNick_name());
+
+		    // 4. [중요] 새로운 인증 토큰 생성
+		    // 정보가 수정된 customUser를 가지고 '새로운 신분증(Token)'을 만드는 과정이다
+		    //UsernamePasswordAuthenticationToken는 Authentication(신분증) 설계도를 실제로 구현해서 만든 '실물 신분증'이라고 보면 된다
+		    UsernamePasswordAuthenticationToken newToken = 
+		        new UsernamePasswordAuthenticationToken(customUser, authentication.getCredentials(), authentication.getAuthorities());
+		    
+		    //세션강제 갱신하기
+		    //새 신분증(newToken)을 신분증을 공식 신분증 보관함(SecurityContext)에 꽂아넣는 것과 같다
+		    //getContext(): 현재 접속 중인 나'의 개인 보관함(Context)
+		    //setAuthentication(newToken): 신분증 갈아 끼우기
+		    SecurityContextHolder.getContext().setAuthentication(newToken);
+			
+			return "redirect:/member/memberUpdateForm";
+		}
+	
+	
+	    //비밀번호수정 기능
+		@PostMapping("/update_password")
+		public String update_password(Member m, RedirectAttributes rttr, Authentication authentication) {
+				
+				m.setPassword(passwordEncoder.encode(m.getPassword()));
+				int cnt = service.update_password(m);
+				
+				if(cnt == 1) {			
+					rttr.addFlashAttribute("msgType", "성공메세지"); 
+					rttr.addFlashAttribute("msg", "비밀번호수정 성공했습니다");	
+					
+					return "redirect:/member/logout"; //action="${cpath}/member/logout"와 같은효과를 낸다
+				}else {
+					rttr.addFlashAttribute("msgType", "실패메세지"); 
+					rttr.addFlashAttribute("msg", "비밀번호수정 실패했습니다");	
+					
+					return "redirect:/member/memberUpdateForm";
+				}					
+
+			}
+		
+
+		//회원정보수정기능
+		@PostMapping("/member_update")
+		public String member_update(Member m, RedirectAttributes rttr, Authentication authentication) {
+				
+				int cnt = service.member_update(m);
+				
+				if(cnt == 1) {
+					rttr.addFlashAttribute("msgType", "성공메세지"); 
+					rttr.addFlashAttribute("msg", "회원정보가 수정되었습니다");									
+				}else {
+					rttr.addFlashAttribute("msgType", "실패메세지"); 
+					rttr.addFlashAttribute("msg", "회원정보 수정에 실패했습니다");				
+				}		
+		
+				CustomUser customUser = (CustomUser) authentication.getPrincipal();
+	
+			    customUser.getMember().setName(m.getName());
+			    customUser.getMember().setGender(m.getGender());
+			    customUser.getMember().setEmail(m.getEmail());
+			    
+			    UsernamePasswordAuthenticationToken newToken = 
+			        new UsernamePasswordAuthenticationToken(customUser, authentication.getCredentials(), authentication.getAuthorities());
+
+			    SecurityContextHolder.getContext().setAuthentication(newToken);
+				
+				return "redirect:/member/memberUpdateForm";
+			}
+		
+		//프로필이미지삭제
+		@PostMapping("/imageDelete")  
+		public String imageDelete(String username, RedirectAttributes rttr, Authentication authentication) { 
+
+
+			int cnt = service.imageDelete(username);
+			
+			if(cnt == 1) {			
+				rttr.addFlashAttribute("msgType", "성공메세지"); 
+				rttr.addFlashAttribute("msg", "프로필이미지가 삭제되었습니다");			
+			}else {
+				rttr.addFlashAttribute("msgType", "실패메세지"); 
+				rttr.addFlashAttribute("msg", "프로필이미지 삭제에 실패했습니다");								
+			}	
+			
+			CustomUser customUser = (CustomUser) authentication.getPrincipal();
+	
+		    customUser.getMember().setProfile("");
+		    
+		    UsernamePasswordAuthenticationToken newToken = 
+		        new UsernamePasswordAuthenticationToken(customUser, authentication.getCredentials(), authentication.getAuthorities());
+
+		    SecurityContextHolder.getContext().setAuthentication(newToken);
+			
+			return "redirect:/member/memberUpdateForm";
+		}
+				
+		
+
+		//탈퇴하기
+		@PostMapping("/close_account")  
+		public String close_account(String username, RedirectAttributes rttr) { 
+
+			int cnt = service.close_account(username);
+			
+			if(cnt == 1) {			
+				rttr.addFlashAttribute("msgType", "성공메세지"); 
+				rttr.addFlashAttribute("msg", "회원탈퇴 되었습니다");	
+				
+				return "redirect:/member/logout"; //action="${cpath}/member/logout"와 같은효과를 낸다
+			}else {
+				rttr.addFlashAttribute("msgType", "실패메세지"); 
+				rttr.addFlashAttribute("msg", "회원탈퇴 실패했습니다");	
+				
+				return "redirect:/member/memberUpdateForm";
+			}	
+		}
+		
+		
+		
+		
 	
 }
 

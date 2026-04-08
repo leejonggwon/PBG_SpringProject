@@ -25,10 +25,12 @@
  
 </head>
 <style>
-        input[type="radio"] {
-            margin-left: 7px;   /* (버튼을 기준)왼쪽 간격 */
-            margin-right: 1px;  /* (버튼을 기준)라디오 버튼과 글자 사이 간격 */
-        }
+/*type이 radio 경우*/
+input[type="radio"] {
+	margin-left: 7px;   /* (버튼을 기준)왼쪽 간격 */
+	margin-right: 1px;  /* (버튼을 기준)라디오 버튼과 글자 사이 간격 */
+}
+
 </style>
 
 <body>
@@ -41,6 +43,8 @@
 		<form action="${cpath}/member/join" method="post"> 
 		<input type="hidden" name="enabled" value="true">
 		<input type="hidden" name="password" id="password" value="" > <!-- 두 password 비교 후 이값을 넘길것이다 -->
+		<input type="hidden" name="user_code" id="user_code"> 
+		
 			<table style="text-align: center; border: 1px solid #dddddd" class ="table table-bordered">
 				<tr>
 					<td style="width: 110px; vertical-align: middle;">아이디</td>
@@ -84,8 +88,7 @@
 					    <input type="radio" name="role" value="PROFESSOR"> PROFESSOR
 					    <input type="radio" name="role" value="ADMIN"> ADMIN
 					</td>
-				</tr>	
-				
+				</tr>				
 				<tr>
 					<td style="width: 110px; vertical-align: middle;">교육과정</td>
 					<td colspan="2">	
@@ -95,14 +98,11 @@
 					    <input type="radio" name="cource" value="UX/UI 디자인"> UX/UI 디자인
 					    <input type="radio" name="cource" value="데이터분석"> 데이터분석
 					</td>
-				</tr>
-				
+				</tr>				
 				<tr>
 					<td style="width: 110px; vertical-align: middle;">나이</td>
 					<td colspan ="2"><input required="required" type="number" name="age" id="age" class="form-control" maxlength="20" placeholder="나이를 입력하세요"></td>				
-				</tr>
-				
-			
+				</tr>			
 				<tr>
 					<td style="width: 110px; vertical-align: middle;">성별</td>
 					<td colspan="2">
@@ -110,10 +110,7 @@
 						<input type="radio" name="gender" value="남자" checked="checked"> 남자
 					    <input type="radio" name="gender" value="여자"> 여자		
 					</td>
-				</tr>
-				
-				
-				
+				</tr>				
 				<tr>
 					<td style="width: 110px; vertical-align: middle;">이메일</td>
 					<td colspan ="2"><input required="required" type="email" name="email" id="email" class="form-control" maxlength="50" placeholder="이메일을 입력하세요"></td>				
@@ -127,15 +124,12 @@
 					</td>
 				</tr>	
 				
-				
-
-				
 											
 			</table>
 		</form>
 		</div>
 
-		<div class="card-footer">SPRING BOOT Academy - All rights reserved</div>
+		<%@ include file="/WEB-INF/common/bottom_common.jsp" %>
 	</div>
 	</div>
 
@@ -144,7 +138,7 @@
   
   <!-- Bootstrap 비밀번호체크 모달창 -->
   <div class="modal fade" id="myModal">
-    <div class="modal-dialog modal-lg">
+    <div class="modal-dialog">
       <div id="checkType" class="modal-content">
       
         <div class="modal-header">
@@ -170,7 +164,7 @@
   
   <!-- 회원가입 실패시 띄워줄 모달창 -->
   <div class="modal fade" id="myMessage">
-    <div class="modal-dialog modal-lg">
+    <div class="modal-dialog">
       <div id="messageType" class="modal-content">
       
         <div class="modal-header">
@@ -195,6 +189,8 @@
   
   <script type="text/javascript">
   $(document).ready(function(){
+	  
+	  user_code();
 	  
 	  if(${not empty msgType}){ //들어오는 msgType에 데이터가 감지되는경우
 			if(${msgType eq "실패메세지"}){ //msgType 데이터가 "실패메세지" 인 경우
@@ -293,7 +289,24 @@
 			$("#password").val(password2); 
 		}		
 	};
+	
+	//user_code 생성
+	function generateRandomCode(length) {
+	    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+	    let result = '';
+	    for (let i = 0; i < length; i++) {
+	        // chars 문자열에서 랜덤한 위치의 글자를 하나씩 선택
+	        result += chars.charAt(Math.floor(Math.random() * chars.length));
+	    }
+	    return result;
+	}
   
+	//user_code 입력
+	function user_code() {
+		const myCode = generateRandomCode(5);
+		$("#user_code").attr("value", myCode);
+	}
+	
   
   
   </script>

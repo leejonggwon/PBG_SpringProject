@@ -352,7 +352,7 @@
     		</c:if>
     	</div>
     </div> 
-    <div class="card-footer">스프링 - 이종권</div>
+    <%@ include file="/WEB-INF/common/bottom_common.jsp" %>
   </div>
   
   <script type="text/javascript">

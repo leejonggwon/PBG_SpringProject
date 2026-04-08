@@ -6,30 +6,30 @@
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
-		<item key="selection" value="cmtView"/>
+		<item key="selection" value="사용하고 계신 아이"/>
 		<list key="findhistory">
-			<item value="cmtview"/>
-			<item value="대댓글등록"/>
-			<item value="댓글등록"/>
-			<item value="대댓등록"/>
-			<item value="대댓"/>
-			<item value="삭제"/>
-			<item value="삭제완료"/>
-			<item value="댓글"/>
-			<item value="cmtCmtInsert"/>
-			<item value="cmtcmt_content"/>
-			<item value="대댓글을 입력해주"/>
-			<item value="등록"/>
-			<item value="대댓댓"/>
-			<item value="도착한"/>
-			<item value="대댓삭제"/>
+			<item value="사용하고 계신 아이"/>
+			<item value="delete"/>
+			<item value="close_account"/>
+			<item value="closeaccountForm"/>
+			<item value="&lt;%-- **시큐리티의 principal.member 객체를 &apos;mvo&apos;라는 변수에 담는다 --%&gt;"/>
+			<item value="nick_nameForm"/>
+			<item value="username"/>
+			<item value="ROLE"/>
+			<item value="role"/>
+			<item value="close_accountForm"/>
+			<item value="roleUpdate"/>
+			<item value="memberRepository"/>
+			<item value="탈퇴하기"/>
+			<item value="탈퇴하시"/>
+			<item value="confirmModal"/>
 		</list>
 		<list key="replacehistory">
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
-		<item key="DIALOG_X_ORIGIN" value="9"/>
-		<item key="DIALOG_Y_ORIGIN" value="9"/>
+		<item key="DIALOG_X_ORIGIN" value="1370"/>
+		<item key="DIALOG_Y_ORIGIN" value="105"/>
 		<item key="DIALOG_WIDTH" value="272"/>
 		<item key="DIALOG_HEIGHT" value="363"/>
 		<item key="DIALOG_FONT_NAME" value="1|맑은 고딕|9.0|0|WINDOWS|1|-15|0|0|0|400|0|0|0|1|0|0|0|0|맑은 고딕"/>

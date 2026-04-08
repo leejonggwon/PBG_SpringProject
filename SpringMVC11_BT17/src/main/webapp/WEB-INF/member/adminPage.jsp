@@ -27,6 +27,13 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </head>
+<style>
+.table-cnt {
+    text-align: center;   /* 가로 중앙 */
+    line-height: 40px;    /* 세로 중앙 (height와 같은 값) */
+}
+}
+</style>
 <body>
  
   <div class="card">
@@ -44,13 +51,13 @@
     			<div class="card" style="min-height: 500px; max-height: 1000px;">
     				<div class="card-body">
     					<table class="table table-bordered table-hover">
-    						<thead>
+    						<thead class="table-cnt">
     							<th>번호</th>
     							<th>아이디</th>
     							<th>이름</th>
-    							<th>현재권한</th>						
-    							<th>변경할권한</th>
-    							<th>변경</th>
+    							<th>권한</th>						
+    							<th>권한 선택</th>
+    							<th></th>
     						</thead>
     						<tbody id="view">
     							<!-- 비동기 방식으로 가져온 게시글 나오게할 부분-->
@@ -65,19 +72,36 @@
     		<div class= "col-lg-5">
     			<div class="card" style="min-height: 500px; max-height: 1000px;">
     				<div class="card-body">
-								
+    					<table class="table table-bordered table-hover">
+    						<thead class="table-cnt">
+    							<th>번호</th>
+    							<th>아이디</th>
+    							<th>이름</th>
+    							<th>교육과정</th>						
+    							<th>교육과정 선택</th>
+    							<th></th>
+    						</thead>
+    						<tbody id="cource_view">
+    							<!-- 비동기 방식으로 가져온 게시글 나오게할 부분-->
+    						</tbody>
+    						
+    					</table>
     				</div>
     			</div>
     		</div>
+    		
+    		
+    		
     	</div>
     </div> 
-    <div class="card-footer">스프링 - 이종권</div>
+    <%@ include file="/WEB-INF/common/bottom_common.jsp" %>
   </div>
   
   <script type="text/javascript">
   	$(document).ready(function(){
   		
   		loadRoleList(); //회원권한조회
+  		loadCourceList(); //회원교육과정조회
 
   	});//ready
   	
@@ -86,90 +110,165 @@
   	
   	//회원권한조회
 	function loadRoleList() {	
-			$.ajax({
-				url : "${cpath}/member/roleAll",    
-				type: "get",  
-				dataType : "json",
-				success: function(list){ 
-					makeView(list);	
-				},   
-				error: function(){ alert("회원권한조회실패"); }
-			});
-		}
+		$.ajax({
+			url : "${cpath}/member/roleAll",    
+			type: "get",  
+			dataType : "json",
+			success: function(list){ 
+				makeView(list);	
+			},   
+			error: function(){ alert("회원권한조회실패"); }
+		});
+	}
   	
+  	
+  	
+	//조회한권한 테이블로 나타내기	
+	function makeView(data){
+		var listHtml = "";
 		
-		function makeView(data){
-			var listHtml = "";
+		//jQuary반목문
+		$.each(data, function(index, obj){ //index:순서 표시자
+			listHtml += "<tr>";
+			listHtml += "<td class='table-cnt'>" + (index+1) + "</td>";		
+			listHtml += "<td class='table-cnt'>" + obj.username + "</td>";
+			listHtml += "<td class='table-cnt'>" + obj.name + "</td>";
+			listHtml += "<td class='table-cnt'>" + obj.role + "</td>";
 			
-			//jQuary반목문
-			$.each(data, function(index, obj){ //index:순서 표시자
-				listHtml += "<tr>";
-				listHtml += "<td>" + (index+1) + "</td>";		
-				listHtml += "<td>" + obj.username + "</td>";
-				listHtml += "<td>" + obj.name + "</td>";
-				listHtml += "<td>" + obj.role + "</td>";
-				
-				listHtml += "<td>";
-				listHtml += "  <select id='role_" + obj.username + "' class='form-control'>";
-				// 각 옵션들을 추가하고, 현재 권한과 일치하면 selected 속성 부여
-				listHtml += "<option value='PROFESSOR' " 
-				         + (obj.role === 'PROFESSOR' ? "selected style='color:red;font-weight:bold;'" : '') 
-				         + ">PROFESSOR</option>";
-				
-				listHtml += "<option value='STUDENT' " 
-				         + (obj.role === 'STUDENT' ? "selected style='color:red;font-weight:bold;'" : '') 
-				         + ">STUDENT</option>";
-				
-				listHtml += "<option value='GUEST' " 
-				         + (obj.role === 'GUEST' ? 'selected' : '') 
-				         + ">GUEST</option>";
-				         
+			listHtml += "<td>";
+			listHtml += "  <select id='role_" + obj.username + "' class='form-control'>";
+			// 각 옵션들을 추가하고, 현재 권한과 일치하면 selected 속성 부여
+			listHtml += "<option value='PROFESSOR' " 
+			         + (obj.role === 'PROFESSOR' ? "selected style='color:blue;font-weight:bold;'" : '') 
+			         + ">PROFESSOR (강사)</option>";
+			
+			listHtml += "<option value='STUDENT' " 
+			         + (obj.role === 'STUDENT' ? "selected style='color:blue;font-weight:bold;'" : '')  
+			         + ">STUDENT (수강생)</option>";
+			
+			listHtml += "<option value='GUEST' " 
+			         + (obj.role === 'GUEST' ? "selected style='color:blue;font-weight:bold;'" : '')
+			         + ">GUEST (게스트)</option>";
+			         
 	         listHtml += "<option value='PENALTY' " 
-		         + (obj.role === 'PENALTY' ? 'selected' : '') 
-		         + ">PENALTY</option>";         
-				
-				
-				listHtml += "  </select>";
-				listHtml += "</td>";
-				
-				
-				listHtml += "<td>";
-				
-				listHtml += "<button type='button' class='btn btn-warning btn-sm' "			
-						 + "onclick=\"roleUpdate('" + obj.username + "')\">변경</button>";	
-				//문자열이면 JS는 변수로 인식한다 		 
-				listHtml += "</td>";
-				
-				listHtml += "</tr>";
-				
-				//onclick='roleUpdate(" + obj.username + ")'
+		         + (obj.role === 'PENALTY' ? "selected style='color:blue;font-weight:bold;'" : '')
+		         + ">PENALTY (이용제한)</option>";         
+			
+			
+			listHtml += "  </select>";
+			listHtml += "</td>";
+			
+			
+			listHtml += "<td class='table-cnt'>";
+			
+			listHtml += "<button type='button' class='btn btn-custom' "			
+					 + "onclick=\"roleUpdate('" + obj.username + "')\">변경</button>";	
+			//문자열이면 JS는 변수로 인식한다 		 
+			listHtml += "</td>";
+			
+			listHtml += "</tr>";
+			
+			//onclick='roleUpdate(" + obj.username + ")'
 
-			});
-			
-			$("#view").html(listHtml);	
-			
-			//goList();
-		}
+		});
 		
-		//권한수정
-		function roleUpdate(username){
-			
-			var role = $("#role_" + username).val();
-		    
-		    
-			$.ajax({
-				url : "${cpath}/member/roleUpdate",   
-				type : "post",
-				data : { "username" : username , "role" : role },
-				success : function(member){ 
-					
-					alert(member.username + "님 " + member.role + "로 권한변경 되었습니다");
-					loadRoleList();
-				},
-				error : function(){ alert("error") }
-			});
-		}
+		$("#view").html(listHtml);	
 		
+		//goList();
+	}
+	
+	//권한수정
+	function roleUpdate(username){
+		
+		var role = $("#role_" + username).val();
+    
+		$.ajax({
+			url : "${cpath}/member/roleUpdate",   
+			type : "post",
+			data : { "username" : username , "role" : role },
+			success : function(member){ 
+				
+				alert(member.username + "님 " + member.role + "로 권한변경 되었습니다");
+				loadRoleList();
+			},
+			error : function(){ alert("error") }
+		});
+	}
+		
+	
+	
+	//교육과정조회
+	function loadCourceList() {	
+		$.ajax({
+			url : "${cpath}/member/courceAll",    
+			type: "get",  
+			dataType : "json",
+			success: function(data){ 
+				//alert("성공");
+				courceView(data);	
+			},   
+			error: function(){ alert("회원 교육과정조회 실패"); }
+		});
+	}
+	
+	//조회한 교육과정 테이블로 나타내기	
+	function courceView(data){
+		var listHtml = "";
+		
+		//jQuary반목문
+		$.each(data, function(index, obj){ //index:순서 표시자
+			listHtml += "<tr>";
+			listHtml += "<td class='table-cnt'>" + (index+1) + "</td>";		
+			listHtml += "<td class='table-cnt'>" + obj.username + "</td>";
+			listHtml += "<td class='table-cnt'>" + obj.name + "</td>";
+			listHtml += "<td class='table-cnt'>" + obj.cource + "</td>";
+			
+			listHtml += "<td>";
+			listHtml += "  <select id='role_" + obj.username + "' class='form-control'>";
+			// 각 옵션들을 추가하고, 현재 권한과 일치하면 selected 속성 부여
+			listHtml += "<option value='PROFESSOR' " 
+			         + (obj.role === 'PROFESSOR' ? "selected style='color:blue;font-weight:bold;'" : '') 
+			         + ">PROFESSOR (강사)</option>";
+			
+			listHtml += "<option value='STUDENT' " 
+			         + (obj.role === 'STUDENT' ? "selected style='color:blue;font-weight:bold;'" : '')  
+			         + ">STUDENT (수강생)</option>";
+			
+			listHtml += "<option value='GUEST' " 
+			         + (obj.role === 'GUEST' ? "selected style='color:blue;font-weight:bold;'" : '')
+			         + ">GUEST (게스트)</option>";
+			         
+	         listHtml += "<option value='PENALTY' " 
+		         + (obj.role === 'PENALTY' ? "selected style='color:blue;font-weight:bold;'" : '')
+		         + ">PENALTY (이용제한)</option>";         
+			
+			
+			listHtml += "  </select>";
+			listHtml += "</td>";
+			
+			
+			listHtml += "<td class='table-cnt'>";
+			
+			listHtml += "<button type='button' class='btn btn-custom' "			
+					 + "onclick=\"roleUpdate('" + obj.username + "')\">변경</button>";	
+			//문자열이면 JS는 변수로 인식한다 		 
+			listHtml += "</td>";
+			
+			listHtml += "</tr>";
+			
+			//onclick='roleUpdate(" + obj.username + ")'
+
+		});
+		
+		$("#cource_view").html(listHtml);	
+		
+		//goList();
+	}
+	
+	
+	
+	
+	
 		
 		
 		

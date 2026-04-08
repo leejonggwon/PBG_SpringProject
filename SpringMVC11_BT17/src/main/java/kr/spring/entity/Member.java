@@ -44,6 +44,7 @@ public class Member {
 	
 	private boolean enabled; //계정 활성화/비활성화 부분(enabled)
 	
+	private String user_code; //프로필사진
 	
 }
 
