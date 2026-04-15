@@ -11,7 +11,7 @@
 	<!--회원권한수정  -->
 	<update id="roleUpdate" parameterType="kr.spring.entity.Member">
 		UPDATE BT_MEMBER
-    	SET ROLE = #{role}
+    	SET ROLE = #{role}, COURCE = #{cource}
    		WHERE USERNAME = #{username}
 	</update>
 	

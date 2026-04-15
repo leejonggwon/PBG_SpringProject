@@ -31,7 +31,7 @@
 		<item key="WHOLE_WORD" value="false"/>
 		<item key="SEARCH_DERIVED" value="false"/>
 		<item key="SEARCH_IN_BINARIES" value="false"/>
-		<item key="HISTORY_SIZE" value="11"/>
+		<item key="HISTORY_SIZE" value="12"/>
 		<section name="EXTENSIONS">
 			<item key="0" value="*"/>
 			<item key="1" value="*.java"/>
@@ -42,7 +42,7 @@
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="vo 정보"/>
+			<item key="textPattern" value="PROFESSOR"/>
 			<item key="scope" value="0"/>
 			<list key="fileNamePatterns">
 				<item value="*"/>
@@ -54,7 +54,7 @@
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="myModal"/>
+			<item key="textPattern" value="vo 정보"/>
 			<item key="scope" value="0"/>
 			<list key="fileNamePatterns">
 				<item value="*"/>
@@ -66,10 +66,10 @@
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="goList()"/>
+			<item key="textPattern" value="myModal"/>
 			<item key="scope" value="0"/>
 			<list key="fileNamePatterns">
-				<item value="*.sh"/>
+				<item value="*"/>
 			</list>
 			<list key="workingSets">
 			</list>
@@ -78,7 +78,7 @@
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="boardUpdateForm"/>
+			<item key="textPattern" value="goList()"/>
 			<item key="scope" value="0"/>
 			<list key="fileNamePatterns">
 				<item value="*.sh"/>
@@ -90,7 +90,7 @@
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="boardUpdate"/>
+			<item key="textPattern" value="boardUpdateForm"/>
 			<item key="scope" value="0"/>
 			<list key="fileNamePatterns">
 				<item value="*.sh"/>
@@ -102,7 +102,7 @@
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="name"/>
+			<item key="textPattern" value="boardUpdate"/>
 			<item key="scope" value="0"/>
 			<list key="fileNamePatterns">
 				<item value="*.sh"/>
@@ -114,7 +114,7 @@
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="hidden"/>
+			<item key="textPattern" value="name"/>
 			<item key="scope" value="0"/>
 			<list key="fileNamePatterns">
 				<item value="*.sh"/>
@@ -126,7 +126,7 @@
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="getLists();"/>
+			<item key="textPattern" value="hidden"/>
 			<item key="scope" value="0"/>
 			<list key="fileNamePatterns">
 				<item value="*.sh"/>
@@ -138,7 +138,7 @@
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="getLists"/>
+			<item key="textPattern" value="getLists();"/>
 			<item key="scope" value="0"/>
 			<list key="fileNamePatterns">
 				<item value="*.sh"/>
@@ -150,7 +150,7 @@
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="/Users/EGOVEDU/eGovFrame-3.10.0/"/>
+			<item key="textPattern" value="getLists"/>
 			<item key="scope" value="0"/>
 			<list key="fileNamePatterns">
 				<item value="*.sh"/>
@@ -159,6 +159,18 @@
 			</list>
 		</section>
 		<section name="HISTORY10">
+			<item key="ignoreCase" value="true"/>
+			<item key="isRegExSearch" value="false"/>
+			<item key="isWholeWord" value="false"/>
+			<item key="textPattern" value="/Users/EGOVEDU/eGovFrame-3.10.0/"/>
+			<item key="scope" value="0"/>
+			<list key="fileNamePatterns">
+				<item value="*.sh"/>
+			</list>
+			<list key="workingSets">
+			</list>
+		</section>
+		<section name="HISTORY11">
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>

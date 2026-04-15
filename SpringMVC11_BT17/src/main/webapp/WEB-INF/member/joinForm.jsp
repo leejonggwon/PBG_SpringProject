@@ -85,7 +85,7 @@ input[type="radio"] {
 						<!-- value값은 컬럼과 같게 해야한다 -->
 						<input type="radio" name="role" value="GUEST"> GUEST
 					    <input type="radio" name="role" value="STUDENT"> STUDENT
-					    <input type="radio" name="role" value="PROFESSOR"> PROFESSOR
+					    <input type="radio" name="role" value="INSTRUCTOR"> INSTRUCTOR
 					    <input type="radio" name="role" value="ADMIN"> ADMIN
 					</td>
 				</tr>				
@@ -93,10 +93,10 @@ input[type="radio"] {
 					<td style="width: 110px; vertical-align: middle;">교육과정</td>
 					<td colspan="2">	
 						<!-- value값은 컬럼과 같게 해야한다 -->
-						<input type="radio" name="cource" value="백엔드" required="required"> 백엔드
-					    <input type="radio" name="cource" value="프론트엔드"> 프론트엔드
-					    <input type="radio" name="cource" value="UX/UI 디자인"> UX/UI 디자인
-					    <input type="radio" name="cource" value="데이터분석"> 데이터분석
+						<input type="radio" name="cource" value="BACK" required="required"> 백엔드
+					    <input type="radio" name="cource" value="FRONT"> 프론트엔드
+					    <input type="radio" name="cource" value="DESIGN"> UX/UI 디자인
+					    <input type="radio" name="cource" value="DATA"> 데이터분석
 					</td>
 				</tr>				
 				<tr>
@@ -228,7 +228,7 @@ input[type="radio"] {
 					$("#checkType").find(".modal-header").addClass("bg-danger text-white");
 				}else{
 					$("#checkMessage").text(username + " 는 사용 가능한 아이디 입니다");			
-					//$("#checkType").find(".modal-header").addClass("bg-success text-white");
+					$("#checkType").find(".modal-header").addClass("bg-primary text-white");
 				}			
 				$("#openModal").click();
 			
@@ -264,7 +264,7 @@ input[type="radio"] {
 					$("#checkType").find(".modal-header").addClass("bg-danger text-white");
 				}else{
 					$("#checkMessage").text(nick_name + " 는 사용 가능한 닉네임 입니다");			
-					//$("#checkType").find(".modal-header").addClass("bg-success text-white");
+					$("#checkType").find(".modal-header").addClass("bg-primary text-white");
 				}			
 				$("#openModal").click();
 			

@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.spring.mapper.MemberMapper">
+	
+	<!-- SQL문장 프로그래밍  -->
+	<sql id="search">
+		<if test="type =='username'">
+			AND USERNAME LIKE CONCAT('%', #{keyword},'%')
+		</if>
+		<if test="type =='nick_name'">
+			AND NICK_NAME LIKE CONCAT('%', #{keyword},'%')
+		</if>
+		<if test="type =='name'">
+			AND NAME LIKE CONCAT('%', #{keyword},'%')
+		</if>
+	</sql>
+
+	<!-- 회원권한전체조회 -->
+	<!-- LIMIT 현재페이지에 시작할 게시글번호, 한 페이지당 보여줄 게시글수 -->
+	<!-- LIMIT 20,10 : 20개 게시글 건너뛰고(21개부터 그 다음 10개 보여줘 -->
+	<select id="memberList" parameterType="kr.spring.entity.Criteria" resultType="kr.spring.entity.Member">
+		SELECT * 
+		FROM BT_MEMBER 
+		<where>
+		    <if test="true">
+		        ROLE != 'ADMIN'
+		    </if>
+		    <include refid="search"/>
+		    LIMIT #{pageStart}, #{perPageNum}
+		</where>		
+	</select>
+
+	<!--회원권한/교육과정수정-->
+	<update id="roleCourceUpdate" parameterType="kr.spring.entity.Member">
+		UPDATE BT_MEMBER
+    	SET ROLE = #{role}, COURCE = #{cource}
+   		WHERE USERNAME = #{username}
+	</update>
+	
+
+	<update id="profileUpdate" parameterType="kr.spring.entity.Member">
+		UPDATE BT_MEMBER SET PROFILE = #{profile}
+		WHERE USERNAME = #{username}
+	</update>
+	
+	<select id="getMember" parameterType="String" resultType="kr.spring.entity.Member">
+		SELECT * FROM BT_MEMBER WHERE USERNAME = #{username}
+	</select>
+	
+	<!-- 아이디 중복체크 -->
+	<select id="registerCheck" parameterType="String" resultType="int"> 
+		SELECT COUNT(*) FROM BT_MEMBER WHERE USERNAME = #{username}
+	</select>
+	
+	<!-- 닉네임 중복체크 -->
+	<select id="nick_nameCheck" parameterType="String" resultType="int"> 
+		SELECT COUNT(*) FROM BT_MEMBER WHERE NICK_NAME = #{nick_name}
+	</select>
+	
+	<!-- insert는 resultType을 못쓰지만, mapper 인터페이스에서 리턴 타입을 int로 주면 MyBatis가 자동으로 성공한 행 수를 돌려준다 -->
+	<insert id="join" parameterType="kr.spring.entity.Member"> 
+		INSERT INTO BT_MEMBER(USERNAME, PASSWORD, ROLE, COURCE, NAME, NICK_NAME, AGE, GENDER, EMAIL, PROFILE, ENABLED, USER_CODE) 
+		VALUES (#{username}, #{password}, #{role}, #{cource}, #{name}, #{nick_name}, #{age}, #{gender}, #{email}, #{profile}, #{enabled}, #{user_code})
+	</insert>
+	
+	<!--회원권한수정  -->
+	<update id="update_nick_name" parameterType="kr.spring.entity.Member">
+		UPDATE BT_MEMBER
+    	SET NICK_NAME = #{nick_name}
+   		WHERE USERNAME = #{username}
+	</update>
+	
+	<!-- 비밀번호수정 -->
+	<update id="update_password" parameterType="kr.spring.entity.Member">
+		UPDATE BT_MEMBER
+    	SET PASSWORD = #{password}
+   		WHERE USERNAME = #{username}
+	</update>
+	
+	<!-- 회원정보수정 -->
+	<update id="member_update" parameterType="kr.spring.entity.Member">
+		UPDATE BT_MEMBER
+    	SET NAME = #{name}, GENDER = #{gender}, EMAIL = #{email}
+   		WHERE USERNAME = #{username}
+	</update>
+	
+	
+	<!-- 탈퇴하기 -->
+	<update id="close_account" parameterType="String">
+		UPDATE BT_MEMBER
+    	SET ENABLED = false
+   		WHERE USERNAME = #{username}
+	</update>
+	
+	<!-- 프로필이미지삭제 -->
+	<update id="imageDelete" parameterType="String">
+		UPDATE BT_MEMBER
+	   	SET PROFILE = ''
+	  	WHERE USERNAME = #{username}
+	</update>
+	
+	<!-- 전체게시글수 -->
+	<!-- 검색결과에 따라 총게시글수가 변경된다 -->
+	<select id="totalCount" resultType="int" parameterType="kr.spring.entity.Criteria" >
+		SELECT COUNT(*) FROM BT_MEMBER WHERE ROLE != 'ADMIN'
+		<include refid="search"/>
+	</select>
+	
+</mapper>
+
+
+
+

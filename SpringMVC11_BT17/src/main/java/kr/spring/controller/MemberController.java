@@ -91,7 +91,7 @@ public class MemberController {
 				System.out.println("회원가입 성공");
 				rttr.addFlashAttribute("msgType", "성공메세지"); 
 				rttr.addFlashAttribute("msg", "회원가입에 성공했습니다");					
-				return "redirect:/";
+				return "redirect:/member/login";
 			}else {
 				System.out.println("회원가입 실패");
 				rttr.addFlashAttribute("msgType", "실패메세지"); 

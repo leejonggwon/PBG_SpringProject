@@ -1,0 +1,372 @@
+--Spring03애 바뀌고 06까지 사용했던 BOARD--
+
+SELECT * FROM BOARD;
+
+DELETE FROM MEMBER WHERE ROLE ='MEMBER';
+
+
+INSERT INTO BOARD (TITLE, CONTENT, WRITER) VALUES
+('공지사항 안내', '안녕하세요. 게시판 이용과 관련된 공지사항을 안내드립니다. 많은 이용 부탁드립니다.', 'admin'),
+('자유게시판 첫 글입니다', '자유롭게 소통할 수 있는 공간입니다. 편하게 글 남겨주세요.', 'apple'),
+('프로젝트 진행 후기', '이번 프로젝트를 진행하면서 느낀 점과 개선 사항을 정리해보았습니다.', 'spring'),
+('질문 있습니다', '게시판 기능 구현 중 오류가 발생했는데 해결 방법을 알고 싶습니다.', 'java'),
+('스터디 모집합니다', '함께 공부할 스터디원을 모집합니다. 관심 있으신 분들은 댓글 부탁드립니다.', 'samsung');
+
+
+SELECT * FROM MEMBER;
+SELECT * FROM AUTH;
+
+DROP TABLE AUTH;
+DROP TABLE MEMBER;
+
+
+--BT_PROHECT
+SELECT * FROM BT_MEMBER;
+
+SELECT * FROM BT_BOARD;
+
+
+--DELETE FROM BT_BOARD;
+--DELETE FROM BT_MEMBER;
+
+DROP TABLE BT_MEMBER;
+DROP TABLE BT_BOARD;
+
+
+
+
+INSERT INTO BT_BOARD (
+    IDX, USERNAME, TITLE, CONTENT, WRITER, IMGPATH,
+    BOARD_GROUP, BOARD_SEQUENCE, BOARD_LEVEL, BOARD_AVAILABLE
+)
+SELECT 
+    IFNULL(MAX(IDX) + 1, 1),
+    'admin', '공지사항 41', '41번 공지사항 안내드립니다', '관', NULL,
+    IFNULL(MAX(BOARD_GROUP) + 1, 1), 0, 0, 1
+FROM BT_BOARD;
+
+INSERT INTO BT_BOARD (
+    IDX, USERNAME, TITLE, CONTENT, WRITER, IMGPATH,
+    BOARD_GROUP, BOARD_SEQUENCE, BOARD_LEVEL, BOARD_AVAILABLE
+)
+SELECT 
+    IFNULL(MAX(IDX) + 1, 1),
+    'admin', '공지사항 42', '42번 공지사항 안내드립니다', '관', NULL,
+    IFNULL(MAX(BOARD_GROUP) + 1, 1), 0, 0, 1
+FROM BT_BOARD;
+
+INSERT INTO BT_BOARD (
+    IDX, USERNAME, TITLE, CONTENT, WRITER, IMGPATH,
+    BOARD_GROUP, BOARD_SEQUENCE, BOARD_LEVEL, BOARD_AVAILABLE
+)
+SELECT 
+    IFNULL(MAX(IDX) + 1, 1),
+    'admin', '공지사항 43', '43번 공지사항 안내드립니다', '관', NULL,
+    IFNULL(MAX(BOARD_GROUP) + 1, 1), 0, 0, 1
+FROM BT_BOARD;
+
+INSERT INTO BT_BOARD (
+    IDX, USERNAME, TITLE, CONTENT, WRITER, IMGPATH,
+    BOARD_GROUP, BOARD_SEQUENCE, BOARD_LEVEL, BOARD_AVAILABLE
+)
+SELECT 
+    IFNULL(MAX(IDX) + 1, 1),
+    'admin', '공지사항 44', '44번 공지사항 안내드립니다', '관', NULL,
+    IFNULL(MAX(BOARD_GROUP) + 1, 1), 0, 0, 1
+FROM BT_BOARD;
+
+INSERT INTO BT_BOARD (
+    IDX, USERNAME, TITLE, CONTENT, WRITER, IMGPATH,
+    BOARD_GROUP, BOARD_SEQUENCE, BOARD_LEVEL, BOARD_AVAILABLE
+)
+SELECT 
+    IFNULL(MAX(IDX) + 1, 1),
+    'admin', '공지사항 45', '45번 공지사항 안내드립니다', '관', NULL,
+    IFNULL(MAX(BOARD_GROUP) + 1, 1), 0, 0, 1
+FROM BT_BOARD;
+
+INSERT INTO BT_BOARD (
+    IDX, USERNAME, TITLE, CONTENT, WRITER, IMGPATH,
+    BOARD_GROUP, BOARD_SEQUENCE, BOARD_LEVEL, BOARD_AVAILABLE
+)
+SELECT 
+    IFNULL(MAX(IDX) + 1, 1),
+    'admin', '공지사항 46', '46번 공지사항 안내드립니다', '관', NULL,
+    IFNULL(MAX(BOARD_GROUP) + 1, 1), 0, 0, 1
+FROM BT_BOARD;
+
+INSERT INTO BT_BOARD (
+    IDX, USERNAME, TITLE, CONTENT, WRITER, IMGPATH,
+    BOARD_GROUP, BOARD_SEQUENCE, BOARD_LEVEL, BOARD_AVAILABLE
+)
+SELECT 
+    IFNULL(MAX(IDX) + 1, 1),
+    'admin', '공지사항 47', '47번 공지사항 안내드립니다', '관', NULL,
+    IFNULL(MAX(BOARD_GROUP) + 1, 1), 0, 0, 1
+FROM BT_BOARD;
+
+INSERT INTO BT_BOARD (
+    IDX, USERNAME, TITLE, CONTENT, WRITER, IMGPATH,
+    BOARD_GROUP, BOARD_SEQUENCE, BOARD_LEVEL, BOARD_AVAILABLE
+)
+SELECT 
+    IFNULL(MAX(IDX) + 1, 1),
+    'admin', '공지사항 48', '48번 공지사항 안내드립니다', '관', NULL,
+    IFNULL(MAX(BOARD_GROUP) + 1, 1), 0, 0, 1
+FROM BT_BOARD;
+
+INSERT INTO BT_BOARD (
+    IDX, USERNAME, TITLE, CONTENT, WRITER, IMGPATH,
+    BOARD_GROUP, BOARD_SEQUENCE, BOARD_LEVEL, BOARD_AVAILABLE
+)
+SELECT 
+    IFNULL(MAX(IDX) + 1, 1),
+    'admin', '공지사항 49', '49번 공지사항 안내드립니다', '관', NULL,
+    IFNULL(MAX(BOARD_GROUP) + 1, 1), 0, 0, 1
+FROM BT_BOARD;
+
+INSERT INTO BT_BOARD (
+    IDX, USERNAME, TITLE, CONTENT, WRITER, IMGPATH,
+    BOARD_GROUP, BOARD_SEQUENCE, BOARD_LEVEL, BOARD_AVAILABLE
+)
+SELECT 
+    IFNULL(MAX(IDX) + 1, 1),
+    'admin', '공지사항 50', '50번 공지사항 안내드립니다', '관', NULL,
+    IFNULL(MAX(BOARD_GROUP) + 1, 1), 0, 0, 1
+FROM BT_BOARD;
+
+
+
+SELECT * FROM BT_BOARD
+ORDER BY BOARD_GROUP DESC, BOARD_SEQUENCE ASC
+LIMIT 0, 10;
+
+--자바에서 Long 타입을 썼으면 DB 테이블을 만들 때 **BIGINT**로 맞춘다
+CREATE TABLE BT_COMMENT(
+	cmt_idx INT AUTO_INCREMENT,         
+	idx BIGINT NOT NULL,                  
+	cmt_content VARCHAR(2000) NOT NULL, 
+	username VARCHAR(20) NOT NULL,       
+	name VARCHAR(30) NOT NULL,     
+	nick_name VARCHAR(30) NOT NULL, 
+	role VARCHAR(30) NOT NULL,
+	profile VARCHAR(100),            
+	cmt_indate DATETIME DEFAULT NOW(), 
+	cmt_cmt_count INT DEFAULT 0,
+
+	cmt_group INT,     
+    cmt_sequence INT,  
+    cmt_level INT,      
+    cmt_available VARCHAR(30), 
+	
+	PRIMARY KEY(cmt_idx)
+);
+
+
+
+SELECT * FROM BT_MEMBER;
+
+--DELETE FROM BT_MEMBER;
+
+--DROP TABLE BT_COMMENT;
+
+SELECT * FROM BT_BOARD WHERE IDX = 5;
+
+SELECT * FROM BT_BOARD;
+
+SELECT * FROM BT_Comment WHERE CMT_IDX = 30;
+
+SELECT * FROM BT_COMMENT;
+
+DELETE FROM BT_BOARD;
+
+--좋아요--
+CREATE TABLE BT_LIKE (
+    idx INT NOT NULL,
+    username VARCHAR(20) NOT NULL,
+    like_available INT DEFAULT 1,
+    PRIMARY KEY (idx, username)
+);
+
+SELECT * FROM BT_BOARD;
+SELECT * FROM BT_MEMBER;
+
+
+
+--강의 게시판--
+SELECT * FROM BT_LEARNING;
+--DELETE FROM BT_LEARNING;
+
+
+
+--강의게시판 댓글--
+CREATE TABLE LEARN_COMMENT(
+	cmt_idx INT AUTO_INCREMENT,         
+	idx BIGINT NOT NULL,                  
+	cmt_content VARCHAR(2000) NOT NULL, 
+	username VARCHAR(20) NOT NULL,       
+	name VARCHAR(30) NOT NULL,     
+	nick_name VARCHAR(30) NOT NULL, 
+	role VARCHAR(30) NOT NULL,
+	profile VARCHAR(100),            
+	cmt_indate DATETIME DEFAULT NOW(),    
+	
+	cmt_group INT,     
+    cmt_sequence INT,  
+    cmt_level INT,      
+    cmt_available VARCHAR(30), 
+	
+	PRIMARY KEY(cmt_idx)
+);
+
+//DROP TABLE LEARN_COMMENT;
+
+--강의댓글
+SELECT * FROM LEARN_COMMENT;
+--DELETE FROM LEARN_COMMENT;
+
+--강의게시판
+SELECT * FROM BT_LEARNING;
+
+
+SELECT * FROM BT_COMMENT;
+SELECT * FROM LEAN_COMMENT;
+
+
+
+--강의게시판 좋아요--
+CREATE TABLE LEARN_LIKE (
+    idx INT NOT NULL,
+    username VARCHAR(20) NOT NULL,
+    like_available INT DEFAULT 1,
+    PRIMARY KEY (idx, username)
+);
+
+SELECT * FROM LEARN_LIKE;
+
+DROP TABLE LEARN_LIKE;
+
+SELECT * FROM BT_COMMENT;
+
+DELETE FROM BT_COMMENT;
+
+SELECT CMT_GROUP FROM BT_COMMENT
+WHERE CMT_IDX = 13;
+
+
+SELECT * FROM BT_COMMENT
+WHERE IDX = 12 AND CMT_LEVEL = 1 AND CMT_GROUP = 11
+ORDER BY CMT_SEQUENCE ASC
+
+SELECT * FROM BT_COMMENT;
+--DROP TABLE BT_COMMENT;
+
+SELECT COUNT(*) FROM BT_COMMENT
+WHERE IDX = 12 AND CMT_LEVEL = 1 AND CMT_GROUP = 2
+ORDER BY CMT_SEQUENCE ASC
+
+SELECT COUNT(*) FROM BT_COMMENT
+WHERE IDX = 12 AND CMT_LEVEL = 1 AND CMT_GROUP = 2
+ORDER BY CMT_SEQUENCE ASC
+
+
+SELECT CMT_CMT_COUNT FROM BT_COMMENT
+WHERE CMT_IDX = 8
+
+
+
+SELECT * FROM BT_MEMBER;
+
+
+UPDATE BT_MEMBER
+SET ENABLED = true
+WHERE USERNAME = "admin";
+
+
+UPDATE BT_MEMBER
+SET ROLE = "ADMIN"
+WHERE USERNAME = "admin";
+
+
+
+
+DELETE FROM BT_MEMBER;
+
+SELECT * FROM BT_MEMBER;
+
+DELETE FROM BT_BOARD;
+
+
+
+SELECT * FROM BT_BOARD;
+
+SELECT * FROM BT_COMMENT;
+
+SELECT * FROM LEARN_COMMENT;
+
+
+--자바에서 Long 타입을 썼으면 DB 테이블을 만들 때 **BIGINT**로 맞춘다
+CREATE TABLE BT_COMMENT(
+	cmt_idx INT AUTO_INCREMENT,         
+	idx BIGINT NOT NULL,                  
+	cmt_content VARCHAR(2000) NOT NULL, 
+	username VARCHAR(20) NOT NULL,       
+	name VARCHAR(30) NOT NULL,     
+	nick_name VARCHAR(30) NOT NULL, 
+	role VARCHAR(30) NOT NULL,
+	profile VARCHAR(100),            
+	cmt_indate DATETIME DEFAULT NOW(), 
+	cmt_cmt_count INT DEFAULT 0,
+
+	cmt_group INT,     
+    cmt_sequence INT,  
+    cmt_level INT,      
+    cmt_available VARCHAR(30), 
+	
+	PRIMARY KEY(cmt_idx)
+);
+
+
+
+--수정할 LEARN_COMMENT
+CREATE TABLE LEARN_COMMENT(
+	cmt_idx INT AUTO_INCREMENT,         
+	idx BIGINT NOT NULL,                  
+	cmt_content VARCHAR(2000) NOT NULL, 
+	username VARCHAR(20) NOT NULL,       
+	name VARCHAR(30) NOT NULL,     
+	nick_name VARCHAR(30) NOT NULL, 
+	role VARCHAR(30) NOT NULL,
+	profile VARCHAR(100),            
+	cmt_indate DATETIME DEFAULT NOW(),  
+	cmt_cmt_count INT DEFAULT 0,
+	
+	
+	cmt_group INT,     
+    cmt_sequence INT,  
+    cmt_level INT,      
+    cmt_available VARCHAR(30), 
+	
+	PRIMARY KEY(cmt_idx)
+);
+
+
+
+
+
+
+SELECT * FROM BT_LEARNING;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
