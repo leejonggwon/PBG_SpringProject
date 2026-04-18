@@ -138168,3 +138168,7 @@ org.eclipse.core.runtime.CoreException: Launch configuration SpringMvc11_BTAppli
 2026-04-18 16:28:34,154 [Worker-13: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 29 resources
 2026-04-18 16:28:34,223 [Worker-13: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
 2026-04-18 16:28:34,223 [Worker-13: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered properties files.
+2026-04-18 16:28:34,223 [Worker-13: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\eGovFrame-4.0.0\workspace.edu\CodeAcademy_Project\src\test\resources
+2026-04-18 16:31:26,419 [Worker-23: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2026-04-18 16:31:26,419 [Worker-23: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered properties files.
+2026-04-18 16:31:26,420 [Worker-23: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
