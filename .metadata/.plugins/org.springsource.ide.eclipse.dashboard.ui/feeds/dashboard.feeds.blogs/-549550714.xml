@@ -1,291 +1,69 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Spring]]></title><description><![CDATA[Level up your Java code and explore what Spring can do for you.]]></description><link>https://spring.io</link><generator>GatsbyJS</generator><lastBuildDate>Fri, 17 Apr 2026 11:21:03 GMT</lastBuildDate><item><title><![CDATA[Spring Framework 6.2.18 and 7.0.7 Available Now]]></title><link>https://spring.io/blog/2026/04/17/spring-framework-6-2-18-and-7-0-7-available-now</link><guid isPermaLink="true">https://spring.io/blog/2026/04/17/spring-framework-6-2-18-and-7-0-7-available-now</guid><dc:creator><![CDATA[snicoll]]></dc:creator><pubDate>Fri, 17 Apr 2026 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;On behalf of the team and everyone who has contributed, I am pleased to announce that Spring Framework &lt;code&gt;6.2.18&lt;/code&gt; and  &lt;code&gt;7.0.7&lt;/code&gt; are available now.&lt;/p&gt;
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Spring]]></title><description><![CDATA[Level up your Java code and explore what Spring can do for you.]]></description><link>https://spring.io</link><generator>GatsbyJS</generator><lastBuildDate>Sat, 18 Apr 2026 00:54:22 GMT</lastBuildDate><item><title><![CDATA[Spring Data 2025.1.5 and 2025.0.11 released]]></title><link>https://spring.io/blog/2026/04/17/spring-data-2025-1-5-and-2025-0-11-released</link><guid isPermaLink="true">https://spring.io/blog/2026/04/17/spring-data-2025-1-5-and-2025-0-11-released</guid><dc:creator><![CDATA[mp911de]]></dc:creator><pubDate>Fri, 17 Apr 2026 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;On behalf of the team and everyone who has contributed, I&apos;m pleased to announce the availability of &lt;code&gt;2025.1.5&lt;/code&gt; and &lt;code&gt;2025.0.11&lt;/code&gt; service releases. These releases ship with dependency upgrades, fixes for regressions, and selected improvements.&lt;/p&gt;
+&lt;p&gt;The upcoming Spring Boot releases will pick up the above releases by next week.&lt;/p&gt;
+&lt;h2 id=&quot;202515&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#202515&quot; aria-label=&quot;202515 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;2025.1.5&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Spring Data Commons &lt;code&gt;4.0.5&lt;/code&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/commons/reference/4.0/api/java/&quot;&gt;Javadoc&lt;/a&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/commons/reference/4.0/&quot;&gt;Documentation&lt;/a&gt; - &lt;a href=&quot;https://github.com/spring-projects/spring-data-commons/releases/tag/4.0.5&quot;&gt;Changelog&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Spring Data JPA &lt;code&gt;4.0.5&lt;/code&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/jpa/reference/4.0/api/java/&quot;&gt;Javadoc&lt;/a&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/jpa/reference/4.0/&quot;&gt;Documentation&lt;/a&gt; - &lt;a href=&quot;https://github.com/spring-projects/spring-data-jpa/releases/tag/4.0.5&quot;&gt;Changelog&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Spring Data KeyValue &lt;code&gt;4.0.5&lt;/code&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/keyvalue/reference/4.0/api/java/&quot;&gt;Javadoc&lt;/a&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/keyvalue/reference/4.0/&quot;&gt;Documentation&lt;/a&gt; - &lt;a href=&quot;https://github.com/spring-projects/spring-data-keyvalue/releases/tag/4.0.5&quot;&gt;Changelog&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Spring Data MongoDB &lt;code&gt;5.0.5&lt;/code&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/mongodb/reference/5.0/api/java/&quot;&gt;Javadoc&lt;/a&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/mongodb/reference/5.0/&quot;&gt;Documentation&lt;/a&gt; - &lt;a href=&quot;https://github.com/spring-projects/spring-data-mongodb/releases/tag/5.0.5&quot;&gt;Changelog&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Spring Data for Apache Cassandra &lt;code&gt;5.0.5&lt;/code&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/cassandra/reference/5.0/api/java/&quot;&gt;Javadoc&lt;/a&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/cassandra/reference/5.0/&quot;&gt;Documentation&lt;/a&gt; - &lt;a href=&quot;https://github.com/spring-projects/spring-data-cassandra/releases/tag/5.0.5&quot;&gt;Changelog&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Spring Data Neo4j &lt;code&gt;8.0.5&lt;/code&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/neo4j/reference/8.0/api/java/&quot;&gt;Javadoc&lt;/a&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/neo4j/reference/8.0/&quot;&gt;Documentation&lt;/a&gt; - &lt;a href=&quot;https://github.com/spring-projects/spring-data-neo4j/releases/tag/8.0.5&quot;&gt;Changelog&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Spring Data LDAP &lt;code&gt;4.0.5&lt;/code&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/ldap/reference/4.0/api/java/&quot;&gt;Javadoc&lt;/a&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/ldap/reference/4.0/&quot;&gt;Documentation&lt;/a&gt; - &lt;a href=&quot;https://github.com/spring-projects/spring-data-ldap/releases/tag/4.0.5&quot;&gt;Changelog&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Spring Data REST &lt;code&gt;5.0.5&lt;/code&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/rest/reference/5.0/api/java/&quot;&gt;Javadoc&lt;/a&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/rest/reference/5.0/&quot;&gt;Documentation&lt;/a&gt; - &lt;a href=&quot;https://github.com/spring-projects/spring-data-rest/releases/tag/5.0.5&quot;&gt;Changelog&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Spring Data Redis &lt;code&gt;4.0.5&lt;/code&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/redis/reference/4.0/api/java/&quot;&gt;Javadoc&lt;/a&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/redis/reference/4.0/&quot;&gt;Documentation&lt;/a&gt; - &lt;a href=&quot;https://github.com/spring-projects/spring-data-redis/releases/tag/4.0.5&quot;&gt;Changelog&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Spring Data Elasticsearch &lt;code&gt;6.0.5&lt;/code&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/elasticsearch/reference/6.0/api/java/&quot;&gt;Javadoc&lt;/a&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/elasticsearch/reference/6.0/&quot;&gt;Documentation&lt;/a&gt; - &lt;a href=&quot;https://github.com/spring-projects/spring-data-elasticsearch/releases/tag/6.0.5&quot;&gt;Changelog&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Spring Data Couchbase &lt;code&gt;6.0.5&lt;/code&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/couchbase/reference/6.0/api/java/&quot;&gt;Javadoc&lt;/a&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/couchbase/reference/6.0/&quot;&gt;Documentation&lt;/a&gt; - &lt;a href=&quot;https://github.com/spring-projects/spring-data-couchbase/releases/tag/6.0.5&quot;&gt;Changelog&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Spring Data Relational &lt;code&gt;4.0.5&lt;/code&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/relational/reference/4.0/api/java/&quot;&gt;Javadoc&lt;/a&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/relational/reference/4.0/&quot;&gt;Documentation&lt;/a&gt; - &lt;a href=&quot;https://github.com/spring-projects/spring-data-relational/releases/tag/4.0.5&quot;&gt;Changelog&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&quot;2025011&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#2025011&quot; aria-label=&quot;2025011 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;2025.0.11&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Spring Data Commons &lt;code&gt;3.5.11&lt;/code&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/commons/reference/3.5/api/java/&quot;&gt;Javadoc&lt;/a&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/commons/reference/3.5/&quot;&gt;Documentation&lt;/a&gt; - &lt;a href=&quot;https://github.com/spring-projects/spring-data-commons/releases/tag/3.5.11&quot;&gt;Changelog&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Spring Data JPA &lt;code&gt;3.5.11&lt;/code&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/jpa/reference/3.5/api/java/&quot;&gt;Javadoc&lt;/a&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/jpa/reference/3.5/&quot;&gt;Documentation&lt;/a&gt; - &lt;a href=&quot;https://github.com/spring-projects/spring-data-jpa/releases/tag/3.5.11&quot;&gt;Changelog&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Spring Data KeyValue &lt;code&gt;3.5.11&lt;/code&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/keyvalue/reference/3.5/api/java/&quot;&gt;Javadoc&lt;/a&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/keyvalue/reference/3.5/&quot;&gt;Documentation&lt;/a&gt; - &lt;a href=&quot;https://github.com/spring-projects/spring-data-keyvalue/releases/tag/3.5.11&quot;&gt;Changelog&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Spring Data MongoDB &lt;code&gt;4.5.11&lt;/code&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/mongodb/reference/4.5/api/java/&quot;&gt;Javadoc&lt;/a&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/mongodb/reference/4.5/&quot;&gt;Documentation&lt;/a&gt; - &lt;a href=&quot;https://github.com/spring-projects/spring-data-mongodb/releases/tag/4.5.11&quot;&gt;Changelog&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Spring Data for Apache Cassandra &lt;code&gt;4.5.11&lt;/code&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/cassandra/reference/4.5/api/java/&quot;&gt;Javadoc&lt;/a&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/cassandra/reference/4.5/&quot;&gt;Documentation&lt;/a&gt; - &lt;a href=&quot;https://github.com/spring-projects/spring-data-cassandra/releases/tag/4.5.11&quot;&gt;Changelog&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Spring Data Neo4j &lt;code&gt;7.5.11&lt;/code&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/neo4j/reference/7.5/api/java/&quot;&gt;Javadoc&lt;/a&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/neo4j/reference/7.5/&quot;&gt;Documentation&lt;/a&gt; - &lt;a href=&quot;https://github.com/spring-projects/spring-data-neo4j/releases/tag/7.5.11&quot;&gt;Changelog&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Spring Data LDAP &lt;code&gt;3.5.11&lt;/code&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/ldap/reference/3.5/api/java/&quot;&gt;Javadoc&lt;/a&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/ldap/reference/3.5/&quot;&gt;Documentation&lt;/a&gt; - &lt;a href=&quot;https://github.com/spring-projects/spring-data-ldap/releases/tag/3.5.11&quot;&gt;Changelog&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Spring Data REST &lt;code&gt;4.5.11&lt;/code&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/rest/reference/4.5/api/java/&quot;&gt;Javadoc&lt;/a&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/rest/reference/4.5/&quot;&gt;Documentation&lt;/a&gt; - &lt;a href=&quot;https://github.com/spring-projects/spring-data-rest/releases/tag/4.5.11&quot;&gt;Changelog&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Spring Data Redis &lt;code&gt;3.5.11&lt;/code&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/redis/reference/3.5/api/java/&quot;&gt;Javadoc&lt;/a&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/redis/reference/3.5/&quot;&gt;Documentation&lt;/a&gt; - &lt;a href=&quot;https://github.com/spring-projects/spring-data-redis/releases/tag/3.5.11&quot;&gt;Changelog&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Spring Data Elasticsearch &lt;code&gt;5.5.11&lt;/code&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/elasticsearch/reference/5.5/api/java/&quot;&gt;Javadoc&lt;/a&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/elasticsearch/reference/5.5/&quot;&gt;Documentation&lt;/a&gt; - &lt;a href=&quot;https://github.com/spring-projects/spring-data-elasticsearch/releases/tag/5.5.11&quot;&gt;Changelog&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Spring Data Couchbase &lt;code&gt;5.5.11&lt;/code&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/couchbase/reference/5.5/api/java/&quot;&gt;Javadoc&lt;/a&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/couchbase/reference/5.5/&quot;&gt;Documentation&lt;/a&gt; - &lt;a href=&quot;https://github.com/spring-projects/spring-data-couchbase/releases/tag/5.5.11&quot;&gt;Changelog&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Spring Data Relational &lt;code&gt;3.5.11&lt;/code&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/relational/reference/3.5/api/java/&quot;&gt;Javadoc&lt;/a&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/relational/reference/3.5/&quot;&gt;Documentation&lt;/a&gt; - &lt;a href=&quot;https://github.com/spring-projects/spring-data-relational/releases/tag/3.5.11&quot;&gt;Changelog&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</content:encoded></item><item><title><![CDATA[Spring Data 2026.0.0-RC1 enters release candidate phase]]></title><link>https://spring.io/blog/2026/04/17/spring-data-2026-0-0-goes-RC</link><guid isPermaLink="true">https://spring.io/blog/2026/04/17/spring-data-2026-0-0-goes-RC</guid><dc:creator><![CDATA[mp911de]]></dc:creator><pubDate>Fri, 17 Apr 2026 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;It is my pleasure to announce that a feature-complete Spring Data &lt;code&gt;2026.0&lt;/code&gt; release candidate is available now! This release is in preparation for the Spring Boot 4.1 release candidate next week. We expect final releases for general availability in May.&lt;/p&gt;
+&lt;p&gt;This RC ships a couple of New and Noteworthy changes:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Upsert functionality for Spring Data Relational using &lt;code&gt;MERGE&lt;/code&gt; or &lt;code&gt;INSERT … ON CONFLICT … DO UPDATE&lt;/code&gt; syntax available on the Template API&lt;/li&gt;
+&lt;li&gt;A &lt;code&gt;RedisMessageSendingTemplate&lt;/code&gt; complementing annotation-driven Redis Pub/Sub listeners with a consistent usage of the same underlying &lt;code&gt;MessageConverter&lt;/code&gt;s.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;RedisCache.resetCaches()&lt;/code&gt; optimization allowing to reset multiple caches in a single call through &lt;code&gt;FLUSHDB&lt;/code&gt; if Redis is used exclusively for caching.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;You can find the consolidated list of changes at the &lt;a href=&quot;https://github.com/spring-projects/spring-data-commons/wiki/Spring-Data-2026.0-Release-Notes&quot;&gt;release notes&lt;/a&gt; for the &lt;code&gt;2026.0&lt;/code&gt; release train.&lt;/p&gt;
+&lt;p&gt;To round things off, here are the links to the documentation and individual change logs:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Spring Data Commons &lt;code&gt;4.1 RC1&lt;/code&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/commons/reference/4.1/api/java/&quot;&gt;Javadoc&lt;/a&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/commons/reference/4.1/&quot;&gt;Documentation&lt;/a&gt; - &lt;a href=&quot;https://github.com/spring-projects/spring-data-commons/releases/tag/4.1.0-RC1&quot;&gt;Changelog&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Spring Data JPA &lt;code&gt;4.1 RC1&lt;/code&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/jpa/reference/4.1/api/java/&quot;&gt;Javadoc&lt;/a&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/jpa/reference/4.1/&quot;&gt;Documentation&lt;/a&gt; - &lt;a href=&quot;https://github.com/spring-projects/spring-data-jpa/releases/tag/4.1.0-RC1&quot;&gt;Changelog&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Spring Data MongoDB &lt;code&gt;5.1 RC1&lt;/code&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/mongodb/reference/5.1/api/java/&quot;&gt;Javadoc&lt;/a&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/mongodb/reference/5.1/&quot;&gt;Documentation&lt;/a&gt; - &lt;a href=&quot;https://github.com/spring-projects/spring-data-mongodb/releases/tag/5.1.0-RC1&quot;&gt;Changelog&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Spring Data Neo4j &lt;code&gt;8.1 RC1&lt;/code&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/neo4j/reference/8.1/api/java/&quot;&gt;Javadoc&lt;/a&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/neo4j/reference/8.1/&quot;&gt;Documentation&lt;/a&gt; - &lt;a href=&quot;https://github.com/spring-projects/spring-data-neo4j/releases/tag/8.1.0-RC1&quot;&gt;Changelog&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Spring Data for Apache Cassandra &lt;code&gt;5.1 RC1&lt;/code&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/cassandra/reference/5.1/api/java/&quot;&gt;Javadoc&lt;/a&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/cassandra/reference/5.1/&quot;&gt;Documentation&lt;/a&gt; - &lt;a href=&quot;https://github.com/spring-projects/spring-data-cassandra/releases/tag/5.1.0-RC1&quot;&gt;Changelog&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Spring Data KeyValue &lt;code&gt;4.1 RC1&lt;/code&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/keyvalue/reference/4.1/api/java/&quot;&gt;Javadoc&lt;/a&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/keyvalue/reference/4.1/&quot;&gt;Documentation&lt;/a&gt; - &lt;a href=&quot;https://github.com/spring-projects/spring-data-keyvalue/releases/tag/4.1.0-RC1&quot;&gt;Changelog&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Spring Data LDAP &lt;code&gt;4.1 RC1&lt;/code&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/ldap/reference/4.1/api/java/&quot;&gt;Javadoc&lt;/a&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/ldap/reference/4.1/&quot;&gt;Documentation&lt;/a&gt; - &lt;a href=&quot;https://github.com/spring-projects/spring-data-ldap/releases/tag/4.1.0-RC1&quot;&gt;Changelog&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Spring Data REST &lt;code&gt;5.1 RC1&lt;/code&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/rest/reference/5.1/api/java/&quot;&gt;Javadoc&lt;/a&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/rest/reference/5.1/&quot;&gt;Documentation&lt;/a&gt; - &lt;a href=&quot;https://github.com/spring-projects/spring-data-rest/releases/tag/5.1.0-RC1&quot;&gt;Changelog&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Spring Data Redis &lt;code&gt;4.1 RC1&lt;/code&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/redis/reference/4.1/api/java/&quot;&gt;Javadoc&lt;/a&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/redis/reference/4.1/&quot;&gt;Documentation&lt;/a&gt; - &lt;a href=&quot;https://github.com/spring-projects/spring-data-redis/releases/tag/4.1.0-RC1&quot;&gt;Changelog&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Spring Data Elasticsearch &lt;code&gt;6.1 RC1&lt;/code&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/elasticsearch/reference/6.1/api/java/&quot;&gt;Javadoc&lt;/a&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/elasticsearch/reference/6.1/&quot;&gt;Documentation&lt;/a&gt; - &lt;a href=&quot;https://github.com/spring-projects/spring-data-elasticsearch/releases/tag/6.1.0-RC1&quot;&gt;Changelog&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Spring Data Couchbase &lt;code&gt;6.1 RC1&lt;/code&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/couchbase/reference/6.1/api/java/&quot;&gt;Javadoc&lt;/a&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/couchbase/reference/6.1/&quot;&gt;Documentation&lt;/a&gt; - &lt;a href=&quot;https://github.com/spring-projects/spring-data-couchbase/releases/tag/6.1.0-RC1&quot;&gt;Changelog&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Spring Data Relational &lt;code&gt;4.1 RC1&lt;/code&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/relational/reference/4.1/api/java/&quot;&gt;Javadoc&lt;/a&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/relational/reference/4.1/&quot;&gt;Documentation&lt;/a&gt; - &lt;a href=&quot;https://github.com/spring-projects/spring-data-relational/releases/tag/4.1.0-RC1&quot;&gt;Changelog&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</content:encoded></item><item><title><![CDATA[Spring Framework 6.2.18 and 7.0.7 Available Now]]></title><link>https://spring.io/blog/2026/04/17/spring-framework-6-2-18-and-7-0-7-available-now</link><guid isPermaLink="true">https://spring.io/blog/2026/04/17/spring-framework-6-2-18-and-7-0-7-available-now</guid><dc:creator><![CDATA[snicoll]]></dc:creator><pubDate>Fri, 17 Apr 2026 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;On behalf of the team and everyone who has contributed, I am pleased to announce that Spring Framework &lt;code&gt;6.2.18&lt;/code&gt; and  &lt;code&gt;7.0.7&lt;/code&gt; are available now.&lt;/p&gt;
 &lt;p&gt;Spring Framework &lt;code&gt;6.2.18&lt;/code&gt; ships with &lt;a href=&quot;https://github.com/spring-projects/spring-framework/releases/tag/v6.2.18&quot;&gt;27 fixes and documentation improvements&lt;/a&gt;. This version will be shipped next week with Spring Boot &lt;code&gt;3.5.14&lt;/code&gt;.
 Spring Framework &lt;code&gt;7.0.7&lt;/code&gt; ships with &lt;a href=&quot;https://github.com/spring-projects/spring-framework/releases/tag/v7.0.7&quot;&gt;52 fixes and documentation improvements&lt;/a&gt;. This version will be shipped next week with Spring Boot &lt;code&gt;4.0.6&lt;/code&gt;.&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;https://spring.io/projects/spring-framework/&quot;&gt;Project Page&lt;/a&gt; | &lt;a href=&quot;https://github.com/spring-projects/spring-framework&quot;&gt;GitHub&lt;/a&gt; | &lt;a href=&quot;https://github.com/spring-projects/spring-framework/issues&quot;&gt;Issues&lt;/a&gt; | &lt;a href=&quot;https://docs.spring.io/spring-framework/reference/&quot;&gt;Documentation&lt;/a&gt;&lt;/p&gt;</content:encoded></item><item><title><![CDATA[A Bootiful Podcast: the legendary Craig Walls]]></title><link>https://spring.io/blog/2026/04/16/a-bootiful-podcast-craig-walls</link><guid isPermaLink="true">https://spring.io/blog/2026/04/16/a-bootiful-podcast-craig-walls</guid><dc:creator><![CDATA[joshlong]]></dc:creator><pubDate>Thu, 16 Apr 2026 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;Hi Spring fans! In this installment we talk to the legendary Craig Walls, author of &lt;em&gt;Spring In Action&lt;/em&gt;, &lt;em&gt;Spring AI in Action&lt;/em&gt;, and more!&lt;/p&gt;
-&lt;iframe title=&quot;the legendary Craig Walls&quot; allowtransparency=&quot;true&quot; height=&quot;300&quot; width=&quot;100%&quot; style=&quot;border: none; min-width: min(100%, 430px);height:300px;&quot; scrolling=&quot;no&quot; data-name=&quot;pb-iframe-player&quot; src=&quot;https://www.podbean.com/player-v2/?from=embed&amp;i=waba9-1a9db36-pb&amp;square=1&amp;share=1&amp;download=1&amp;fonts=Arial&amp;skin=1&amp;font-color=&amp;rtl=0&amp;logo_link=&amp;btn-skin=7&amp;size=300&quot; loading=&quot;lazy&quot; allowfullscreen=&quot;&quot;&gt;&lt;/iframe&gt;</content:encoded></item><item><title><![CDATA[Spring AI Agentic Patterns (Part 7): Session API — Event-Sourced Short-Term Memory with Context Compaction]]></title><link>https://spring.io/blog/2026/04/15/spring-ai-session-management</link><guid isPermaLink="true">https://spring.io/blog/2026/04/15/spring-ai-session-management</guid><dc:creator><![CDATA[tzolov]]></dc:creator><pubDate>Wed, 15 Apr 2026 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;&lt;em&gt;A New Session API for Spring AI — Structured, Compactable, Multi-Agent-Ready&lt;/em&gt;&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Part 7 of the &lt;a href=&quot;https://spring.io/blog/2026/04/07/spring-ai-agentic-patterns-6-memory-tools&quot;&gt;Spring AI Agentic Patterns&lt;/a&gt; series&lt;/strong&gt; completes the memory picture. After covering &lt;a href=&quot;https://spring.io/blog/2026/01/13/spring-ai-generic-agent-skills&quot;&gt;Agent Skills&lt;/a&gt;, &lt;a href=&quot;https://spring.io/blog/2026/01/16/spring-ai-ask-user-question-tool&quot;&gt;AskUserQuestionTool&lt;/a&gt;, &lt;a href=&quot;https://spring.io/blog/2026/01/20/spring-ai-agentic-patterns-3-todowrite/&quot;&gt;TodoWriteTool&lt;/a&gt;, &lt;a href=&quot;https://spring.io/blog/2026/01/27/spring-ai-agentic-patterns-4-task-subagents&quot;&gt;Subagent Orchestration&lt;/a&gt;, &lt;a href=&quot;https://spring.io/blog/2026/01/29/spring-ai-agentic-patterns-a2a-integration&quot;&gt;A2A Integration&lt;/a&gt;, and &lt;a href=&quot;https://spring.io/blog/2026/04/07/spring-ai-agentic-patterns-6-memory-tools&quot;&gt;AutoMemoryTools&lt;/a&gt; for long-term cross-session memory, we now add the complementary &lt;strong&gt;short-term layer&lt;/strong&gt;: Spring AI Session. Storing conversation history as a flat message list works for short exchanges but breaks down as sessions grow — naive truncation silently discards tool-call sequences mid-exchange, leaving the model with orphaned results and broken turn structure. Spring AI Session solves this by automatically recording every message, tool call, and result for the active exchange and managing the context window intelligently, while &lt;code&gt;AutoMemoryTools&lt;/code&gt; retains curated facts that must survive beyond the session. A complete agent memory stack needs both; neither replaces the other.&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;&lt;strong&gt;Roadmap:&lt;/strong&gt; Incubating in &lt;a href=&quot;https://github.com/spring-ai-community/spring-ai-session&quot;&gt;spring-ai-community&lt;/a&gt;; targets Spring AI 2.1 (November 2026), when &lt;code&gt;ChatMemory&lt;/code&gt; will be deprecated in its favour.&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;&lt;code&gt;ChatMemory&lt;/code&gt; evicts the oldest messages with no turn safety, no event identity, no multi-agent support, and no record of what was discarded. Spring AI Session replaces it with an event-sourced log, pluggable compaction strategies, branch isolation, and keyword-searchable recall storage.&lt;/p&gt;
-&lt;p&gt;🚀 &lt;strong&gt;Want to jump right in?&lt;/strong&gt; Skip to the &lt;a href=&quot;#getting-started&quot;&gt;Getting Started&lt;/a&gt; section.&lt;/p&gt;
-&lt;hr&gt;
-&lt;h2 id=&quot;session-api-architecture&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#session-api-architecture&quot; aria-label=&quot;session api architecture permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Session API Architecture&lt;/h2&gt;
-&lt;img style=&quot;display: block; margin: auto;&quot; src=&quot;https://raw.githubusercontent.com/spring-io/spring-io-static/refs/heads/main/blog/tzolov/20260412/session-api-classes.png&quot; width=&quot;700&quot; alt=&quot;Spring AI Session API Classes&quot;&gt;
-&lt;h3 id=&quot;session-and-sessionevent&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#session-and-sessionevent&quot; aria-label=&quot;session and sessionevent permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Session and SessionEvent&lt;/h3&gt;
-&lt;p&gt;&lt;code&gt;Session&lt;/code&gt; is an &lt;strong&gt;immutable metadata-only value object&lt;/strong&gt; — it holds the session ID, user ID, TTL, and arbitrary metadata. The event log lives separately in the repository, fetched on demand.&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;SessionEvent&lt;/code&gt; wraps a Spring AI &lt;code&gt;Message&lt;/code&gt; and adds what &lt;code&gt;Message&lt;/code&gt; intentionally omits: a UUID, &lt;code&gt;sessionId&lt;/code&gt;, &lt;code&gt;timestamp&lt;/code&gt;, an optional &lt;code&gt;branch&lt;/code&gt; label for multi-agent hierarchies, and framework flags like &lt;code&gt;METADATA_SYNTHETIC&lt;/code&gt;.&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-java&quot;&gt;SessionService service = new DefaultSessionService(InMemorySessionRepository.builder().build());
-
-Session session = service.create(
-    CreateSessionRequest.builder().userId(&quot;alice&quot;).build()
-);
-
-service.appendMessage(session.id(), new UserMessage(&quot;What is Spring AI?&quot;));
-service.appendMessage(session.id(), new AssistantMessage(&quot;Spring AI is...&quot;));
-
-List&amp;#x3C;Message&gt; history = service.getMessages(session.id()); // ready to pass to an LLM
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id=&quot;turns&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#turns&quot; aria-label=&quot;turns permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Turns&lt;/h3&gt;
-&lt;p&gt;A &lt;strong&gt;turn&lt;/strong&gt; is the atomic unit of conversation: one &lt;code&gt;UserMessage&lt;/code&gt; plus all following events — assistant replies, tool calls, tool results — up to the next &lt;code&gt;UserMessage&lt;/code&gt;. All compaction strategies operate at turn granularity, so the kept window always starts on a &lt;code&gt;USER&lt;/code&gt; message. The model never sees an orphaned tool result or a split exchange.&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;Turn 1: [USER &quot;What is Spring AI?&quot;]  [ASSISTANT &quot;Spring AI is...&quot;]
-Turn 2: [USER &quot;Can it use tools?&quot;]   [ASSISTANT (tool call)]  [TOOL result]  [ASSISTANT &quot;Yes,...&quot;]
-&lt;/code&gt;&lt;/pre&gt;
-&lt;hr&gt;
-&lt;h2 id=&quot;context-compaction&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#context-compaction&quot; aria-label=&quot;context compaction permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Context Compaction&lt;/h2&gt;
-&lt;p&gt;Compaction reduces the event history to fit the context window while preserving coherence. It is driven by two composable abstractions: &lt;strong&gt;triggers&lt;/strong&gt; and &lt;strong&gt;strategies&lt;/strong&gt;.&lt;/p&gt;
-&lt;h3 id=&quot;triggers&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#triggers&quot; aria-label=&quot;triggers permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Triggers&lt;/h3&gt;
-&lt;pre&gt;&lt;code class=&quot;language-java&quot;&gt;new TurnCountTrigger(20);                                   // fires when &gt; 20 turns
-TokenCountTrigger.builder().threshold(4000).build();        // fires at 4000 estimated tokens
-
-// OR-composite — fires if either condition is met
-CompositeCompactionTrigger.anyOf(
-    new TurnCountTrigger(20),
-    TokenCountTrigger.builder().threshold(4000).build()
-);
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id=&quot;strategies&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#strategies&quot; aria-label=&quot;strategies permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Strategies&lt;/h3&gt;
-&lt;table&gt;
-&lt;thead&gt;
-&lt;tr&gt;
-&lt;th&gt;Strategy&lt;/th&gt;
-&lt;th&gt;LLM call?&lt;/th&gt;
-&lt;th&gt;Best for&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-&lt;tbody&gt;
-&lt;tr&gt;
-&lt;td&gt;&lt;code&gt;SlidingWindowCompactionStrategy&lt;/code&gt;&lt;/td&gt;
-&lt;td&gt;No&lt;/td&gt;
-&lt;td&gt;Cost-sensitive, short-term context&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;&lt;code&gt;TurnWindowCompactionStrategy&lt;/code&gt;&lt;/td&gt;
-&lt;td&gt;No&lt;/td&gt;
-&lt;td&gt;Turn-structured dialogues&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;&lt;code&gt;TokenCountCompactionStrategy&lt;/code&gt;&lt;/td&gt;
-&lt;td&gt;No&lt;/td&gt;
-&lt;td&gt;Hard context-window limits&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;&lt;code&gt;RecursiveSummarizationCompactionStrategy&lt;/code&gt;&lt;/td&gt;
-&lt;td&gt;Yes&lt;/td&gt;
-&lt;td&gt;Long-running, context-rich sessions&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-&lt;p&gt;The first three keep a verbatim suffix of events (by message count, turn count, or token budget). All three snap the cut point to the nearest turn boundary — no partial turns are ever kept.&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Recursive Summarization&lt;/strong&gt; is the most powerful: it uses an LLM to summarize the events being archived and stores the result as a synthetic &lt;code&gt;user&lt;/code&gt; + &lt;code&gt;assistant&lt;/code&gt; turn. Each subsequent compaction pass builds on prior summaries — creating a rolling compressed history that never starts from scratch:&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-java&quot;&gt;RecursiveSummarizationCompactionStrategy.builder(chatClient)
-    .maxEventsToKeep(10)
-    .overlapSize(2)   // feed 2 events from the active window into the summary prompt
-    .build();
-&lt;/code&gt;&lt;/pre&gt;
-&lt;blockquote&gt;
-&lt;p&gt;&lt;strong&gt;Note:&lt;/strong&gt; Trigger and strategy must always be configured together — setting one without the other throws &lt;code&gt;IllegalArgumentException&lt;/code&gt; at build time. Either set both via &lt;code&gt;.compactionTrigger(...)&lt;/code&gt; and &lt;code&gt;.compactionStrategy(...)&lt;/code&gt;, or omit both to disable compaction entirely.&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;hr&gt;
-&lt;h2 id=&quot;chatclient-integration&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#chatclient-integration&quot; aria-label=&quot;chatclient integration permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;ChatClient Integration&lt;/h2&gt;
-&lt;p&gt;&lt;code&gt;SessionMemoryAdvisor&lt;/code&gt; wires session management into the &lt;code&gt;ChatClient&lt;/code&gt; pipeline transparently. On every request it loads history, prepends it to the prompt, appends the new user and assistant messages, and runs compaction if a trigger fires — all without any manual code in the application.&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-java&quot;&gt;@Bean
-SessionMemoryAdvisor sessionMemoryAdvisor(SessionService sessionService,
-        ChatClient.Builder chatClientBuilder) {
-
-    return SessionMemoryAdvisor.builder(sessionService)
-        .defaultUserId(&quot;alice&quot;)
-        .compactionTrigger(new TurnCountTrigger(20))
-        .compactionStrategy(
-            RecursiveSummarizationCompactionStrategy.builder(chatClientBuilder.build())
-                .maxEventsToKeep(10)
-                .build()
-        )
-        .build();
-}
-
-@Bean
-ChatClient chatClient(ChatClient.Builder chatClientBuilder, SessionMemoryAdvisor advisor) {
-    return chatClientBuilder.defaultAdvisors(advisor).build();
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Pass a session ID at call time via the advisor context:&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-java&quot;&gt;String response = chatClient.prompt()
-    .user(&quot;Hello!&quot;)
-    .advisors(a -&gt; a.param(SessionMemoryAdvisor.SESSION_ID_CONTEXT_KEY, &quot;session-abc&quot;))
-    .call()
-    .content();
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;If no session exists for the given ID, the advisor creates one automatically.&lt;/p&gt;
-&lt;hr&gt;
-&lt;h2 id=&quot;multi-agent-branch-isolation&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#multi-agent-branch-isolation&quot; aria-label=&quot;multi agent branch isolation permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Multi-Agent Branch Isolation&lt;/h2&gt;
-&lt;p&gt;When an orchestrator fans out to parallel sub-agents, all agents can share the same &lt;code&gt;Session&lt;/code&gt; — but each must see only its own events plus its ancestors&apos;. &lt;code&gt;SessionEvent.branch&lt;/code&gt; is a dot-separated path that records the producing agent&apos;s position in the hierarchy:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;orchestrator        branch = &quot;orch&quot;
-├── researcher      branch = &quot;orch.researcher&quot;
-└── writer          branch = &quot;orch.writer&quot;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Events with &lt;code&gt;branch = null&lt;/code&gt; are root-level — visible to every agent. Pass &lt;code&gt;EventFilter.forBranch()&lt;/code&gt; to apply isolation automatically inside the advisor:&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-java&quot;&gt;// Researcher sees: null-branch + &quot;orch&quot; + own &quot;orch.researcher&quot; events
-// Hidden: &quot;orch.writer&quot; (sibling)
-SessionMemoryAdvisor researcherAdvisor = SessionMemoryAdvisor.builder(sessionService)
-    .defaultSessionId(sharedSessionId)
-    .eventFilter(EventFilter.forBranch(&quot;orch.researcher&quot;))
-    .build();
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Synthetic summary events from &lt;code&gt;RecursiveSummarizationCompactionStrategy&lt;/code&gt; always carry &lt;code&gt;branch = null&lt;/code&gt;, so compaction summaries remain visible to every agent in the session.&lt;/p&gt;
-&lt;hr&gt;
-&lt;h2 id=&quot;recall-storage&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#recall-storage&quot; aria-label=&quot;recall storage permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Recall Storage&lt;/h2&gt;
-&lt;p&gt;Compaction improves prompt efficiency, but older events are removed from the active context window. &lt;code&gt;SessionEventTools&lt;/code&gt; implements the MemGPT &lt;em&gt;Recall Storage&lt;/em&gt; pattern: the full verbatim event log is always retained and searchable by keyword, even after compaction has pruned it from the prompt.&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-java&quot;&gt;ChatClient client = ChatClient.builder(chatModel)
-    .defaultTools(SessionEventTools.builder(sessionService).build())
-    .defaultAdvisors(advisor)
-    .build();
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;The &lt;code&gt;conversation_search&lt;/code&gt; tool is auto-discovered by Spring AI. When the model needs to recall a prior exchange it calls the tool with a keyword and an optional &lt;code&gt;page&lt;/code&gt; index; results come back as chronologically ordered JSON. Synthetic summary events are searchable too — their text is indexed in the recall store.&lt;/p&gt;
-&lt;hr&gt;
-&lt;h2 id=&quot;jdbc-persistence&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#jdbc-persistence&quot; aria-label=&quot;jdbc persistence permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;JDBC Persistence&lt;/h2&gt;
-&lt;p&gt;&lt;code&gt;spring-ai-session-jdbc&lt;/code&gt; stores session data in two tables (&lt;code&gt;AI_SESSION&lt;/code&gt; and &lt;code&gt;AI_SESSION_EVENT&lt;/code&gt;, an append-only event log) with support for PostgreSQL, MySQL, MariaDB, and H2. The Spring Boot starter auto-configures everything:&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-xml&quot;&gt;&amp;#x3C;dependency&gt;
-    &amp;#x3C;groupId&gt;org.springaicommunity&amp;#x3C;/groupId&gt;
-    &amp;#x3C;artifactId&gt;spring-ai-starter-session-jdbc&amp;#x3C;/artifactId&gt;
-&amp;#x3C;/dependency&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;For PostgreSQL or MySQL, enable schema initialisation:&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-yaml&quot;&gt;spring:
-  ai:
-    session:
-      repository:
-        jdbc:
-          initialize-schema: always
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;No additional bean declarations are required.&lt;/p&gt;
-&lt;hr&gt;
-&lt;h2 id=&quot;getting-started&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#getting-started&quot; aria-label=&quot;getting started permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Getting Started&lt;/h2&gt;
-&lt;p&gt;&lt;strong&gt;Requirements:&lt;/strong&gt; Java 17+, Spring AI &lt;code&gt;2.0.0-M4+&lt;/code&gt;, Spring Boot &lt;code&gt;4.0.2+&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;1. Import the BOM:&lt;/strong&gt;&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-xml&quot;&gt;&amp;#x3C;dependencyManagement&gt;
-    &amp;#x3C;dependencies&gt;
-        &amp;#x3C;dependency&gt;
-            &amp;#x3C;groupId&gt;org.springaicommunity&amp;#x3C;/groupId&gt;
-            &amp;#x3C;artifactId&gt;spring-ai-session-bom&amp;#x3C;/artifactId&gt;
-            &amp;#x3C;version&gt;0.2.0&amp;#x3C;/version&gt;
-            &amp;#x3C;type&gt;pom&amp;#x3C;/type&gt;
-            &amp;#x3C;scope&gt;import&amp;#x3C;/scope&gt;
-        &amp;#x3C;/dependency&gt;
-    &amp;#x3C;/dependencies&gt;
-&amp;#x3C;/dependencyManagement&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;strong&gt;2. Add a starter&lt;/strong&gt; — JDBC for production, or &lt;code&gt;spring-ai-session-management&lt;/code&gt; alone for in-memory development:&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-xml&quot;&gt;&amp;#x3C;dependency&gt;
-    &amp;#x3C;groupId&gt;org.springaicommunity&amp;#x3C;/groupId&gt;
-    &amp;#x3C;artifactId&gt;spring-ai-starter-session-jdbc&amp;#x3C;/artifactId&gt;
-&amp;#x3C;/dependency&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;strong&gt;3. Wire the advisor and use it:&lt;/strong&gt;&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-java&quot;&gt;@Bean
-SessionMemoryAdvisor sessionMemoryAdvisor(SessionService sessionService) {
-    return SessionMemoryAdvisor.builder(sessionService)
-        .defaultUserId(&quot;alice&quot;)
-        .compactionTrigger(new TurnCountTrigger(20))
-        .compactionStrategy(SlidingWindowCompactionStrategy.builder().maxEvents(10).build())
-        .build();
-}
-
-@Bean
-ChatClient chatClient(ChatModel chatModel, SessionMemoryAdvisor advisor) {
-    return ChatClient.builder(chatModel).defaultAdvisors(advisor).build();
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code class=&quot;language-java&quot;&gt;Session session = sessionService.create(
-    CreateSessionRequest.builder().userId(&quot;alice&quot;).build()
-);
-
-String response = chatClient.prompt()
-    .user(&quot;What is Spring AI?&quot;)
-    .advisors(a -&gt; a.param(SessionMemoryAdvisor.SESSION_ID_CONTEXT_KEY, session.id()))
-    .call()
-    .content();
-&lt;/code&gt;&lt;/pre&gt;
-&lt;hr&gt;
-&lt;h2 id=&quot;from-chatmemory-to-session-api&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#from-chatmemory-to-session-api&quot; aria-label=&quot;from chatmemory to session api permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;From ChatMemory to Session API&lt;/h2&gt;
-&lt;p&gt;The Session API is designed to &lt;strong&gt;replace&lt;/strong&gt; &lt;code&gt;ChatMemory&lt;/code&gt; as Spring AI&apos;s primary conversation persistence abstraction:&lt;/p&gt;
-&lt;table&gt;
-&lt;thead&gt;
-&lt;tr&gt;
-&lt;th&gt;&lt;/th&gt;
-&lt;th&gt;&lt;code&gt;ChatMemory&lt;/code&gt;&lt;/th&gt;
-&lt;th&gt;Spring AI Session&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-&lt;tbody&gt;
-&lt;tr&gt;
-&lt;td&gt;Storage unit&lt;/td&gt;
-&lt;td&gt;&lt;code&gt;Message&lt;/code&gt; (flat list)&lt;/td&gt;
-&lt;td&gt;&lt;code&gt;SessionEvent&lt;/code&gt; (immutable, timestamped, identified)&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;Compaction&lt;/td&gt;
-&lt;td&gt;Evict oldest messages&lt;/td&gt;
-&lt;td&gt;Four pluggable strategies incl. LLM summarization&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;Turn safety&lt;/td&gt;
-&lt;td&gt;Not enforced&lt;/td&gt;
-&lt;td&gt;All strategies snap to turn boundaries&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;Multi-agent&lt;/td&gt;
-&lt;td&gt;Not supported&lt;/td&gt;
-&lt;td&gt;Branch isolation with dot-separated labels&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;Recall search&lt;/td&gt;
-&lt;td&gt;Not available&lt;/td&gt;
-&lt;td&gt;&lt;code&gt;conversation_search&lt;/code&gt; tool via &lt;code&gt;SessionEventTools&lt;/code&gt;&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;Concurrency&lt;/td&gt;
-&lt;td&gt;Implementation-dependent&lt;/td&gt;
-&lt;td&gt;Optimistic CAS write in all implementations&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-&lt;p&gt;The equivalent of &lt;code&gt;MessageWindowChatMemory.builder().maxMessages(20).build()&lt;/code&gt; is:&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-java&quot;&gt;SessionMemoryAdvisor.builder(sessionService)
-    .compactionTrigger(new TurnCountTrigger(20))
-    .compactionStrategy(SlidingWindowCompactionStrategy.builder().maxEvents(20).build())
-    .build();
-&lt;/code&gt;&lt;/pre&gt;
-&lt;hr&gt;
-&lt;h2 id=&quot;conclusion&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#conclusion&quot; aria-label=&quot;conclusion permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Conclusion&lt;/h2&gt;
-&lt;p&gt;Spring AI Session brings a structured, event-sourced &lt;strong&gt;short-term memory&lt;/strong&gt; layer to the Spring AI ecosystem — with turn-safe compaction, LLM-powered summarization, multi-agent branch isolation, and keyword-searchable recall storage. Paired with &lt;code&gt;AutoMemoryTools&lt;/code&gt; from &lt;a href=&quot;https://spring.io/blog/2026/04/07/spring-ai-agentic-patterns-6-memory-tools&quot;&gt;Part 6&lt;/a&gt;, you now have both halves of a complete agent memory stack: a durable long-term layer for facts that outlive the session, and a coherent short-term layer for the active conversation. The library is available from the &lt;a href=&quot;https://github.com/spring-ai-community/spring-ai-session&quot;&gt;spring-ai-community&lt;/a&gt; organization.&lt;/p&gt;
-&lt;hr&gt;
-&lt;h2 id=&quot;resources&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#resources&quot; aria-label=&quot;resources permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Resources&lt;/h2&gt;
+&lt;h3 id=&quot;cve-reports&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#cve-reports&quot; aria-label=&quot;cve reports permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;CVE Reports:&lt;/h3&gt;
+&lt;p&gt;This release addresses:&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;GitHub&lt;/strong&gt;: &lt;a href=&quot;https://github.com/spring-ai-community/spring-ai-session&quot;&gt;spring-ai-community/spring-ai-session&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Documentation&lt;/strong&gt;: &lt;a href=&quot;https://spring-ai-community.github.io/spring-ai-session/&quot;&gt;spring-ai-community.github.io/spring-ai-session&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Spring AI Reference&lt;/strong&gt;: &lt;a href=&quot;https://docs.spring.io/spring-ai/reference/&quot;&gt;docs.spring.io/spring-ai/reference&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;ChatMemory API&lt;/strong&gt; (current): &lt;a href=&quot;https://docs.spring.io/spring-ai/reference/2.0-SNAPSHOT/api/chat-memory.html&quot;&gt;Chat Memory Reference&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://spring.io/security/cve-2026-22740&quot;&gt;CVE-2026-22740&lt;/a&gt; &quot;Spring Framework DoS with Multipart Temp Files in WebFlux&quot;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://spring.io/security/cve-2026-22741&quot;&gt;CVE-2026-22741&lt;/a&gt; &quot;Static resource cache poisoning in Spring MVC and WebFlux&quot;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://spring.io/security/cve-2026-22745&quot;&gt;CVE-2026-22745&lt;/a&gt; &quot;Denial of service in static resource handling on Windows platforms&quot;&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h4 id=&quot;agentic-patterns-series&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#agentic-patterns-series&quot; aria-label=&quot;agentic patterns series permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Agentic Patterns Series&lt;/h4&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;Part 1&lt;/strong&gt;: &lt;a href=&quot;https://spring.io/blog/2026/01/13/spring-ai-generic-agent-skills&quot;&gt;Agent Skills&lt;/a&gt; — modular, reusable agent capabilities&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Part 2&lt;/strong&gt;: &lt;a href=&quot;https://spring.io/blog/2026/01/16/spring-ai-ask-user-question-tool&quot;&gt;AskUserQuestionTool&lt;/a&gt; — interactive agent workflows&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Part 3&lt;/strong&gt;: &lt;a href=&quot;https://spring.io/blog/2026/01/20/spring-ai-agentic-patterns-3-todowrite/&quot;&gt;TodoWriteTool&lt;/a&gt; — structured task management&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Part 4&lt;/strong&gt;: &lt;a href=&quot;https://spring.io/blog/2026/01/27/spring-ai-agentic-patterns-4-task-subagents&quot;&gt;Subagent Orchestration&lt;/a&gt; — hierarchical multi-agent architectures&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Part 5&lt;/strong&gt;: &lt;a href=&quot;https://spring.io/blog/2026/01/29/spring-ai-agentic-patterns-a2a-integration&quot;&gt;A2A Integration&lt;/a&gt; — building interoperable agents&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Part 6&lt;/strong&gt;: &lt;a href=&quot;https://spring.io/blog/2026/04/07/spring-ai-agentic-patterns-6-memory-tools&quot;&gt;AutoMemoryTools&lt;/a&gt; — persistent long-term memory across sessions&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Part 7&lt;/strong&gt;: Spring AI Session (this post) — structured short-term memory with turn-safe compaction&lt;/li&gt;
-&lt;/ul&gt;</content:encoded></item><item><title><![CDATA[This Week in Spring - April 14th, 2026]]></title><link>https://spring.io/blog/2026/04/14/this-week-in-spring-april-14-2026</link><guid isPermaLink="true">https://spring.io/blog/2026/04/14/this-week-in-spring-april-14-2026</guid><dc:creator><![CDATA[joshlong]]></dc:creator><pubDate>Tue, 14 Apr 2026 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;Hi, Spring fans! ¡Hola from Barcelona, Spain! I&apos;m at the amazing Spring I/O event, hanging out with some of the amazing Spring ecosystem developers! Life is amazing here in the warm sun of springtime.&lt;/p&gt;
-&lt;p&gt;There&apos;s a lot to look at this week, so let&apos;s dive right into it!&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Another nice tutorial &lt;a href=&quot;https://www.youtube.com/watch?v=i_9z3tNrphE&quot;&gt;on how to build microservices with Spring Boot&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;I loved this new post &lt;a href=&quot;https://www.infoq.com/articles/spring-team-spring-7-boot-4/&quot;&gt;looking at Spring Framework 7 and Spring Boot 4 over on InfoQ&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://www.baeldung.com/spring-boot-internationalization&quot;&gt;Interesting! A guide to internationalization in Spring Boot&lt;/a&gt;, by our friends at Baeldung.&lt;/li&gt;
-&lt;li&gt;I really liked this post looking at how the enormous Aperro CAS system manages configuration properties at scale: &lt;a href=&quot;https://medium.com/all-things-software/spring-boot-configuration-properties-at-scale-884f494721ac&quot;&gt;Spring Boot configuration properties at scale&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;Check out this new blog looking at a prospective auto-memory feature for Spring AI: &lt;a href=&quot;https://spring.io/blog/2026/04/07/spring-ai-agentic-patterns-6-memory-tools&quot;&gt;Spring AI agentic patterns #6: Memory tools&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;Building a cost-free, local retrieval-augmented generation pipeline with Spring AI: &lt;a href=&quot;https://levelup.gitconnected.com/building-a-cost-free-local-retrieval-augmented-generation-pipeline-with-spring-ai-785a840d4607?gi=9f3ed153cd51&quot;&gt;post&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://www.youtube.com/watch?v=bYgV15wMYTs&quot;&gt;Spring AI introduction: what it is and why it matters&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;Have you seen this new TUI for Apache Maven? &lt;a href=&quot;https://blog.gnodet.fr/posts/pilot-010-interactive-tui-for-maven/&quot;&gt;Seems interesting!&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;Catherine Edelveis is back at it again, this time with an amazing video looking at Java memory options that you should know. Super interesting!&lt;/li&gt;
-&lt;/ul&gt;</content:encoded></item></channel></rss>
+&lt;p&gt;Open source support for Spring Framework 5.3.x and 6.1.x generations has ended, see &lt;a href=&quot;https://spring.io/projects/spring-framework#support&quot;&gt;our support page for more information&lt;/a&gt;.
+This fix has been applied to the 5.3.46 and 6.1.24 commercial releases, available now.&lt;/p&gt;
+&lt;p&gt;If you are not a commercial customer, &lt;a href=&quot;https://spring.io/projects/spring-framework/#support&quot;&gt;please consider upgrading to an open source supported version&lt;/a&gt; at your earliest convenience.
+Commercial customers using Spring Boot 2.7, 3.1, or 3.2 can make use of Spring Boot Hotfix releases 2.7.32.1, 3.3.18.1 and 3.4.15.1. Releases are available now on the Spring commercial artifact repository and can be accessed with a &lt;a href=&quot;https://enterprise.spring.io&quot;&gt;Spring Enterprise Subscription&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://spring.io/projects/spring-framework/&quot;&gt;Project Page&lt;/a&gt; | &lt;a href=&quot;https://github.com/spring-projects/spring-framework&quot;&gt;GitHub&lt;/a&gt; | &lt;a href=&quot;https://github.com/spring-projects/spring-framework/issues&quot;&gt;Issues&lt;/a&gt; | &lt;a href=&quot;https://docs.spring.io/spring-framework/reference/&quot;&gt;Documentation&lt;/a&gt;&lt;/p&gt;</content:encoded></item><item><title><![CDATA[A Bootiful Podcast: the legendary Craig Walls]]></title><link>https://spring.io/blog/2026/04/16/a-bootiful-podcast-craig-walls</link><guid isPermaLink="true">https://spring.io/blog/2026/04/16/a-bootiful-podcast-craig-walls</guid><dc:creator><![CDATA[joshlong]]></dc:creator><pubDate>Thu, 16 Apr 2026 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;Hi Spring fans! In this installment we talk to the legendary Craig Walls, author of &lt;em&gt;Spring In Action&lt;/em&gt;, &lt;em&gt;Spring AI in Action&lt;/em&gt;, and more!&lt;/p&gt;
+&lt;iframe title=&quot;the legendary Craig Walls&quot; allowtransparency=&quot;true&quot; height=&quot;300&quot; width=&quot;100%&quot; style=&quot;border: none; min-width: min(100%, 430px);height:300px;&quot; scrolling=&quot;no&quot; data-name=&quot;pb-iframe-player&quot; src=&quot;https://www.podbean.com/player-v2/?from=embed&amp;i=waba9-1a9db36-pb&amp;square=1&amp;share=1&amp;download=1&amp;fonts=Arial&amp;skin=1&amp;font-color=&amp;rtl=0&amp;logo_link=&amp;btn-skin=7&amp;size=300&quot; loading=&quot;lazy&quot; allowfullscreen=&quot;&quot;&gt;&lt;/iframe&gt;</content:encoded></item></channel></rss>
