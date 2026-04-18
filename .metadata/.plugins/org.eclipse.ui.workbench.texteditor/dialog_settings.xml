@@ -6,31 +6,31 @@
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
-		<item key="selection" value="nick_nameCheck"/>
+		<item key="selection" value="top()"/>
 		<list key="findhistory">
-			<item value="nick_nameCheck"/>
-			<item value="닉네임 중복"/>
-			<item value="닉네임중복"/>
-			<item value="registerCheck"/>
-			<item value="중복확인"/>
-			<item value="사용 가능한"/>
-			<item value="사용가능한"/>
-			<item value="checkType"/>
-			<item value="msgType"/>
-			<item value="성공메세지"/>
-			<item value="openModal"/>
-			<item value="msg"/>
-			<item value="roleCourceUpdate"/>
-			<item value="변경"/>
-			<item value="ㅂ"/>
+			<item value="top()"/>
+			<item value="navbarHeader"/>
+			<item value="top"/>
+			<item value="addUploadFile"/>
+			<item value="첨부파일추가"/>
+			<item value="download_btn"/>
+			<item value="$(&quot;#uploadFile2&quot;).hide();"/>
+			<item value="(oper == &quot;updateForm&quot;)"/>
+			<item value="name=&quot;uploadFile2&quot;"/>
+			<item value="첨부파일 추가하기"/>
+			<item value="addUploadFile2"/>
+			<item value="첨부파일"/>
+			<item value="add"/>
+			<item value="cmtComment"/>
+			<item value="id=&quot;cmt_"/>
 		</list>
 		<list key="replacehistory">
 			<item value=""/>
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
-		<item key="DIALOG_X_ORIGIN" value="1508"/>
-		<item key="DIALOG_Y_ORIGIN" value="531"/>
+		<item key="DIALOG_X_ORIGIN" value="9"/>
+		<item key="DIALOG_Y_ORIGIN" value="285"/>
 		<item key="DIALOG_WIDTH" value="272"/>
 		<item key="DIALOG_HEIGHT" value="363"/>
 		<item key="DIALOG_FONT_NAME" value="1|맑은 고딕|9.0|0|WINDOWS|1|-15|0|0|0|400|0|0|0|1|0|0|0|0|맑은 고딕"/>
