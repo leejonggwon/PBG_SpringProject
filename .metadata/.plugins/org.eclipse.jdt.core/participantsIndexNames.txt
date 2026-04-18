@@ -27,6 +27,8 @@ C:\eGovFrame-4.0.0\workspace.edu\.metadata\.plugins\org.eclipse.jst.jsp.core\jsp
 \SpringMVC03\src\main\java
 C:\eGovFrame-4.0.0\workspace.edu\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\939760403.index
 \kk\src\main\java
+C:\eGovFrame-4.0.0\workspace.edu\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\1958034218.index
+\SpringMVC11_BT23\src\main\resources
 C:\eGovFrame-4.0.0\workspace.edu\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\3368089327.index
 \lab303-easycompany\src\main\java
 C:\eGovFrame-4.0.0\workspace.edu\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\1685368980.index
@@ -201,6 +203,8 @@ C:\eGovFrame-4.0.0\workspace.edu\.metadata\.plugins\org.eclipse.jst.jsp.core\jsp
 \lab104-common-component-tutor\src\main\java
 C:\eGovFrame-4.0.0\workspace.edu\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\979164132.index
 \lab301-mvc-tutor\src\main\java
+C:\eGovFrame-4.0.0\workspace.edu\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\3534843073.index
+\SpringMVC11_BT23\src\main\resources
 C:\eGovFrame-4.0.0\workspace.edu\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\2504022153.index
 \lab105-template-project-tutor\src\main\java
 C:\eGovFrame-4.0.0\workspace.edu\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\4065547126.index
@@ -275,6 +279,8 @@ C:\eGovFrame-4.0.0\workspace.edu\.metadata\.plugins\org.eclipse.jst.jsp.core\jsp
 \SpringMVC11_BT17\src\main\resources
 C:\eGovFrame-4.0.0\workspace.edu\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\2465795515.index
 \SpringMVC09_CP10\src\main\java
+C:\eGovFrame-4.0.0\workspace.edu\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\2987548951.index
+\SpringMVC11_BT23\src\main\resources
 C:\eGovFrame-4.0.0\workspace.edu\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\3438834552.index
 \lab401-mobile-guide-3.5\src\main\java
 C:\eGovFrame-4.0.0\workspace.edu\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\1732164661.index
@@ -331,6 +337,8 @@ C:\eGovFrame-4.0.0\workspace.edu\.metadata\.plugins\org.eclipse.jst.jsp.core\jsp
 \SpringMVC11_BT14\src\main\resources
 C:\eGovFrame-4.0.0\workspace.edu\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\3131703318.index
 \SpringMVC11_BT13\src\main\resources
+C:\eGovFrame-4.0.0\workspace.edu\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\2884332899.index
+\SpringMVC11_BT23\src\main\resources
 C:\eGovFrame-4.0.0\workspace.edu\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\3871179392.index
 \SpringMVC11_BT10\src\main\resources
 C:\eGovFrame-4.0.0\workspace.edu\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\2741494544.index
@@ -695,6 +703,8 @@ C:\eGovFrame-4.0.0\workspace.edu\.metadata\.plugins\org.eclipse.jst.jsp.core\jsp
 \SpringMVC09_CP4\src\main\java
 C:\eGovFrame-4.0.0\workspace.edu\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\3290733446.index
 \SpringMVC04\src\main\java
+C:\eGovFrame-4.0.0\workspace.edu\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\3787305219.index
+\SpringMVC11_BT23\src\main\resources
 C:\eGovFrame-4.0.0\workspace.edu\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\4045069434.index
 \ComunicationProject3\src\main\java
 C:\eGovFrame-4.0.0\workspace.edu\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\1705773398.index

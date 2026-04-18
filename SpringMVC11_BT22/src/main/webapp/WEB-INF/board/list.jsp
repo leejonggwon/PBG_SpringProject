@@ -78,7 +78,7 @@
 	    		<div class= "col-lg-5">
 	    			<div class="card" style="min-height: 500px; max-height: 1000px;">
 	    				<div class="card-body">
-	    				<p>※욕설 뿐 아니라 모욕적인 표현이 담긴 게시글은 삭제됩니다.</p>
+	    				<p>※ [백엔드] 커뮤니티 게시판입니다. 욕설 및 모욕적인 표현이 포함된 게시글은 운영 정책에 따라 삭제됩니다.</p>
 	    					<table class="table table-bordered table-hover">
 	    						<thead class="table-cnt">
 	    							<th style="width: 8%;">번호</th>

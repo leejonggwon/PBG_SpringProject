@@ -88,11 +88,11 @@
     							<th style="width: 7%;">이름</th>
     							<th style="width: 11%;">닉네임</th>
     							<th style="width: 7%;">탈퇴여부</th>
-    							<th style="width: 10%;">권한</th>						
-    							<th style="width: 15%;">권한 수정</th>
+    							<th style="width: 9%;">권한</th>						
+    							<th style="width: 14%;">권한 수정</th>
     							<th style="width: 7%;">교육과정</th>						
     							<th style="width: 15%;">교육과정 수정</th>
-    							<th style="width: 5%;"></th>
+    							<th style="width: 7%;"></th>
     						</thead>
     						<tbody id="view">
     							<!-- 비동기 방식으로 가져온 회원정보테이블 나오게할 부분-->
@@ -263,11 +263,11 @@
 			data : { "username" : username , "role" : role, "cource" : cource },
 			success : function(){			
 				//alert(member.username + "님 회원정보가 변경되었습니다");			
-				//$("#messageType").find(".modal-header").attr("class", "modal-header bg-primary text-white");				
-				//$("#msgType").text("성공메세지");
-				//$("#msg").text("회원정보가 변경되었습니다");
+				$("#messageType").find(".modal-header").attr("class", "modal-header bg-primary text-white");				
+				$("#msgType").text("성공메세지");
+				$("#msg").text("회원정보가 변경되었습니다");
 				
-				//$("#myMessageOpenModal").click();
+				$("#myMessageOpenModal").click();
 				
 				pageMove(page);
 				

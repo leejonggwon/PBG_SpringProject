@@ -77,7 +77,7 @@
 	    		<div class= "col-lg-5">
 	    			<div class="card" style="min-height: 500px; max-height: 1000px;">
 	    				<div class="card-body">
-	    				<p>※ 강의전용 게시판입니다. 관리자/강사 등급 이외는 게시물 등록이 제한됩니다</p>
+	    				<p>※ [백엔드] 강의전용 게시판입니다. 관리자/강사 등급 이외는 게시물 등록이 제한됩니다</p>
 	    					<table class="table table-bordered table-hover">
 	    						<thead class="table-cnt">
 	    							<th style="width: 8%;">번호</th>
