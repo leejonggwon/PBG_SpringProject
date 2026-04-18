@@ -12,6 +12,7 @@ public class SpringMvc11_BTApplication {
 		//Spring Boot를 구동 및 실행하는 클래스 
 		SpringApplication.run(SpringMvc11_BTApplication.class, args);
 		
+		
 	} 
 }
 
