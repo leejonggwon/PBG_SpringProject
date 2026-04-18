@@ -138172,3 +138172,22 @@ org.eclipse.core.runtime.CoreException: Launch configuration SpringMvc11_BTAppli
 2026-04-18 16:31:26,419 [Worker-23: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
 2026-04-18 16:31:26,419 [Worker-23: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered properties files.
 2026-04-18 16:31:26,420 [Worker-23: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2026-04-18 16:31:26,426 [Worker-23: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 29 resources
+2026-04-18 16:31:26,451 [Worker-23: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2026-04-18 16:31:26,451 [Worker-23: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered properties files.
+2026-04-18 16:31:26,451 [Worker-23: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\eGovFrame-4.0.0\workspace.edu\SpringMVC11_BT24\src\test\resources
+2026-04-18 16:32:44,912 [Worker-41: Building] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: kr.spring:SpringMVC10:0.0.1-SNAPSHOT @ C:\eGovFrame-4.0.0\workspace.edu\SpringMVC11_BT25\pom.xml.
+2026-04-18 16:32:45,439 [Worker-41: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2026-04-18 16:32:45,440 [Worker-41: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered properties files.
+2026-04-18 16:32:45,440 [Worker-41: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2026-04-18 16:32:45,443 [Worker-41: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 29 resources
+2026-04-18 16:32:45,518 [Worker-41: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2026-04-18 16:32:45,518 [Worker-41: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered properties files.
+2026-04-18 16:32:45,518 [Worker-41: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\eGovFrame-4.0.0\workspace.edu\SpringMVC11_BT25\src\test\resources
+2026-04-18 16:32:47,685 [Worker-41: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2026-04-18 16:32:47,686 [Worker-41: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered properties files.
+2026-04-18 16:32:47,688 [Worker-41: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2026-04-18 16:32:47,693 [Worker-41: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 29 resources
+2026-04-18 16:32:47,770 [Worker-41: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2026-04-18 16:32:47,770 [Worker-41: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered properties files.
+2026-04-18 16:32:47,770 [Worker-41: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\eGovFrame-4.0.0\workspace.edu\SpringMVC11_BT25\src\test\resources
