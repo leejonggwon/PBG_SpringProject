@@ -17,10 +17,19 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
 <link rel="stylesheet" href="${cpath}/resources/css/btnStyle.css">
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+ 
+ 
  
  
 </head>
@@ -40,24 +49,31 @@ input[type="radio"] {
 	<div class="card">
 		<div class="card-header">회원가입폼</div>
 		<div class="card-body">
-		<form action="${cpath}/member/join" method="post"> 
-		<input type="hidden" name="enabled" value="true">
-		<input type="hidden" name="password" id="password" value="" > <!-- 두 password 비교 후 이값을 넘길것이다 -->
-		<input type="hidden" name="user_code" id="user_code"> 
+		<form id="joinFrm" action="${cpath}/member/join" method="post"> 
+			<input type="hidden" name="enabled" value="true">
+			<input type="hidden" name="password" id="password" value="" > <!-- 두 password 비교 후 이값을 넘길것이다 -->
+			<input type="hidden" name="user_code" id="user_code"> 
 		
 			<table style="text-align: center; border: 1px solid #dddddd" class ="table table-bordered">
 				<tr>
 					<td style="width: 110px; vertical-align: middle;">아이디</td>
-					<td><input required="required" type="text" name="username" id="username" class="form-control" maxlength="20" placeholder="아이디를 입력하세요"></td>	
-					<td style="width: 180px;"><button type="button" onclick="registerCheck()" class="btn btn-custom">아이디 중복확인</button></td>
+					<td><input required="required" type="text" name="username" id="username" onkeyup="usernameCheck()" class="form-control" maxlength="20" placeholder="아이디 입력 (영문 숫자 포함 6~20자)"></td>	
+					<td style="width: 180px;"><button type="button" onclick="registerCheck()" class="btn btn-custom">아이디 중복확인</button></td>		
+				</tr>
+				<tr>
+					<td style="width: 200px; vertical-align: middle;">아이디 형식확인</td>
+					<td colspan ="2" style="text-align: center">
+						<span id="usernamePassMessage"></span> <!-- 비밀번호 일치 여부 메시지 표시-->															
+					</td>
 				</tr>			
 				<tr>
 					<td style="width: 110px; vertical-align: middle;">비밀번호</td>
-					<td colspan ="2"><input class="form-control" type="password" name="password1" id="password1" onkeyup="passwordCheck()" maxlength="20" required="required" placeholder="비밀번호를 입력하세요"></td>									
+					<td><input class="form-control" type="password" name="password1" id="password1" onkeyup="passwordCheck()" maxlength="20" required="required" placeholder="비밀번호 입력 (영문 숫자 특수문자 포함 8~20자)"></td>														
+					<td style="width: 200px;"><button id="password1CheckBtn" type="button" onclick="pwdShow()" class="btn btn-custom"><i id="password1CheckBtn_icon" class="fas fa-eye" style="color: rgb(255, 255, 255);"></i>&nbsp;&nbsp;<span id="password1CheckBtn_text">비밀번호 보이기</span></button></td>		
 				</tr>	
 				<tr>
 					<td style="width: 110px; vertical-align: middle;">비밀번호확인</td>
-					<td colspan ="2"><input class="form-control" type="password" name="password2" id="password2" onkeyup="passwordCheck()" maxlength="20" required="required" placeholder="비밀번호를 확인하세요"></td>					
+					<td colspan ="2"><input class="form-control" type="password" name="password2" id="password2" onkeyup="passwordCheck()" maxlength="20" required="required" placeholder="비밀번호 재입력"></td>					
 				</tr>
 				
 				<tr>
@@ -118,7 +134,10 @@ input[type="radio"] {
 				
 				<tr>
 					<td colspan ="3" style="text-align: right">
-						<input type="submit" class="btn btn-custom btn" value="회원가입">
+						
+						
+						<button type="button" data-oper="join" class="btn btn-custom btn">회원가입</button>
+						
 						<input type="reset" class="btn btn-outline-dark" value="입력취소">												
 						<button type="button" class="btn btn-secondary" onclick="location.href='${cpath}/member/login'">로그인로 페이지이동</button>						
 					</td>
@@ -190,7 +209,7 @@ input[type="radio"] {
   <script type="text/javascript">
   $(document).ready(function(){
 	  
-	  user_code(); //사용자번호
+	  user_code(); //사용자번호 생성
 	  
 	  if(${not empty msgType}){ //들어오는 msgType에 데이터가 감지되는경우
 			if(${msgType eq "실패메세지"}){ //msgType 데이터가 "실패메세지" 인 경우
@@ -198,6 +217,47 @@ input[type="radio"] {
 			}
 			$("#myMessageOpenModal").click(); //모달창 실행
 		}
+	   
+	  
+	  var joinFrm = $("#joinFrm");
+	  
+	  $("button[data-oper]").on("click", function(){
+		 
+		  
+		  var oper = $(this).data("oper");
+		  //숫자 + 영문 + 특수문자 조합, 8~20자
+		  //Regex: Regular Expression '정규 표현식'
+		  const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,20}$/;
+		  var password = $("#password").val(); //비밀번호
+		  var password1 = $("#password1").val(); 
+		  var password2 = $("#password2").val(); 
+		  
+		  if(oper == "join"){
+			  if(password != password1 || password1 != password2 ){
+				  alert("비밀번호가 서로 일치하지 않습니다");
+				  
+				  $("#password").val(""); //비밀번호
+				  $("#password1").val(""); 
+				  $("#password2").val(""); 
+			        return false;
+			  }
+			  
+			  //.test() 통과되는지 확인하는 함수 
+			  if (!passwordRegex.test(password)) {
+				  alert("영문, 숫자, 특수문자를 조합하여 8~20자로 입력해주세요.");
+				  $("#password").val(""); //비밀번호
+				  $("#password1").val(""); 
+				  $("#password2").val(""); 
+			        return false;	        			  
+			    } 		    
+
+			        joinFrm.submit();
+			    
+			 
+		  }
+		  
+	  });
+	  
 	  
   });//end ready
   
@@ -291,6 +351,30 @@ input[type="radio"] {
 		}		
 	};
 	
+	//username체크
+	function usernameCheck() {
+		
+		//영문자(대소문자 상관없음) 1개 이상 + 숫자 1개 이상
+		// ^ (시작)
+		// (?=.*[A-Za-z]) ← 영문자 하나는 꼭 있어야 한다
+		// (?=.*\d) ← 숫자 하나는 꼭 있어야 한다
+		// [A-Za-z\d] ← 영문자나 숫자만 쓸 수 있다
+		// {6,20} ← 이걸 6~20글자로 맞춘다
+		// $ (끝)
+		const idRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,20}$/; 
+		
+		var username = $("#username").val();
+		
+		if(!idRegex.test(username)){
+			$("#usernamePassMessage").html("영문 숫자를 조합하여 6~20자로 입력해주세요")
+			$("#usernamePassMessage").css("color", "red");
+		}else{
+			$("#usernamePassMessage").html("사용 가능한 아이디 형식입니다. 아이디 중복 확인을 진행해 주세요.")
+			$("#usernamePassMessage").css("color", "blue");
+				
+		}		
+	};
+	
 	//user_code 생성
 	function generateRandomCode(length) {
 	    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -308,6 +392,25 @@ input[type="radio"] {
 		$("#user_code").attr("value", myCode);
 	}
 	
+	//비밀번호보이기 기능
+	function pwdShow() {
+		const password1 = $("#password1");	
+		const btn = $("#password1CheckBtn"); 
+		const btn_icon = $("#password1CheckBtn_icon"); 
+		const btn_text = $("#password1CheckBtn_text"); 
+				
+	    if (password1.attr("type") == "password") {      	
+	    	password1.attr("type", "text");
+	    	btn_text.text("비밀번호 숨기기");
+	    	btn_icon.attr("class","fas fa-eye-slash").attr("style","color: rgb(0, 0, 0);");	    	
+	        btn.attr("class","btn btn-light");	   	        
+	    } else {     
+	    	password1.attr("type", "password");    
+	    	btn_text.text("비밀번호 보이기");   
+	    	btn_icon.attr("class","fas fa-eye").attr("style","color: rgb(255, 255, 255);");
+	        btn.attr("class","btn btn-custom");        
+	    }
+	}
   
   
   </script>

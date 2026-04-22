@@ -25,5 +25,6 @@
 <aop-project name="SpringMVC07"/>
 <aop-project name="SpringMVC10"/>
 <aop-project name="spring014_websocket2"/>
+<aop-project name="SpringMVC11_BT25"/>
 <aop-project name="SpringBook"/>
 </aop-reference-model>

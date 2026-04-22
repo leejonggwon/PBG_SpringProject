@@ -16,10 +16,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
   <link rel="stylesheet" href="${cpath}/resources/css/btnStyle.css">
+  
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+  
+  
   <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.slim.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  
   
 <style>
 .carousel-inner > .item > img,
@@ -46,14 +55,15 @@
 				<table style="text-align: center; border: 1px solid #dddddd" class ="table table-borderd">
 					<tr>
 						<td style="width: 110px; vertical-align: middle;">아이디</td>
-						<td><input type="text" name="username" id="username" class="form-control" maxlength="20" placeholder="아이디를 입력하세요"></td>						
+						<td colspan ="2"><input type="text" name="username" id="username" class="form-control" maxlength="20" placeholder="아이디를 입력하세요"></td>						
 					</tr>
 					<tr>
 						<td style="width: 110px; vertical-align: middle;">비밀번호</td>
 						<td><input required="required" type="password" name="password" id="password" class="form-control" maxlength="20" placeholder="비밀번호를 입력하세요"></td>								
+						<td style="width: 200px;"><button id="passwordCheckBtn" type="button" onclick="pwdShow()" class="btn btn-custom"><i id="passwordCheckBtn_icon" class="fas fa-eye" style="color: rgb(255, 255, 255);"></i>&nbsp;&nbsp;<span id="passwordCheckBtn_text">비밀번호 보이기</span></button></t
 					</tr>
 					<tr>
-						<td colspan ="2">
+						<td colspan ="3">
 							<span id="passMessage" style="text-align:center"></span> 
 							<input type="submit" class="btn btn-custom" value="로그인">												
 							<a type="button" class="btn btn-outline-dark" href="${cpath}/member/joinForm">회원가입</a>		
@@ -177,7 +187,28 @@
 				$("#myMessageOpenModal").click(); //모달창 실행
 			}
 			
-		});
+		}); //ready
+		
+		
+		//비밀번호보이기 기능
+		function pwdShow() {
+			const password = $("#password");	
+			const btn = $("#passwordCheckBtn"); 
+			const btn_icon = $("#passwordCheckBtn_icon"); 
+			const btn_text = $("#passwordCheckBtn_text"); 
+					
+		    if (password.attr("type") == "password") {      	
+		    	password.attr("type", "text");
+		    	btn_text.text("비밀번호 숨기기");
+		    	btn_icon.attr("class","fas fa-eye-slash").attr("style","color: rgb(0, 0, 0);");	    	
+		        btn.attr("class","btn btn-light");	   	        
+		    } else {     
+		    	password.attr("type", "password");    
+		    	btn_text.text("비밀번호 보이기");   
+		    	btn_icon.attr("class","fas fa-eye").attr("style","color: rgb(255, 255, 255);");
+		        btn.attr("class","btn btn-custom");        
+		    }
+		}
 	
 	</script>
 

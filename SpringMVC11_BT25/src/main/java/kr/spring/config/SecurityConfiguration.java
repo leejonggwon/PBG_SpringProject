@@ -33,13 +33,14 @@ public class SecurityConfiguration {
 		 	.antMatchers("/", "/member/**").permitAll()
 		 	// "/" 또는 "member" 하위의 모든 접근을 허용하겠다(로그인 안해도 가능) 
 		 	.antMatchers("/board/**").authenticated()
+		 	.antMatchers("/learning/**").authenticated()
 		 	// board로 접근하는 모든 경우는 인증된(로그인한)사용자만 허용한다
 		 	.and() 
 		 	.formLogin() 
 		 	.loginPage("/member/login") 
 		 	//시큐리티가 제공하는 기본창 말고 우리가만든 별도의 로그인 폼을 사용하겠다
 		 	//로그인 페이지는 member/login를 사용한다  
-		 	.defaultSuccessUrl("/board/list") //로그인 성공시 "board/list"로 이동하겠다
+		 	.defaultSuccessUrl("/learning/learning_list") //로그인 성공시 "board/list"로 이동하겠다
 		 	.and() 
 		 	.logout() 
 		 	.logoutUrl("/member/logout") 

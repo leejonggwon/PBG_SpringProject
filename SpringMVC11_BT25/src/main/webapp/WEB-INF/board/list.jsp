@@ -166,7 +166,7 @@
 									<div class="form-group">
 										<input type="text" value="${pageMaker.cri.keyword}" class="form-control" name="keyword">
 									</div>
-									<button type="submit" class="btn btn-custom">검색</button>									
+									&nbsp;<button type="submit" class="btn btn-custom">검색</button>									
 								</form>
 							</div>
 							

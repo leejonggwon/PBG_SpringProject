@@ -45,25 +45,27 @@
 	<div class="col-lg-2">
 		<div class="card" style="min-height: 500px; max-height: 2000px;">
 			<div class="card-body">
-				<h6 class="card-title" style="text-align: center">
+				<h5 class="card-title" style="text-align: center">
 				<%-- **시큐리티의 principal.member 객체를 'mvo'라는 변수에 담는다 --%>
 				<sec:authentication property="principal.member" var="mvo" />
 				
 					<c:choose>
 						<%--'mvo' 변수로 체크하면 회원값이 출력된다--%>
 						<c:when test="${not empty mvo.profile}">
-							<img class="rounded-circle" width="180" height="180"
+							<img class="rounded-circle" width="150" height="150"
 								src="${cpath}/profile_upload/${mvo.profile}" alt="profile" />
 						</c:when>
 						<c:otherwise>
-							<img class="rounded-circle" width="180" height="180"
+							<img class="rounded-circle" width="150" height="150"
 								src="${cpath}/resources/images/default.png" alt="default_img" />
 						</c:otherwise>
 					</c:choose>
 					
 					<br><br>
-					<p class="card-text">${mvo.nick_name} (${mvo.username})</p>
-					</h6>
+					<p class="card-text">${mvo.nick_name}</p>
+					</h5>
+					<p style="text-align: center" class="card-text">${mvo.name} (${mvo.username})</p>
+					
 				
 									
 					<p style="text-align: center">내 등급 [
@@ -91,7 +93,7 @@
 					
 						<p style="text-align: center">[백엔드]</p>
 						<form action="${cpath}/learning/learning_list">
-							<button id="learning_list" type="submit" class="form-control btn btn-light btn-sm">강의</button>
+							<button id="learning_list" type="submit" class="form-control btn btn-light btn-sm">수업</button>
 						</form><br>
 						<form action="${cpath}/board/list">
 							<button id="list" type="submit" class="form-control btn btn-light btn-sm">커뮤니티</button>
@@ -100,7 +102,7 @@
 						
 						<p style="text-align: center">[프론트엔드]</p>
 						<form action="#">
-							<button type="submit" class="form-control btn btn-light btn-sm">강의</button>
+							<button type="submit" class="form-control btn btn-light btn-sm">수업</button>
 						</form><br>
 						<form action="#">
 							<button type="submit" class="form-control btn btn-light btn-sm">커뮤니티</button>
@@ -109,7 +111,7 @@
 						
 						<p style="text-align: center">[UX/UI 디자인]</p>
 						<form action="#">
-							<button type="submit" class="form-control btn btn-light btn-sm">강의</button>
+							<button type="submit" class="form-control btn btn-light btn-sm">수업</button>
 						</form><br>
 						<form action="#">
 							<button type="submit" class="form-control btn btn-light btn-sm">커뮤니티</button>
@@ -118,7 +120,7 @@
 						
 						<p style="text-align: center">[데이터분석]</p>
 						<form action="#">
-							<button type="submit" class="form-control btn btn-light btn-sm">강의</button>
+							<button type="submit" class="form-control btn btn-light btn-sm">수업</button>
 						</form><br>
 						<form action="#">
 							<button type="submit" class="form-control btn btn-light btn-sm">커뮤니티</button>
@@ -137,9 +139,9 @@
 					<c:if test="${mvo.role != 'ADMIN'}">
 						<c:choose>
 					        <c:when test="${mvo.cource == 'BACK'}">
-					        	<p style="text-align: center">내 교육과정 [백엔드]</p>
+					        	<p style="text-align: center">내 수업 [백엔드]</p>
 								<form action="${cpath}/learning/learning_list">
-									<button id="learning_list" type="submit" class="form-control btn btn-light btn-sm">강의</button>
+									<button id="learning_list" type="submit" class="form-control btn btn-light btn-sm">수업</button>
 								</form><br>
 								<form action="${cpath}/board/list">
 									<button id="list" type="submit" class="form-control btn btn-light btn-sm">커뮤니티</button>
@@ -148,7 +150,7 @@
 					        <c:when test="${mvo.cource == 'FRONT'}">
 					        	<p style="text-align: center">내 교육과정 [프론트엔드]</p>
 								<form action="${cpath}/learning/learning_list">
-									<button id="learning_list" type="submit" class="form-control btn btn-light btn-sm">강의</button>
+									<button id="learning_list" type="submit" class="form-control btn btn-light btn-sm">수업</button>
 								</form><br>
 								<form action="${cpath}/board/list">
 									<button id="list" type="submit" class="form-control btn btn-light btn-sm">커뮤니티</button>
@@ -157,7 +159,7 @@
 					        <c:when test="${mvo.cource == 'DESIGN'}">
 					        	<p style="text-align: center">내 교육과정 [UX/UI 디자인]</p>
 								<form action="${cpath}/learning/learning_list">
-									<button id="learning_list" type="submit" class="form-control btn btn-light btn-sm">강의</button>
+									<button id="learning_list" type="submit" class="form-control btn btn-light btn-sm">수업</button>
 								</form><br>
 								<form action="${cpath}/board/list">
 									<button id="list" type="submit" class="form-control btn btn-light btn-sm">커뮤니티</button>
@@ -166,7 +168,7 @@
 					        <c:when test="${mvo.cource == 'DATA'}">
 					        	<p style="text-align: center">내 교육과정 [데이터분석]</p>
 								<form action="${cpath}/learning/learning_list">
-									<button id="learning_list" type="submit" class="form-control btn btn-light btn-sm">강의</button>
+									<button id="learning_list" type="submit" class="form-control btn btn-light btn-sm">수업</button>
 								</form><br>
 								<form action="${cpath}/board/list">
 									<button id="list" type="submit" class="form-control btn btn-light btn-sm">커뮤니티</button>
