@@ -6,31 +6,31 @@
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
-		<item key="selection" value="아이디"/>
+		<item key="selection" value="권한"/>
 		<list key="findhistory">
-			<item value="아이디"/>
+			<item value="권한"/>
+			<item value="role-textSt"/>
+			<item value="role-text"/>
+			<item value="번호"/>
+			<item value="password"/>
 			<item value="passwordCheck"/>
-			<item value="username"/>
-			<item value="password2"/>
-			<item value="password1"/>
-			<item value="pageFrm"/>
-			<item value="joinFrm"/>
-			<item value="joinForm"/>
-			<item value="id=&quot;pageFrm"/>
-			<item value="data-oper"/>
-			<item value="회원가입"/>
-			<item value="top()"/>
-			<item value="navbarHeader"/>
-			<item value="top"/>
-			<item value="addUploadFile"/>
+			<item value="id=&quot;password"/>
+			<item value="passwordCheckBtn_text"/>
+			<item value="pwdShow"/>
+			<item value="내용"/>
+			<item value="내영"/>
+			<item value="img"/>
+			<item value="uploadFile_input"/>
+			<item value="register"/>
+			<item value="이미지첨부"/>
 		</list>
 		<list key="replacehistory">
 			<item value=""/>
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
-		<item key="DIALOG_X_ORIGIN" value="1512"/>
-		<item key="DIALOG_Y_ORIGIN" value="595"/>
+		<item key="DIALOG_X_ORIGIN" value="119"/>
+		<item key="DIALOG_Y_ORIGIN" value="9"/>
 		<item key="DIALOG_WIDTH" value="272"/>
 		<item key="DIALOG_HEIGHT" value="363"/>
 		<item key="DIALOG_FONT_NAME" value="1|맑은 고딕|9.0|0|WINDOWS|1|-15|0|0|0|400|0|0|0|1|0|0|0|0|맑은 고딕"/>
