@@ -6,31 +6,31 @@
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
-		<item key="selection" value="권한"/>
+		<item key="selection" value="reply"/>
 		<list key="findhistory">
-			<item value="권한"/>
-			<item value="role-textSt"/>
-			<item value="role-text"/>
-			<item value="번호"/>
-			<item value="password"/>
-			<item value="passwordCheck"/>
-			<item value="id=&quot;password"/>
-			<item value="passwordCheckBtn_text"/>
-			<item value="pwdShow"/>
-			<item value="내용"/>
-			<item value="내영"/>
-			<item value="img"/>
-			<item value="uploadFile_input"/>
+			<item value="reply"/>
+			<item value="goReply"/>
+			<item value="답글등록"/>
+			<item value="답글"/>
 			<item value="register"/>
-			<item value="이미지첨부"/>
+			<item value="goUpdate()"/>
+			<item value="updateComplete"/>
+			<item value="updateForm"/>
+			<item value="goUpdate"/>
+			<item value="update"/>
+			<item value="printBoard"/>
+			<item value="readonly"/>
+			<item value="replyComplete"/>
+			<item value="selectedLecture"/>
+			<item value="id=&quot;lecture"/>
 		</list>
 		<list key="replacehistory">
 			<item value=""/>
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
-		<item key="DIALOG_X_ORIGIN" value="119"/>
-		<item key="DIALOG_Y_ORIGIN" value="9"/>
+		<item key="DIALOG_X_ORIGIN" value="1529"/>
+		<item key="DIALOG_Y_ORIGIN" value="179"/>
 		<item key="DIALOG_WIDTH" value="272"/>
 		<item key="DIALOG_HEIGHT" value="363"/>
 		<item key="DIALOG_FONT_NAME" value="1|맑은 고딕|9.0|0|WINDOWS|1|-15|0|0|0|400|0|0|0|1|0|0|0|0|맑은 고딕"/>

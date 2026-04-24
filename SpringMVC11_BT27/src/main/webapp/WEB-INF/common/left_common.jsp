@@ -35,9 +35,14 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 </head>
 <style>
-.table-cnt {
-    text-align: center;
+.btn_gap {
+    margin-bottom: 8px;
 }
+.line_gap {
+    margin-bottom: 8px;
+}
+
+
 </style>
 
 <body>
@@ -45,7 +50,7 @@
 	<div class="col-lg-2">
 		<div class="card" style="min-height: 500px; max-height: 2000px;">
 			<div class="card-body">
-				<h5 class="card-title" style="text-align: center">
+				<h5 class="card-title" style="text-align: center; margin-bottom: 5px;">
 				<%-- **시큐리티의 principal.member 객체를 'mvo'라는 변수에 담는다 --%>
 				<sec:authentication property="principal.member" var="mvo" />
 				
@@ -64,10 +69,11 @@
 					<br><br>
 					<p class="card-text">${mvo.nick_name}</p>
 					</h5>
-					<p style="text-align: center" class="card-text">${mvo.name} (${mvo.username})</p>
-					
+					<div>
+						<p style="text-align: center" class="card-text">${mvo.name} (${mvo.username})</p>
+					</div>
 				
-									
+					<hr style="margin-top: 8px;">				
 					<p style="text-align: center">내 등급 [
 						<c:choose>
 					        <c:when test="${mvo.role == 'ADMIN'}">관리자</c:when>
@@ -78,52 +84,64 @@
 					    </c:choose>
 				    ] </p>				
 					<!-- <sec:authentication property="principal.member.role" /> -->
-					<hr>
+					
 
 					<!-- 관리자 권한-->
 					<sec:authorize access="hasRole('ADMIN')">
-						<form action="${cpath}/member/adminPage">
+						<form action="${cpath}/member/adminPage" class="btn_gap">
 							<button id="adminPage" type="submit" class="form-control btn btn-outline-dark btn-sm">관리자페이지</button>
 						</form>					
-						<br>
 						<form action="#">
 							<button type="submit" class="form-control btn btn-outline-dark btn-sm">강사전용 커뮤니티</button>
 						</form>
 						<hr>							
 					
 						<p style="text-align: center">[백엔드]</p>
-						<form action="${cpath}/learning/learning_list">
-							<button id="learning_list" type="submit" class="form-control btn btn-light btn-sm">수업</button>
-						</form><br>
-						<form action="${cpath}/board/list">
-							<button id="list" type="submit" class="form-control btn btn-light btn-sm">커뮤니티</button>
+						<form action="${cpath}/learning/learning_list" class="btn_gap">
+							<button id="learning_list" type="submit" class="form-control btn btn-light btn-sm">Back-End</button>
+						</form>
+						<form action="${cpath}/board/list" class="btn_gap">
+							<button id="list" type="submit" class="form-control btn btn-light btn-sm">Q&A</button>
+						</form>				
+						<form action="#" class="btn_gap">
+							<button id="#" type="#" class="form-control btn btn-light btn-sm">커뮤니티</button>
 						</form>
 						<hr>					
 						
 						<p style="text-align: center">[프론트엔드]</p>
-						<form action="#">
-							<button type="submit" class="form-control btn btn-light btn-sm">수업</button>
-						</form><br>
-						<form action="#">
-							<button type="submit" class="form-control btn btn-light btn-sm">커뮤니티</button>
+						<form action="#" class="btn_gap">
+							<button type="submit" class="form-control btn btn-light btn-sm">Front-End</button>
 						</form>
+						<form action="#" class="btn_gap">
+							<button type="submit" class="form-control btn btn-light btn-sm">Q&A</button>
+						</form>					
+						<form action="#" class="btn_gap">
+							<button id="#" type="#" class="form-control btn btn-light btn-sm">커뮤니티</button>
+						</form>
+						
 						<hr>
 						
 						<p style="text-align: center">[UX/UI 디자인]</p>
-						<form action="#">
-							<button type="submit" class="form-control btn btn-light btn-sm">수업</button>
-						</form><br>
-						<form action="#">
-							<button type="submit" class="form-control btn btn-light btn-sm">커뮤니티</button>
+						<form action="#" class="btn_gap">
+							<button type="submit" class="form-control btn btn-light btn-sm">UX/UI Design</button>
+						</form>
+						<form action="#" class="btn_gap">
+							<button type="submit" class="form-control btn btn-light btn-sm">Q&A</button>
+						</form>				
+						<form action="#" class="btn_gap">
+							<button id="#" type="#" class="form-control btn btn-light btn-sm">커뮤니티</button>
 						</form>
 						<hr>
 						
 						<p style="text-align: center">[데이터분석]</p>
-						<form action="#">
-							<button type="submit" class="form-control btn btn-light btn-sm">수업</button>
-						</form><br>
-						<form action="#">
-							<button type="submit" class="form-control btn btn-light btn-sm">커뮤니티</button>
+						<form action="#" class="btn_gap">
+							<button type="submit" class="form-control btn btn-light btn-sm">Data Analysis</button>
+						</form>
+						<form action="#" class="btn_gap">
+							<button type="submit" class="form-control btn btn-light btn-sm">Q&A</button>
+						</form>				
+						<form action="#" class="btn_gap">
+							<button id="#" type="#" class="form-control btn btn-light btn-sm">커뮤니티</button>
 						</form>						
 					</sec:authorize> <!-- end ADMIN -->
 		
@@ -140,38 +158,50 @@
 						<c:choose>
 					        <c:when test="${mvo.course == 'BACK'}">
 					        	<p style="text-align: center">내 수업 [백엔드]</p>
-								<form action="${cpath}/learning/learning_list">
-									<button id="learning_list" type="submit" class="form-control btn btn-light btn-sm">수업</button>
-								</form><br>
-								<form action="${cpath}/board/list">
-									<button id="list" type="submit" class="form-control btn btn-light btn-sm">커뮤니티</button>
+								<form action="${cpath}/learning/learning_list" class="btn_gap">
+									<button id="learning_list" type="submit" class="form-control btn btn-light btn-sm">Back-End</button>
+								</form>
+								<form action="${cpath}/board/list" class="btn_gap">
+									<button id="list" type="submit" class="form-control btn btn-light btn-sm">Q&A</button>
+								</form>				
+								<form action="#">
+									<button id="#" type="#" class="form-control btn btn-light btn-sm">커뮤니티</button>
 								</form>				
 					        </c:when>
 					        <c:when test="${mvo.course == 'FRONT'}">
 					        	<p style="text-align: center">내 교육과정 [프론트엔드]</p>
-								<form action="${cpath}/learning/learning_list">
-									<button id="learning_list" type="submit" class="form-control btn btn-light btn-sm">수업</button>
-								</form><br>
-								<form action="${cpath}/board/list">
-									<button id="list" type="submit" class="form-control btn btn-light btn-sm">커뮤니티</button>
+								<form action="${cpath}/learning/learning_list" class="btn_gap">
+									<button id="learning_list" type="submit" class="form-control btn btn-light btn-sm">Front-End</button>
+								</form>
+								<form action="${cpath}/board/list" class="btn_gap">
+									<button id="list" type="submit" class="form-control btn btn-light btn-sm">Q&A</button>
+								</form>				
+								<form action="#">
+									<button id="#" type="#" class="form-control btn btn-light btn-sm">커뮤니티</button>
 								</form>							 
 					        </c:when>
 					        <c:when test="${mvo.course == 'DESIGN'}">
 					        	<p style="text-align: center">내 교육과정 [UX/UI 디자인]</p>
-								<form action="${cpath}/learning/learning_list">
-									<button id="learning_list" type="submit" class="form-control btn btn-light btn-sm">수업</button>
-								</form><br>
-								<form action="${cpath}/board/list">
-									<button id="list" type="submit" class="form-control btn btn-light btn-sm">커뮤니티</button>
+								<form action="${cpath}/learning/learning_list" class="btn_gap">
+									<button id="learning_list" type="submit" class="form-control btn btn-light btn-sm">UX/UI Design</button>
+								</form>
+								<form action="${cpath}/board/list" class="btn_gap">
+									<button id="list" type="submit" class="form-control btn btn-light btn-sm">Q&A</button>
+								</form>			
+								<form action="#" class="btn_gap">
+									<button id="#" type="#" class="form-control btn btn-light btn-sm">커뮤니티</button>
 								</form>							  
 					        </c:when>
 					        <c:when test="${mvo.course == 'DATA'}">
 					        	<p style="text-align: center">내 교육과정 [데이터분석]</p>
 								<form action="${cpath}/learning/learning_list">
-									<button id="learning_list" type="submit" class="form-control btn btn-light btn-sm">수업</button>
+									<button id="learning_list" type="submit" class="form-control btn btn-light btn-sm">Data Analysis</button>
 								</form><br>
 								<form action="${cpath}/board/list">
-									<button id="list" type="submit" class="form-control btn btn-light btn-sm">커뮤니티</button>
+									<button id="list" type="submit" class="form-control btn btn-light btn-sm">Q&A</button>
+								</form><br>					
+								<form action="#">
+									<button id="#" type="#" class="form-control btn btn-light btn-sm">커뮤니티</button>
 								</form>							   
 					        </c:when>
 					    </c:choose>
@@ -180,16 +210,14 @@
 
 					<!-- 공통부분 -->
 					<hr>
-					<form action="${cpath}/member/memberUpdateForm_passwordCheckForm">
+					<form action="${cpath}/member/memberUpdateForm_passwordCheckForm" class="btn_gap">
 						<button id="memberUpdateForm" class="form-control btn btn-outline-dark btn-sm">계정관리</button>
 					</form>
-					<br>
-	
-					<form action="${cpath}/member/logout">
+					
+					<form action="${cpath}/member/logout" class="btn_gap">
 						<button type="submit" class="form-control btn btn-outline-dark btn-sm">로그아웃</button>
 					</form>
-	
-					<br>
+
 			</div>
 		</div>
 	</div>

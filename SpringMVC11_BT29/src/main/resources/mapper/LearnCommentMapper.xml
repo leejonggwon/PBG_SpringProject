@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.spring.mapper.LearnCommentMapper">
+	
+
+	<!-- 댓글등록하기 -->
+	<insert id="cmtInsert" parameterType="kr.spring.entity.LearnComment"> 
+		INSERT INTO LEARN_COMMENT(IDX, CMT_CONTENT, USERNAME, NAME, NICK_NAME, ROLE, PROFILE) 
+		VALUES (#{idx}, #{cmt_content}, #{username}, #{name}, #{nick_name}, #{role}, #{profile})
+	</insert>
+	
+	<!-- 댓글등록 -->
+	<insert id="cmtInsertSelectKey" parameterType="kr.spring.entity.LearnComment">
+		<selectKey keyProperty="cmt_idx,cmt_group" resultType="kr.spring.entity.LearnComment" order="BEFORE"> 
+			SELECT IFNULL(MAX(CMT_IDX) + 1, 1) as cmt_idx,
+				   IFNULL(MAX(CMT_GROUP) + 1, 1) as cmt_group
+				   FROM LEARN_COMMENT 	
+		</selectKey>
+		INSERT INTO LEARN_COMMENT(CMT_IDX, IDX, CMT_CONTENT, USERNAME, NAME, NICK_NAME, ROLE, PROFILE, CMT_GROUP, CMT_SEQUENCE, CMT_LEVEL, CMT_AVAILABLE)
+		VALUES(#{cmt_idx}, #{idx}, #{cmt_content}, #{username}, #{name}, #{nick_name}, #{role}, #{profile}, #{cmt_group}, 0, 0, 1)
+	</insert>
+
+	<!-- 댓글조회하기 -->
+	<select id="loadCmt" parameterType="Long" resultType="kr.spring.entity.LearnComment"> 
+	    SELECT *
+	    FROM LEARN_COMMENT
+	    WHERE IDX = #{idx} AND CMT_LEVEL = 0
+	    ORDER BY CMT_GROUP DESC, CMT_SEQUENCE ASC
+	</select>
+	
+	
+	
+	
+	<!-- 댓글삭제하기 -->
+	<delete id="cmtDelete">
+		UPDATE LEARN_COMMENT
+		SET CMT_AVAILABLE = #{role}
+		WHERE CMT_IDX = #{cmt_idx}
+	</delete>
+	
+	
+	<!-- 게시글상세보기  -->
+	<select id="cmtRead" parameterType="int" resultType="kr.spring.entity.LearnComment">
+		SELECT * FROM LEARN_COMMENT WHERE CMT_IDX = #{cmt_idx}
+	</select>
+	
+	
+	<!-- 새로운 댓글이 들어올 때 기존의 댓글 순서를 +1 하는 기능 -->
+	<!-- parent 부모글 : boardSequence=0, boardLevel=0, boardAvailable=1 -->
+	<!-- **cmt_group이 동일하고 부모글인 cmt_sequence 0보다 큰 데이터는 cmt_sequence + 1로 업데이트 해라 -->
+	<update id="cmtcmtSeqUpdate" parameterType="kr.spring.entity.LearnComment"  >
+		UPDATE LEARN_COMMENT
+		SET CMT_SEQUENCE = CMT_SEQUENCE + 1
+		WHERE CMT_GROUP = #{cmt_group} AND CMT_SEQUENCE > #{cmt_sequence} 
+	</update>
+	
+	<!-- 댓글당 대댓글수  -->
+	<update id="cmt_cmt_countUpdate" parameterType="kr.spring.entity.LearnComment"  >
+		UPDATE LEARN_COMMENT
+		SET CMT_CMT_COUNT = CMT_CMT_COUNT + 1
+		WHERE CMT_GROUP = #{cmt_group} AND CMT_LEVEL = 0 
+	</update>
+	
+	
+	
+	<!-- 답글저장기능 -->
+	<!-- IFNULL(MAX(IDX) + 1, 1) as idx : 새로 들어올 댓글 의 IDX 값을 자동으로 계산해서 하나 증가시켜 주는 역할 -->
+	<insert id="cmtcmtInsert" parameterType="kr.spring.entity.LearnComment">
+		<selectKey keyProperty="cmt_idx" resultType="kr.spring.entity.LearnComment" order="BEFORE"> 
+			SELECT IFNULL(MAX(CMT_IDX) + 1, 1) as cmt_idx
+				   FROM LEARN_COMMENT 	
+		</selectKey>
+		INSERT INTO LEARN_COMMENT(CMT_IDX, IDX, CMT_CONTENT, USERNAME, NAME, NICK_NAME, ROLE, PROFILE, CMT_GROUP, CMT_SEQUENCE, CMT_LEVEL, CMT_AVAILABLE)
+		VALUES(#{cmt_idx}, #{idx}, #{cmt_content}, #{username}, #{name}, #{nick_name}, #{role}, #{profile}, #{cmt_group}, #{cmt_sequence}, #{cmt_level}, 1)
+	</insert>
+	
+	
+	<!-- cmt_group 가져오기 기능 -->
+	<select id="getCmt_group" parameterType="int" resultType="int"> 
+	    SELECT CMT_GROUP FROM LEARN_COMMENT WHERE CMT_IDX = #{cmt_idx}
+	</select>
+	
+	
+	<!-- 대댓글조회하기 -->
+	<select id="loadCmtcmt" parameterType="kr.spring.entity.LearnComment" resultType="kr.spring.entity.LearnComment"> 
+	    SELECT *
+	    FROM LEARN_COMMENT
+	    WHERE IDX = #{idx} AND CMT_LEVEL = 1 AND CMT_GROUP = #{cmt_group}
+	    ORDER BY CMT_SEQUENCE ASC
+	</select>
+	
+	<select id="getCmt_cmt_count" parameterType="int" resultType="int"> 
+	    SELECT CMT_CMT_COUNT
+	    FROM LEARN_COMMENT
+	    WHERE CMT_IDX =#{cmt_idx}
+	</select>
+	
+	
+	
+	
+
+
+</mapper>
