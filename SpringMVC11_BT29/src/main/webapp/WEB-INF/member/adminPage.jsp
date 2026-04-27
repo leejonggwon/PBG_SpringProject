@@ -47,7 +47,7 @@
     		
     		<!-- 두번째+세번째 합침 -->
     		<div class= "col-lg-10">
-    			<div class="card" style="min-height: 500px; max-height: 1000px;">
+    			<div class="card" style="min-height: 800px; max-height: 1500px;">
     				<div class="card-body">
     					<br>
 

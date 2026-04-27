@@ -83,7 +83,7 @@
 	    		<div class= "col-lg-5">
 	    			<div class="card" style="min-height: 500px; max-height: 2000px;">
 	    				<div class="card-body">
-	    				<p>※ [백엔드] Q&A 게시판입니다. 욕설 및 모욕적인 표현이 포함된 게시글은 운영 정책에 따라 삭제됩니다.</p>
+	    				<p>※ [백엔드] 커뮤니티 게시판입니다. 욕설 및 모욕적인 표현이 포함된 게시글은 운영 정책에 따라 삭제됩니다.</p>
 	    					<table class="table table-bordered table-hover">
 	    						<thead class="table-cnt">
 	    							<th style="width: 9%;">번호</th>
@@ -273,7 +273,7 @@
 						
 	    						
 	    						<div id="uploadFile" class="form-group">
-	    							<label>이미지첨부</label>
+	    							<label>이미지업로드 (※이미지 형식의 파일만 등록할 수 있습니다)</label>
 	    							<input type="file" id="uploadFile_img" name="uploadFile" accept="image/*" class="form-control">    							
 		    					</div>
 	    						
@@ -541,17 +541,17 @@
 
   				if(attached_data){
   					$("#delete_attached_data_btn").show(); //'첨부파일삭제'버튼보이기 
-  					$("#delete_attached_data_btn button").attr("class", "btn btn-sm btn-dark").text(" 이미지첨부 삭제 (" + attached_data + ")" );				
+  					$("#delete_attached_data_btn button").attr("class", "btn btn-sm btn-dark").text(" 이미지 첨부파일 삭제 ( " + attached_data + " )" );				
   				} 
   				
   				if(attached_data2){
   					$("#delete_attached_data_btn2").show(); //'첨부파일삭제'버튼보이기 
-  					$("#delete_attached_data_btn2 button").attr("class", "btn btn-sm btn-dark").text(" 첨부파일 삭제 (" + attached_data2 + ")" );				
+  					$("#delete_attached_data_btn2 button").attr("class", "btn btn-sm btn-dark").text(" 첨부파일 삭제 ( " + attached_data2 + " )" );				
   				}
   				
   				if(attached_data3){
   					$("#delete_attached_data_btn3").show(); //'첨부파일삭제'버튼보이기 
-  					$("#delete_attached_data_btn3 button").attr("class", "btn btn-sm btn-dark").text(" 첨부파일2 삭제 (" + attached_data3 + ")" );				
+  					$("#delete_attached_data_btn3 button").attr("class", "btn btn-sm btn-dark").text(" 첨부파일2 삭제 ( " + attached_data3 + " )" );				
   				}
   				
   				$("#img_container").hide(); // 이미지숨기기
@@ -665,8 +665,8 @@
   		    //download_link <a>태그에 text 표시한다 
   		    $("#download_link").text(attached_data);
   		    
-  		    //숨겨져 있던 버튼을 화면에 보여줌
-  		    //$("#download_btn").show();
+  		
+  		    $("#download_btn").hide();
   		} else {
   		    // 파일이 없으면 버튼을 숨김
   		    $("#download_btn").hide();
@@ -1470,7 +1470,7 @@
 		
 		//id="delete_attached_data_btn" 안에 button 태그에 접근한다
 		//<input>태그의 경우는 .val()을 사용한다 
-		$("#delete_attached_data_btn button").attr("class", "btn btn-sm btn-outline-dark").text("첨부파일 삭제 완료");
+		$("#delete_attached_data_btn button").attr("class", "btn btn-sm btn-outline-dark").text("이미지 첨부파일 삭제 완료");
 	}
 	
 	//첨부된데이터2삭제
@@ -1488,7 +1488,7 @@
 		$("#regForm").find("input[name='attached_data3']").remove();
 		alert("첨부된 데이터가 삭제되었습니다");
 
-		$("#delete_attached_data_btn3 button").attr("class", "btn btn-sm btn-outline-dark").text("첨부파일 삭제 완료");
+		$("#delete_attached_data_btn3 button").attr("class", "btn btn-sm btn-outline-dark").text("첨부파일2 삭제 완료");
 	}
 	
 	//첨부파일추가하기 버튼

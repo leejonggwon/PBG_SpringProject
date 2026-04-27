@@ -6,31 +6,31 @@
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
-		<item key="selection" value="reply"/>
+		<item key="selection" value="타입"/>
 		<list key="findhistory">
-			<item value="reply"/>
-			<item value="goReply"/>
-			<item value="답글등록"/>
-			<item value="답글"/>
-			<item value="register"/>
-			<item value="goUpdate()"/>
-			<item value="updateComplete"/>
-			<item value="updateForm"/>
-			<item value="goUpdate"/>
-			<item value="update"/>
-			<item value="printBoard"/>
-			<item value="readonly"/>
-			<item value="replyComplete"/>
-			<item value="selectedLecture"/>
-			<item value="id=&quot;lecture"/>
+			<item value="타입"/>
+			<item value="role-textSt-instructor"/>
+			<item value="권한"/>
+			<item value="※"/>
+			<item value="type=&quot;file&quot;"/>
+			<item value="disabled"/>
+			<item value="프로필업로드"/>
+			<item value="프로필업데이트"/>
+			<item value="수정완료"/>
+			<item value="nick_name"/>
+			<item value="닉네임수정 되었습니다"/>
+			<item value="수정되었습니다"/>
+			<item value="$(&quot;#checkMessage&quot;).text(&quot;프로필 이미지가 변경되었습니다&quot;);"/>
+			<item value="var password1 = $(&quot;#password1&quot;).val();"/>
+			<item value="id=&quot;password"/>
 		</list>
 		<list key="replacehistory">
 			<item value=""/>
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
-		<item key="DIALOG_X_ORIGIN" value="1529"/>
-		<item key="DIALOG_Y_ORIGIN" value="179"/>
+		<item key="DIALOG_X_ORIGIN" value="109"/>
+		<item key="DIALOG_Y_ORIGIN" value="229"/>
 		<item key="DIALOG_WIDTH" value="272"/>
 		<item key="DIALOG_HEIGHT" value="363"/>
 		<item key="DIALOG_FONT_NAME" value="1|맑은 고딕|9.0|0|WINDOWS|1|-15|0|0|0|400|0|0|0|1|0|0|0|0|맑은 고딕"/>

@@ -77,7 +77,7 @@
 				   FROM BT_BOARD 	
 		</selectKey>
 		INSERT INTO BT_BOARD(IDX, USERNAME, ROLE, LECTURE, TITLE, CONTENT, WRITER, ATTACHED_DATA, ATTACHED_DATA2, ATTACHED_DATA3, BOARD_GROUP, BOARD_SEQUENCE, BOARD_LEVEL, BOARD_AVAILABLE)
-		VALUES(#{idx}, #{username}, #{role}, #{lecture}, #{title}, #{content}, #{writer}, #{attached_data}, #{attached_data2},  #{attached_data3},
+		VALUES(#{idx}, #{username}, #{role}, #{lecture}, #{title}, #{content}, #{writer}, #{attached_data}, #{attached_data2}, #{attached_data3},
 		#{board_group}, #{board_sequence}, #{board_level}, 1)
 	</insert>
 	

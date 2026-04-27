@@ -225,10 +225,10 @@
 							<form id="regForm">					
 								<input type="hidden" id="idx" name="idx" value="">	
 								<input type="hidden" id="attached_data" name="attached_data" value="${vo.attached_data}">									
+								<input type="hidden" id="attached_data2" name="attached_data2" value="${vo.attached_data2}">									
 								
 								<input type="hidden" id="username" name="username" value="<sec:authentication property='principal.member.username'/>">
 								<input type="hidden" id="role" name="role" value="<sec:authentication property='principal.member.role'/>">
-								<input type="hidden" id="attached_data2" name="attached_data2" value="${vo.attached_data2}">									
 								
 								<!-- 페이징정보 -->
 								<input type="hidden" id="page" name="page" value="${pageMaker.cri.page}">
@@ -238,7 +238,7 @@
 								<input type="hidden" id="keyword" name="keyword" value="${pageMaker.cri.keyword}">
 								
 								<!-- 강의선택 -->				
-								<div class="form-group" id="lecture_container">
+								<div class="form-group">
 									<label for="lecture"></label> 
 									<div class="form-inline justify-content-start"> 
 										<select id="lecture" name="lecture" class="form-control">
@@ -279,14 +279,13 @@
 	    						<div id="delete_attached_data_btn2" class="form-group" style="display: none">				
 	    							<button onclick="delete_attached_data2()" type="button"></button> 	
 	    						</div>
-	    									
 	    						
-	    						
+	    						<!-- 관리 강사만 첨부파일 아이콘 볼수있다 -->
 	    						<c:if test="${user.member.role =='ADMIN' || user.member.role =='INSTRUCTOR'}">
 		    						<div class="row">
 		    							<div class="col">
 		    								<div id="uploadFile" class="form-group">
-				    							<label>첨부파일(영상파일)</label>
+				    							<label>영상업로드 (※영상 형식의 파일만 등록할 수 있습니다)</label>
 				    							<!-- name값과 VO의 필드명이 다르게한다 -->
 				    							<input type="file" id="uploadFile_video" name="uploadFile" accept="video/*" class="form-control">
 				    						</div>
@@ -299,18 +298,18 @@
 	    						</c:if>
 	    						
 	    						<div id="uploadFile2" class="form-group" style="display: none;">
-	    							<label>첨부파일2</label> 						
+	    							<label>첨부파일</label> 						
 	    							<input type="file" name="uploadFile2" class="form-control">
 	    						</div>
 	    						
 	    						<!-- 다운로드링크 -->
 	    						<div id="download_btn" style="display: none;" class="mb-3">
-	    							<label>첨부파일(영상파일)</label><br>
+	    							<label>영상파일</label><br>
 	    							<a id="download_link" href="#"></a>					       
 	    						</div>
 	    						
 	    						<div id="download_btn2" style="display: none;" class="mb-3">
-	    							<label>첨부파일2</label><br>
+	    							<label>첨부파일</label><br>
 	    							<a id="download_link2" href="#"></a>					       
 	    						</div>
 	    										
@@ -323,7 +322,7 @@
 	    						<!-- 게시글등록시 버튼 -->
 	    						<c:if test="${user.member.role =='ADMIN' || user.member.role =='INSTRUCTOR'}">
 		    						<div id="regDiv">  					
-			    						<button type="button" data-oper="register" class="btn btn-sm btn-custom">등록2</button> 						
+			    						<button type="button" data-oper="register" class="btn btn-sm btn-custom">등록</button> 						
 			    						<button type="button" data-oper="reset" class="btn btn-sm btn-outline-dark">취소</button> 						
 		    						</div>	
 	    						</c:if>
@@ -491,16 +490,17 @@
   		$("button[data-oper]").on("click", function(){
   			//클릭한 버튼의 data-oper 속성 값을 가져온다
   			var oper = $(this).data("oper");
-
   			//현재페이지 번호
   			var currentPage = ${pageMaker.cri.page}		
-
-  			if(oper == "register"){ //등록	
+  			
+  		    //등록기능
+  			if(oper == "register"){ 	
   				var file = $("#uploadFile_video")[0].files[0];				
   				
   				var lecture = $("#lecture").val();
-  				alert("register에서: " + lecture);
   				
+  				
+  				//강의값없으면
   				if(!lecture){
   					alert("강의종류의 선택해주세요");
   					$("#lecture").focus();
@@ -510,7 +510,7 @@
   				// *먼저 파일이 있을 때만 영상 파일인지 체크해야한다	
   			    if (file) {         
   			        if (!file.type.startsWith("video/")) {
-  			            alert("'첨부파일(영상파일)'은 동영상 파일만 등록할 수 있습니다");
+  			            alert("'첨부파일()영상파일'은 동영상 파일만 등록할 수 있습니다");
   			            $("#uploadFile_video").val(""); 
   			            return false; 
   			        }
@@ -550,9 +550,8 @@
   				$("#cmt").hide(); //댓글전체폼 숨긴다
 	    			
   			}else if(oper == "updateForm"){ //수정폼	
-  
   				$("#lecture").prop("disabled", false);
-  			
+  							
   				regForm.find("#title").attr("readonly", false);
   				regForm.find("#content").attr("readonly", false);
   				
@@ -570,12 +569,12 @@
 
   				if(attached_data){
   					$("#delete_attached_data_btn").show(); //'첨부파일삭제'버튼보이기 
-  					$("#delete_attached_data_btn button").attr("class", "btn btn-sm btn-dark").text(" 첨부파일(영상) 삭제 (" + attached_data + ")" );				
+  					$("#delete_attached_data_btn button").attr("class", "btn btn-sm btn-dark").text(" 영상 첨부파일 삭제 (" + attached_data + ")" );				
   				} 	
   				
   				if(attached_data2){
   					$("#delete_attached_data_btn2").show(); 
-  					$("#delete_attached_data_btn2 button").attr("class", "btn btn-sm btn-dark").text(" 첨부파일2 삭제 (" + attached_data2 + ")" );				
+  					$("#delete_attached_data_btn2 button").attr("class", "btn btn-sm btn-dark").text(" 첨부파일 삭제 (" + attached_data2 + ")" );				
   				}
   				
   				$("#video_container").hide(); // 비디오강의 숨기기
@@ -596,11 +595,13 @@
   				$("#cmt").hide(); //댓글전체폼 숨긴다
   		
   			}else if(oper =="reply"){
-  				
+		
   				// hidden 필드인 #idx에 저장된 부모 게시글의 번호를 가져온다
   			    //var parentIdx = regForm.find("#idx").val();
-  			  	//var boardGroup = regForm.find("#board_group").val();
+  			  	//var boardGroup = regForm.find("#board_group").val();	
   				
+  				var lecture = $("#lecture").val();			 				
+  				regForm.find("#lecture").val(lecture);
   				regForm.find("#title").attr("readonly", false).val(""); // .val("") : 기존작성된내용 ""로 변경
   				regForm.find("#content").attr("readonly", false).val("");		
   				regForm.find("#writer").val("${user.member.nick_name}");
@@ -611,16 +612,15 @@
   				//<form>태그 hidden에 있는 attached_data를 삭제한다
   				regForm.find("input[name='attached_data']").remove();
   				regForm.find("input[name='attached_data2']").remove();
-  				
+		
+  			    $("#replyComplete").show(); // '답글등록' 버튼 보이기
   				$("#video_container").hide(); // 비디오강의 숨기기
   				$("#likeBtn").hide();  // '좋아요' 버튼 숨기기
   				$("#reply").hide(); // '답글쓰기' 버튼 숨기기
   				$("#update").hide(); // '수정' 버튼 숨기기	
-  				
-  			    $("#replyComplete").show(); // '답글등록' 버튼 보이기
-  			    
+  				  			
   			    $("#download_btn").hide(); // '파일다운' 숨기기
-		    	$("#download_btn2").hide(); // '파일다운' 숨기기
+		    	$("#download_btn2").hide(); // '파일다운' 숨기기		    	
   			    $("#uploadFile").show();   // '파일첨부' 버튼 보이기
   			  	$("#uploadFile2").hide();   // '파일첨부2' 버튼 보이기
 			    
@@ -662,14 +662,13 @@
   		
   		var regForm = $("#regForm"); //등록글
   		var cmtForm = $("#cmtForm"); //댓글
-  		
-  		//$("#lecture_show").hide(); //강의 선택숨기기
-  		
+	
   		var selectedLecture = vo.lecture; 
   		//.val(selectedLecture): selectedLecture가 "Java"라면, <option value="Java">를 자동으로 찾아간다
   		//.prop("selected", true): 선택된 요소의 속성중 selected 상태를 true로 설정한다 
    	    $("#lecture").val(selectedLecture).prop("selected", true);
-   	    $("#lecture").prop("disabled", true);
+  		
+   	    $("#lecture").prop("disabled", true); //폼을 submit 하면 disabled 된 요소의 값은 서버로 전송되지 않는다 
   		
   		
   		//regForm기준으로 title을 찾는다 → vo.title 인 value값을 넣는다 
@@ -708,7 +707,7 @@
 		    $("#download_link").text(attached_data);
 		    
 		    //숨겨져 있던 버튼을 화면에 보여줌
-		    $("#download_btn").show();	   
+		    $("#download_btn").hide();	   
  		} else {
  		    // 파일이 없으면 버튼을 숨김
  		    $("#download_btn").hide();
@@ -757,7 +756,7 @@
   		regForm.find("#username").val(vo.username); 
   		regForm.find("#attached_data").val(vo.attached_data); 
   		regForm.find("#attached_data2").val(vo.attached_data2); 
-  		regForm.find("#lecture").val(vo.lecture); 
+  		
   		
 
   		//댓글작성에 입력되는 값
@@ -797,9 +796,7 @@
   	
   	//수정기능
   	function goUpdate(){
-  		var regForm = $("#regForm");
-  		$("#attached_data_btn").hide();
-  		
+  			
   		var lecture = $("#lecture").val();	
 			
 		if(!lecture){
@@ -807,7 +804,8 @@
 			$("#lecture").focus();
 			return false; 
 		}
-
+		
+		var regForm = $("#regForm");
   		regForm.attr("action", "${cpath}/learning/modify");
   		regForm.attr("method", "post");
 		regForm.attr("enctype", "multipart/form-data");
@@ -816,23 +814,17 @@
   	}
   	
   	//답글기능
-  	function goReply(){
+  	function goReply(){		
+  		//disabled을 ture를 하면 서버에 전송되지 않으므로 전송직전에 false로 풀어준다 
+  		$("#lecture").prop("disabled", false); 	
+  		
   		if($("#title").val().trim() == "" || $("#content").val().trim() == ""){
 			alert("제목 또는 내용이 입력되지 않았습니다");
 			$("#title").focus();;
 				return false;
 		}
-  	
-  		var lecture = $("#lecture").val();	
-		alert("goReply에 lecture값: " + lecture);	
-			if(!lecture){
-				alert("강의종류의 선택해주세요");
-				$("#lecture").focus();
-				return false; 
-			}
-  		
-  		
-  		var regForm = $("#regForm");
+		
+		var regForm = $("#regForm");
   		regForm.attr("action", "${cpath}/learning/reply");
   		regForm.attr("method", "post");
   		regForm.attr("enctype", "multipart/form-data");
@@ -1531,7 +1523,7 @@
 		
 		//id="delete_attached_data_btn" 안에 button 태그에 접근한다
 		//<input>태그의 경우는 .val()을 사용한다 
-		$("#delete_attached_data_btn button").attr("class", "btn btn-sm btn-outline-dark").text("첨부파일 삭제 완료");
+		$("#delete_attached_data_btn button").attr("class", "btn btn-sm btn-outline-dark").text("영상 첨부파일 삭제 완료");
 	}
 	
 	//첨부된데이터2삭제
