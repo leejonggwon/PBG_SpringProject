@@ -6,31 +6,31 @@
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
-		<item key="selection" value="타입"/>
+		<item key="selection" value="chat"/>
 		<list key="findhistory">
-			<item value="타입"/>
-			<item value="role-textSt-instructor"/>
-			<item value="권한"/>
-			<item value="※"/>
-			<item value="type=&quot;file&quot;"/>
-			<item value="disabled"/>
-			<item value="프로필업로드"/>
-			<item value="프로필업데이트"/>
-			<item value="수정완료"/>
-			<item value="nick_name"/>
-			<item value="닉네임수정 되었습니다"/>
-			<item value="수정되었습니다"/>
-			<item value="$(&quot;#checkMessage&quot;).text(&quot;프로필 이미지가 변경되었습니다&quot;);"/>
-			<item value="var password1 = $(&quot;#password1&quot;).val();"/>
-			<item value="id=&quot;password"/>
+			<item value="chat"/>
+			<item value="resive_msg"/>
+			<item value="out"/>
+			<item value="disconnection"/>
+			<item value="passwordCheckEnter"/>
+			<item value="passwordCheck"/>
+			<item value="join_room"/>
+			<item value="css"/>
+			<item value="css\"/>
+			<item value="close"/>
+			<item value="obj.nick_name"/>
+			<item value="obj"/>
+			<item value="move"/>
+			<item value="myMessageOpenModal"/>
+			<item value="모달"/>
 		</list>
 		<list key="replacehistory">
 			<item value=""/>
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
-		<item key="DIALOG_X_ORIGIN" value="109"/>
-		<item key="DIALOG_Y_ORIGIN" value="229"/>
+		<item key="DIALOG_X_ORIGIN" value="-263"/>
+		<item key="DIALOG_Y_ORIGIN" value="9"/>
 		<item key="DIALOG_WIDTH" value="272"/>
 		<item key="DIALOG_HEIGHT" value="363"/>
 		<item key="DIALOG_FONT_NAME" value="1|맑은 고딕|9.0|0|WINDOWS|1|-15|0|0|0|400|0|0|0|1|0|0|0|0|맑은 고딕"/>

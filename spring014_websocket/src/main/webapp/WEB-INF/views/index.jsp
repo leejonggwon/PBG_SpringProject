@@ -14,10 +14,10 @@
 	window.onload=function(){ //웹페이지가 완전히 로드된 뒤에 실행할 코드를 지정
 		
 		//TODO 002 일대다 채팅 Controller 요청
-		document.querySelector(".bnt-primary").onclick=function(){
+		document.querySelector(".btn-primary").onclick=function(){
 			location.href="./chatOneToMany.do";
 		}
-		document.querySelector(".bnt-success").onclick=function(){
+		document.querySelector(".btn-success").onclick=function(){
 			location.href="./chatGrop.do";
 		}
 	}
@@ -25,8 +25,8 @@
 
 <body>
 	<div class="container" style="margin-top:200px; text-align:center;">
-		<button class="btn bnt-primary">1:N 채팅</button>
-		<button class="btn bnt-success">Group 채팅</button>
+		<button class="btn btn-primary">1:N 채팅</button>
+		<button class="btn btn-success">Group 채팅</button>
 	</div>
 </body>
 </html>

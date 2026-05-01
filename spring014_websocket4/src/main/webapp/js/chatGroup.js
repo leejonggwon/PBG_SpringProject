@@ -1,8 +1,8 @@
 //TODO 014
 
-var ws =null;
-var url =null;
-var nick =null;
+var ws = null;
+var url = null;
+var nick = null;
 var pageClosed = true;
 
 $(document).ready(function(){
@@ -33,6 +33,7 @@ $(document).ready(function(){
 	ws.onmessage = function(event){
 		var msg = event.data;
 		console.log(event,msg);
+		
 		if(msg.startsWith("<font style")){ //입장과 퇴실 메시지
 			$(".resive_msg").append($("<div class='noticeTxt'>")).append(msg+"<br>");
 			//TODO 016 참여 목록창 REST 처리, 입장/퇴장 시 목록을 갱신
@@ -48,12 +49,12 @@ $(document).ready(function(){
 	}
 	
 	ws.onclose=function(){
-		alert("서버와 연결이 종료되었습니다 채팅방이 삭제 됩니다");
+		alert("서버와 연결이 종료되었습니다. 채팅방이 삭제 됩니다");
 	}
 	
 	$(".chat_btn").bind("click", function(){
 		if($(".chat").val() == ""){
-			alert("내용을 입력하세요");
+			alert("내용을 입력해주세요");
 			return;
 		}else{
 			ws.send(nick + ":" + $(".chat").val());

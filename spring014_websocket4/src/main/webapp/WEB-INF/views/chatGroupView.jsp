@@ -21,6 +21,7 @@
 	<hr>
 	<div class="container">
 		<button class="btn btn-danger btn-block" onclick="roomClose()">채팅종료</button>
+		
 		<table>
 			<tr>
 				<td colspan="2" align="center">채팅그룹명:<b id="group">${gr_id}</b></td>
@@ -37,6 +38,7 @@
 				</td>
 			</tr>
 		</table>
+		
 		<div class="chat_div">
 			<input type="text" class="chat" onkeypress="if(event.keyCode==13)$('.chat_btn').click();">
 			<input type="button" class="chat_btn" value="내용전송">

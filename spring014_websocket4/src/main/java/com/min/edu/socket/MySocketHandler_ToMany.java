@@ -74,7 +74,7 @@ public class MySocketHandler_ToMany extends TextWebSocketHandler {
 				map.put(session, msg.replace("#$nick_", ""));
 				
 				for (WebSocketSession webSocketSession : list) {
-					SimpleDateFormat sdf = new SimpleDateFormat("yyy-MM-dd HH:mm:ss");
+					SimpleDateFormat sdf = new SimpleDateFormat("yyy-MM-dd HH24:mm:ss");
 					String out = sdf.format(new Date());
 					webSocketSession.sendMessage(new TextMessage("<font style='color:green; font-size:8px;'>"+map.get(session)+"님이 방을 입장하셨습니다("+out+")</font>"));
 				}

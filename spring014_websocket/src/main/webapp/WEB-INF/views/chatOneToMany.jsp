@@ -23,10 +23,10 @@
 
 </style>
 </head>
+
 <!-- TODO 003 채팅화면 구현 및 이벤트 작성페이지 -->
+
 <script src="${pageContext.request.contextPath}/js/chatOneToMany.js"></script>
-
-
 <body>
 	<div class="container">
 		<button style="width: 100%;" onclick="disconnection()">연결종료</button>
@@ -42,6 +42,8 @@
 				</tr>
 			</tbody>		
 		</table>
+		
+		<!-- 글쓰는 영역 -->
 		<div id="chat_div" style="display: none;">
 			<input type="text" id="chat" style="width: 100%;" onkeypress="if(event.keyCode==13){$('#chat_btn').click()}">
 			<input type="button" id="chat_btn" style="width: 100%;" value="전송">

@@ -18,7 +18,7 @@
 			location.href="./chatOneToMany.do";
 		}
 		document.querySelector(".btn-success").onclick=function(){
-			location.href="./chatGroup.do";
+			location.href="./chatGrop.do";
 		}
 	}
 </script>

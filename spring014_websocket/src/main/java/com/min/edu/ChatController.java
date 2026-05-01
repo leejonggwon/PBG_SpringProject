@@ -25,9 +25,13 @@ public class ChatController implements ServletConfigAware {
 	@GetMapping(value="/chatOneToMany.do")
 	public String chatOneToMany() {
 		log.info("ChatController 일대다 화면이동 요청");
-		return "chatOneToMany";
+		return "chatOneToMany"; 
 	}
 	
+	@GetMapping(value="/")
+	public String index() {
+		return "index"; 
+	}
 	
 
 }

@@ -64,6 +64,7 @@ public class MySocketHandler_Group extends TextWebSocketHandler {
 			}
 		}else { //내용전달
 			String msg2 = msg.substring(0,msg.indexOf(":")).trim();
+			
 			for (WebSocketSession s : list) {
 				//WebSocket Session에 담겨있는 각 참여자의 아이디(mem_id)와 그룹(gr_id)를 가져옴
 				Map<String, Object> sessionMap = s.getAttributes();
@@ -92,16 +93,16 @@ public class MySocketHandler_Group extends TextWebSocketHandler {
 		log.info("afterConnectionClosed WebSocket 세션 삭제");
 		super.afterConnectionClosed(session, status);
 		
-		//현재사용자 삭제
+		//현재사용자를 삭제
 		Map<String, Object> mySession = session.getAttributes();
 		String myGrSession = (String)mySession.get("gr_id");
 		String myMemSession = (String)mySession.get("mem_id");
 		
 		log.info("세션 삭제 전 확인:{}", list.contains(session));
 		list.remove(session);
-		log.info("세션 삭제후 확인:{}", list.contains(session));
+		log.info("세션 삭제 후 확인:{}", list.contains(session));
 		
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd 24HH:mm:ss");
 		String now = sdf.format(new Date());
 		
 		//같은 그룹의 사용자에게 메시지 전달

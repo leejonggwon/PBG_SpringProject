@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.spring.mapper.CommunicationMapper">
+	
+	<!-- SQL문장 프로그래밍  -->
+	<sql id="search">
+		<if test="type =='writer'">
+			WHERE WRITER LIKE CONCAT('%', #{keyword},'%')
+		</if>
+		<if test="type =='title'">
+			WHERE TITLE LIKE CONCAT('%', #{keyword},'%')
+		</if>
+		<if test="type =='content'">
+			WHERE CONTENT LIKE CONCAT('%', #{keyword},'%')
+		</if>
+	</sql>
+	
+	
+	<!-- 게시글출력 -->
+	<!-- pageStart 번째 부터 perPageNum개 가져오기 -->
+	<select id="getList" resultType="kr.spring.entity.Communication" parameterType="kr.spring.entity.Criteria">
+		SELECT * FROM BT_COMMUNICATION
+		<include refid="search"/>
+		ORDER BY BOARD_GROUP DESC, BOARD_SEQUENCE ASC
+		LIMIT #{pageStart}, #{perPageNum}
+	</select>
+	
+	
+	<!-- 전체게시글수 -->
+	<!-- 검색결과에 따라 총게시글수가 변경된다 -->
+	<select id="totalCount" resultType="int" parameterType="kr.spring.entity.Criteria" >
+		SELECT COUNT(*) FROM BT_COMMUNICATION
+		<include refid="search"/>
+	</select>
+	
+
+	<!-- 게시판 조회수 -->
+	<update id="boardCount" parameterType="Long">
+		UPDATE BT_COMMUNICATION SET COUNT = COUNT + 1 WHERE IDX = #{idx}
+	</update>
+	
+	<!-- 게시글등록 -->
+	<insert id="register" parameterType="kr.spring.entity.Communication">
+		INSERT INTO BT_COMMUNICATION(IDX, USERNAME, ROLE, TITLE, CONTENT, WRITER, ATTACHED_DATA, ATTACHED_DATA2, ATTACHED_DATA3, BOARD_GROUP, BOARD_SEQUENCE, BOARD_LEVEL, BOARD_AVAILABLE)
+		SELECT IFNULL(MAX(IDX) + 1, 1) , #{username}, #{role}, #{title}, #{content}, #{writer}, #{attached_data}, #{attached_data2}, #{attached_data3}, IFNULL(MAX(IDX) + 1, 1), 0, 0, 1   
+		FROM BT_COMMUNICATION                   
+	</insert>
+	
+	<!-- 게시글등록 -->
+	<insert id="insertSelectKey" parameterType="kr.spring.entity.Communication">
+		<selectKey keyProperty="idx,board_group" resultType="kr.spring.entity.Communication" order="BEFORE"> 
+			SELECT IFNULL(MAX(IDX) + 1, 1) as idx,
+				   IFNULL(MAX(BOARD_GROUP) + 1, 1) as board_group
+				   FROM BT_COMMUNICATION	
+		</selectKey>
+		INSERT INTO BT_COMMUNICATION(IDX, USERNAME, ROLE, TITLE, CONTENT, WRITER, ATTACHED_DATA, ATTACHED_DATA2, ATTACHED_DATA3, BOARD_GROUP, BOARD_SEQUENCE, BOARD_LEVEL, BOARD_AVAILABLE)
+		VALUES(#{idx}, #{username}, #{role}, #{title}, #{content}, #{writer}, #{attached_data}, #{attached_data2}, #{attached_data3}, #{board_group}, 0, 0, 1)
+	</insert>
+	
+	
+	
+	
+	<!-- BOARDSEQUENCE + 1 기능 -->
+	<!-- parent 부모글 : boardSequence=0, boardLevel=0, boardAvailable=1 -->
+	<update id="replySeqUpdate" parameterType="kr.spring.entity.Communication"  >
+		UPDATE BT_COMMUNICATION
+		SET BOARD_SEQUENCE = BOARD_SEQUENCE + 1
+		WHERE BOARD_GROUP = #{board_group}
+		AND BOARD_SEQUENCE > #{board_sequence} 
+	</update>
+	
+	<!-- 답글저장기능 -->
+	<!-- IFNULL(MAX(IDX) + 1, 1) as idx : 새로 들어올 댓글 의 IDX 값을 자동으로 계산해서 하나 증가시켜 주는 역할 -->
+	<insert id="replyInsert" parameterType="kr.spring.entity.Communication">
+		<selectKey keyProperty="idx" resultType="kr.spring.entity.Communication" order="BEFORE"> 
+			SELECT IFNULL(MAX(IDX) + 1, 1) as idx
+				   FROM BT_COMMUNICATION
+		</selectKey>
+		INSERT INTO BT_COMMUNICATION(IDX, USERNAME, ROLE, TITLE, CONTENT, WRITER, ATTACHED_DATA, ATTACHED_DATA2, ATTACHED_DATA3, BOARD_GROUP, BOARD_SEQUENCE, BOARD_LEVEL, BOARD_AVAILABLE)
+		VALUES(#{idx}, #{username}, #{role}, #{title}, #{content}, #{writer}, #{attached_data}, #{attached_data2},  #{attached_data3},
+		#{board_group}, #{board_sequence}, #{board_level}, 1)
+	</insert>
+	
+	
+	
+	<!--게시글삭제-->
+	<update id="delete">
+		UPDATE BT_COMMUNICATION
+		SET BOARD_AVAILABLE = #{role}
+		WHERE IDX = #{idx}
+	</update>
+	
+	
+	<!-- 게시글수정 -->
+	<update id="update" parameterType="kr.spring.entity.Communication">
+		UPDATE BT_COMMUNICATION
+		SET TITLE = #{title}, CONTENT = #{content}, ATTACHED_DATA = #{attached_data}, ATTACHED_DATA2 = #{attached_data2}, ATTACHED_DATA3 = #{attached_data3}
+		WHERE IDX = #{idx}
+	</update>
+	
+	<!-- 게시글상세보기  -->
+	<select id="read" parameterType="Long" resultType="kr.spring.entity.Communication">
+		SELECT * FROM BT_COMMUNICATION WHERE IDX = #{idx}
+	</select>
+	
+	
+	
+</mapper>
+
+
+
+

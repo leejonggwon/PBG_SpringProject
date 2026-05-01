@@ -1,0 +1,16 @@
+
+.btn-custom {
+    background-color: #343A40; 
+    color: white;            
+    border: none;             
+}
+
+/*버튼호버*/
+.btn-custom:hover {
+    background-color: #495057; 
+    color: #e0e0e0;
+}
+
+.cmtBg {
+    background-color: #f4f5f7;
+}

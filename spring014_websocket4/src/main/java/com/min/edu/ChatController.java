@@ -60,6 +60,7 @@ public class ChatController implements ServletConfigAware {
 		
 		//서버 전체에 계속해서 참여자의 정보를 담기위해서 ServletContext를 사용한다 
 		Map<String, String> chatList = (Map<String, String>)servletContext.getAttribute("chatList");
+		
 		if(chatList == null) {
 			chatList = new HashMap<String, String>();
 			chatList.put(mem_id, gr_id);
@@ -71,7 +72,7 @@ public class ChatController implements ServletConfigAware {
 		
 		log.info("ChatController 웹소캣 목록:{}", servletContext.getAttribute("chatList"));
 		
-		return "chatGroupView";
+		return "chatGroupView"; //이 화면에서 세션을 가져와서 담아주는 작업은 bean으로 만든다
 	}
 	
 	

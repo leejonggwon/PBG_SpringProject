@@ -2,8 +2,8 @@
  * TODO 009 WebSocket 객체를 생성하는데 서버의 WebSocket와 연결 
  */
 
-var ws =null; //웹소캣 객체
-var url = null; //웹소캣 주소
+var ws = null; //웹소캣 객체
+var url = null; //웹소캣 접속주소
 var nick = null; //대화명
 
 $(document).ready(function(){
@@ -28,7 +28,7 @@ $(document).ready(function(){
 	var url = location.href;
 	console.log("location.href의 값:", url);
 	var wsUrl = url.substring(url.indexOf("//"), url.lastIndexOf("/")+1);
-	console.log("웹소켓 호출 주소: ", `ws:${wsUrl}wsChat.do`);
+	console.log("웹소캣 호출 주소: ", `ws:${wsUrl}wsChat.do`); //웹소캣 서버를 호출하는 주소
 	
 	ws= new WebSocket(`ws:${wsUrl}wsChat.do`);
 	console.log("생성된 WebSocket 객체: ", ws);
@@ -45,7 +45,7 @@ $(document).ready(function(){
 		alert("웹소캣 서버와 연결이 종료되었습니다");
 	}
 
-	}); //#join_room
+	}); //#join_room에 관련
 	
 	$("#chat_btn").bind("click", function(){
 		console.log("대화내용 전달");
@@ -67,7 +67,6 @@ $(document).ready(function(){
 		ws.close();
 		ws=null;
 	})
-	
 	
 });
 

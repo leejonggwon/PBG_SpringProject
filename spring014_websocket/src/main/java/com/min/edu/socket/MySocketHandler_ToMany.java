@@ -15,12 +15,12 @@ import org.springframework.web.socket.handler.TextWebSocketHandler;
 
 import lombok.extern.slf4j.Slf4j;
 //TODO 005 WebSocket 객체를 생성하는 Bean 
-@Component(value ="wsChat.do")
+@Component(value ="wsChat.do") //Bean이만들어지고 WebSocket 라이브러리가 서버로 만들어준다
 @Slf4j
 public class MySocketHandler_ToMany extends TextWebSocketHandler {
 	
 	private ArrayList<WebSocketSession> list; //웹소켓 전체 세션을 담아주는 객체(채팅의 대상을 담음)
-	private Map<WebSocketSession, String> map = new HashMap<WebSocketSession, String>(); //웹소캣 세션에 해당이름
+	private Map<WebSocketSession, String> map = new HashMap<WebSocketSession, String>(); //웹소캣 세션에 해당이름을 담는다
 	
 	public MySocketHandler_ToMany() {
 		list = new ArrayList<WebSocketSession>();
@@ -58,7 +58,7 @@ public class MySocketHandler_ToMany extends TextWebSocketHandler {
 		map.remove(session);
 	}
 	
-	//TODO 008 WebSocke에 참여하는 대상자에게 메세지를 전달
+	//TODO 008 WebSocke에 참여하는 대상자에게 메시지를 전달
 	@Override
 	protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {	
 		log.info("웹소캣 전달 메시지 : handleTextMessage");
@@ -74,7 +74,7 @@ public class MySocketHandler_ToMany extends TextWebSocketHandler {
 				map.put(session, msg.replace("#$nick_", ""));
 				
 				for (WebSocketSession webSocketSession : list) {
-					SimpleDateFormat sdf = new SimpleDateFormat("yyy-MM-dd HH:mm:ss");
+					SimpleDateFormat sdf = new SimpleDateFormat("yyy-MM-dd HH24:mm:ss");
 					String out = sdf.format(new Date());
 					webSocketSession.sendMessage(new TextMessage("<font style='color:green; font-size:8px;'>"+map.get(session)+"님이 방을 입장하셨습니다("+out+")</font>"));
 				}
