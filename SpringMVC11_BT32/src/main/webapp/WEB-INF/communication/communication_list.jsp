@@ -36,14 +36,14 @@
     text-align: center;
 }
 .role-textSt-instructor {
-    color: #1d517b;
-    background-color: #eff5fa;
-    font-weight: bold;
+	color: #e75c59;
+    /*background-color: #f6dede;*/
+    /*font-weight: bold;*/
 }
-.role-textSt-admin {  
-    color: #e75c59;
-    background-color: #f6dede;
-    font-weight: bold;
+.role-textSt-admin {    
+    color: #1d517b;
+    /*background-color: #eff5fa;*/
+    /*font-weight: bold;*/
 }
 
 /*작성자 글씨효과*/

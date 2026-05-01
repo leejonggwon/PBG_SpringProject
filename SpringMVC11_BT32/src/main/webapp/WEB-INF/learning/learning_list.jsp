@@ -35,15 +35,15 @@
 .table-cnt {
     text-align: center;
 }
-.role-textSt-instructor {  
-    color: #e75c59;
-    background-color: #f6dede;
-    font-weight: bold;
+.role-textSt-instructor {
+	color: #e75c59;
+    /*background-color: #f6dede;*/
+    /*font-weight: bold;*/
 }
-.role-textSt-admin {  
+.role-textSt-admin {    
     color: #1d517b;
-    background-color: #eff5fa;
-    font-weight: bold;
+    /*background-color: #eff5fa;*/
+    /*font-weight: bold;*/
 }
 
 /*작성자 글씨효과*/
@@ -135,13 +135,14 @@
 
 	    					<table class="table table-bordered table-hover">
 	    						<thead class="table-cnt">
-	    							<th style="width: 8%;">번호</th>
-	    							<th style="width: 9%;">강의</th>
-	    							<th style="width: 35%;">제목</th>
-	    							<th style="width: 8%;">공감</th>
-	    							<th style="width: 17%;">작성자</th>    							
+	    							<th style="width: 7%;">번호</th>
+	    							<th style="width: 7%;">강의</th>
+	    							<th style="width: 31%;">제목</th>
+	    							<th style="width: 7%;">공감</th>
+	    							<th style="width: 17%;">작성자</th>
+	    							<th style="width: 9%;">권한</th>
 	    							<th style="width: 15%;">작성일</th>
-	    							<th style="width: 8%;">조회</th>
+	    							<th style="width: 7%;">조회</th>
 	    						</thead>
 	    						<tbody>
 	    							<c:forEach var="vo" items="${list}" varStatus="i">
@@ -196,7 +197,7 @@
 	    									<td class="table-cnt writer" data-writer="${vo.username}">
 											   <a href="#" class="writer-link"> ${vo.writer}</a>
 											</td>	
-	    									<%--  
+	    									
 	    									<!-- 권한 -->
 	    									<td class="table-cnt">
 											    <c:choose>
@@ -209,7 +210,7 @@
 											        <c:otherwise>수강생</c:otherwise>
 											    </c:choose>
 											</td>
-											--%>		
+													
 											<!-- 작성일 -->														
 	    									<td class="table-cnt"><fmt:formatDate value="${vo.indate}" pattern="yyyy.MM.dd HH:mm"/></td>
 	    									<!-- 조회수 -->
