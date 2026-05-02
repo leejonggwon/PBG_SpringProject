@@ -180,6 +180,8 @@ background-position: center;
 		</div>
 	</div>
 	<script type="text/javascript">
+	
+	//-----------------------------------------------------------------------------------------------------------------------------------
 	//TODO 014
 
 	var ws =null;
@@ -291,8 +293,6 @@ background-position: center;
 		});
 	}
 
-
-	
 	</script>
 	
 	

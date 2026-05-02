@@ -361,7 +361,7 @@
 		    							</div>	
 		    							<div class="col">
 		    								<label></label><br>
-		    								<button id="addUploadFile_btn" type="button" onclick="addUploadFile()" class="btn btn-sm btn-outline-dark"> 첨부파일 추가하기</button> 	
+		    								<button id="addUploadFile_btn" type="button" onclick="addUploadFile()" class="btn btn-sm btn-outline-dark"> 첨부파일 추가</button> 	
 		    							</div>		    						
 		    						</div>
 	    						</c:if>
@@ -1684,6 +1684,14 @@
 	//첨부파일추가하기 버튼
 	function addUploadFile(){
 		$("#uploadFile2").toggle();
+		
+		var btnText = $("#addUploadFile_btn").text().trim(); // trim()으로 앞뒤 공백 제거
+
+		if (btnText === "첨부파일 추가") {
+		    $("#addUploadFile_btn").text("첨부파일 접기");
+		} else {
+		    $("#addUploadFile_btn").text("첨부파일 추가");
+		}
 	}
 	
   </script>

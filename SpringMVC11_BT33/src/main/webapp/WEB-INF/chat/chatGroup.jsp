@@ -104,7 +104,7 @@
 		    					<br>   					    					   					
 								<div style="text-align: center">						
 									<p style="margin-bottom: 25px;">※ 오픈채팅방입니다. 욕설이나 모욕적인 표현이 포함된 메시지는 운영 정책에 따라 이용이 제한될 수 있습니다.</p>											 							 
-									<button class="btn btn-custom" onclick="goSocket('단체오픈채팅','${user.member.nick_name}(${roleName}))')">${user.member.nick_name}(${roleName}) &nbsp; 오픈채팅방에 입장하기</button>
+									<button class="btn btn-custom" onclick="goSocket('Back-End 단체오픈채팅','${user.member.nick_name}(${roleName})')">${user.member.nick_name}(${roleName}) &nbsp; 오픈채팅방에 입장하기</button>
 								</div>
 							</div>
 	

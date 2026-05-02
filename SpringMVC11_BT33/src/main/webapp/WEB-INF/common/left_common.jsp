@@ -85,9 +85,7 @@
 					    </c:choose>
 				    ] </p>				
 					<!-- <sec:authentication property="principal.member.role" /> -->
-					
-					${user.member.role}
-					${auth}
+
 						
 					<!-- 관리자 권한-->
 					<sec:authorize access="hasRole('ADMIN')">
@@ -162,8 +160,7 @@
 					
 					<!-- 운영부 권한-->
 					<sec:authorize access="hasRole('STAFF')">								
-												
-					
+
 						<p style="text-align: center">[백엔드]</p>
 						<form action="${cpath}/learning/learning_list" class="btn_gap">
 							<button id="learning_list" type="submit" class="form-control btn btn-light btn-sm">Back-End 강의</button>
