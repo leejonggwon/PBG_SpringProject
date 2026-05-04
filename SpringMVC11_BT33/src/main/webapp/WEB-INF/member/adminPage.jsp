@@ -423,7 +423,7 @@
 	
 	
 	
-	//페이지 버튼클릿시 페이지 이동하는 기능
+	//페이지 버튼클릭시 페이지 이동하는 기능
 	function search() {
 		
 	    let type = $("#search_type").val();

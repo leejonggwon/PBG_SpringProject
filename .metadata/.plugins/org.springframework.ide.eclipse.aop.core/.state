@@ -3,11 +3,13 @@
 <aop-project name="SpringMVC04"/>
 <aop-project name="SpringMVC11"/>
 <aop-project name="SpringMVC08"/>
+<aop-project name="ComunicationProject_copy"/>
 <aop-project name="spring014_websocket3"/>
-<aop-project name="SpringMVC11_BT20"/>
-<aop-project name="SpringMVC11_BT24"/>
-<aop-project name="SpringMVC11_BT28"/>
 <aop-project name="SpringMVC09_CP3"/>
+<aop-project name="SpringMVC11_BT28"/>
+<aop-project name="SpringMVC11_BT24"/>
+<aop-project name="SpringMVC11_BT20"/>
+<aop-project name="SpringMVC11_BT31"/>
 <aop-project name="SpringMVC05"/>
 <aop-project name="SpringMVC12"/>
 <aop-project name="SpringMVC01"/>
@@ -24,6 +26,7 @@
 <aop-project name="SpringMVC11_BT19"/>
 <aop-project name="SpringMVC11_BT22"/>
 <aop-project name="SpringMVC11_BT26"/>
+<aop-project name="SpringMVC11_BT33"/>
 <aop-project name="ComunicationProject"/>
 <aop-project name="spring014_websocket"/>
 <aop-project name="SpringMVC10"/>
@@ -33,5 +36,6 @@
 <aop-project name="SpringMVC11_BT21"/>
 <aop-project name="SpringMVC11_BT25"/>
 <aop-project name="SpringMVC11_BT29"/>
+<aop-project name="SpringMVC11_BT32"/>
 <aop-project name="SpringBook"/>
 </aop-reference-model>

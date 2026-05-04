@@ -135,14 +135,14 @@
 
 	    					<table class="table table-bordered table-hover">
 	    						<thead class="table-cnt">
-	    							<th style="width: 7%;">번호</th>
-	    							<th style="width: 7%;">강의</th>
-	    							<th style="width: 31%;">제목</th>
-	    							<th style="width: 7%;">공감</th>
-	    							<th style="width: 17%;">작성자</th>
-	    							<th style="width: 9%;">권한</th>
+	    							<th style="width: 8%;">번호</th>
+	    							<th style="width: 4%;">강의</th>
+	    							<th style="width: 33%;">제목</th>
+	    							<th style="width: 8%;">공감</th>
+	    							<th style="width: 13%;">작성자</th>
+	    							<th style="width: 11%;">권한</th>
 	    							<th style="width: 15%;">작성일</th>
-	    							<th style="width: 7%;">조회</th>
+	    							<th style="width: 8%;">조회</th>
 	    						</thead>
 	    						<tbody>
 	    							<c:forEach var="vo" items="${list}" varStatus="i">

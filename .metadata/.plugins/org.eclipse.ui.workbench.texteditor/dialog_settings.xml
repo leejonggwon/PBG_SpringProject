@@ -6,31 +6,31 @@
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
-		<item key="selection" value="chat"/>
+		<item key="selection" value="hidden"/>
 		<list key="findhistory">
-			<item value="chat"/>
-			<item value="resive_msg"/>
-			<item value="out"/>
-			<item value="disconnection"/>
-			<item value="passwordCheckEnter"/>
-			<item value="passwordCheck"/>
-			<item value="join_room"/>
-			<item value="css"/>
-			<item value="css\"/>
-			<item value="close"/>
-			<item value="obj.nick_name"/>
-			<item value="obj"/>
-			<item value="move"/>
-			<item value="myMessageOpenModal"/>
-			<item value="모달"/>
+			<item value="hidden"/>
+			<item value="Move"/>
+			<item value="pageMove"/>
+			<item value="pageMaker"/>
+			<item value="${pageMaker.cri.type == &apos;writer&apos; ? &apos;selected&apos; : &apos;&apos;}"/>
+			<item value="${pageMaker.cri}"/>
+			<item value="EL(${pageMaker.cri})"/>
+			<item value="과목"/>
+			<item value="likePlus"/>
+			<item value="좋아요"/>
+			<item value="pageStart"/>
+			<item value="addUploadFile()"/>
+			<item value="addUploadFile"/>
+			<item value="addUpload"/>
+			<item value="addU"/>
 		</list>
 		<list key="replacehistory">
 			<item value=""/>
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
-		<item key="DIALOG_X_ORIGIN" value="-263"/>
-		<item key="DIALOG_Y_ORIGIN" value="9"/>
+		<item key="DIALOG_X_ORIGIN" value="49"/>
+		<item key="DIALOG_Y_ORIGIN" value="229"/>
 		<item key="DIALOG_WIDTH" value="272"/>
 		<item key="DIALOG_HEIGHT" value="363"/>
 		<item key="DIALOG_FONT_NAME" value="1|맑은 고딕|9.0|0|WINDOWS|1|-15|0|0|0|400|0|0|0|1|0|0|0|0|맑은 고딕"/>
