@@ -46,6 +46,13 @@ input[type="radio"] {
     margin-left: 7px;   /* (버튼을 기준)왼쪽 간격 */
     margin-right: 1px;  /* (버튼을 기준)라디오 버튼과 글자 사이 간격 */
 }
+
+
+/*모달 배경색 연하게*/
+.modal-backdrop {
+  opacity: 0.2 !important;
+}
+
 </style>
 
 <body>

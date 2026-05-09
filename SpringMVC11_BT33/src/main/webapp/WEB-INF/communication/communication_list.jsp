@@ -64,6 +64,22 @@
 .title-link:hover  {
    /*text-decoration: none;*/ /* 밑줄 없애고 싶을 때 */
 }
+
+/*모달 배경색 연하게*/
+.modal-backdrop {
+  opacity: 0.2 !important;
+}
+
+/*모달창 카드처럼*/
+#writerType {
+  background: #ffffff;
+  border-radius: 15px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+}
+
+.modal-body {
+  background-color: #f8f9fa;
+}
 </style>
 
 <body>
@@ -694,47 +710,47 @@
   		
   		
   	//게시글 작성자 클릭시 username를 도출하는 기능
-		//이전것: $(".writer").on("click", function(e) {		
-		//  댓글 작성자 클릭하면 이미 게시글 작성자와 바인딩시점차이로 프로필모달이 생성하지 않는다 
-		//  부모인 document가 .writer 들어오면 코드를 실행한다
-		$(document).on("click", ".writer", function(e) {	
-			e.preventDefault();
-		    var username = $(this).data("writer");
-		   
-		    $.ajax({
-		         url: "${cpath}/member/writerInfo",
-		         type: "get",
-		         data: { "username" : username},
-		         dataType: "json",
-		         success: function(writerInfo) {	        			        	
-		         	
-		         	$("#writerUsername").text("[ID] " + writerInfo.username);
-		         	$("#writerName").text("[Name] " + writerInfo.name);
-		         	$("#writerNick_name").text("[Nick Name] " + writerInfo.nick_name);
-		         	         	
-		         	$("#writerImg").attr("src",  writerInfo.profile            
-			            		? "${cpath}/profile_upload/" + writerInfo.profile 
-			            		: "${cpath}/resources/images/default.png");	
-		         	 		         	 
-		         	const roleMap = {
-		         	        'STUDENT': '수강생',
-		         	        'INSTRUCTOR': '강사',
-		         	        'ADMIN': '관리자',		  
-		         	        'STAFF': '운영부'
-		         	    };
-		         	
-		         	var roleKorean = roleMap[writerInfo.role] || writerInfo.role;	         	
-		         	$("#writerRole").text("[Role] " + roleKorean);
-		         	
-		            
-		         	$("#writerOpenModal").click();
-		         },
-		         error: function() {
-		             alert("작성자 정보를 가져오는데 실패했습니다.");
-		         }
-		    });
-		   
-		});
+	//이전것: $(".writer").on("click", function(e) {		
+	//  댓글 작성자 클릭하면 이미 게시글 작성자와 바인딩시점차이로 프로필모달이 생성하지 않는다 
+	//  부모인 document가 .writer 들어오면 코드를 실행한다
+	$(document).on("click", ".writer", function(e) {	
+		e.preventDefault();
+	    var username = $(this).data("writer");
+	   
+	    $.ajax({
+	         url: "${cpath}/member/writerInfo",
+	         type: "get",
+	         data: { "username" : username},
+	         dataType: "json",
+	         success: function(writerInfo) {	        			        	
+	         	
+	         	$("#writerUsername").text("[ID] " + writerInfo.username);
+	         	$("#writerName").text("[Name] " + writerInfo.name);
+	         	$("#writerNick_name").text("[Nick Name] " + writerInfo.nick_name);
+	         	         	
+	         	$("#writerImg").attr("src",  writerInfo.profile            
+		            		? "${cpath}/profile_upload/" + writerInfo.profile 
+		            		: "${cpath}/resources/images/default.png");	
+	         	 		         	 
+	         	const roleMap = {
+	         	        'STUDENT': '수강생',
+	         	        'INSTRUCTOR': '강사',
+	         	        'ADMIN': '관리자',		  
+	         	        'STAFF': '운영부'
+	         	    };
+	         	
+	         	var roleKorean = roleMap[writerInfo.role] || writerInfo.role;	         	
+	         	$("#writerRole").text("[Role] " + roleKorean);
+	         	
+	            
+	         	$("#writerOpenModal").click();
+	         },
+	         error: function() {
+	             alert("작성자 정보를 가져오는데 실패했습니다.");
+	         }
+	    });
+	   
+	});
   		
 
   	});//end ready

@@ -64,6 +64,22 @@
 .title-link:hover  {
    /*text-decoration: none;*/ /* 밑줄 없애고 싶을 때 */
 }
+
+/*모달 배경색 연하게*/
+.modal-backdrop {
+  opacity: 0.2 !important;
+}
+
+/*모달창 카드처럼*/
+#writerType {
+  background: #ffffff;
+  border-radius: 15px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+}
+
+.modal-body {
+  background-color: #f8f9fa;
+}
 </style>
 
 <body>

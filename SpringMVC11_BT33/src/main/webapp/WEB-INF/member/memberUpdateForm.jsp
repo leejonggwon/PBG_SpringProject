@@ -38,6 +38,12 @@ input[type="radio"] {
     margin-left: 7px;   /* (버튼을 기준)왼쪽 간격 */
     margin-right: 1px;  /* (버튼을 기준)라디오 버튼과 글자 사이 간격 */
 }
+
+/*모달 배경색 연하게*/
+.modal-backdrop {
+  opacity: 0.2 !important;
+}
+
 </style>
 
 <body>
@@ -238,27 +244,28 @@ input[type="radio"] {
 		  const oper = $(this).data("oper"); 
 		  //닉네임
 		  if(oper == "nick_name"){ 
-				if($("#nick_name").val() == "${user.member.nick_name}"){
-					
-					$("#checkMessage").text("현재 사용중인 닉네임 입니다");
-					$("#checkType").find(".modal-header").addClass("bg-danger text-white");
-					$("#openModal").click();
-					$("#username").focus(); 
-					
-					$("#nick_name").focus(); //다시 내용입력란에 포커스적용 
-					return false;
-				}else if($("#nick_name").val().trim() == ""){
-					$("#checkMessage").text("닉네임을 입력해주세요");
-					$("#checkType").find(".modal-header").addClass("bg-secondary text-white");
-					$("#openModal").click();	
-					
-					$("#nick_name").focus(); // 아이디 입력창으로 커서를 자동한다
-					return false;
-				}	
-	   
-				nick_nameForm.attr("action", "${cpath}/member/update_nick_name");
-				nick_nameForm.attr("method", "post");
-				nick_nameForm.submit();
+			  
+			if($("#nick_name").val() == "${user.member.nick_name}"){
+				
+				$("#checkMessage").text("현재 사용중인 닉네임 입니다");
+				$("#checkType").find(".modal-header").addClass("bg-danger text-white");
+				$("#openModal").click();
+				$("#username").focus(); 
+				
+				$("#nick_name").focus(); //다시 내용입력란에 포커스적용 
+				return false;
+			}else if($("#nick_name").val().trim() == ""){
+				$("#checkMessage").text("닉네임을 입력해주세요");
+				$("#checkType").find(".modal-header").addClass("bg-secondary text-white");
+				$("#openModal").click();	
+				
+				$("#nick_name").focus(); // 아이디 입력창으로 커서를 자동한다
+				return false;
+			}	
+   
+			nick_nameForm.attr("action", "${cpath}/member/update_nick_name");
+			nick_nameForm.attr("method", "post");
+			nick_nameForm.submit();
 				
 		  	
 		   }else if(oper =="member_update"){
