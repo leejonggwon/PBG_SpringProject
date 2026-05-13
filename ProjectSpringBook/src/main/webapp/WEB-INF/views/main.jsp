@@ -20,7 +20,7 @@
 <style>
 	body {
 		font-family: 'Nanum Gothic', sans-serif;
-		background-color: #f6f7f2;
+		/*background-color: #f6f7f2;*/ /*배경*/
 	}
 
 	h2 {
@@ -39,7 +39,7 @@
 	}
 
 	.panel-heading {
-		background-color: #588157 !important;
+		background-color: #588157 !important; /*도서목록*/
 		color: #fff !important;
 		font-size: 18px;
 		font-weight: bold;
@@ -180,7 +180,7 @@
 				</form>
 			</div>
 
-			<div class="panel-footer">한국도서관 © 도서관장 이종권</div>
+			<div class="panel-footer">© Library of Hanguk. All rights reserved.</div>
 		</div>
 	</div>
 	
@@ -209,7 +209,7 @@
 	<script type="text/javascript">
 		$(document).ready(function(){ 
 			loadList();
-			 $('#adModal').modal('show'); //모달창 
+			 //$('#adModal').modal('show'); //모달창 
 		});
 	
 		function loadList() {

@@ -6,33 +6,33 @@
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
-		<item key="selection" value="수정"/>
+		<item key="selection" value="회원정보수정"/>
 		<list key="findhistory">
-			<item value="수정"/>
-			<item value="delete_attached_data_btn"/>
-			<item value="이미지 첨부파일 삭제"/>
-			<item value="영상 첨부파일 삭제"/>
-			<item value="첨부파일 삭제"/>
-			<item value="첨부 파일 삭제"/>
-			<item value="cmt_groupCnt"/>
-			<item value="getCmt_group"/>
-			<item value="cmtComment"/>
-			<item value="대댓글"/>
-			<item value="getCmt_cmt_count"/>
-			<item value="getCmt_cmt_countgetCmt_cmt_count"/>
-			<item value="video"/>
-			<item value="검색"/>
-			<item value="search()"/>
+			<item value="회원정보수정"/>
+			<item value="이미지등록"/>
+			<item value="이미지 등록"/>
+			<item value="page"/>
+			<item value="pageFrm"/>
+			<item value="move"/>
+			<item value="bookList"/>
+			<item value="bkCallNumber"/>
+			<item value="bkCount"/>
+			<item value="file"/>
+			<item value="data-oper"/>
+			<item value="data-btn"/>
+			<item value="data-btn&quot;"/>
+			<item value="[data-btn]&quot;"/>
+			<item value="btn"/>
 		</list>
 		<list key="replacehistory">
 			<item value=""/>
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
-		<item key="DIALOG_X_ORIGIN" value="1404"/>
-		<item key="DIALOG_Y_ORIGIN" value="639"/>
+		<item key="DIALOG_X_ORIGIN" value="-880"/>
+		<item key="DIALOG_Y_ORIGIN" value="461"/>
 		<item key="DIALOG_WIDTH" value="272"/>
-		<item key="DIALOG_HEIGHT" value="363"/>
+		<item key="DIALOG_HEIGHT" value="361"/>
 		<item key="DIALOG_FONT_NAME" value="1|맑은 고딕|9.0|0|WINDOWS|1|-15|0|0|0|400|0|0|0|1|0|0|0|0|맑은 고딕"/>
 	</section>
 </section>
