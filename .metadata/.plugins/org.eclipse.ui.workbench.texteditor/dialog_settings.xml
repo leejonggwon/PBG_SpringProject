@@ -6,8 +6,15 @@
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
-		<item key="selection" value="회원정보수정"/>
+		<item key="selection" value="reply"/>
 		<list key="findhistory">
+			<item value="reply"/>
+			<item value="작성자"/>
+			<item value="답글등록"/>
+			<item value="option"/>
+			<item value="lecture"/>
+			<item value="답글"/>
+			<item value="수정"/>
 			<item value="회원정보수정"/>
 			<item value="이미지등록"/>
 			<item value="이미지 등록"/>
@@ -16,20 +23,13 @@
 			<item value="move"/>
 			<item value="bookList"/>
 			<item value="bkCallNumber"/>
-			<item value="bkCount"/>
-			<item value="file"/>
-			<item value="data-oper"/>
-			<item value="data-btn"/>
-			<item value="data-btn&quot;"/>
-			<item value="[data-btn]&quot;"/>
-			<item value="btn"/>
 		</list>
 		<list key="replacehistory">
 			<item value=""/>
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
-		<item key="DIALOG_X_ORIGIN" value="-880"/>
+		<item key="DIALOG_X_ORIGIN" value="9"/>
 		<item key="DIALOG_Y_ORIGIN" value="461"/>
 		<item key="DIALOG_WIDTH" value="272"/>
 		<item key="DIALOG_HEIGHT" value="361"/>
