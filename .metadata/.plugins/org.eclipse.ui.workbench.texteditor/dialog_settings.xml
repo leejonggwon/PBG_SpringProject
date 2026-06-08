@@ -6,31 +6,31 @@
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
-		<item key="selection" value="reply"/>
+		<item key="selection" value="FormData"/>
 		<list key="findhistory">
-			<item value="reply"/>
-			<item value="작성자"/>
-			<item value="답글등록"/>
-			<item value="option"/>
-			<item value="lecture"/>
-			<item value="답글"/>
-			<item value="수정"/>
-			<item value="회원정보수정"/>
-			<item value="이미지등록"/>
-			<item value="이미지 등록"/>
-			<item value="page"/>
-			<item value="pageFrm"/>
-			<item value="move"/>
-			<item value="bookList"/>
-			<item value="bkCallNumber"/>
+			<item value="FormData"/>
+			<item value="모든 내용을 입력하세요"/>
+			<item value="focus"/>
+			<item value="a:focus"/>
+			<item value="대회소개"/>
+			<item value="success"/>
+			<item value="panel-"/>
+			<item value=".accordion-title"/>
+			<item value="nav-tabs"/>
+			<item value="pagination"/>
+			<item value="uploadFile_img"/>
+			<item value="첨부파일"/>
+			<item value="tab-content"/>
+			<item value="attachedDeleteBtn"/>
+			<item value="첨부파일 삭제하기"/>
 		</list>
 		<list key="replacehistory">
 			<item value=""/>
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
-		<item key="DIALOG_X_ORIGIN" value="9"/>
-		<item key="DIALOG_Y_ORIGIN" value="461"/>
+		<item key="DIALOG_X_ORIGIN" value="1503"/>
+		<item key="DIALOG_Y_ORIGIN" value="405"/>
 		<item key="DIALOG_WIDTH" value="272"/>
 		<item key="DIALOG_HEIGHT" value="361"/>
 		<item key="DIALOG_FONT_NAME" value="1|맑은 고딕|9.0|0|WINDOWS|1|-15|0|0|0|400|0|0|0|1|0|0|0|0|맑은 고딕"/>

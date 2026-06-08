@@ -1,0 +1,108 @@
+-- SQL파일 설정 경로: new → SQL File 
+
+-- SQL 문장 작성 
+-- *조건:  MyBatis가 자동으로 매핑해주기 위해서는 VO 클래스의 필드명이 데이터베이스 테이블의 컬럼명과 동일해야 한다
+--실행: 드래그 → Alt + X → Execute Selected Text
+
+CREATE TABLE MR_BOARD(
+	IDX INT NOT NULL AUTO_INCREMENT, 
+	MEMID VARCHAR(20) NOT NULL, 
+	TITLE VARCHAR(100) NOT NULL,
+	CONTENT VARCHAR(2000) NOT NULL,
+	ATTACHED VARCHAR(100),
+	WRITER VARCHAR(30) NOT NULL,
+	INDATE DATETIME DEFAULT NOW(), 
+	COUNT INT DEFAULT 0,
+	PRIMARY KEY(IDX)
+);
+
+--조회
+SELECT * FROM MR_BOARD;
+
+
+
+--테이블 식제
+DROP TABLE MR_BOARD;
+
+DELETE FROM MR_BOARD;
+
+
+--입력
+INSERT INTO MR_BOARD(TITLE, CONTENT, WRITER)
+VALUES
+('공지사항', '8월 서버 점검이 예정되어 있습니다.', '관리자'),
+('자유게시판 오픈!', '이제 자유롭게 글을 남겨보세요.', '운영팀'),
+('스프링 질문 있어요', 'Controller와 Service 차이점이 궁금합니다.', '초보개발자'),
+('스터디 모집', '백엔드 스터디 함께하실 분 구합니다!', '개발자A'),
+('오류 해결법 공유', 'MySQL 연결 오류 해결법 정리해봤어요.', '지식나눔이');
+
+
+-- 회원 테이블 --
+CREATE TABLE MR_MEMBER(
+	MEMIDX INT AUTO_INCREMENT,
+	MEMID VARCHAR(20) NOT NULL,
+	MEMPASSWORD VARCHAR(20) NOT NULL,
+	MEMNAME VARCHAR(20) NOT NULL,
+	MEMAGE INT,
+	MEMGENDER VARCHAR(20),
+	MEMEMAIL VARCHAR(50),
+	MEMPROFILE VARCHAR(50), 
+	PRIMARY KEY(MEMIDX)
+);
+
+
+SELECT * FROM MR_MEMBER;
+
+DELETE FROM MR_MEMBER;
+
+INSERT INTO MR_MEMBER (MEMID, MEMPASSWORD, MEMNAME, MEMAGE, MEMGENDER, MEMEMAIL, MEMPROFILE)
+VALUES ('admin','1234','관리자', 38, '남자', 'admin@gmail.com', '');
+
+
+
+
+
+
+-- 마라톤 기록 --
+CREATE TABLE MR_RECORD(
+	MRNUMBER VARCHAR(10),
+	MRNAME VARCHAR(20) NOT NULL,
+	MRBIRTH DATE,
+	MRGENDER VARCHAR(10),
+	MRCOURSE VARCHAR(20),
+	MRRECORD TIME NOT NULL,
+	MRDATE DATE NOT NULL,
+	PRIMARY KEY(MRNUMBER)
+);
+
+DROP TABLE MR_RECORD;
+
+DELETE FROM MR_RECORD;
+
+
+INSERT INTO MR_RECORD (MRNUMBER, MRNAME, MRBIRTH, MRGENDER, MRCOURSE, MRRECORD, MRDATE) VALUES
+('1001', '김철수', '1988-03-12', '남자', '42.195km', '03:15:42', '2025-06-15'),
+('1002', '이영희', '1995-07-24', '여자', '42.195km', '03:45:20', '2025-06-15'),
+('1003', '박민준', '2001-11-05', '남자', '42.195km', '02:58:15', '2025-06-15'),
+('1004', '최서연', '1992-02-18', '여자', '42.195km', '03:58:10', '2025-06-15'),
+('1005', '정우진', '1985-09-30', '남자', '42.195km', '03:32:05', '2025-06-15'),
+('1006', '한지민', '1990-05-14', '여자', '42.195km', '04:21:30', '2025-06-15'),
+('1007', '장동현', '1983-12-01', '남자', '42.195km', '02:54:18', '2025-06-15'),
+('1008', '오지현', '1998-04-22', '여자', '42.195km', '04:10:45', '2025-06-15'),
+('1009', '강태양', '2003-08-09', '남자', '42.195km', '03:08:55', '2025-06-15'),
+('1010', '윤서아', '1994-10-17', '여자', '42.195km', '04:12:33', '2025-06-15');
+
+DELETE FROM MR_BOARD;
+
+SELECT * FROM MR_RECORD;
+
+
+UPDATE MR_BOARD SET WRITER = '한국 마라톤 사무국';
+
+
+SELECT * FROM MR_BOARD;
+
+DELETE FROM MR_BOARD WHERE IDX=52;
+
+
+
